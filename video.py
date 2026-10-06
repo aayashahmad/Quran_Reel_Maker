@@ -1,4 +1,5 @@
 import os
+import re
 import subprocess
 import wave
 from functools import lru_cache
@@ -93,17 +94,19 @@ def draw_block(d, text, fname, y, max_h, size, min_size, color, lh, rtl=True, la
     return y
 
 
-def draw_words(d, tokens, y, max_h, size, min_size, lh, color, hl=None, fname="AmiriQuran-Regular.ttf"):
-    """Draw Arabic words right-to-left, one by one, so a single word can be highlighted.
+def draw_words(d, tokens, y, max_h, size, min_size, lh, color, hl=None, fname="AmiriQuran-Regular.ttf", lang="ar"):
+    """Draw Arabic or Urdu words right-to-left, one by one, so a single word can be highlighted.
     tokens: list of (text, index); the token whose index == hl gets a gold box.
     The layout depends only on the tokens, so every highlight state lines up exactly."""
     max_w = W - 140
     while True:
         f = font(fname, size)
         space = text_w(f, " ")
+        if lang == "ur":                        # Nastaliq spaces are narrow; leave room for the highlight box
+            space = max(space, size * 0.45)
         lines, cur, cur_w = [], [], 0.0
         for text, idx in tokens:
-            ww = text_w(f, shape(text))
+            ww = text_w(f, shape(text), lang=lang)
             if cur and cur_w + space + ww > max_w:
                 lines.append((cur, cur_w))
                 cur, cur_w = [], 0.0
@@ -115,12 +118,13 @@ def draw_words(d, tokens, y, max_h, size, min_size, lh, color, hl=None, fname="A
         if len(lines) * line_h <= max_h or size <= min_size:
             break
         size -= 4
-    kw = dict(direction="rtl", language="ar") if RAQM else {}
+    kw = dict(direction="rtl", language=lang) if RAQM else {}
     for words, line_w in lines:
         # Highlight box height = real ink extent of this line (harakat above and below included)
         boxes = [f.getbbox(shape(t), **kw) for t, _, _ in words]
         top, bottom = min(bx[1] for bx in boxes) - 8, max(bx[3] for bx in boxes) + 8
-        band = size * 0.55                      # lines repeat every line_h; keep the box in this line's band
+        band = size * (0.15 if lang == "ur" else 0.55)  # lines repeat every line_h; keep the box in this line's band
+                                                        # (Nastaliq letters like ک reach higher)
         top, bottom = max(top, band), min(bottom, band + line_h)
         x = (W + line_w) / 2                    # right edge of the centred line
         for text, idx, ww in words:
@@ -154,10 +158,11 @@ def background(w=W, h=H):
     return _gradient(w, h).copy()
 
 
-def make_frame(item, path, hl=None, urdu=None):
+def make_frame(item, path, hl=None, urdu=None, ur_hl=None):
     """item may be a real ayah, or the Bismillah frame (item["is_bismillah"]).
     hl: index of the Arabic word being recited (highlighted), or None.
-    urdu: None = no Urdu audio; False = Arabic is playing (Urdu dimmed); True = Urdu is being read."""
+    urdu: None = no Urdu audio; False = Arabic is playing (Urdu dimmed); True = Urdu is being read.
+    ur_hl: index of the Urdu word being read (highlighted), or None."""
     img = background()
     d = ImageDraw.Draw(img)
     bism = item.get("is_bismillah")
@@ -182,7 +187,9 @@ def make_frame(item, path, hl=None, urdu=None):
     y = max(y + 40, 1060)
     d.line([(400, y - 20), (W - 400, y - 20)], fill=(90, 130, 110), width=2)
     ur_color = SOFT if urdu is None else (WHITE if urdu else DIM)
-    draw_block(d, item["ur"], "NotoNastaliqUrdu.ttf", y + 10, H - y - 260, 52, 28, ur_color, 2.0, lang="ur")
+    ur_tokens = [(w, i) for i, w in enumerate(item["ur"].split())]
+    draw_words(d, ur_tokens, y + 10, H - y - 260, 52, 28, 2.0, ur_color, ur_hl,
+               fname="NotoNastaliqUrdu.ttf", lang="ur")
 
     if CHANNEL_TAG:
         center(d, CHANNEL_TAG, 38, H - 150, MUTED)
@@ -255,6 +262,55 @@ def word_timeline(segments, nwords, dur):
     return merged
 
 
+def _voiced(wav, dur):
+    """[(start, end)] of the parts of this audio that are not silence."""
+    log = subprocess.run(["ffmpeg", "-hide_banner", "-i", str(wav), "-af", "silencedetect=noise=-35dB:d=0.25",
+                          "-f", "null", "-"], capture_output=True, text=True).stderr
+    out, t, kind = [], 0.0, "end"
+    for kind, sec in re.findall(r"silence_(start|end): ([\d.]+)", log):
+        sec = min(float(sec), dur)
+        if kind == "start" and sec > t:
+            out.append((t, sec))
+        t = sec
+    if kind == "end" and dur > t:               # the file doesn't end in silence
+        out.append((t, dur))
+    return [(a, b) for a, b in out if b - a > 0.05] or [(0.0, dur)]
+
+
+def urdu_timeline(wav, nwords_text, dur):
+    """[(seconds, word index or None)] covering `dur` seconds of Urdu audio.
+    Estimated: the speaking time (pauses skipped) is shared by the words in proportion
+    to their length, since there are no word timings for the Urdu reading."""
+    weights = [max(1, len(re.sub(r"[^\w]", "", w))) + 1 for w in nwords_text]
+    voiced = _voiced(wav, dur)
+    total = sum(b - a for a, b in voiced)
+
+    def real(x):                                # speaking-time offset -> time in the file
+        for a, b in voiced:
+            if x <= b - a:
+                return a + x
+            x -= b - a
+        return voiced[-1][1]
+
+    out, t, acc = [], 0.0, 0.0
+    for i, w in enumerate(weights):
+        s, acc = real(acc / sum(weights) * total), acc + w
+        e = real(acc / sum(weights) * total)
+        if s > t:                               # pause: before the first word nothing is lit,
+            out.append((s - t, i - 1 if i else None))   # later the previous word stays lit
+        out.append((e - s, i))
+        t = e
+    if dur > t:
+        out.append((dur - t, len(weights) - 1 if weights else None))
+    merged = []
+    for sec, w in out:
+        if merged and merged[-1][1] == w:
+            merged[-1] = (merged[-1][0] + sec, w)
+        elif sec > 0:
+            merged.append((sec, w))
+    return merged
+
+
 # Small hosts (e.g. 512 MB): set FFMPEG_THREADS=1 so x264 doesn't size its buffers for every host core.
 _THREADS = os.getenv("FFMPEG_THREADS")
 LOW_MEM_X264 = ["-threads", _THREADS, "-x264-params", "rc-lookahead=5"] if _THREADS else []
@@ -288,13 +344,16 @@ def render(items, audio_lists, info, out_path, workdir, log=print):
         words = it.get("words") or []
         states = word_timeline(it.get("segments") or [], len(words), durs[0])
         if has_urdu:
-            states.append((sum(durs[1:]), "urdu"))
+            ur = urdu_timeline(workdir / f"a{i}_1.wav", it["ur"].split(), durs[1])
+            states += [(sec, ("urdu", w)) for sec, w in ur]
+            if len(durs) > 2:
+                states.append((sum(durs[2:]), ("urdu", None)))
         drawn = {}
         for sec, st in states:
             if st not in drawn:
                 fp = workdir / f"f{i}_{len(drawn)}.png"
-                if st == "urdu":
-                    make_frame(it, fp, urdu=True)
+                if isinstance(st, tuple):
+                    make_frame(it, fp, urdu=True, ur_hl=st[1])
                 else:
                     make_frame(it, fp, hl=st, urdu=False if has_urdu else None)
                 drawn[st] = fp
