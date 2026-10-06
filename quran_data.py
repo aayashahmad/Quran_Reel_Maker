@@ -12,7 +12,7 @@ AUDIO = "https://cdn.islamic.network/quran/audio/{}/{}/{}.mp3"
 QDC = ("https://api.quran.com/api/v4/verses/by_chapter/{}?words=true&word_fields=text_uthmani"
        "&audio={}&per_page=50&page={}")
 QDC_AUDIO = "https://verses.quran.com/{}"
-BITRATE = {"ur.khan": 64}  # other editions use 128
+BITRATE = {"ur.khan": 64, "en.walk": 192}  # other editions use 128
 BISMILLAH = "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ"
 
 

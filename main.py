@@ -6,6 +6,7 @@ from concurrent.futures import ThreadPoolExecutor
 from config import STATE_FILE, OUT, MAX_REEL_SECONDS, PRIVACY, READ_URDU, URDU_AUDIO
 from quran_data import load_quran, surah_ranges, get_audio, duration
 from content import reel_info, metadata
+import translations
 import video
 
 
@@ -28,10 +29,14 @@ def write_state(s):
     STATE_FILE.write_text(json.dumps(s, indent=2))
 
 
-def ayah_audio(item, read_urdu=READ_URDU):
+DEFAULT_VOICE = URDU_AUDIO if READ_URDU else None
+
+
+def ayah_audio(item, voice=DEFAULT_VOICE):
+    """Audio files for one ayah: the Arabic recitation, then (if `voice`, an audio edition) the translation."""
     files = [get_audio(item)]
-    if read_urdu:
-        files.append(get_audio(item, URDU_AUDIO))
+    if voice:
+        files.append(get_audio(item, voice))
     return files
 
 
@@ -50,7 +55,7 @@ def with_bismillah(quran, items):
     return list(items)
 
 
-def prefetch(items, read_urdu=READ_URDU, log=print):
+def prefetch(items, voice=DEFAULT_VOICE, log=print):
     """Download all audio for these ayat in parallel (the audio server is slow one by one)."""
     items = list(items)
     if any(it.get("bismillah") for it in items):
@@ -58,7 +63,7 @@ def prefetch(items, read_urdu=READ_URDU, log=print):
     done = [0]
 
     def one(it):
-        ayah_audio(it, read_urdu)
+        ayah_audio(it, voice)
         done[0] += 1
         log(f"Downloading audio {done[0]}/{len(items)}")
     with ThreadPoolExecutor(8) as ex:
@@ -137,16 +142,20 @@ class TooLong(Exception):
         self.seconds, self.parts = seconds, parts
 
 
-def build_reel(items, info, out_dir, name, read_urdu=READ_URDU, log=print, max_seconds=None):
+def build_reel(items, info, out_dir, name, read_aloud=READ_URDU, log=print, max_seconds=None, lang="ur"):
     """Render mp4 + thumbnail for these ayat. Returns (mp4, thumb, title, desc, tags, seconds).
+    lang: translation language code (see translations.LANGS); read_aloud: also play its recording
+    after each ayah, when that language has one.
     With max_seconds, raises TooLong (with suggested parts) instead of rendering a longer video."""
-    prefetch(items, read_urdu, log)
+    voice = translations.LANGS[lang]["audio"] if read_aloud else None
+    texts = translations.texts(lang, quran_cached(), log)
+    prefetch(items, voice, log)
     if max_seconds:
         durs = []
         for it in items:
-            files = ayah_audio(it, read_urdu)
+            files = ayah_audio(it, voice)
             if it.get("bismillah"):
-                files = ayah_audio(quran_cached()[0], read_urdu) + files
+                files = ayah_audio(quran_cached()[0], voice) + files
             durs.append(sum(duration(f) for f in files))
         if sum(durs) > max_seconds:
             parts = split(durs, groups=[it["ruku"] for it in items])
@@ -156,13 +165,14 @@ def build_reel(items, info, out_dir, name, read_urdu=READ_URDU, log=print, max_s
     work = out_dir / f"work_{name}"
     if work.exists():
         shutil.rmtree(work)
-    frames = with_bismillah(quran_cached(), items)
-    audio = [ayah_audio(it, read_urdu) for it in frames]
+    items = [dict(it, tr=texts[it["n"] - 1]) for it in items]
+    frames = [dict(it, tr=texts[it["n"] - 1]) for it in with_bismillah(quran_cached(), items)]
+    audio = [ayah_audio(it, voice) for it in frames]
     mp4 = out_dir / f"{name}.mp4"
-    secs = video.render(frames, audio, info, mp4, work, log=log)
-    thumb = video.make_thumbnail(info, out_dir / f"{name}_thumbnail.jpg")
+    secs = video.render(frames, audio, info, mp4, work, log=log, lang=lang)
+    thumb = video.make_thumbnail(info, out_dir / f"{name}_thumbnail.jpg", video.tr_lang(lang))
     shutil.rmtree(work, ignore_errors=True)
-    title, desc, tags = metadata(items, info, read_urdu)
+    title, desc, tags = metadata(items, info, bool(voice), lang)
     return mp4, thumb, title, desc, tags, secs
 
 

@@ -155,6 +155,8 @@
   .row { display: grid; grid-template-columns: 1fr 1fr auto; gap: 14px; align-items: end; margin-top: 18px; }
   .check { display: flex; gap: 10px; align-items: center; margin-top: 18px; color: var(--text); text-transform: none; letter-spacing: 0; font: 15px Lora, Georgia, serif; }
   .check input { width: 18px; height: 18px; accent-color: var(--gold); }
+  .check.off { color: var(--muted); }
+  .langnote { color: var(--muted); font-size: 13.5px; margin: 8px 0 0; font-family: system-ui, -apple-system, sans-serif; }
 
   button, a.btn {
     display: inline-flex; align-items: center; justify-content: center; gap: 8px;
@@ -216,7 +218,7 @@
     <p class="bismillah" lang="ar">بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ</p>
     <h1>Quran Reel Maker</h1>
     <p class="ur" lang="ur" dir="rtl">قرآنِ پاک کی تلاوت اور اردو ترجمہ کی ویڈیوز</p>
-    <p class="sub">Choose a surah and ayat to make a vertical video with recitation, word-by-word highlighting and the Urdu translation.</p>
+    <p class="sub">Choose a surah and ayat to make a vertical video with recitation, word-by-word highlighting and a translation in your language.</p>
     <div class="divider" aria-hidden="true"><i></i></div>
   </header>
 
@@ -247,7 +249,15 @@
       <div><label for="to">To ayah</label><input id="to" type="number" min="1" value="1"></div>
       <button class="ghost" id="full" type="button">Full surah</button>
     </div>
-    <label class="check"><input type="checkbox" id="urdu" {% if read_urdu %}checked{% endif %}> Read the Urdu translation aloud after each ayah</label>
+    <div class="field">
+      <label for="lang">Translation</label>
+      <select id="lang">
+        {% for l in langs %}<option value="{{ l.code }}" data-audio="{{ 1 if l.audio else 0 }}" data-translator="{{ l.translator }}" data-reader="{{ l.reader or '' }}">{{ l.name }}{% if l.native != l.name %} · {{ l.native }}{% endif %}{% if l.audio %}  🔊{% endif %}</option>
+        {% endfor %}
+      </select>
+      <p class="langnote" id="langnote"></p>
+    </div>
+    <label class="check"><input type="checkbox" id="read" {% if read_urdu %}checked{% endif %}> <span id="readlabel">Read the translation aloud after each ayah</span></label>
     <div class="actions"><button id="go" class="primary" type="button">Generate video</button></div>
     <div id="status" role="status"></div>
     <div id="parts" class="parts"></div>
@@ -276,7 +286,7 @@
   <div class="divider" aria-hidden="true"><i></i></div>
   <p class="ayah" lang="ar">وَرَتِّلِ ٱلْقُرْءَانَ تَرْتِيلًا</p>
   <p class="tr">“And recite the Quran with measured recitation.” (Al-Muzzammil 73:4)</p>
-  <p class="credit">Recitation: Mishary Rashid Alafasy • Urdu translation: Fateh Muhammad Jalandhry • Urdu audio: Shamshad Ali Khan</p>
+  <p class="credit">Recitation: Mishary Rashid Alafasy • Translations: alquran.cloud • Urdu: Fateh Muhammad Jalandhry, read by Shamshad Ali Khan</p>
   <p class="dev">Developed by <strong>Aayash Ahmad Bhat</strong> • <a href="mailto:aayash.bhat.dev@gmail.com">aayash.bhat.dev@gmail.com</a></p>
 </footer>
 <script>
@@ -388,7 +398,8 @@ $("go").onclick = async () => {
   $("go").disabled = true; $("parts").innerHTML = ""; setStatus("Starting…", false, null, true);
   try {
     const r = await fetch("/api/generate", { method: "POST", headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ surah: surah.value, from: from.value, to: to.value, urdu: $("urdu").checked }) });
+      body: JSON.stringify({ surah: surah.value, from: from.value, to: to.value, lang: $("lang").value,
+                             read: $("read").checked }) });
     const d = await r.json();
     if (!r.ok) throw new Error(d.error || "Could not start");
     poll(d.id);
@@ -427,6 +438,20 @@ function showParts(j) {
     box.appendChild(b);
   });
 }
+
+function syncLang() {
+  const o = $("lang").selectedOptions[0], audio = o.dataset.audio === "1", read = $("read");
+  read.disabled = !audio;
+  read.closest(".check").classList.toggle("off", !audio);
+  $("readlabel").textContent = audio ? "Read the translation aloud after each ayah"
+                                     : "Read aloud (no recording for this language)";
+  $("langnote").textContent = `Translation by ${o.dataset.translator}.` +
+    (audio ? ` Read aloud by ${o.dataset.reader}.` : " Shown on screen with the Arabic recitation.");
+  try { localStorage.setItem("lang", o.value); } catch (e) {}
+}
+try { const saved = localStorage.getItem("lang"); if (saved && $("lang").querySelector(`option[value="${saved}"]`)) $("lang").value = saved; } catch (e) {}
+$("lang").onchange = syncLang;
+syncLang();
 
 document.querySelectorAll(".copy").forEach(b => b.onclick = () => {
   navigator.clipboard.writeText($(b.dataset.for).value);
