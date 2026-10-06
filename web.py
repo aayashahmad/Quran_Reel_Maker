@@ -2,6 +2,7 @@
 Run with:  ./run.sh web   then open http://localhost:5050"""
 import re
 import shutil
+import socket
 import threading
 import time
 import uuid
@@ -24,6 +25,7 @@ LANG_OPTIONS = [{"code": c, "name": l["name"], "native": l["native"], "translato
 JOBS = {}
 RENDER_LOCK = threading.Lock()      # one render at a time
 JOB_ID = re.compile(r"^[0-9a-f]{12}$")
+SERVER = socket.gethostname()
 WEB_MAX_SECONDS = 10 * 60           # longer selections get a list of reel-sized parts instead
 KEEP_SECONDS = 60 * 60              # made files are deleted after this, nothing is kept
 
@@ -94,6 +96,12 @@ def run_job(jid, surah, first, last, lang, read_aloud):
                    parts=[{"from": a, "to": b, "seconds": round(s)} for a, b, s in e.parts])
     except Exception as e:  # show the error on the page
         job.update(status="error", msg=f"Failed: {e}")
+
+
+@app.after_request
+def served_by(resp):
+    resp.headers["X-Served-By"] = SERVER     # which computer answered (main or backup)
+    return resp
 
 
 @app.get("/")

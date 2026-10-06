@@ -5,6 +5,8 @@
 # Afterwards the site runs as two services that start on boot and restart on failure:
 #   quran-web     the website (gunicorn on 127.0.0.1:5050)
 #   quran-tunnel  the Cloudflare tunnel that serves it at quranreelmaker.xyz
+# With FAILOVER=1 the tunnel is installed but not started: this server is a backup that
+# failover-server.sh switches on only while the main computer is offline.
 set -euo pipefail
 
 REPO=https://github.com/aayashahmad/Quran_Reel_Maker.git
@@ -49,6 +51,8 @@ EOF
 cloudflared tunnel --config "$TUNNEL_DIR/config.yml" ingress validate
 
 echo "== Services"
+# Small servers (under 4 GB memory): keep ffmpeg to one thread so a render fits in memory
+lowmem=""; [ "$(awk '/MemTotal/ {print int($2 / 1024)}' /proc/meminfo)" -lt 4000 ] && lowmem="Environment=FFMPEG_THREADS=1"
 sudo tee /etc/systemd/system/quran-web.service >/dev/null <<EOF
 [Unit]
 Description=Quran Reel Maker website
@@ -58,6 +62,7 @@ Wants=network-online.target
 [Service]
 User=$USER
 WorkingDirectory=$APP
+$lowmem
 ExecStart=$APP/.venv/bin/gunicorn web:app --bind 127.0.0.1:5050 --workers 1 --threads 8 --timeout 0
 Restart=always
 RestartSec=5
@@ -81,11 +86,17 @@ RestartSec=5
 WantedBy=multi-user.target
 EOF
 sudo systemctl daemon-reload
-sudo systemctl enable --now quran-web quran-tunnel
-sudo systemctl restart quran-web quran-tunnel
+sudo systemctl enable --now quran-web
+sudo systemctl restart quran-web
+if [ "${FAILOVER:-0}" = 1 ]; then
+  sudo systemctl disable --now quran-tunnel 2>/dev/null || true
+else
+  sudo systemctl enable --now quran-tunnel
+  sudo systemctl restart quran-tunnel
+fi
 
 echo "== Check"
 for i in $(seq 1 30); do curl -sf -o /dev/null http://127.0.0.1:5050/ && break; sleep 2; done
 curl -s -o /dev/null -w "website: HTTP %{http_code}\n" http://127.0.0.1:5050/
-systemctl is-active quran-web quran-tunnel
+systemctl is-active quran-web quran-tunnel || true
 echo "Done. To update later:  cd $APP && git pull && sudo systemctl restart quran-web"
