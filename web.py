@@ -1,4 +1,4 @@
-"""Local website: pick a surah and ayah range, generate a reel or a status/story image, download it.
+"""Local website: pick a surah and ayah range, generate a reel, download it.
 Run with:  ./run.sh web   then open http://localhost:5050"""
 import re
 import shutil
@@ -12,8 +12,6 @@ from config import WEB_OUT, READ_URDU
 from quran_data import load_quran, surah_ranges
 from content import reel_info
 from main import build_reel, TooLong
-import reflect
-import video
 
 app = Flask(__name__)
 QURAN = load_quran()
@@ -23,12 +21,11 @@ SURAHS = [{"n": s, "en": QURAN[a]["surah_en"], "ar": QURAN[a]["surah_ar"], "coun
 JOBS = {}
 RENDER_LOCK = threading.Lock()      # one render at a time
 JOB_ID = re.compile(r"^[0-9a-f]{12}$")
-STORY_MAX_AYAT = 3
 WEB_MAX_SECONDS = 10 * 60           # longer selections get a list of reel-sized parts instead
 KEEP_SECONDS = 60 * 60              # made files are deleted after this, nothing is kept
 
 
-def pick(d, limit=None):
+def pick(d):
     """Validate surah/from/to from a request. Returns (surah, first, last) or an error string."""
     try:
         surah, first, last = int(d["surah"]), int(d["from"]), int(d["to"])
@@ -39,8 +36,6 @@ def pick(d, limit=None):
     count = RANGES[surah][1] - RANGES[surah][0]
     if not 1 <= first <= last <= count:
         return f"Ayah numbers must be between 1 and {count}, and From must not be after To."
-    if limit and last - first + 1 > limit:
-        return f"A story fits up to {limit} ayat. Make From and To closer together."
     return surah, first, last
 
 
@@ -98,30 +93,9 @@ def run_job(jid, surah, first, last, urdu):
         job.update(status="error", msg=f"Failed: {e}")
 
 
-def run_story(jid, surah, first, last, language):
-    job = JOBS[jid]
-    try:
-        s0, s1 = RANGES[surah]
-        items = QURAN[s0 + first - 1:s0 + last]
-        info = reel_info(items, 1, 1, first == 1 and last == s1 - s0)
-        job["msg"] = "Writing the reflection"
-        data = reflect.generate(items, info, language)
-        job["msg"] = "Drawing the story image"
-        out = WEB_OUT / jid
-        out.mkdir(parents=True, exist_ok=True)
-        img = video.make_story(items, info, data, out / f"{file_name(surah, first, last)}_story.png", language)
-        caption = data["caption"] + "\n\n" + " ".join("#" + h for h in data["hashtags"])
-        job.update(status="done", msg="Done", image=img.name, headline=data["headline"],
-                   reflection=data["reflection"], action=data["action"], caption=caption)
-    except reflect.ReflectionError as e:
-        job.update(status="error", msg=str(e))
-    except Exception as e:
-        job.update(status="error", msg=f"Failed: {e}")
-
-
 @app.get("/")
 def index():
-    return render_template("index.html", surahs=SURAHS, read_urdu=READ_URDU, story_max=STORY_MAX_AYAT)
+    return render_template("index.html", surahs=SURAHS, read_urdu=READ_URDU)
 
 
 @app.post("/api/generate")
@@ -131,18 +105,6 @@ def generate():
     if isinstance(p, str):
         return jsonify(error=p), 400
     return start_job(run_job, *p, bool(d.get("urdu", True)))
-
-
-@app.post("/api/story")
-def story():
-    d = request.get_json(force=True)
-    if not reflect.available():
-        return jsonify(error="Stories need a Claude API key. Set ANTHROPIC_API_KEY and restart the website."), 400
-    p = pick(d, STORY_MAX_AYAT)
-    if isinstance(p, str):
-        return jsonify(error=p), 400
-    lang = d.get("language") if d.get("language") in reflect.LANGUAGES else "roman"
-    return start_job(run_story, *p, lang)
 
 
 @app.get("/api/job/<jid>")

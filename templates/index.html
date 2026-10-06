@@ -179,21 +179,15 @@
   .parts button { padding: 8px 14px; font-size: 14px; }
 
   .result { display: none; }
-  .media, .story-media { display: grid; grid-template-columns: 250px 1fr; gap: 22px; }
+  .media { display: grid; grid-template-columns: 250px 1fr; gap: 22px; }
   video { width: 100%; border-radius: 14px; background: #000; border: 1px solid var(--line); }
-  .thumb, .story-img { width: 100%; border-radius: 12px; border: 1px solid var(--line); }
+  .thumb { width: 100%; border-radius: 12px; border: 1px solid var(--line); }
   .dl { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0 4px; }
   .field { margin-top: 16px; }
   .field-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 7px; }
   .field-head label { margin: 0; }
   .copy { padding: 5px 14px; font-size: 13px; }
 
-  .story-row { display: flex; flex-wrap: wrap; gap: 14px; align-items: end; }
-  .story-row > div { flex: 1 1 220px; }
-  .story-text p { margin: 0 0 10px; }
-  .story-text .hl { font-family: Amiri, serif; font-size: 25px; color: var(--gold2); line-height: 1.5; }
-  .story-text [dir=rtl] { font-family: "Noto Nastaliq Urdu", serif; line-height: 2.2; }
-  .note { color: var(--muted); font-size: 13px; margin-top: 12px; padding: 10px 14px; border-left: 2px solid var(--gold); background: rgba(212,175,95,.06); border-radius: 0 8px 8px 0; font-family: system-ui, -apple-system, sans-serif; }
   .warn { color: var(--err); }
 
 
@@ -210,7 +204,7 @@
     .hero { padding: 40px 14px 22px; border-radius: 220px 220px 0 0 / 110px 110px 0 0; }
     .hero::before { border-radius: 212px 212px 0 0 / 104px 104px 0 0; }
     .card { padding: 22px 16px; }
-    .media, .story-media { grid-template-columns: 1fr; }
+    .media { grid-template-columns: 1fr; }
     .row { grid-template-columns: 1fr 1fr; }
     .row button { grid-column: 1 / -1; }
   }
@@ -276,37 +270,6 @@
     <div class="field"><div class="field-head"><label for="tags">Tags</label><button class="ghost copy" data-for="tags">Copy</button></div><textarea id="tags" readonly></textarea></div>
   </section>
 
-  <section class="card">
-    <div class="card-head"><div class="medallion">٢</div><div><h2>Status / story</h2><span class="ur" lang="ur" dir="rtl">اسٹیٹس اور اسٹوری</span></div></div>
-    <p class="hint">Uses the surah and ayat chosen above (up to {{ story_max }} ayat). Makes a 9:16 image with the ayat, the Urdu translation and a short reflection on living it today, plus a caption to post.</p>
-    <div class="story-row">
-      <div><label for="lang">Reflection language</label>
-        <select id="lang">
-          <option value="roman">Roman Urdu</option>
-          <option value="urdu">اردو</option>
-          <option value="english">English</option>
-        </select></div>
-      <button id="storygo" type="button">Make status / story</button>
-    </div>
-    <div id="storystatus" class="status" role="status"></div>
-  </section>
-
-  <section class="card result" id="storyresult">
-    <div class="card-head"><div class="medallion">✓</div><div><h2>Your story</h2><span class="ur" lang="ur" dir="rtl">آپ کی اسٹوری</span></div></div>
-    <div class="story-media">
-      <div>
-        <img id="storyimg" class="story-img" alt="Story image">
-        <div class="dl"><a class="btn" id="dls" href="#">Download image</a></div>
-      </div>
-      <div class="story-text">
-        <p class="hl" id="s_head"></p>
-        <p id="s_refl"></p>
-        <p id="s_act" style="color:var(--muted)"></p>
-        <div class="field"><div class="field-head"><label for="caption">Caption</label><button class="ghost copy" data-for="caption">Copy</button></div><textarea id="caption" readonly style="min-height:140px"></textarea></div>
-        <p class="note">This reflection is written by AI from the translation. It is not tafsir. Read it before you post, and ask a scholar if anything seems off.</p>
-      </div>
-    </div>
-  </section>
 
 </main>
 <footer>
@@ -463,33 +426,6 @@ function showParts(j) {
     b.onclick = () => { surah.value = j.surah; syncPicker(); from.value = p.from; to.value = p.to; $("go").click(); };
     box.appendChild(b);
   });
-}
-
-$("storygo").onclick = async () => {
-  const el = $("storystatus"), btn = $("storygo");
-  btn.disabled = true; $("storyresult").style.display = "none"; setStatus("Starting…", false, el, true);
-  try {
-    const r = await fetch("/api/story", { method: "POST", headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ surah: surah.value, from: from.value, to: to.value, language: $("lang").value }) });
-    const d = await r.json();
-    if (!r.ok) throw new Error(d.error || "Could not start");
-    pollStory(d.id);
-  } catch (e) { setStatus(e.message, true, el); btn.disabled = false; }
-};
-
-async function pollStory(id) {
-  const el = $("storystatus"), r = await fetch(`/api/job/${id}`), j = await r.json();
-  if (j.status === "running") { setStatus(j.msg + "…", false, el, true); return setTimeout(() => pollStory(id), 1000); }
-  $("storygo").disabled = false;
-  if (j.status === "error") return setStatus(j.msg, true, el);
-  setStatus(j.msg, false, el);
-  const src = `/files/${id}/${j.image}`;
-  $("storyimg").src = src; $("dls").href = src + "?dl=1";
-  $("s_head").textContent = j.headline; $("s_refl").textContent = j.reflection;
-  $("s_act").textContent = j.action; $("caption").value = j.caption;
-  const rtl = $("lang").value === "urdu";
-  ["s_head", "s_refl", "s_act", "caption"].forEach(k => $(k).dir = rtl ? "rtl" : "ltr");
-  $("storyresult").style.display = "block";
 }
 
 document.querySelectorAll(".copy").forEach(b => b.onclick = () => {
