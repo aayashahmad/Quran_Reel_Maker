@@ -1,0 +1,45 @@
+name: Post Quran Short
+
+on:
+  schedule:
+    - cron: "30 2 * * *"    # 08:00 IST
+    - cron: "30 14 * * *"   # 20:00 IST
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency: quran-post
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: sudo apt-get update && sudo apt-get install -y ffmpeg libraqm0 libfribidi0
+      - run: pip install -r requirements.txt
+      - name: Reuse downloaded Quran text, audio and fonts
+        uses: actions/cache@v4
+        with:
+          path: |
+            data
+            fonts
+          key: quran-data-${{ github.run_id }}
+          restore-keys: quran-data-
+      - name: Render and upload one reel
+        run: python main.py run --count 1
+        env:
+          YT_TOKEN_JSON: ${{ secrets.YT_TOKEN_JSON }}
+          YT_PRIVACY: public
+          CHANNEL_TAG: ${{ vars.CHANNEL_TAG }}
+      - name: Save progress
+        run: |
+          git config user.name "quran-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add state.json
+          git commit -m "progress" || exit 0
+          git push

@@ -1,0 +1,10 @@
+client_secret.json
+token.json
+output/
+data/
+fonts/
+__pycache__/
+.venv/
+web_output/
+.env
+.DS_Store
