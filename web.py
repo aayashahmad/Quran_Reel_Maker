@@ -1,8 +1,9 @@
 """Local website: pick a surah and ayah range, generate a reel or a status/story image, download it.
 Run with:  ./run.sh web   then open http://localhost:5050"""
-import json
 import re
+import shutil
 import threading
+import time
 import uuid
 
 from flask import Flask, abort, jsonify, render_template, request, send_from_directory
@@ -24,6 +25,7 @@ RENDER_LOCK = threading.Lock()      # one render at a time
 JOB_ID = re.compile(r"^[0-9a-f]{12}$")
 STORY_MAX_AYAT = 3
 WEB_MAX_SECONDS = 10 * 60           # longer selections get a list of reel-sized parts instead
+KEEP_SECONDS = 60 * 60              # made files are deleted after this, nothing is kept
 
 
 def pick(d, limit=None):
@@ -42,7 +44,25 @@ def pick(d, limit=None):
     return surah, first, last
 
 
+def file_name(surah, first, last):
+    """Download name, e.g. Surah-Yusuf_12_1-5."""
+    en = re.sub(r"[^A-Za-z0-9-]+", "-", QURAN[RANGES[surah][0]]["surah_en"]).strip("-")
+    return f"Surah-{en}_{surah}_{first}-{last}"
+
+
+def cleanup():
+    """Delete made files older than KEEP_SECONDS, and forget their jobs."""
+    if not WEB_OUT.exists():
+        return
+    cutoff = time.time() - KEEP_SECONDS
+    for d in WEB_OUT.iterdir():
+        if d.is_dir() and d.stat().st_mtime < cutoff:
+            shutil.rmtree(d, ignore_errors=True)
+            JOBS.pop(d.name, None)
+
+
 def start_job(target, *args):
+    cleanup()
     jid = uuid.uuid4().hex[:12]
     JOBS[jid] = {"status": "running", "msg": "Queued"}
     threading.Thread(target=target, args=(jid, *args), daemon=True).start()
@@ -62,13 +82,12 @@ def run_job(jid, surah, first, last, urdu):
             items = QURAN[s0 + first - 1:s0 + last]
             full = first == 1 and last == s1 - s0
             info = reel_info(items, 1, 1, full)
-            name = f"surah_{surah}_{first}-{last}"
+            name = file_name(surah, first, last)
             mp4, thumb, title, desc, tags, secs = build_reel(
                 items, info, WEB_OUT / jid, name, read_urdu=urdu, log=log,
                 max_seconds=WEB_MAX_SECONDS)
         result = dict(video=mp4.name, thumb=thumb.name, title=title, desc=desc,
                       tags=", ".join(tags), seconds=round(secs))
-        (WEB_OUT / jid / "meta.json").write_text(json.dumps(result, ensure_ascii=False))
         job.update(status="done", msg=f"Done: {int(secs // 60)} min {int(secs % 60)} s", **result)
     except TooLong as e:
         job.update(status="toolong", surah=surah,
@@ -90,7 +109,7 @@ def run_story(jid, surah, first, last, language):
         job["msg"] = "Drawing the story image"
         out = WEB_OUT / jid
         out.mkdir(parents=True, exist_ok=True)
-        img = video.make_story(items, info, data, out / f"story_{surah}_{first}-{last}.png", language)
+        img = video.make_story(items, info, data, out / f"{file_name(surah, first, last)}_story.png", language)
         caption = data["caption"] + "\n\n" + " ".join("#" + h for h in data["hashtags"])
         job.update(status="done", msg="Done", image=img.name, headline=data["headline"],
                    reflection=data["reflection"], action=data["action"], caption=caption)
@@ -124,17 +143,6 @@ def story():
         return jsonify(error=p), 400
     lang = d.get("language") if d.get("language") in reflect.LANGUAGES else "roman"
     return start_job(run_story, *p, lang)
-
-
-@app.get("/api/recent")
-def recent():
-    """Finished reels, newest first (survives page reloads and server restarts)."""
-    out = []
-    for meta in sorted(WEB_OUT.glob("*/meta.json"), key=lambda p: p.stat().st_mtime, reverse=True)[:30]:
-        d = json.loads(meta.read_text())
-        d["id"] = meta.parent.name
-        out.append(d)
-    return jsonify(out)
 
 
 @app.get("/api/job/<jid>")

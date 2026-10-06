@@ -196,14 +196,6 @@
   .note { color: var(--muted); font-size: 13px; margin-top: 12px; padding: 10px 14px; border-left: 2px solid var(--gold); background: rgba(212,175,95,.06); border-radius: 0 8px 8px 0; font-family: system-ui, -apple-system, sans-serif; }
   .warn { color: var(--err); }
 
-  .rec { display: flex; gap: 16px; align-items: center; padding: 14px 0; border-top: 1px solid var(--line-soft); }
-  .rec:first-child { border-top: 0; }
-  .rec img { width: 128px; border-radius: 8px; flex: none; border: 1px solid var(--line-soft); }
-  .rec .t { flex: 1; min-width: 0; font-size: 14px; }
-  .rec .t b { display: block; font-weight: 600; overflow-wrap: anywhere; }
-  .rec .t span { color: var(--muted); font-size: 13px; }
-  .rec .dl { margin: 8px 0 0; gap: 8px; }
-  .rec .btn, .rec button { padding: 6px 14px; font-size: 13px; }
 
   footer { text-align: center; padding: 10px 16px 44px; color: var(--muted); }
   footer .ayah { font-family: "Amiri Quran", Amiri, serif; color: var(--gold2); font-size: 28px; line-height: 2; margin: 0; }
@@ -221,7 +213,6 @@
     .media, .story-media { grid-template-columns: 1fr; }
     .row { grid-template-columns: 1fr 1fr; }
     .row button { grid-column: 1 / -1; }
-    .rec { align-items: flex-start; } .rec img { width: 92px; }
   }
 </style>
 </head>
@@ -317,11 +308,6 @@
     </div>
   </section>
 
-  <section class="card" id="recentcard" style="display:none">
-    <div class="card-head"><div class="medallion">٣</div><div><h2>Your videos</h2><span class="ur" lang="ur" dir="rtl">آپ کی تمام ویڈیوز</span></div></div>
-    <p class="hint">Every video made here stays in this list, even after you reload the page.</p>
-    <div id="recent"></div>
-  </section>
 </main>
 <footer>
   <div class="divider" aria-hidden="true"><i></i></div>
@@ -455,7 +441,6 @@ async function poll(id) {
   setStatus(j.msg);
   showResult(id, j);
   $("result").scrollIntoView({ behavior: "smooth", block: "start" });
-  loadRecent();
 }
 
 function showResult(id, j) {
@@ -479,27 +464,6 @@ function showParts(j) {
     box.appendChild(b);
   });
 }
-
-async function loadRecent() {
-  let list = [];
-  try { list = await (await fetch("/api/recent")).json(); } catch (e) { return; }
-  const box = $("recent"); box.innerHTML = "";
-  $("recentcard").style.display = list.length ? "block" : "none";
-  list.forEach(r => {
-    const base = `/files/${r.id}/`, row = document.createElement("div");
-    row.className = "rec";
-    row.innerHTML = `<img alt=""><div class="t"><b></b><span></span>
-      <div class="dl"><a class="btn">Download video</a> <a class="btn">Download thumbnail</a> <button class="ghost btn" type="button">Show</button></div></div>`;
-    row.querySelector("img").src = base + r.thumb;
-    row.querySelector("b").textContent = r.title;
-    row.querySelector("span").textContent = fmt(r.seconds || 0);
-    const [v, t] = row.querySelectorAll("a");
-    v.href = base + r.video + "?dl=1"; t.href = base + r.thumb + "?dl=1";
-    row.querySelector("button").onclick = () => { showResult(r.id, r); $("result").scrollIntoView({ behavior: "smooth" }); };
-    box.appendChild(row);
-  });
-}
-loadRecent();
 
 $("storygo").onclick = async () => {
   const el = $("storystatus"), btn = $("storygo");
