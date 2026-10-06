@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends ffmpeg libraqm0
 # Spaces run the container as user 1000; give it a home and a writable app folder.
 RUN useradd -m -u 1000 user
 USER user
-ENV HOME=/home/user PATH=/home/user/.local/bin:$PATH PYTHONUNBUFFERED=1
+ENV HOME=/home/user PATH=/home/user/.local/bin:$PATH PYTHONUNBUFFERED=1 FFMPEG_THREADS=1
 WORKDIR /home/user/app
 
 COPY --chown=user requirements.txt .

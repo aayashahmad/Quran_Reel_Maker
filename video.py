@@ -1,3 +1,4 @@
+import os
 import subprocess
 import wave
 from functools import lru_cache
@@ -254,6 +255,11 @@ def word_timeline(segments, nwords, dur):
     return merged
 
 
+# Small hosts (e.g. 512 MB): set FFMPEG_THREADS=1 so x264 doesn't size its buffers for every host core.
+_THREADS = os.getenv("FFMPEG_THREADS")
+LOW_MEM_X264 = ["-threads", _THREADS, "-x264-params", "rc-lookahead=5"] if _THREADS else []
+
+
 def render(items, audio_lists, info, out_path, workdir, log=print):
     """One frame per ayah, timed to its audio. audio_lists[i] = files played in order
     for ayah i (Arabic, then Urdu). A title card is shown first. Returns total seconds."""
@@ -311,6 +317,7 @@ def render(items, audio_lists, info, out_path, workdir, log=print):
         "-f", "concat", "-safe", "0", "-i", str(alst),
         "-vf", f"fps={FPS},format=yuv420p",
         "-c:v", "libx264", "-preset", "veryfast", "-tune", "stillimage", "-crf", "20",
+        *LOW_MEM_X264,
         "-c:a", "aac", "-b:a", "160k", "-t", f"{total:.3f}",   # exact length; -shortest overshoots
         "-movflags", "+faststart", str(out_path)],
         stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
