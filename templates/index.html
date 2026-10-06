@@ -417,20 +417,34 @@ function setStatus(msg, err, el, busy) {
   el.classList.toggle("err", !!err); el.classList.toggle("busy", !!busy);
 }
 
+const OFFLINE = "The website is offline right now (the computer that makes the videos is switched off). Please try again later.";
+// Calls the server and returns its JSON. When the server can't be reached, Cloudflare answers with
+// its own HTML error page instead, so anything that isn't JSON means "offline".
+async function api(url, opts) {
+  let r;
+  try { r = await fetch(url, opts); } catch (e) { throw new Error(OFFLINE); }
+  if (!(r.headers.get("content-type") || "").includes("json")) {
+    throw new Error(r.status === 404 ? "This video was lost because the website restarted. Please generate it again." : OFFLINE);
+  }
+  const d = await r.json();
+  if (!r.ok) throw new Error(d.error || "Could not start");
+  return d;
+}
+
 $("go").onclick = async () => {
   $("go").disabled = true; $("parts").innerHTML = ""; setStatus("Starting…", false, null, true);
   try {
-    const r = await fetch("/api/generate", { method: "POST", headers: { "Content-Type": "application/json" },
+    const d = await api("/api/generate", { method: "POST", headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ surah: surah.value, from: from.value, to: to.value, lang: $("lang").value,
                              read: $("read").checked }) });
-    const d = await r.json();
-    if (!r.ok) throw new Error(d.error || "Could not start");
     poll(d.id);
   } catch (e) { setStatus(e.message, true); $("go").disabled = false; }
 };
 
 async function poll(id) {
-  const r = await fetch(`/api/job/${id}`), j = await r.json();
+  let j;
+  try { j = await api(`/api/job/${id}`); }
+  catch (e) { $("go").disabled = false; return setStatus(e.message, true); }
   if (j.status === "running") { setStatus(j.msg + "…", false, null, true); return setTimeout(() => poll(id), 1000); }
   $("go").disabled = false;
   if (j.status === "error") return setStatus(j.msg, true);
