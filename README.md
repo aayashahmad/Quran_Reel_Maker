@@ -74,3 +74,6 @@ The reflections are written by AI (Claude) from the translation. It is told not 
 ## Please check
 - Have a knowledgeable person (hafiz/aalim) check the first reels for text, translation and audio, especially that the spoken Urdu matches the on-screen Jalandhry translation.
 - A single very long ayah (like 2:282 with its Urdu) can be longer than 3 minutes. That one uploads as a normal video, not a Short.
+
+## Developer
+Developed by **Aayash Ahmad Bhat**: [aayash.bhat.dev@gmail.com](mailto:aayash.bhat.dev@gmail.com)
