@@ -1,0 +1,11 @@
+.venv
+__pycache__
+data
+output
+web_output
+.env
+client_secret.json
+token.json
+state.json
+.git
+.DS_Store

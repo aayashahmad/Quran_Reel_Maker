@@ -1,3 +1,13 @@
+---
+title: Quran Reel Maker
+emoji: 📖
+colorFrom: green
+colorTo: yellow
+sdk: docker
+app_port: 7860
+pinned: false
+---
+
 # Quran Reels Auto-Poster + Reel Maker website
 
 Posts 2 YouTube Shorts (reels) every day, going through the whole Quran surah by surah, and includes a local website to make your own reels and status/story images.

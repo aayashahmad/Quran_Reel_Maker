@@ -1,0 +1,21 @@
+name: Deploy website to Hugging Face
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency: deploy-hf
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Push to the Space
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          HF_SPACE: ${{ vars.HF_SPACE }}    # e.g. aayashahmad/quran-reel-maker
+        run: git push --force "https://user:$HF_TOKEN@huggingface.co/spaces/$HF_SPACE" HEAD:main
