@@ -166,6 +166,32 @@
   .check { display: flex; gap: 10px; align-items: center; margin-top: 18px; color: var(--text); text-transform: none; letter-spacing: 0; font: 15px Lora, Georgia, serif; }
   .check input { width: 18px; height: 18px; accent-color: var(--gold); }
   .check.off { color: var(--muted); }
+  /* Read and listen: the whole surah, played in the browser with word highlighting */
+  .player { position: sticky; top: 8px; z-index: 5; display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
+    padding: 10px 12px; margin-bottom: 14px; border-radius: 14px; background: linear-gradient(180deg, #0f3d31, #0b3328);
+    box-shadow: 0 10px 24px rgba(0,0,0,.35), inset 0 0 0 1px var(--line); }
+  .player button { padding: 0; width: 42px; height: 42px; display: grid; place-items: center; border-radius: 50%; }
+  .player button svg { width: 18px; height: 18px; }
+  .player .play { width: 50px; height: 50px; }
+  .player .play svg { width: 22px; height: 22px; }
+  .player button[aria-pressed="true"] { background: rgba(212,175,95,.22); }
+  .player .check { margin: 0 0 0 4px; font-size: 14px; }
+  .player .pos { margin-left: auto; color: var(--muted); font: 13px system-ui, -apple-system, sans-serif; }
+  .ay { padding: 14px 12px; border-radius: 12px; border-left: 3px solid transparent; cursor: pointer; transition: background .15s; }
+  .ay + .ay { border-top: 1px solid var(--line-soft); }
+  .ay:hover { background: rgba(212,175,95,.05); }
+  .ay.now { background: rgba(212,175,95,.09); border-left-color: var(--gold); }
+  .ay-ar { font-family: "Amiri Quran", Amiri, serif; font-size: 30px; line-height: 2.1; text-align: right; margin: 0; color: var(--text); }
+  .ay.tr-on .ay-ar { color: var(--muted); }
+  .ay-ar .end { color: var(--gold); margin-right: 4px; }
+  .ay-ar .sajda { font: 14px "Noto Nastaliq Urdu", serif; color: var(--gold); margin-right: 8px; }
+  .ay-tr { margin: 6px 0 0; color: var(--muted); font: 16px/1.7 system-ui, -apple-system, sans-serif; }
+  .ay-tr[lang="ur"] { font-family: "Noto Nastaliq Urdu", serif; line-height: 2.3; font-size: 17px; }
+  .ay.tr-on .ay-tr { color: var(--text); }
+  .ay .w, .ay .tw { border-radius: 6px; padding: 0 2px; transition: background .12s, color .12s; }
+  .ay .w.hl, .ay .tw.hl { background: rgba(212,175,95,.3); color: var(--gold2); }
+  .reader-note { color: var(--muted); font: 13px system-ui, -apple-system, sans-serif; margin: 0 0 8px; }
+  @media (max-width: 640px) { .ay-ar { font-size: 25px; } .player .pos { width: 100%; margin: 0; text-align: center; } }
   .langnote { color: var(--muted); font-size: 13.5px; margin: 8px 0 0; font-family: system-ui, -apple-system, sans-serif; }
 
   button, a.btn {
@@ -281,7 +307,8 @@
       <p class="langnote" id="langnote"></p>
     </div>
     <label class="check"><input type="checkbox" id="read" {% if read_urdu %}checked{% endif %}> <span id="readlabel">Read the translation aloud after each ayah</span></label>
-    <div class="actions"><button id="go" class="primary" type="button">Generate video</button></div>
+    <div class="actions"><button id="go" class="primary" type="button">Generate video</button>
+      <button id="readbtn" class="primary ghost" type="button">Read and listen</button></div>
     <div id="status" role="status"></div>
     <div id="parts" class="parts"></div>
   </section>
@@ -303,6 +330,19 @@
     <div class="field"><div class="field-head"><label for="tags">Tags</label><button class="ghost copy" data-for="tags">Copy</button></div><textarea id="tags" readonly></textarea></div>
   </section>
 
+  <section class="card result" id="reader">
+    <div class="card-head"><div class="medallion">۝</div><div><h2 id="rd_title">Read and listen</h2><span class="ur" lang="ur" dir="rtl">پڑھیں اور سنیں</span></div></div>
+    <p class="reader-note" id="rd_note"></p>
+    <div class="player">
+      <button type="button" class="ghost" id="rd_prev" aria-label="Previous ayah"><svg viewBox='0 0 24 24' fill='currentColor' aria-hidden='true'><path d='M6 5h2v14H6zM20 5v14L9 12z'/></svg></button>
+      <button type="button" class="play" id="rd_play" aria-label="Play"><svg viewBox='0 0 24 24' fill='currentColor' aria-hidden='true'><path d='M7 4v16l13-8z'/></svg></button>
+      <button type="button" class="ghost" id="rd_next" aria-label="Next ayah"><svg viewBox='0 0 24 24' fill='currentColor' aria-hidden='true'><path d='M16 5h2v14h-2zM4 5v14l11-7z'/></svg></button>
+      <button type="button" class="ghost" id="rd_repeat" aria-pressed="false" aria-label="Repeat this ayah" title="Repeat this ayah"><svg viewBox='0 0 24 24' fill='currentColor' aria-hidden='true'><path d='M7 7h10v3l4-4-4-4v3H5v6h2zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2z'/></svg></button>
+      <label class="check"><input type="checkbox" id="rd_tr"> <span>Translation audio</span></label>
+      <span class="pos" id="rd_pos"></span>
+    </div>
+    <div id="rd_list"></div>
+  </section>
 
 </main>
 <footer>
@@ -561,6 +601,125 @@ function syncLang() {
 try { const saved = localStorage.getItem("lang"); if (saved && $("lang").querySelector(`option[value="${saved}"]`)) $("lang").value = saved; } catch (e) {}
 $("lang").onchange = syncLang;
 syncLang();
+
+// ---- Read and listen: plays the whole surah in the browser, ayah by ayah, highlighting words ----
+const PLAY = `<svg viewBox='0 0 24 24' fill='currentColor' aria-hidden='true'><path d='M7 4v16l13-8z'/></svg>`, PAUSE = `<svg viewBox='0 0 24 24' fill='currentColor' aria-hidden='true'><path d='M6 4h4v16H6zm8 0h4v16h-4z'/></svg>`;
+const AR_DIGITS = n => String(n).replace(/\d/g, d => "٠١٢٣٤٥٦٧٨٩"[d]);
+const player = new Audio();
+let rd = null, cur = 0, part = "ar", repeatOn = false, lit = [], warm = null;
+
+function readerRow(a, i, data) {
+  const row = document.createElement("div");
+  row.className = "ay"; row.dataset.i = i;
+  const ar = document.createElement("p");
+  ar.className = "ay-ar"; ar.lang = "ar"; ar.dir = "rtl";
+  a.words.forEach((w, k) => {
+    const s = document.createElement("span"); s.className = "w"; s.textContent = w;
+    ar.append(s, k < a.words.length - 1 ? " " : "");
+  });
+  if (!a.bism) {
+    const end = document.createElement("span"); end.className = "end"; end.textContent = " \u06DD" + AR_DIGITS(a.n);
+    ar.append(end);
+    if (a.sajda) { const sj = document.createElement("span"); sj.className = "sajda"; sj.textContent = "آیتِ سجدہ"; ar.append(sj); }
+  }
+  const tr = document.createElement("p");
+  tr.className = "ay-tr"; tr.dir = data.rtl ? "rtl" : "ltr"; tr.lang = data.lang === "ur" ? "ur" : data.lang;
+  if (data.spaced) {
+    a.tr.split(/\s+/).forEach((w, k) => {
+      const s = document.createElement("span"); s.className = "tw"; s.textContent = w;
+      tr.append(k ? " " : "", s);
+    });
+  } else tr.textContent = a.tr;
+  row.append(ar, tr);
+  row.onclick = () => playRow(i, "ar");
+  return row;
+}
+
+$("readbtn").onclick = async () => {
+  const btn = $("readbtn");
+  btn.disabled = true; setStatus("Loading the surah…", false, null, true);
+  try {
+    const data = await api(`/api/surah/${surah.value}?lang=${encodeURIComponent($("lang").value)}`);
+    stopReader();
+    rd = data;
+    rd.rows = (data.bismillah ? [{ ...data.bismillah, bism: true }] : []).concat(data.ayat);
+    const list = $("rd_list"); list.innerHTML = "";
+    rd.rows.forEach((a, i) => list.append(readerRow(a, i, data)));
+    $("rd_title").textContent = `Surah ${data.en} · ${data.ayat.length} ayat`;
+    const hasVoice = !!data.ayat[0].tr_audio;
+    $("rd_tr").checked = hasVoice && $("read").checked; $("rd_tr").disabled = !hasVoice;
+    $("rd_tr").closest(".check").classList.toggle("off", !hasVoice);
+    $("rd_note").textContent = "Recitation by Mishary Rashid Alafasy. Tap any ayah to start from it." +
+      (hasVoice ? "" : " This translation has no recording, so it is shown on screen only.");
+    // start at the "From ayah" of the form (at the Bismillah when that is ayah 1)
+    const start = Math.min(Math.max(+from.value || 1, 1), data.ayat.length), bism = data.bismillah ? 1 : 0;
+    cur = bism && start === 1 ? 0 : bism + start - 1; part = "ar";
+    markRow();
+    setStatus("");
+    $("reader").style.display = "block";
+    $("reader").scrollIntoView({ behavior: "smooth", block: "start" });
+  } catch (e) { setStatus(e.message, true); }
+  btn.disabled = false;
+};
+
+function stopReader() { player.pause(); player.removeAttribute("src"); clearLit(); }
+function clearLit() { lit.forEach(el => el.classList.remove("hl")); lit = []; }
+function markRow(scroll) {
+  document.querySelectorAll(".ay.now").forEach(r => r.classList.remove("now", "tr-on"));
+  const row = $("rd_list").children[cur];
+  if (!row) return;
+  row.classList.add("now"); row.classList.toggle("tr-on", part === "tr");
+  if (scroll) row.scrollIntoView({ behavior: "smooth", block: "center" });
+  const a = rd.rows[cur];
+  $("rd_pos").textContent = a.bism ? "Bismillah" : `Ayah ${a.n} of ${rd.ayat.length}`;
+}
+function playRow(i, p) {
+  if (!rd || i < 0 || i >= rd.rows.length) return;
+  cur = i; part = p; clearLit(); markRow(true);
+  const a = rd.rows[i];
+  player.src = p === "ar" ? a.audio : a.tr_audio;
+  player.play().catch(() => {});
+  const next = rd.rows[i + 1];              // fetch the next ayah's audio ahead, so there is no gap
+  if (next && p === "ar") { warm = new Audio(); warm.preload = "auto"; warm.src = next.audio; }
+}
+function afterPart() {
+  const a = rd.rows[cur];
+  if (part === "ar" && $("rd_tr").checked && a.tr_audio) return playRow(cur, "tr");
+  if (repeatOn) return playRow(cur, "ar");
+  if (cur + 1 < rd.rows.length) return playRow(cur + 1, "ar");
+  clearLit(); $("rd_pos").textContent = "Finished";
+}
+player.onended = afterPart;
+player.onerror = () => { if (rd && player.getAttribute("src")) afterPart(); };   // a missing file: go on
+player.onplay = () => { $("rd_play").innerHTML = PAUSE; $("rd_play").setAttribute("aria-label", "Pause"); requestAnimationFrame(tick); };
+player.onpause = () => { $("rd_play").innerHTML = PLAY; $("rd_play").setAttribute("aria-label", "Play"); };
+
+function light(el) { if (el && !el.classList.contains("hl")) { clearLit(); el.classList.add("hl"); lit = [el]; } }
+function tick() {
+  if (!rd || player.paused) return;
+  const row = $("rd_list").children[cur], a = rd.rows[cur], ms = player.currentTime * 1000;
+  if (part === "ar") {                      // Quran.com word timings: [word number, start ms, end ms]
+    let w = -1;
+    for (const [pos, start] of a.segments) if (start <= ms) w = pos - 1;
+    light(row.querySelectorAll(".w")[w]);
+  } else if (rd.spaced && player.duration) {  // no timings for translations: share the time by word length
+    const words = row.querySelectorAll(".tw"), weights = [...words].map(e => e.textContent.replace(/\W/g, "").length + 1);
+    const total = weights.reduce((x, y) => x + y, 0), at = player.currentTime / player.duration * total;
+    let acc = 0, k = 0;
+    while (k < weights.length - 1 && acc + weights.at(k) <= at) acc += weights.at(k++);
+    light(words[k]);
+  }
+  requestAnimationFrame(tick);
+}
+
+$("rd_play").onclick = () => {
+  if (!rd) return;
+  if (!player.getAttribute("src")) return playRow(cur, "ar");
+  player.paused ? player.play().catch(() => {}) : player.pause();
+};
+$("rd_prev").onclick = () => rd && playRow(Math.max(cur - 1, 0), "ar");
+$("rd_next").onclick = () => rd && playRow(Math.min(cur + 1, rd.rows.length - 1), "ar");
+$("rd_repeat").onclick = () => { repeatOn = !repeatOn; $("rd_repeat").setAttribute("aria-pressed", String(repeatOn)); };
 
 document.querySelectorAll(".copy").forEach(b => b.onclick = () => {
   navigator.clipboard.writeText($(b.dataset.for).value);

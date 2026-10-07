@@ -11,14 +11,20 @@ LATIN = "NotoSans.ttf"            # Latin and Cyrillic
 NASKH = "NotoNaskhArabic.ttf"     # Arabic script other than Urdu
 
 
-def _lang(name, native, edition, translator, font=LATIN, rtl=False, audio=None, reader=None):
+QDC_TRANSLATION = "https://api.quran.com/api/v4/quran/translations/{}?fields=verse_key"
+
+
+def _lang(name, native, edition, translator, font=LATIN, rtl=False, audio=None, reader=None, shape=None):
+    """edition: an alquran.cloud edition, or "qdc:<id>" for a Quran.com translation.
+    shape: language tag for text shaping, when the code isn't one (e.g. Roman Urdu)."""
     return dict(name=name, native=native, edition=edition, translator=translator,
-                font=font, rtl=rtl, audio=audio, reader=reader)
+                font=font, rtl=rtl, audio=audio, reader=reader, shape=shape)
 
 
 # code: language. Urdu first (the default), English second, the rest by English name.
 LANGS = {
     "ur": _lang("Urdu", "اردو", URDU_EDITION, URDU_NAME, "NotoNastaliqUrdu.ttf", True, URDU_AUDIO, URDU_AUDIO_NAME),
+    "ur-roman": _lang("Roman Urdu", "Roman Urdu", "qdc:831", "Abul A'la Maududi", shape="ur-Latn"),
     "en": _lang("English", "English", "en.sahih", "Saheeh International", audio="en.walk", reader="Ibrahim Walk"),
     "sq": _lang("Albanian", "Shqip", "sq.ahmeti", "Sherif Ahmeti"),
     "am": _lang("Amharic", "አማርኛ", "am.sadiq", "Sadiq & Sani Habib", "NotoSansEthiopic.ttf"),
@@ -67,8 +73,8 @@ LANGS = {
     "uz": _lang("Uzbek", "Ўзбек", "uz.sodik", "Muhammad Sodik Muhammad Yusuf", audio="uz.sodik-audio",
                 reader="Muhammad Sodik Muhammad Yusuf"),
 }
-LANGS = {k: LANGS[k] for k in ["ur", "en"] + sorted((k for k in LANGS if k not in ("ur", "en")),
-                                                    key=lambda k: LANGS[k]["name"])}
+FIRST = ["ur", "ur-roman", "en"]
+LANGS = {k: LANGS[k] for k in FIRST + sorted((k for k in LANGS if k not in FIRST), key=lambda k: LANGS[k]["name"])}
 NO_SPACES = {"zh", "ja", "th", "my"}   # written without spaces between words: wrapped by letter, never highlighted
 
 _cache, _lock = {}, threading.Lock()
@@ -81,12 +87,17 @@ def texts(code, quran, log=print):
     with _lock:
         if code not in _cache:
             ed = LANGS[code]["edition"]
-            f = DATA / f"tr_{ed}.json"
+            f = DATA / f"tr_{ed.replace(':', '_')}.json"
             if not f.exists():
                 log(f"Downloading the {LANGS[code]['name']} translation")
-                surahs = _get(API.format(ed)).json()["data"]["surahs"]
-                f.write_text(json.dumps([a["text"].replace("﻿", "").strip()
-                                         for s in surahs for a in s["ayahs"]], ensure_ascii=False),
+                if ed.startswith("qdc:"):       # Quran.com: one list in Quran order, may hold footnote tags
+                    rows = _get(QDC_TRANSLATION.format(ed[4:])).json()["translations"]
+                    out = [re.sub(r"<sup[^>]*>.*?</sup>|<[^>]+>", "", r["text"]) for r in rows]
+                else:
+                    surahs = _get(API.format(ed)).json()["data"]["surahs"]
+                    out = [a["text"] for s in surahs for a in s["ayahs"]]
+                assert len(out) == 6236, f"{ed}: {len(out)} ayat"
+                f.write_text(json.dumps([t.replace("\ufeff", "").strip() for t in out], ensure_ascii=False),
                              encoding="utf-8")
             # some translations contain stray control characters, which fonts can't draw
             _cache[code] = [re.sub(r"[\x00-\x1f\x7f-\x9f]", "", t)

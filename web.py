@@ -10,10 +10,10 @@ import uuid
 from flask import Flask, abort, jsonify, render_template, request, send_from_directory
 
 from config import WEB_OUT, READ_URDU
-from quran_data import load_quran, surah_ranges
+from quran_data import load_quran, surah_ranges, audio_url
 from content import reel_info
 from main import build_reel, TooLong
-from translations import LANGS
+from translations import LANGS, NO_SPACES, texts
 
 app = Flask(__name__)
 QURAN = load_quran()
@@ -47,7 +47,7 @@ def pick(d):
 def file_name(surah, first, last, lang="ur"):
     """Download name, e.g. Surah-Yusuf_12_1-5 (Urdu) or Surah-Yusuf_12_1-5_English."""
     en = re.sub(r"[^A-Za-z0-9-]+", "-", QURAN[RANGES[surah][0]]["surah_en"]).strip("-")
-    return f"Surah-{en}_{surah}_{first}-{last}" + ("" if lang == "ur" else f"_{LANGS[lang]['name']}")
+    return f"Surah-{en}_{surah}_{first}-{last}" + ("" if lang == "ur" else "_" + LANGS[lang]["name"].replace(" ", "-"))
 
 
 def cleanup():
@@ -119,6 +119,28 @@ def generate():
     if lang not in LANGS:
         return jsonify(error="Unknown translation language."), 400
     return start_job(run_job, *p, lang, bool(d.get("read", d.get("urdu", True))))
+
+
+@app.get("/api/surah/<int:surah>")
+def surah_data(surah):
+    """A whole surah for reading and listening in the browser: Arabic words with their timings,
+    the translation, and where each ayah's audio is online (the browser plays it from there)."""
+    lang = request.args.get("lang", "ur")
+    if surah not in RANGES or lang not in LANGS:
+        abort(404)
+    tr = texts(lang, QURAN, log=lambda m: None)
+    voice = LANGS[lang]["audio"]
+    s0, s1 = RANGES[surah]
+
+    def ayah(it):
+        return {"n": it["ayah"], "words": it["words"], "segments": it["segments"], "audio": audio_url(it),
+                "tr": tr[it["n"] - 1], "tr_audio": audio_url(it, voice) if voice else None,
+                "sajda": it["sajda"]}
+    first = QURAN[s0]
+    return jsonify(surah=surah, en=first["surah_en"], ar=first["surah_ar"], lang=lang,
+                   rtl=LANGS[lang]["rtl"], spaced=lang not in NO_SPACES,
+                   bismillah=ayah(QURAN[0]) if first["bismillah"] else None,
+                   ayat=[ayah(it) for it in QURAN[s0:s1]])
 
 
 @app.get("/api/job/<jid>")

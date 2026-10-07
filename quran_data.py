@@ -103,16 +103,20 @@ def surah_ranges(quran):
     return r
 
 
+def audio_url(item, edition=None):
+    """Where the Arabic recitation (edition None) or a translation audio edition of an ayah is online."""
+    if edition is None:
+        return QDC_AUDIO.format(item["audio_url"])
+    return AUDIO.format(BITRATE.get(edition, 128), edition, item["n"])
+
+
 def get_audio(item, edition=None):
-    """Arabic recitation (edition None, from Quran.com) or a translation audio edition."""
+    """Arabic recitation (edition None, from Quran.com) or a translation audio edition, downloaded once."""
     d = DATA / "audio"
     d.mkdir(parents=True, exist_ok=True)
-    if edition is None:
-        f = d / f"qdc{RECITATION_ID}_{item['n']}.mp3"
-        url = QDC_AUDIO.format(item["audio_url"])
-    else:
-        f = d / f"{edition}_{item['n']}.mp3"
-        url = AUDIO.format(BITRATE.get(edition, 128), edition, item["n"])
+    name = f"qdc{RECITATION_ID}" if edition is None else edition
+    f = d / f"{name}_{item['n']}.mp3"
+    url = audio_url(item, edition)
     if not f.exists():
         tmp = f.with_suffix(".part")     # never leave a half-downloaded file behind
         tmp.write_bytes(_get(url).content)

@@ -63,7 +63,7 @@ def metadata(items, info, read_urdu=True, lang="ur"):
 
 def _metadata_other(items, info, read_aloud, lang):
     en, ar, rng, name = info["surah_en"], info["surah_ar"], info["range"], lang["name"]
-    tag = "".join(ch for ch in en if ch.isalnum())
+    tag, ntag = ("".join(ch for ch in t if ch.isalnum()) for t in (en, name))
 
     if info["full"]:
         title = f"Surah {en} Full | {name} Translation | {ar} #Shorts"
@@ -81,7 +81,7 @@ def _metadata_other(items, info, read_aloud, lang):
             f"Quran recitation with {name} translation{native}.\n\n")
     credits = (f"\n\nRecitation: {RECITER_NAME}\n{name} translation: {lang['translator']}\n"
                + (f"{name} audio: {lang['reader']}\n" if read_aloud else "")
-               + f"\n#Quran #Quran{name} #Surah{tag} #Tilawat #Islam #Shorts")
+               + f"\n#Quran #Quran{ntag} #Surah{tag} #Tilawat #Islam #Shorts")
     body = ("\n".join(f"{x['ar']} ({x['ayah']})" for x in items) + f"\n\n{name} translation:\n"
             + "\n".join(f"{x['tr']} ({x['ayah']})" for x in items))
     room = 4900 - len(head) - len(credits)

@@ -68,6 +68,7 @@ def tr_lang(code=None):
     """Settings of a translation language (Urdu when code is None), with its fonts downloaded."""
     code = code or "ur"
     lang = dict(LANGS[code], code=code)
+    lang["shape"] = lang["shape"] or code       # language tag for text shaping
     ensure_fonts(BASE_FONTS + (lang["font"],) + FALLBACK_FONTS)
     return lang
 
@@ -267,10 +268,10 @@ def make_frame(item, path, hl=None, tr=None, tr_hl=None, lang=None):
     size, min_size, lh, band = TR_STYLE.get(lang["font"], TR_STYLE_DEFAULT)
     if lang["code"] in NO_SPACES:
         draw_block(d, text, lang["font"], y + 10, H - y - 260, size, min_size, color, lh,
-                   rtl=lang["rtl"], lang=lang["code"])
+                   rtl=lang["rtl"], lang=lang["shape"])
     else:
         draw_words(d, [(w, i) for i, w in enumerate(text.split())], y + 10, H - y - 260, size, min_size, lh,
-                   color, tr_hl, fname=lang["font"], lang=lang["code"], rtl=lang["rtl"], band=band)
+                   color, tr_hl, fname=lang["font"], lang=lang["shape"], rtl=lang["rtl"], band=band)
 
     if CHANNEL_TAG:
         center(d, CHANNEL_TAG, 38, H - 150, MUTED)
@@ -292,7 +293,7 @@ def card(info, w, h, lang=None):
         center(d, f"With {lang['name']} translation", size * 7 // 8, y + size // 4, SOFT, w)
         if lang["native"] != lang["name"]:
             draw_block(d, lang["native"], lang["font"], y + size * 3 // 2, size * 2, size * 3 // 4, size // 2,
-                       MUTED, 1.6, rtl=lang["rtl"], lang=lang["code"], width=w)
+                       MUTED, 1.6, rtl=lang["rtl"], lang=lang["shape"], width=w)
 
     if h > w:   # vertical 9:16
         center(d, f"Surah {info['surah']}", 60, 380, MUTED, w)
