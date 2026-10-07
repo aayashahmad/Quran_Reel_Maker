@@ -223,7 +223,8 @@
   button.ghost:hover { background: rgba(212,175,95,.1); }
   button:disabled { opacity: .5; cursor: wait; transform: none; }
   .primary { padding: 13px 30px; font-size: 16px; }
-  .actions { margin-top: 22px; text-align: center; }
+  .actions { margin-top: 22px; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+  @media (max-width: 480px) { .actions button { flex: 1 1 100%; max-width: 320px; } }
 
   #status, .status { margin-top: 16px; color: var(--muted); min-height: 24px; text-align: center; font-family: system-ui, -apple-system, sans-serif; font-size: 15px; }
   #status.err, .status.err { color: var(--err); }
