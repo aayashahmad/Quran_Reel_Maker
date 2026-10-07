@@ -186,6 +186,23 @@ def meta():
     return jsonify(title=title, desc=desc, tags=", ".join(tags), name=file_name(surah, first, last, lang))
 
 
+SITE = "https://quranreelmaker.xyz"
+
+
+@app.get("/sitemap.xml")
+def sitemap():
+    """The pages search engines should index."""
+    urls = "".join(f"<url><loc>{SITE}{path}</loc></url>" for path in ["/"])
+    xml = f'<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">{urls}</urlset>'
+    return app.response_class(xml, mimetype="application/xml")
+
+
+@app.get("/robots.txt")
+def robots():
+    """Allow everything and point to the sitemap (Cloudflare adds its own lines above these)."""
+    return app.response_class(f"User-agent: *\nAllow: /\n\nSitemap: {SITE}/sitemap.xml\n", mimetype="text/plain")
+
+
 @app.get("/api/job/<jid>")
 def job(jid):
     if jid not in JOBS:
