@@ -14,7 +14,7 @@ from config import DATA
 BW, BH = 540, 960          # drawn at half size: soft shapes look the same once scaled up, and draw 4x faster
 LOOP_FPS, LOOP_SECONDS = 20, 12
 FRAMES = LOOP_FPS * LOOP_SECONDS
-VERSION = 1                # bump when a style's look changes, so saved loops are made again
+VERSION = 2                # bump when a style's look changes, so saved loops are made again
 STYLES = ("stars", "particles", "rays", "aurora", "night", "waves")
 GOLD = (212, 175, 95)
 _lock = threading.Lock()
@@ -120,9 +120,9 @@ def _night(t, rnd):
         a = int(s["alpha"] * (0.5 + 0.5 * math.sin(2 * math.pi * (t * s["tw"] + s["phase"]))))
         r = s["r"]
         d.ellipse([s["x"] - r, s["y"] - r, s["x"] + r, s["y"] + r], fill=(235, 230, 210, a))
-    mx, my, mr = BW * 0.78, BH * 0.1, 26
+    mx, my, mr = BW * 0.84, BH * 0.925, 20     # bottom right: below the translation, clear of all text
     d.ellipse([mx - mr, my - mr, mx + mr, my + mr], fill=(240, 220, 170, 150))
-    d.ellipse([mx - mr + 11, my - mr - 5, mx + mr + 11, my + mr - 5], fill=(0, 0, 0, 0))
+    d.ellipse([mx - mr + 9, my - mr - 4, mx + mr + 9, my + mr - 4], fill=(0, 0, 0, 0))
     return _glow(img, layer, 0.8)
 
 
