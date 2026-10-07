@@ -6,6 +6,7 @@ from concurrent.futures import ThreadPoolExecutor
 from config import STATE_FILE, OUT, MAX_REEL_SECONDS, PRIVACY, READ_URDU, URDU_AUDIO
 from quran_data import load_quran, surah_ranges, get_audio, duration
 from content import reel_info, metadata
+import backgrounds
 import translations
 import video
 
@@ -169,7 +170,7 @@ def build_reel(items, info, out_dir, name, read_aloud=READ_URDU, log=print, max_
     frames = [dict(it, tr=texts[it["n"] - 1]) for it in with_bismillah(quran_cached(), items)]
     audio = [ayah_audio(it, voice) for it in frames]
     mp4 = out_dir / f"{name}.mp4"
-    secs = video.render(frames, audio, info, mp4, work, log=log, lang=lang)
+    secs = video.render(frames, audio, info, mp4, work, log=log, lang=lang, bg=backgrounds.pick(info))
     thumb = video.make_thumbnail(info, out_dir / f"{name}_thumbnail.jpg", video.tr_lang(lang))
     shutil.rmtree(work, ignore_errors=True)
     title, desc, tags = metadata(items, info, bool(voice), lang)

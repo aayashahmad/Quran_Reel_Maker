@@ -10,6 +10,7 @@ from PIL import Image, ImageDraw, ImageFont, features
 
 from config import FONTS, W, H, FPS, CHANNEL_TAG, INTRO_SECONDS
 from translations import LANGS, NO_SPACES
+import backgrounds
 
 _GF = "https://github.com/google/fonts/raw/main/ofl/"
 FONT_URLS = {
@@ -229,18 +230,20 @@ def _gradient(w, h):
     return g.resize((w, h), Image.BILINEAR)
 
 
-def background(w=W, h=H):
-    return _gradient(w, h).copy()
+def background(w=W, h=H, clear=False):
+    """The plain green background, or (clear) a transparent canvas for drawing over a moving background."""
+    return Image.new("RGBA", (w, h), (0, 0, 0, 0)) if clear else _gradient(w, h).copy()
 
 
-def make_frame(item, path, hl=None, tr=None, tr_hl=None, lang=None):
+def make_frame(item, path, hl=None, tr=None, tr_hl=None, lang=None, clear=False):
     """item may be a real ayah, or the Bismillah frame (item["is_bismillah"]).
     hl: index of the Arabic word being recited (highlighted), or None.
     tr: None = translation not read aloud; False = Arabic is playing (translation dimmed);
         True = the translation is being read. tr_hl: index of its word being read, or None.
-    lang: from tr_lang(); the translation shown is item["tr"] (Urdu item["ur"] by default)."""
+    lang: from tr_lang(); the translation shown is item["tr"] (Urdu item["ur"] by default).
+    clear: transparent instead of the plain background (a moving background goes behind it)."""
     lang = lang or tr_lang()
-    img = background()
+    img = background(clear=clear)
     d = ImageDraw.Draw(img)
     bism = item.get("is_bismillah")
 
@@ -278,10 +281,11 @@ def make_frame(item, path, hl=None, tr=None, tr_hl=None, lang=None):
     img.save(path)
 
 
-def card(info, w, h, lang=None):
-    """Title card: used as the reel's first frame (vertical) and as the YouTube thumbnail (landscape)."""
+def card(info, w, h, lang=None, clear=False):
+    """Title card: used as the reel's first frame (vertical) and as the YouTube thumbnail (landscape).
+    clear: transparent instead of the plain background (a moving background goes behind it)."""
     lang = lang or tr_lang()
-    img = background(w, h)
+    img = background(w, h, clear)
     d = ImageDraw.Draw(img)
     d.rectangle([24, 24, w - 25, h - 25], outline=GOLD, width=4)
 
@@ -408,17 +412,22 @@ _THREADS = os.getenv("FFMPEG_THREADS")
 LOW_MEM_X264 = ["-threads", _THREADS, "-x264-params", "rc-lookahead=5"] if _THREADS else []
 
 
-def render(items, audio_lists, info, out_path, workdir, log=print, lang=None):
+def render(items, audio_lists, info, out_path, workdir, log=print, lang=None, bg=None):
     """One frame per ayah, timed to its audio. audio_lists[i] = files played in order
     for ayah i (Arabic, then the translation). A title card is shown first. Returns total seconds.
-    lang: translation language code (Urdu by default); items carry its text in "tr"."""
+    lang: translation language code (Urdu by default); items carry its text in "tr".
+    bg: a moving background style (backgrounds.STYLES) played behind the text, or None for plain."""
     lang = tr_lang(lang)
     workdir.mkdir(parents=True, exist_ok=True)
+    clear = bg is not None
+    if clear:
+        log("Preparing the background")
+        bg_loop = backgrounds.loop(bg)
 
     frames, wavs = [], []
     if INTRO_SECONDS > 0:
         fp = workdir / "intro.png"
-        card(info, W, H, lang).save(fp)
+        card(info, W, H, lang, clear).save(fp)
         sil = workdir / "intro.wav"
         subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-f", "lavfi",
                         "-i", "anullsrc=r=44100:cl=stereo", "-t", str(INTRO_SECONDS),
@@ -449,9 +458,9 @@ def render(items, audio_lists, info, out_path, workdir, log=print, lang=None):
             if st not in drawn:
                 fp = workdir / f"f{i}_{len(drawn)}.png"
                 if isinstance(st, tuple):
-                    make_frame(it, fp, tr=True, tr_hl=st[1], lang=lang)
+                    make_frame(it, fp, tr=True, tr_hl=st[1], lang=lang, clear=clear)
                 else:
-                    make_frame(it, fp, hl=st, tr=False if read else None, lang=lang)
+                    make_frame(it, fp, hl=st, tr=False if read else None, lang=lang, clear=clear)
                 drawn[st] = fp
             frames.append((drawn[st], sec))
 
@@ -466,12 +475,20 @@ def render(items, audio_lists, info, out_path, workdir, log=print, lang=None):
 
     total = sum(d for _, d in frames)
     log("Encoding video 0%")
+    if clear:       # the text frames (transparent) over the background loop, repeated as long as needed
+        video_in = ["-stream_loop", "-1", "-i", str(bg_loop), "-f", "concat", "-safe", "0", "-i", str(lst)]
+        video_out = ["-filter_complex", f"[0:v]scale={W}:{H},fps={FPS}[bg];[1:v]fps={FPS},format=rgba[fg];"
+                                        "[bg][fg]overlay=format=auto,format=yuv420p[v]",
+                     "-map", "[v]", "-map", "2:a", "-c:v", "libx264", "-preset", "veryfast", "-crf", "21"]
+    else:
+        video_in = ["-f", "concat", "-safe", "0", "-i", str(lst)]
+        video_out = ["-vf", f"fps={FPS},format=yuv420p",
+                     "-c:v", "libx264", "-preset", "veryfast", "-tune", "stillimage", "-crf", "20"]
     proc = subprocess.Popen([
         "ffmpeg", "-y", "-loglevel", "error", "-nostats", "-progress", "pipe:1",
-        "-f", "concat", "-safe", "0", "-i", str(lst),
+        *video_in,
         "-f", "concat", "-safe", "0", "-i", str(alst),
-        "-vf", f"fps={FPS},format=yuv420p",
-        "-c:v", "libx264", "-preset", "veryfast", "-tune", "stillimage", "-crf", "20",
+        *video_out,
         *LOW_MEM_X264,
         "-c:a", "aac", "-b:a", "160k", "-t", f"{total:.3f}",   # exact length; -shortest overshoots
         "-movflags", "+faststart", str(out_path)],
