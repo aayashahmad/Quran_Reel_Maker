@@ -1,17 +1,12 @@
-"""Moving backgrounds for reels, each a seamless loop made once, saved in data/bg/, and played behind
-every reel that uses it.
-- Drawn styles (STYLES): 12-second loops drawn here; all motion repeats a whole number of times per
-  loop, so the end meets the start without a jump.
-- Real footage (FOOTAGE): free clips from Mixkit (mixkit.co, Mixkit Stock Video Free License: free to
-  use in videos, not to redistribute as stock), cropped to portrait, darkened and softened so the text
-  stays readable, and looped by crossfading the end into the start."""
+"""Moving backgrounds for reels: eleven styles drawn here (no downloaded footage), each a seamless
+12-second loop. A loop is made once, saved in data/bg/, and played behind every reel that uses it.
+All motion repeats a whole number of times per loop, so the end meets the start without a jump."""
 import math
 import random
 import subprocess
 import threading
 from functools import lru_cache
 
-import requests
 from PIL import Image, ImageDraw, ImageFilter
 
 from config import DATA
@@ -20,18 +15,8 @@ BW, BH = 540, 960          # drawn at half size: soft shapes look the same once 
 LOOP_FPS, LOOP_SECONDS = 20, 12
 FRAMES = LOOP_FPS * LOOP_SECONDS
 VERSION = 2                # bump when a style's look changes, so saved loops are made again
-DRAWN = ("stars", "particles", "rays", "aurora", "night", "waves",
-         "mosque", "lanterns", "arches", "desert", "rosette")
-FOOTAGE = {                # style name: Mixkit clip id
-    "mosque-night": 4312, "mosque-lights": 17255, "mosque-day": 11922, "mosque-clouds": 9736,
-    "mosque-sunrise": 9799, "mosque-dawn": 9998, "mosque-chandeliers": 39184,
-    "golden-dome": 11422, "golden-pattern": 30557, "islamic-doors": 30867,
-    "arched-corridor": 32997,
-    "milky-way-desert": 46119, "moon": 4433, "milky-way-mountains": 4148, "night-lake": 1704,
-    "beach-sunset": 2168, "sea-sunset": 4119, "above-clouds": 4695, "northern-lights": 4038, "desert-sunset": 46061,
-}
-STYLES = DRAWN + tuple(FOOTAGE)
-FOOTAGE_URL = "https://assets.mixkit.co/videos/{0}/{0}-720.mp4"
+STYLES = ("stars", "particles", "rays", "aurora", "night", "waves",
+          "mosque", "lanterns", "arches", "desert", "rosette")
 GOLD = (212, 175, 95)
 _lock = threading.Lock()
 
@@ -321,29 +306,6 @@ def _randoms():
     }
 
 
-def _footage(clip, tmp):
-    """Download a Mixkit clip and turn it into a background loop: the portrait centre, darkened to
-    42% and softened, the last second crossfaded into the start so it loops without a jump."""
-    src = tmp.with_suffix(".src.mp4")
-    r = requests.get(FOOTAGE_URL.format(clip), headers={"User-Agent": "Mozilla/5.0"}, timeout=120)
-    r.raise_for_status()
-    src.write_bytes(r.content)
-    probe = subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", str(src)],
-                           capture_output=True, text=True, check=True)
-    length = min(float(probe.stdout), 16.0)               # long clips: the first 16 s are plenty
-    fade = 1.0
-    look = (f"crop=ih*9/16:ih,scale={BW}:{BH},fps={LOOP_FPS},"
-            "colorlevels=romax=0.42:gomax=0.42:bomax=0.42,gblur=sigma=1.2,format=yuv420p")
-    graph = (f"[0:v]trim=0:{length},setpts=PTS-STARTPTS,{look},split[a][b];"
-             f"[a]trim={fade}:{length},setpts=PTS-STARTPTS[body];"
-             f"[b]trim=0:{fade},setpts=PTS-STARTPTS[head];"
-             f"[body][head]xfade=transition=fade:duration={fade}:offset={length - 2 * fade}[v]")
-    subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(src), "-filter_complex", graph, "-map", "[v]",
-                    "-an", "-c:v", "libx264", "-preset", "medium", "-crf", "23", "-g", str(LOOP_FPS), str(tmp)],
-                   check=True)
-    src.unlink()
-
-
 def loop(style):
     """Path of the saved background loop for this style, making it first if needed (seconds, once)."""
     out = DATA / "bg" / f"{style}-v{VERSION}.mp4"
@@ -352,10 +314,6 @@ def loop(style):
             return out
         out.parent.mkdir(parents=True, exist_ok=True)
         tmp = out.with_suffix(".part.mp4")
-        if style in FOOTAGE:
-            _footage(FOOTAGE[style], tmp)
-            tmp.replace(out)
-            return out
         proc = subprocess.Popen(["ffmpeg", "-y", "-loglevel", "error", "-f", "rawvideo", "-pix_fmt", "rgb24",
                                  "-s", f"{BW}x{BH}", "-r", str(LOOP_FPS), "-i", "-", "-c:v", "libx264",
                                  "-preset", "medium", "-crf", "22", "-pix_fmt", "yuv420p", "-g", str(LOOP_FPS),
