@@ -6,7 +6,7 @@ import wave
 from functools import lru_cache
 
 import requests
-from PIL import Image, ImageDraw, ImageFont, features
+from PIL import Image, ImageDraw, ImageFilter, ImageFont, features
 
 from config import FONTS, W, H, FPS, CHANNEL_TAG, INTRO_SECONDS
 from translations import LANGS, NO_SPACES
@@ -235,6 +235,16 @@ def background(w=W, h=H, clear=False):
     return Image.new("RGBA", (w, h), (0, 0, 0, 0)) if clear else _gradient(w, h).copy()
 
 
+def shadowed(img):
+    """A transparent frame with a soft dark halo under everything drawn on it, so the text stays
+    readable over any moving background (blurred at half size: same look, a quarter of the work)."""
+    w, h = img.size
+    halo = img.getchannel("A").resize((w // 2, h // 2)).filter(ImageFilter.GaussianBlur(5)).resize((w, h))
+    shadow = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    shadow.putalpha(halo.point(lambda a: min(255, int(a * 2.2))))
+    return Image.alpha_composite(shadow, img)
+
+
 def make_frame(item, path, hl=None, tr=None, tr_hl=None, lang=None, clear=False):
     """item may be a real ayah, or the Bismillah frame (item["is_bismillah"]).
     hl: index of the Arabic word being recited (highlighted), or None.
@@ -278,7 +288,7 @@ def make_frame(item, path, hl=None, tr=None, tr_hl=None, lang=None, clear=False)
 
     if CHANNEL_TAG:
         center(d, CHANNEL_TAG, 38, H - 150, MUTED)
-    img.save(path)
+    (shadowed(img) if clear else img).save(path)
 
 
 def card(info, w, h, lang=None, clear=False):
@@ -427,7 +437,8 @@ def render(items, audio_lists, info, out_path, workdir, log=print, lang=None, bg
     frames, wavs = [], []
     if INTRO_SECONDS > 0:
         fp = workdir / "intro.png"
-        card(info, W, H, lang, clear).save(fp)
+        img = card(info, W, H, lang, clear)
+        (shadowed(img) if clear else img).save(fp)
         sil = workdir / "intro.wav"
         subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-f", "lavfi",
                         "-i", "anullsrc=r=44100:cl=stereo", "-t", str(INTRO_SECONDS),

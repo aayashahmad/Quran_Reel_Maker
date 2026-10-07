@@ -240,7 +240,7 @@ const DeviceReel = (() => {
       const rows = (first === 1 && data.bismillah ? [{ ...data.bismillah, bism: true }] : []).concat(ayat);
       const rng = first === last ? `${first}` : `${first}-${last}`;
       const info = { label: full ? `Full Surah  •  ${data.ayat.length} Ayat` : (first === last ? `Ayah ${rng}` : `Ayat ${rng}`) };
-      const style = data.styles[(surahNo * 31 + first) % data.styles.length];
+      const style = data.styles[(surahNo * 7919 + first * 131) % data.styles.length];   // as backgrounds.pick
       const voice = read && !!rows[0].tr_audio_local;
 
       await Promise.all(['78px "Amiri Quran"', "80px Amiri", '52px "Noto Nastaliq Urdu"'].map(f => document.fonts.load(f)));
@@ -284,7 +284,7 @@ const DeviceReel = (() => {
       const stream = canvas.captureStream(30);
       dest.stream.getAudioTracks().forEach(tr => stream.addTrack(tr));
       const type = pickType(), chunks = [];
-      const rec = new MediaRecorder(stream, { mimeType: type, videoBitsPerSecond: 6_000_000, audioBitsPerSecond: 160_000 });
+      const rec = new MediaRecorder(stream, { mimeType: type, videoBitsPerSecond: 3_500_000, audioBitsPerSecond: 160_000 });
       rec.ondataavailable = e => e.data.size && chunks.push(e.data);
       const stopped = new Promise(res => rec.onstop = res);
       await bg.play();
@@ -299,7 +299,9 @@ const DeviceReel = (() => {
       await new Promise(resolve => {
         const frame = () => {
           const now = audio.currentTime - t0;
+          ctx.shadowColor = "transparent";
           ctx.drawImage(bg, 0, 0, W, H);
+          ctx.shadowColor = "rgba(0,0,0,0.9)"; ctx.shadowBlur = 16;   // soft halo under the text, as on the server
           if (now < INTRO) drawCard(ctx, info, data, W, H);
           else {
             while (k < plan.length - 1 && plan[k][1] <= now) k++;
