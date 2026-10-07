@@ -1,4 +1,4 @@
-"""Moving backgrounds for reels: six styles drawn here (no downloaded footage), each a seamless
+"""Moving backgrounds for reels: eleven styles drawn here (no downloaded footage), each a seamless
 12-second loop. A loop is made once, saved in data/bg/, and played behind every reel that uses it.
 All motion repeats a whole number of times per loop, so the end meets the start without a jump."""
 import math
@@ -15,7 +15,8 @@ BW, BH = 540, 960          # drawn at half size: soft shapes look the same once 
 LOOP_FPS, LOOP_SECONDS = 20, 12
 FRAMES = LOOP_FPS * LOOP_SECONDS
 VERSION = 2                # bump when a style's look changes, so saved loops are made again
-STYLES = ("stars", "particles", "rays", "aurora", "night", "waves")
+STYLES = ("stars", "particles", "rays", "aurora", "night", "waves",
+          "mosque", "lanterns", "arches", "desert", "rosette")
 GOLD = (212, 175, 95)
 _lock = threading.Lock()
 
@@ -139,8 +140,153 @@ def _waves(t, rnd):
     return _glow(img, layer, 1.2)
 
 
+def _mosque_shape(d, x0, base, scale, fill):
+    """A mosque silhouette: a main dome on a drum, two small domes and two minarets."""
+    s = scale
+    d.rectangle([x0 - 70 * s, base - 40 * s, x0 + 70 * s, base], fill=fill)            # prayer hall
+    d.rectangle([x0 - 34 * s, base - 62 * s, x0 + 34 * s, base - 40 * s], fill=fill)    # drum
+    d.ellipse([x0 - 38 * s, base - 110 * s, x0 + 38 * s, base - 38 * s], fill=fill)     # main dome
+    d.polygon([(x0 - 3 * s, base - 108 * s), (x0, base - 126 * s), (x0 + 3 * s, base - 108 * s)], fill=fill)
+    for side in (-1, 1):
+        cx = x0 + side * 52 * s
+        d.ellipse([cx - 16 * s, base - 66 * s, cx + 16 * s, base - 34 * s], fill=fill)  # small domes
+        mx = x0 + side * 92 * s
+        d.rectangle([mx - 6 * s, base - 150 * s, mx + 6 * s, base], fill=fill)          # minaret
+        d.rectangle([mx - 9 * s, base - 118 * s, mx + 9 * s, base - 112 * s], fill=fill)  # balcony
+        d.polygon([(mx - 7 * s, base - 150 * s), (mx, base - 172 * s), (mx + 7 * s, base - 150 * s)], fill=fill)
+
+
+def _mosque(t, rnd):
+    """Mosques at dusk along the bottom, the sky glowing and stars twinkling above."""
+    glow = 0.5 + 0.5 * math.sin(2 * math.pi * t)
+    img = _base((10, 30, 46), (38 + int(14 * glow), 34 + int(8 * glow), 40)).copy()
+    layer = Image.new("RGBA", (BW, BH), (0, 0, 0, 0))
+    d = ImageDraw.Draw(layer)
+    for st in rnd["sky"][:70]:
+        if st["y"] < BH * 0.55:
+            a = int(st["alpha"] * 0.7 * (0.5 + 0.5 * math.sin(2 * math.pi * (t * st["tw"] + st["phase"]))))
+            d.ellipse([st["x"] - 1, st["y"] - 1, st["x"] + 1, st["y"] + 1], fill=(235, 230, 210, a))
+    img = _glow(img, layer, 1.2)
+    horizon = Image.new("RGBA", (BW // 4, BH // 4), (0, 0, 0, 0))
+    ImageDraw.Draw(horizon).ellipse([BW / 8 - 70, BH / 4 - 30, BW / 8 + 70, BH / 4 + 20],
+                                    fill=(230, 150, 80, int(70 + 40 * glow)))
+    horizon = horizon.filter(ImageFilter.GaussianBlur(16)).resize((BW, BH), Image.BILINEAR)
+    img = Image.alpha_composite(img.convert("RGBA"), horizon).convert("RGB")
+    sil = ImageDraw.Draw(img)
+    _mosque_shape(sil, BW * 0.2, BH, 0.55, (6, 18, 16))
+    _mosque_shape(sil, BW * 0.82, BH, 0.48, (6, 18, 16))
+    _mosque_shape(sil, BW * 0.5, BH, 0.8, (3, 12, 11))
+    return img
+
+
+def _lantern(d, cx, top, length, angle, a):
+    """A hanging Ramadan lantern on its string, swung by `angle` (radians)."""
+    bx, by = cx + length * math.sin(angle), top + length * math.cos(angle)
+    d.line([(cx, top), (bx, by)], fill=GOLD + (int(120 * a),), width=1)
+    w, h = 26, 48
+    d.polygon([(bx - 8, by), (bx + 8, by), (bx + w / 2, by + 12), (bx - w / 2, by + 12)], fill=GOLD + (int(210 * a),))
+    d.rectangle([bx - w / 2, by + 12, bx + w / 2, by + 12 + h], outline=GOLD + (int(230 * a),), width=2,
+                fill=(240, 190, 90, int(140 * a)))
+    d.line([(bx, by + 12), (bx, by + 12 + h)], fill=GOLD + (int(160 * a),), width=1)
+    d.polygon([(bx - w / 2, by + 12 + h), (bx + w / 2, by + 12 + h), (bx, by + 32 + h)], fill=GOLD + (int(210 * a),))
+
+
+def _lanterns(t, rnd):
+    """Ramadan lanterns hanging at both sides, swaying gently and glowing."""
+    img = _base((14, 40, 44), (3, 14, 14)).copy()
+    glow = Image.new("RGBA", (BW, BH), (0, 0, 0, 0))
+    lit = Image.new("RGBA", (BW, BH), (0, 0, 0, 0))
+    g, d = ImageDraw.Draw(glow), ImageDraw.Draw(lit)
+    # short strings: every lantern stays above y=190, where the Arabic text starts
+    for i, (cx, length) in enumerate(((24, 40), (60, 95), (96, 15), (BW - 96, 25), (BW - 60, 75), (BW - 24, 100))):
+        ang = 0.09 * math.sin(2 * math.pi * (t * (1 + i % 2) + i * 0.27))
+        bx, by = cx + length * math.sin(ang), length * math.cos(ang)
+        pulse = 0.75 + 0.25 * math.sin(2 * math.pi * (t * 2 + i * 0.4))
+        g.ellipse([bx - 50, by - 10, bx + 50, by + 100], fill=(240, 180, 80, int(80 * pulse)))
+        _lantern(d, cx, 0, length, ang, 0.9)
+    img = _glow(img, glow, 14)
+    return Image.alpha_composite(img.convert("RGBA"), lit).convert("RGB")
+
+
+def _arch(cx, base, w, h):
+    """Outline points of a pointed (Islamic) arch: upright sides, then two circular arcs meeting at
+    the apex, each centred inside the opposite half (radius 0.8 of the width)."""
+    r = 0.8 * w
+    apex = math.acos((w / 2 - r) / r)                      # angle where the left arc reaches the centre line
+    rise = r * math.sin(apex)
+    ys = base - (h - rise)                                 # where the arcs spring from the sides
+    left = [(cx - w / 2 + r + r * math.cos(a), ys - r * math.sin(a))
+            for a in (math.pi - (math.pi - apex) * k / 24 for k in range(25))]
+    right = [(2 * cx - x, y) for x, y in reversed(left)]
+    return [(cx - w / 2, base)] + left + right[1:] + [(cx + w / 2, base)]
+
+
+def _arches(t, rnd):
+    """A great pointed arch framing the screen, with light travelling along it, and small arches below."""
+    img = _base().copy()
+    layer = Image.new("RGBA", (BW, BH), (0, 0, 0, 0))
+    d = ImageDraw.Draw(layer)
+    big = _arch(BW / 2, BH - 18, BW - 28, BH - 40)
+    d.line(big + [big[0]], fill=GOLD + (140,), width=3)
+    inner = _arch(BW / 2, BH - 30, BW - 52, BH - 64)
+    d.line(inner + [inner[0]], fill=GOLD + (70,), width=2)
+    n = len(big)
+    for k in range(3):                                         # three lights running round the arch
+        pos = (t + k / 3) % 1 * (n - 1)
+        x, y = big[int(pos)]
+        d.ellipse([x - 14, y - 14, x + 14, y + 14], fill=(250, 220, 150, 200))
+    for i in range(5):
+        cx = BW * (0.18 + i * 0.16)
+        small = _arch(cx, BH - 18, 64, 120)
+        d.line(small, fill=GOLD + (60,), width=2)
+    return _glow(img, layer, 1.6)
+
+
+def _desert(t, rnd):
+    """Desert dunes under a night sky, sand drifting across them."""
+    img = _base((8, 20, 34), (30, 26, 22)).copy()
+    layer = Image.new("RGBA", (BW, BH), (0, 0, 0, 0))
+    d = ImageDraw.Draw(layer)
+    for st in rnd["sky"]:
+        if st["y"] < BH * 0.6:
+            a = int(st["alpha"] * (0.5 + 0.5 * math.sin(2 * math.pi * (t * st["tw"] + st["phase"]))))
+            r = st["r"]
+            d.ellipse([st["x"] - r, st["y"] - r, st["x"] + r, st["y"] + r], fill=(235, 230, 210, a))
+    for p in rnd["particles"][:30]:                            # sand drifting right, a whole lap per loop
+        x = (p["x"] + t * BW * p["laps"]) % BW
+        y = BH * 0.78 + (p["y"] % (BH * 0.2))
+        d.ellipse([x - 1.2, y - 1.2, x + 1.2, y + 1.2], fill=(220, 190, 140, int(p["alpha"] * 0.6)))
+    img = _glow(img, layer, 0.8)
+    dunes = ImageDraw.Draw(img)
+    for k, (h, amp, col) in enumerate(((0.80, 28, (44, 34, 24)), (0.86, 22, (34, 26, 18)), (0.92, 16, (22, 17, 12)))):
+        pts = [(x, BH * h + amp * math.sin(2 * math.pi * (x / BW * (1.2 + k * 0.4)) + k)) for x in range(0, BW + 6, 6)]
+        dunes.polygon(pts + [(BW, BH), (0, BH)], fill=col)
+    return img
+
+
+def _rosette(t, rnd):
+    """A large faint sixteen-point geometric rosette turning slowly behind the text."""
+    img = _base().copy()
+    layer = Image.new("RGBA", (BW, BH), (0, 0, 0, 0))
+    d = ImageDraw.Draw(layer)
+    cx, cy, rot = BW / 2, BH * 0.5, 2 * math.pi / 16 * t        # turns one point per loop: seamless
+    for ring, (r, alpha) in enumerate(((250, 85), (190, 75), (130, 65), (70, 55))):
+        pts = []
+        for k in range(32):
+            a = rot * (1 if ring % 2 == 0 else -1) + math.pi / 16 * k
+            rr = r if k % 2 == 0 else r * 0.82
+            pts.append((cx + rr * math.cos(a), cy + rr * math.sin(a)))
+        d.polygon(pts, outline=GOLD + (alpha,), width=2)
+    for k in range(16):
+        a = rot + math.pi / 8 * k
+        d.line([(cx + 70 * math.cos(a), cy + 70 * math.sin(a)), (cx + 250 * math.cos(a), cy + 250 * math.sin(a))],
+               fill=GOLD + (40,), width=1)
+    return _glow(img, layer, 0.8)
+
+
 DRAW = {"stars": _stars, "particles": _particles, "rays": _rays, "aurora": _aurora, "night": _night,
-        "waves": _waves}
+        "waves": _waves, "mosque": _mosque, "lanterns": _lanterns, "arches": _arches, "desert": _desert,
+        "rosette": _rosette}
 
 
 def _randoms():
