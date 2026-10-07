@@ -210,6 +210,25 @@
   #devpreview { display: block; width: 216px; aspect-ratio: 9 / 16; margin: 14px auto 0; border-radius: 12px;
     border: 1px solid var(--line); background: #000; }
   #devpreview[hidden] { display: none; }
+  /* Background picker: a button showing the choice, a popup grid of all backgrounds playing */
+  .bg-btn { margin-top: 0; }
+  .bg-thumb { flex: none; width: 34px; height: 60px; border-radius: 6px; overflow: hidden; display: grid; place-items: center;
+    background: radial-gradient(circle at 50% 35%, rgba(212,175,95,.35), #062019 70%); box-shadow: inset 0 0 0 1px var(--line);
+    color: var(--gold); font: 700 11px system-ui, -apple-system, sans-serif; }
+  .bg-thumb video { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .bg-box { width: min(680px, 100%); max-height: 92vh; overflow-y: auto; }
+  .bg-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 8px; }
+  @media (max-width: 520px) { .bg-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; } }
+  .bg-tile { display: flex; flex-direction: column; align-items: stretch; gap: 6px; padding: 6px; border-radius: 12px;
+    background: rgba(3,22,17,.6); color: var(--text); box-shadow: inset 0 0 0 1px var(--line);
+    font: 600 12.5px system-ui, -apple-system, sans-serif; }
+  .bg-tile:hover { transform: none; background: rgba(212,175,95,.1); box-shadow: inset 0 0 0 1px var(--gold); }
+  .bg-tile.on { background: rgba(212,175,95,.16); box-shadow: inset 0 0 0 2px var(--gold); }
+  .bg-tile.on b { color: var(--gold2); }
+  .bg-tile video, .bg-auto { width: 100%; aspect-ratio: 9 / 16; border-radius: 8px; object-fit: cover; display: block; background: #062019; }
+  .bg-auto { display: grid; place-items: center; text-align: center; padding: 8px; color: var(--gold2); font-size: 13px; line-height: 1.4;
+    background: radial-gradient(circle at 50% 35%, rgba(212,175,95,.3), #062019 70%); }
+  .bg-tile b { text-align: center; font-weight: 600; }
   .langnote { color: var(--muted); font-size: 13.5px; margin: 8px 0 0; font-family: system-ui, -apple-system, sans-serif; }
 
   button, a.btn {
@@ -325,6 +344,14 @@
       </div>
       <p class="langnote" id="langnote"></p>
     </div>
+    <div class="field">
+      <label id="bglabel">Background</label>
+      <button type="button" class="picker-btn bg-btn" id="bgbtn" aria-haspopup="dialog" aria-labelledby="bglabel bgbtn">
+        <span class="bg-thumb" id="bg_thumb">Auto</span>
+        <span class="pk-en"><span id="bg_name">Automatic</span><small id="bg_sub">Each surah gets its own background</small></span>
+        <span class="chev" aria-hidden="true"></span>
+      </button>
+    </div>
     <label class="check"><input type="checkbox" id="read" {% if read_urdu %}checked{% endif %}> <span id="readlabel">Read the translation aloud after each ayah</span></label>
     <div class="actions"><button id="go" class="primary" type="button">Generate video</button>
       <button id="readbtn" class="primary ghost" type="button">Read and listen</button></div>
@@ -365,6 +392,17 @@
   </section>
 
 </main>
+<div class="modal" id="bgmodal" hidden role="dialog" aria-modal="true" aria-labelledby="bgmodal-title">
+  <div class="modal-box bg-box">
+    <h3 id="bgmodal-title">Choose a background</h3>
+    <div class="bg-grid" id="bggrid">
+      <button type="button" class="bg-tile" data-bg="" data-name="Automatic"><span class="bg-auto">A different one for each surah</span><b>Automatic</b></button>
+      {% for b in bgs %}<button type="button" class="bg-tile" data-bg="{{ b.style }}" data-name="{{ b.name }}"><video muted loop playsinline preload="none" data-src="/bg/{{ b.style }}.mp4"></video><b>{{ b.name }}</b></button>
+      {% endfor %}
+    </div>
+    <button type="button" class="ghost" id="bg_close">Close</button>
+  </div>
+</div>
 <div class="modal" id="genmodal" hidden role="dialog" aria-modal="true" aria-labelledby="genmodal-title">
   <div class="modal-box">
     <h3 id="genmodal-title">How should the video be made?</h3>
@@ -501,6 +539,32 @@ async function api(url, opts) {
   return d;
 }
 
+// ---- Background picker: popup grid, each tile playing its loop; "" = automatic ----
+const bgmodal = $("bgmodal"), bgTiles = [...document.querySelectorAll(".bg-tile")];
+let bgChoice = "";
+function showBg() {
+  const tile = bgTiles.find(t => t.dataset.bg === bgChoice) || bgTiles[0];
+  bgTiles.forEach(t => t.classList.toggle("on", t === tile));
+  $("bg_name").textContent = tile.dataset.name;
+  $("bg_sub").textContent = bgChoice ? "Used for every reel you make" : "Each surah gets its own background";
+  $("bg_thumb").innerHTML = bgChoice ? `<video muted loop playsinline autoplay src="/bg/${bgChoice}.mp4"></video>` : "Auto";
+}
+function openBg() {
+  bgTiles.forEach(t => { const v = t.querySelector("video"); if (v) { if (!v.src) v.src = v.dataset.src; v.play().catch(() => {}); } });
+  bgmodal.hidden = false; (bgTiles.find(t => t.classList.contains("on")) || bgTiles[0]).focus();
+}
+function closeBg() { bgmodal.hidden = true; bgTiles.forEach(t => t.querySelector("video")?.pause()); $("bgbtn").focus(); }
+bgTiles.forEach(t => t.onclick = () => {
+  bgChoice = t.dataset.bg; showBg(); closeBg();
+  try { localStorage.setItem("bg", bgChoice); } catch (e) {}
+});
+$("bgbtn").onclick = openBg;
+$("bg_close").onclick = closeBg;
+bgmodal.onclick = e => { if (e.target === bgmodal) closeBg(); };
+document.addEventListener("keydown", e => { if (e.key === "Escape" && !bgmodal.hidden) closeBg(); });
+try { const saved = localStorage.getItem("bg"); if (saved && bgTiles.some(t => t.dataset.bg === saved)) bgChoice = saved; } catch (e) {}
+showBg();
+
 // ---- Generate: a popup asks where the video is made ----
 const genmodal = $("genmodal");
 function closeGen() { genmodal.hidden = true; $("go").focus(); }
@@ -522,7 +586,8 @@ async function generateDevice() {
   prev.hidden = false;
   try {
     const r = await DeviceReel.make({ surahNo: +surah.value, first: +from.value, last: +to.value, lang: $("lang").value,
-                                      read: $("read").checked, preview: prev, log: m => setStatus(m, false, null, true) });
+                                      read: $("read").checked, bg: bgChoice, preview: prev,
+                                      log: m => setStatus(m, false, null, true) });
     const name = r.meta.name, vurl = URL.createObjectURL(r.video), turl = URL.createObjectURL(r.thumb);
     $("vid").src = vurl; $("thumb").src = turl;
     $("dlv").href = vurl; $("dlv").download = `${name}.${r.ext}`;
@@ -541,7 +606,7 @@ async function generateCloud() {
   try {
     const d = await api("/api/generate", { method: "POST", headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ surah: surah.value, from: from.value, to: to.value, lang: $("lang").value,
-                             read: $("read").checked }) });
+                             read: $("read").checked, bg: bgChoice }) });
     poll(d.id);
   } catch (e) { setStatus(e.message, true); $("go").disabled = false; }
 };

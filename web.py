@@ -71,7 +71,7 @@ def start_job(target, *args):
     return jsonify(id=jid)
 
 
-def run_job(jid, surah, first, last, lang, read_aloud):
+def run_job(jid, surah, first, last, lang, read_aloud, bg):
     job = JOBS[jid]
 
     def log(msg):
@@ -87,7 +87,7 @@ def run_job(jid, surah, first, last, lang, read_aloud):
             name = file_name(surah, first, last, lang)
             mp4, thumb, title, desc, tags, secs = build_reel(
                 items, info, WEB_OUT / jid, name, read_aloud=read_aloud, log=log,
-                max_seconds=WEB_MAX_SECONDS, lang=lang)
+                max_seconds=WEB_MAX_SECONDS, lang=lang, bg=bg)
         result = dict(video=mp4.name, thumb=thumb.name, title=title, desc=desc,
                       tags=", ".join(tags), seconds=round(secs))
         job.update(status="done", msg=f"Done: {int(secs // 60)} min {int(secs % 60)} s", **result)
@@ -108,7 +108,8 @@ def served_by(resp):
 
 @app.get("/")
 def index():
-    return render_template("index.html", surahs=SURAHS, langs=LANG_OPTIONS, read_urdu=READ_URDU)
+    return render_template("index.html", surahs=SURAHS, langs=LANG_OPTIONS, read_urdu=READ_URDU,
+                           bgs=[{"style": s, "name": backgrounds.NAMES[s]} for s in backgrounds.STYLES])
 
 
 @app.post("/api/generate")
@@ -120,7 +121,10 @@ def generate():
     lang = d.get("lang", "ur")
     if lang not in LANGS:
         return jsonify(error="Unknown translation language."), 400
-    return start_job(run_job, *p, lang, bool(d.get("read", d.get("urdu", True))))
+    bg = d.get("bg") or None                  # None = pick from the surah and ayah
+    if bg is not None and bg not in backgrounds.STYLES:
+        return jsonify(error="Unknown background."), 400
+    return start_job(run_job, *p, lang, bool(d.get("read", d.get("urdu", True))), bg)
 
 
 @app.get("/api/surah/<int:surah>")

@@ -143,10 +143,11 @@ class TooLong(Exception):
         self.seconds, self.parts = seconds, parts
 
 
-def build_reel(items, info, out_dir, name, read_aloud=READ_URDU, log=print, max_seconds=None, lang="ur"):
+def build_reel(items, info, out_dir, name, read_aloud=READ_URDU, log=print, max_seconds=None, lang="ur", bg=None):
     """Render mp4 + thumbnail for these ayat. Returns (mp4, thumb, title, desc, tags, seconds).
     lang: translation language code (see translations.LANGS); read_aloud: also play its recording
-    after each ayah, when that language has one.
+    after each ayah, when that language has one. bg: a background style (backgrounds.STYLES), or
+    None to pick one from the surah and ayah.
     With max_seconds, raises TooLong (with suggested parts) instead of rendering a longer video."""
     voice = translations.LANGS[lang]["audio"] if read_aloud else None
     texts = translations.texts(lang, quran_cached(), log)
@@ -170,7 +171,7 @@ def build_reel(items, info, out_dir, name, read_aloud=READ_URDU, log=print, max_
     frames = [dict(it, tr=texts[it["n"] - 1]) for it in with_bismillah(quran_cached(), items)]
     audio = [ayah_audio(it, voice) for it in frames]
     mp4 = out_dir / f"{name}.mp4"
-    secs = video.render(frames, audio, info, mp4, work, log=log, lang=lang, bg=backgrounds.pick(info))
+    secs = video.render(frames, audio, info, mp4, work, log=log, lang=lang, bg=bg or backgrounds.pick(info))
     thumb = video.make_thumbnail(info, out_dir / f"{name}_thumbnail.jpg", video.tr_lang(lang))
     shutil.rmtree(work, ignore_errors=True)
     title, desc, tags = metadata(items, info, bool(voice), lang)

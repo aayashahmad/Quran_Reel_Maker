@@ -231,7 +231,7 @@ const DeviceReel = (() => {
     return !!(window.MediaRecorder && HTMLCanvasElement.prototype.captureStream && (window.AudioContext || window.webkitAudioContext) && pickType());
   }
 
-  async function make({ surahNo, first, last, lang, read, preview, log }) {
+  async function make({ surahNo, first, last, lang, read, bg, preview, log }) {
     const audio = new (window.AudioContext || window.webkitAudioContext)();   // created in the click: allowed to play
     try {
       log("Loading the surah…");
@@ -240,7 +240,8 @@ const DeviceReel = (() => {
       const rows = (first === 1 && data.bismillah ? [{ ...data.bismillah, bism: true }] : []).concat(ayat);
       const rng = first === last ? `${first}` : `${first}-${last}`;
       const info = { label: full ? `Full Surah  •  ${data.ayat.length} Ayat` : (first === last ? `Ayah ${rng}` : `Ayat ${rng}`) };
-      const style = data.styles[(surahNo * 7919 + first * 131) % data.styles.length];   // as backgrounds.pick
+      const style = data.styles.includes(bg) ? bg                                       // chosen, or as backgrounds.pick
+        : data.styles[(surahNo * 7919 + first * 131) % data.styles.length];
       const voice = read && !!rows[0].tr_audio_local;
 
       await Promise.all(['78px "Amiri Quran"', "80px Amiri", '52px "Noto Nastaliq Urdu"'].map(f => document.fonts.load(f)));

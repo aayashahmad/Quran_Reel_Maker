@@ -17,6 +17,9 @@ FRAMES = LOOP_FPS * LOOP_SECONDS
 VERSION = 2                # bump when a style's look changes, so saved loops are made again
 STYLES = ("stars", "particles", "rays", "aurora", "night", "waves",
           "mosque", "lanterns", "arches", "desert", "rosette")
+NAMES = {"stars": "Star pattern", "particles": "Gold particles", "rays": "Light rays", "aurora": "Aurora",
+         "night": "Night sky", "waves": "Waves", "mosque": "Mosques at dusk", "lanterns": "Lanterns",
+         "arches": "Islamic arch", "desert": "Desert night", "rosette": "Rosette"}
 GOLD = (212, 175, 95)
 _lock = threading.Lock()
 
