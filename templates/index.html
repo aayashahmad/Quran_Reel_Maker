@@ -192,6 +192,24 @@
   .ay .w.hl, .ay .tw.hl { background: rgba(212,175,95,.3); color: var(--gold2); }
   .reader-note { color: var(--muted); font: 13px system-ui, -apple-system, sans-serif; margin: 0 0 8px; }
   @media (max-width: 640px) { .ay-ar { font-size: 25px; } .player .pos { width: 100%; margin: 0; text-align: center; } }
+  /* Generate popup: in the cloud, or on this device */
+  .modal { position: fixed; inset: 0; z-index: 50; display: flex; align-items: center; justify-content: center; padding: 16px;
+    background: rgba(2,12,9,.72); backdrop-filter: blur(3px); }
+  .modal[hidden] { display: none; }
+  .modal-box { width: min(480px, 100%); background: linear-gradient(180deg, #0f3d31, #0a2f25); border: 1px solid var(--gold);
+    border-radius: 18px; padding: 22px; box-shadow: 0 24px 60px rgba(0,0,0,.55); animation: pop .14s ease-out; }
+  .modal-box h3 { font-family: Amiri, serif; color: var(--gold); font-size: 24px; margin: 0 0 14px; text-align: center; }
+  .choice { width: 100%; display: flex; flex-direction: column; align-items: flex-start; gap: 4px; text-align: left;
+    background: rgba(3,22,17,.6); color: var(--text); border-radius: 14px; padding: 14px 16px; margin-bottom: 10px;
+    box-shadow: inset 0 0 0 1px var(--line); font: 15px system-ui, -apple-system, sans-serif; }
+  .choice:hover { background: rgba(212,175,95,.1); box-shadow: inset 0 0 0 1px var(--gold); }
+  .choice b { color: var(--gold2); font-size: 16px; }
+  .choice span { color: var(--muted); font-size: 13.5px; line-height: 1.45; font-weight: 400; }
+  .choice:disabled { opacity: .5; cursor: not-allowed; }
+  .modal-box .ghost { display: block; margin: 6px auto 0; }
+  #devpreview { display: block; width: 216px; aspect-ratio: 9 / 16; margin: 14px auto 0; border-radius: 12px;
+    border: 1px solid var(--line); background: #000; }
+  #devpreview[hidden] { display: none; }
   .langnote { color: var(--muted); font-size: 13.5px; margin: 8px 0 0; font-family: system-ui, -apple-system, sans-serif; }
 
   button, a.btn {
@@ -310,6 +328,7 @@
     <div class="actions"><button id="go" class="primary" type="button">Generate video</button>
       <button id="readbtn" class="primary ghost" type="button">Read and listen</button></div>
     <div id="status" role="status"></div>
+    <canvas id="devpreview" hidden aria-label="Preview of the reel being recorded"></canvas>
     <div id="parts" class="parts"></div>
   </section>
 
@@ -345,6 +364,16 @@
   </section>
 
 </main>
+<div class="modal" id="genmodal" hidden role="dialog" aria-modal="true" aria-labelledby="genmodal-title">
+  <div class="modal-box">
+    <h3 id="genmodal-title">How should the video be made?</h3>
+    <button type="button" class="choice" id="gen_cloud"><b>Generate in cloud</b>
+      <span>Made on our server as an MP4 that works everywhere. Usually seconds; a few minutes when the backup server is in use.</span></button>
+    <button type="button" class="choice" id="gen_device"><b>Generate on this device</b>
+      <span id="gen_device_note">Made in your browser while the reel plays, so a 40-second reel takes about 40 seconds. Keep this tab open until it finishes.</span></button>
+    <button type="button" class="ghost" id="gen_cancel">Cancel</button>
+  </div>
+</div>
 <footer>
   <div class="divider" aria-hidden="true"><i></i></div>
   <p class="ayah" lang="ar">وَرَتِّلِ ٱلْقُرْءَانَ تَرْتِيلًا</p>
@@ -471,7 +500,42 @@ async function api(url, opts) {
   return d;
 }
 
-$("go").onclick = async () => {
+// ---- Generate: a popup asks where the video is made ----
+const genmodal = $("genmodal");
+function closeGen() { genmodal.hidden = true; $("go").focus(); }
+$("go").onclick = () => {
+  const ok = DeviceReel.supported();
+  $("gen_device").disabled = !ok;
+  if (!ok) $("gen_device_note").textContent = "This browser can't record video. Please use Generate in cloud.";
+  genmodal.hidden = false; $("gen_cloud").focus();
+};
+$("gen_cancel").onclick = closeGen;
+genmodal.onclick = e => { if (e.target === genmodal) closeGen(); };
+document.addEventListener("keydown", e => { if (e.key === "Escape" && !genmodal.hidden) closeGen(); });
+$("gen_cloud").onclick = () => { genmodal.hidden = true; generateCloud(); };
+$("gen_device").onclick = () => { genmodal.hidden = true; generateDevice(); };
+
+async function generateDevice() {
+  const go = $("go"), prev = $("devpreview");
+  go.disabled = true; $("parts").innerHTML = ""; $("result").style.display = "none";
+  prev.hidden = false;
+  try {
+    const r = await DeviceReel.make({ surahNo: +surah.value, first: +from.value, last: +to.value, lang: $("lang").value,
+                                      read: $("read").checked, preview: prev, log: m => setStatus(m, false, null, true) });
+    const name = r.meta.name, vurl = URL.createObjectURL(r.video), turl = URL.createObjectURL(r.thumb);
+    $("vid").src = vurl; $("thumb").src = turl;
+    $("dlv").href = vurl; $("dlv").download = `${name}.${r.ext}`;
+    $("dlt").href = turl; $("dlt").download = `${name}_thumbnail.jpg`;
+    $("title").value = r.meta.title; $("desc").value = r.meta.desc; $("tags").value = r.meta.tags;
+    $("result").style.display = "block";
+    setStatus(r.ext === "mp4" ? `Done on this device: ${fmt(Math.round(r.seconds))}`
+      : `Done: saved as WebM (this browser can't record MP4). WhatsApp and Instagram prefer MP4; use Generate in cloud for that.`);
+    $("result").scrollIntoView({ behavior: "smooth", block: "start" });
+  } catch (e) { setStatus(e.message || "Could not make the video on this device.", true); }
+  prev.hidden = true; go.disabled = false;
+}
+
+async function generateCloud() {
   $("go").disabled = true; $("parts").innerHTML = ""; setStatus("Starting…", false, null, true);
   try {
     const d = await api("/api/generate", { method: "POST", headers: { "Content-Type": "application/json" },
@@ -498,6 +562,7 @@ function showResult(id, j) {
   const base = `/files/${id}/`;
   $("vid").src = base + j.video; $("thumb").src = base + j.thumb;
   $("dlv").href = base + j.video + "?dl=1"; $("dlt").href = base + j.thumb + "?dl=1";
+  $("dlv").removeAttribute("download"); $("dlt").removeAttribute("download");   // the server names the file
   $("title").value = j.title; $("desc").value = j.desc; $("tags").value = j.tags;
   $("result").style.display = "block";
 }
@@ -511,7 +576,7 @@ function showParts(j) {
     const b = document.createElement("button");
     b.className = "ghost"; b.type = "button";
     b.textContent = `Part ${i + 1}: ayat ${p.from}–${p.to} (${fmt(p.seconds)})`;
-    b.onclick = () => { surah.value = j.surah; syncPicker(); from.value = p.from; to.value = p.to; $("go").click(); };
+    b.onclick = () => { surah.value = j.surah; syncPicker(); from.value = p.from; to.value = p.to; generateCloud(); };
     box.appendChild(b);
   });
 }
@@ -726,5 +791,6 @@ document.querySelectorAll(".copy").forEach(b => b.onclick = () => {
   b.textContent = "Copied"; setTimeout(() => b.textContent = "Copy", 1200);
 });
 </script>
+<script src="/static/device-reel.js"></script>
 </body>
 </html>

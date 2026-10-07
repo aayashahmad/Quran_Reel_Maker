@@ -7,12 +7,14 @@ import threading
 import time
 import uuid
 
-from flask import Flask, abort, jsonify, render_template, request, send_from_directory
+from flask import Flask, abort, jsonify, render_template, request, send_file, send_from_directory
 
 from config import WEB_OUT, READ_URDU
 from quran_data import load_quran, surah_ranges, audio_url
-from content import reel_info
+from content import reel_info, metadata
 from main import build_reel, TooLong
+from quran_data import get_audio
+import backgrounds
 from translations import LANGS, NO_SPACES, texts
 
 app = Flask(__name__)
@@ -135,12 +137,53 @@ def surah_data(surah):
     def ayah(it):
         return {"n": it["ayah"], "words": it["words"], "segments": it["segments"], "audio": audio_url(it),
                 "tr": tr[it["n"] - 1], "tr_audio": audio_url(it, voice) if voice else None,
-                "sajda": it["sajda"]}
+                "sajda": it["sajda"], "gn": it["n"],
+                # same audio through this server, for making a reel on the device (islamic.network
+                # doesn't allow other sites to read its files; Quran.com does)
+                "tr_audio_local": f"/api/audio/{voice}/{it['n']}" if voice else None}
     first = QURAN[s0]
     return jsonify(surah=surah, en=first["surah_en"], ar=first["surah_ar"], lang=lang,
                    rtl=LANGS[lang]["rtl"], spaced=lang not in NO_SPACES,
                    bismillah=ayah(QURAN[0]) if first["bismillah"] else None,
-                   ayat=[ayah(it) for it in QURAN[s0:s1]])
+                   ayat=[ayah(it) for it in QURAN[s0:s1]], styles=backgrounds.STYLES,
+                   translator=LANGS[lang]["translator"], name=LANGS[lang]["name"], native=LANGS[lang]["native"],
+                   font=LANGS[lang]["font"])
+
+
+VOICES = {l["audio"] for l in LANGS.values() if l["audio"]}
+
+
+@app.get("/api/audio/<edition>/<int:n>")
+def audio(edition, n):
+    """A translation recording, served from here (downloaded once and kept)."""
+    if edition not in VOICES or not 1 <= n <= len(QURAN):
+        abort(404)
+    return send_file(get_audio(QURAN[n - 1], edition), mimetype="audio/mpeg", max_age=86400)
+
+
+@app.get("/bg/<style>.mp4")
+def background_loop(style):
+    """A moving background loop, for reels made on the device."""
+    if style not in backgrounds.STYLES:
+        abort(404)
+    return send_file(backgrounds.loop(style), mimetype="video/mp4", max_age=86400)
+
+
+@app.get("/api/meta")
+def meta():
+    """Title, description and tags for a reel made on the device."""
+    p = pick(request.args)
+    lang = request.args.get("lang", "ur")
+    if isinstance(p, str) or lang not in LANGS:
+        return jsonify(error=p if isinstance(p, str) else "Unknown translation language."), 400
+    surah, first, last = p
+    s0, s1 = RANGES[surah]
+    tr = texts(lang, QURAN, log=lambda m: None)
+    items = [dict(it, tr=tr[it["n"] - 1]) for it in QURAN[s0 + first - 1:s0 + last]]
+    info = reel_info(items, 1, 1, first == 1 and last == s1 - s0)
+    read = request.args.get("read") == "1" and bool(LANGS[lang]["audio"])
+    title, desc, tags = metadata(items, info, read, lang)
+    return jsonify(title=title, desc=desc, tags=", ".join(tags), name=file_name(surah, first, last, lang))
 
 
 @app.get("/api/job/<jid>")
