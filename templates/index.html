@@ -326,7 +326,7 @@
     <div class="field">
       <label id="langlabel">Translation</label>
       <select id="lang" class="sr-only" tabindex="-1" aria-hidden="true">
-        {% for l in langs %}<option value="{{ l.code }}" data-name="{{ l.name }}" data-native="{{ l.native }}" data-audio="{{ 1 if l.audio else 0 }}" data-translator="{{ l.translator }}" data-reader="{{ l.reader or '' }}">{{ l.name }}</option>
+        {% for l in langs %}<option value="{{ l.code }}" data-badge="{{ l.badge }}" data-name="{{ l.name }}" data-native="{{ l.native }}" data-audio="{{ 1 if l.audio else 0 }}" data-translator="{{ l.translator }}" data-reader="{{ l.reader or '' }}">{{ l.name }}</option>
         {% endfor %}
       </select>
       <div class="picker" id="langpicker">
@@ -655,7 +655,7 @@ const langbtn = $("langbtn"), langpop = $("langpop"), langsearch = $("langsearch
 let langShown = LANGS, langActive = 0;
 
 function langRow(l, el) {      // fills a list row or the button
-  el.querySelector(".snum").textContent = l.code;
+  el.querySelector(".snum").textContent = l.badge || l.code;      // short label fits the star
   const name = el.querySelector(".en span, #lk_name");
   name.textContent = l.name;
   if (l.audio) name.insertAdjacentHTML("beforeend", `<span class="aud">Audio</span>`);

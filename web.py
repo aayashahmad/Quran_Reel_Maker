@@ -36,7 +36,7 @@ def voice(lang):
 
 
 def lang_options():
-    return [{"code": c, "name": l["name"], "native": l["native"], "translator": l["translator"],
+    return [{"code": c, "badge": "RU" if c == "ur-roman" else c, "name": l["name"], "native": l["native"], "translator": l["translator"],
              "audio": bool(voice(c)), "reader": l["reader"]} for c, l in LANGS.items()]
 JOBS = {}
 RENDER_LOCK = threading.Lock()      # one render at a time
