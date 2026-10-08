@@ -754,7 +754,7 @@ function readerRow(a, i, data) {
     if (a.sajda) { const sj = document.createElement("span"); sj.className = "sajda"; sj.textContent = "آیتِ سجدہ"; ar.append(sj); }
   }
   const tr = document.createElement("p");
-  tr.className = "ay-tr"; tr.dir = data.rtl ? "rtl" : "ltr"; tr.lang = data.lang === "ur" ? "ur" : data.lang;
+  tr.className = "ay-tr"; tr.dir = data.rtl ? "rtl" : "ltr"; tr.lang = data.font === "NotoNastaliqUrdu.ttf" ? "ur" : data.lang;
   if (data.spaced) {
     a.tr.split(/\s+/).forEach((w, k) => {
       const s = document.createElement("span"); s.className = "tw"; s.textContent = w;

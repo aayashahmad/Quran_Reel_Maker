@@ -124,7 +124,7 @@ const DeviceReel = (() => {
     const family = FAMILY[data.font] || sansFamily;
     const tr = data.spaced
       ? layoutWords(ctx, row.tr.split(/\s+/).filter(Boolean).map((w, i) => [w, i]), y + 10, H - y - 260, size, minSize, lh,
-                    family, data.rtl, band, lang === "ur")
+                    family, data.rtl, band, data.font === "NotoNastaliqUrdu.ttf")
       : null;
     return { ar, tr, trY: y, sajdaY, row, family, trStyle: [size, minSize, lh] };
   }
@@ -231,7 +231,7 @@ const DeviceReel = (() => {
     return !!(window.MediaRecorder && HTMLCanvasElement.prototype.captureStream && (window.AudioContext || window.webkitAudioContext) && pickType());
   }
 
-  async function make({ surahNo, first, last, lang, read, bg, preview, log }) {
+  async function make({ surahNo, first, last, lang, read, bg: chosen, preview, log }) {
     const audio = new (window.AudioContext || window.webkitAudioContext)();   // created in the click: allowed to play
     try {
       log("Loading the surah…");
@@ -240,7 +240,7 @@ const DeviceReel = (() => {
       const rows = (first === 1 && data.bismillah ? [{ ...data.bismillah, bism: true }] : []).concat(ayat);
       const rng = first === last ? `${first}` : `${first}-${last}`;
       const info = { label: full ? `Full Surah  •  ${data.ayat.length} Ayat` : (first === last ? `Ayah ${rng}` : `Ayat ${rng}`) };
-      const style = data.styles.includes(bg) ? bg                                       // chosen, or as backgrounds.pick
+      const style = data.styles.includes(chosen) ? chosen                               // chosen, or as backgrounds.pick
         : data.styles[(surahNo * 7919 + first * 131) % data.styles.length];
       const voice = read && !!rows[0].tr_audio_local;
 

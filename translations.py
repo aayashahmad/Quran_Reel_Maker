@@ -15,7 +15,8 @@ QDC_TRANSLATION = "https://api.quran.com/api/v4/quran/translations/{}?fields=ver
 
 
 def _lang(name, native, edition, translator, font=LATIN, rtl=False, audio=None, reader=None, shape=None):
-    """edition: an alquran.cloud edition, or "qdc:<id>" for a Quran.com translation.
+    """edition: an alquran.cloud edition, "qdc:<id>" for a Quran.com translation, or "file:<name>" for
+    a QUL (qul.tarteel.ai) simple.json saved by hand as data/qul_<name>.json (QUL needs a login).
     shape: language tag for text shaping, when the code isn't one (e.g. Roman Urdu)."""
     return dict(name=name, native=native, edition=edition, translator=translator,
                 font=font, rtl=rtl, audio=audio, reader=reader, shape=shape)
@@ -24,6 +25,8 @@ def _lang(name, native, edition, translator, font=LATIN, rtl=False, audio=None, 
 # code: language. Urdu first (the default), English second, the rest by English name.
 LANGS = {
     "ur": _lang("Urdu", "اردو", URDU_EDITION, URDU_NAME, "NotoNastaliqUrdu.ttf", True, URDU_AUDIO, URDU_AUDIO_NAME),
+    "ks": _lang("Kashmiri", "کٲشُر", "file:bayanul-furqan-koshur-quran", "Mirwaiz Muhammad Yusuf Shah (Bayanul Furqan)",
+                "NotoNastaliqUrdu.ttf", True, shape="ur"),
     "ur-roman": _lang("Roman Urdu", "Roman Urdu", "qdc:831", "Abul A'la Maududi", shape="ur-Latn"),
     "en": _lang("English", "English", "en.sahih", "Saheeh International", audio="en.walk", reader="Ibrahim Walk"),
     "sq": _lang("Albanian", "Shqip", "sq.ahmeti", "Sherif Ahmeti"),
@@ -73,11 +76,29 @@ LANGS = {
     "uz": _lang("Uzbek", "Ўзбек", "uz.sodik", "Muhammad Sodik Muhammad Yusuf", audio="uz.sodik-audio",
                 reader="Muhammad Sodik Muhammad Yusuf"),
 }
-FIRST = ["ur", "ur-roman", "en"]
+FIRST = ["ur", "ks", "ur-roman", "en"]
 LANGS = {k: LANGS[k] for k in FIRST + sorted((k for k in LANGS if k not in FIRST), key=lambda k: LANGS[k]["name"])}
 NO_SPACES = {"zh", "ja", "th", "my"}   # written without spaces between words: wrapped by letter, never highlighted
 
 _cache, _lock = {}, threading.Lock()
+
+
+def _without_notes(t):
+    """Drop the translator's commentary in ﴿ … ﴾ (Bayanul Furqan puts long notes there).
+    If the brackets don't pair up, only the bracket marks go, so no translation text is lost."""
+    if t.count("﴿") == t.count("﴾"):
+        out, depth = [], 0
+        for ch in t:
+            if ch == "﴿":
+                depth += 1
+            elif ch == "﴾":
+                depth = max(0, depth - 1)
+            elif depth == 0:
+                out.append(ch)
+        t = "".join(out)
+    t = re.sub(r"[﴿﴾]", "", t)
+    t = re.sub(r"\s+[عع]\s*$", "", t)           # a ruku sign (ع) at the end
+    return re.sub(r"\s+", " ", t).strip(" ۔.،")
 
 
 def texts(code, quran, log=print):
@@ -88,6 +109,10 @@ def texts(code, quran, log=print):
         if code not in _cache:
             ed = LANGS[code]["edition"]
             f = DATA / f"tr_{ed.replace(':', '_')}.json"
+            if ed.startswith("file:") and not f.exists():
+                raw = json.loads((DATA / f"qul_{ed[5:]}.json").read_text(encoding="utf-8"))
+                out = [_without_notes(raw[f"{a['surah']}:{a['ayah']}"]["t"]) for a in quran]
+                f.write_text(json.dumps(out, ensure_ascii=False), encoding="utf-8")
             if not f.exists():
                 log(f"Downloading the {LANGS[code]['name']} translation")
                 if ed.startswith("qdc:"):       # Quran.com: one list in Quran order, may hold footnote tags

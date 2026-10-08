@@ -151,7 +151,7 @@ def surah_data(surah):
                    bismillah=ayah(QURAN[0]) if first["bismillah"] else None,
                    ayat=[ayah(it) for it in QURAN[s0:s1]], styles=backgrounds.STYLES,
                    translator=LANGS[lang]["translator"], name=LANGS[lang]["name"], native=LANGS[lang]["native"],
-                   font=LANGS[lang]["font"])
+                   font=LANGS[lang]["font"], shape=LANGS[lang]["shape"] or lang)
 
 
 VOICES = {l["audio"] for l in LANGS.values() if l["audio"]}
