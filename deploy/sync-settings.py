@@ -9,7 +9,8 @@ import sys
 
 host, key, local = sys.argv[1], sys.argv[2], pathlib.Path(sys.argv[3])
 REMOTE = "quran-reel-site/data/settings.json"
-ssh = ["ssh", "-i", key, "-o", "BatchMode=yes", "-o", "ConnectTimeout=10", host]
+ssh = ["ssh", "-i", key, "-o", "BatchMode=yes", "-o", "ConnectTimeout=10",
+       "-o", "ServerAliveInterval=5", "-o", "ServerAliveCountMax=2", host]
 
 
 def updated(text):
