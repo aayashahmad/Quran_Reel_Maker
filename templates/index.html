@@ -538,14 +538,14 @@ function setStatus(msg, err, el, busy) {
   el.classList.toggle("err", !!err); el.classList.toggle("busy", !!busy);
 }
 
-const OFFLINE = "The website is offline right now (the computer that makes the videos is switched off). Please try again later.";
+const OFFLINE = "We're switching servers right now. Please try again in 1–2 minutes.";
 // Calls the server and returns its JSON. When the server can't be reached, Cloudflare answers with
 // its own HTML error page instead, so anything that isn't JSON means "offline".
 async function api(url, opts) {
   let r;
   try { r = await fetch(url, opts); } catch (e) { throw new Error(OFFLINE); }
   if (!(r.headers.get("content-type") || "").includes("json")) {
-    throw new Error(r.status === 404 ? "This video was lost because the website restarted. Please generate it again." : OFFLINE);
+    throw new Error(r.status === 404 ? "We switched servers while your video was being made. Please generate it again." : OFFLINE);
   }
   const d = await r.json();
   if (!r.ok) throw new Error(d.error || "Could not start");

@@ -1,0 +1,8 @@
+# Deploy (once logged in with `npx wrangler login`):  cd deploy/cloudflare-worker && npx wrangler deploy
+name = "quranreelmaker-switching"
+main = "worker.js"
+compatibility_date = "2026-10-01"
+routes = [
+  { pattern = "quranreelmaker.xyz/*", zone_name = "quranreelmaker.xyz" },
+  { pattern = "www.quranreelmaker.xyz/*", zone_name = "quranreelmaker.xyz" },
+]

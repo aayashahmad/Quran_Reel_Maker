@@ -1,5 +1,5 @@
 #!/bin/sh
-# Main computer side of the failover (see failover-server.sh). Run every 30 seconds:
+# Main computer side of the failover (see failover-server.sh). Run every 15 seconds:
 #   laptop-heartbeat.sh ubuntu@SERVER_IP ~/.ssh/KEY
 # It tells the backup server "the site is being served here" only while that is true:
 # the local website answers and this computer's tunnel is running.
