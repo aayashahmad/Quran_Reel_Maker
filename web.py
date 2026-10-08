@@ -1,5 +1,7 @@
 """Local website: pick a surah, ayah range and translation language, generate a reel, download it.
 Run with:  ./run.sh web   then open http://localhost:5050"""
+import hashlib
+import pathlib
 import re
 import shutil
 import socket
@@ -42,6 +44,9 @@ JOBS = {}
 RENDER_LOCK = threading.Lock()      # one render at a time
 JOB_ID = re.compile(r"^[0-9a-f]{12}$")
 SERVER = socket.gethostname()
+# version tag for static files, from their contents: a changed file gets a new URL, so browsers and
+# Cloudflare (which keep static files for hours) never run an old copy
+STATIC_V = hashlib.sha256(b"".join(p.read_bytes() for p in sorted(pathlib.Path(app.static_folder).glob("*")))).hexdigest()[:10]
 WEB_MAX_SECONDS = 10 * 60           # longer selections get a list of reel-sized parts instead
 KEEP_SECONDS = 60 * 60              # made files are deleted after this, nothing is kept
 
@@ -123,7 +128,7 @@ def served_by(resp):
 @app.get("/")
 def index():
     return render_template("index.html", surahs=SURAHS, langs=lang_options(), read_urdu=READ_URDU,
-                           device_generation=site_settings.get()["device_generation"],
+                           device_generation=site_settings.get()["device_generation"], static_v=STATIC_V,
                            bgs=[{"style": s, "name": backgrounds.NAMES[s]} for s in backgrounds.STYLES])
 
 
