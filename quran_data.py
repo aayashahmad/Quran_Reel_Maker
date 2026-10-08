@@ -13,6 +13,14 @@ QDC = ("https://api.quran.com/api/v4/verses/by_chapter/{}?words=true&word_fields
        "&audio={}&per_page=50&page={}")
 QDC_AUDIO = "https://verses.quran.com/{}"
 BITRATE = {"ur.khan": 64, "en.walk": 192}  # other editions use 128
+# recordings made on this computer rather than downloaded (data/audio/<edition>_<n>.mp3), e.g. the
+# Kashmiri Bolbosh voice from ~/kashmiri-voice/make_kashmiri_audio.py; served at /api/audio/
+LOCAL_AUDIO = {"ks.bolbosh"}
+
+
+def local_audio_complete(edition):
+    """True when every ayah of a local recording edition exists."""
+    return sum(1 for _ in (DATA / "audio").glob(f"{edition}_*.mp3")) >= 6236
 BISMILLAH = "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ"
 
 
@@ -107,6 +115,8 @@ def audio_url(item, edition=None):
     """Where the Arabic recitation (edition None) or a translation audio edition of an ayah is online."""
     if edition is None:
         return QDC_AUDIO.format(item["audio_url"])
+    if edition in LOCAL_AUDIO:
+        return f"/api/audio/{edition}/{item['n']}"
     return AUDIO.format(BITRATE.get(edition, 128), edition, item["n"])
 
 
@@ -117,6 +127,8 @@ def get_audio(item, edition=None):
     name = f"qdc{RECITATION_ID}" if edition is None else edition
     f = d / f"{name}_{item['n']}.mp3"
     url = audio_url(item, edition)
+    if not f.exists() and edition in LOCAL_AUDIO:
+        raise FileNotFoundError(f"{f.name} has not been made yet")
     if not f.exists():
         tmp = f.with_suffix(".part")     # never leave a half-downloaded file behind
         tmp.write_bytes(_get(url).content)

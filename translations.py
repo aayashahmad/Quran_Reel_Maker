@@ -26,7 +26,7 @@ def _lang(name, native, edition, translator, font=LATIN, rtl=False, audio=None, 
 LANGS = {
     "ur": _lang("Urdu", "اردو", URDU_EDITION, URDU_NAME, "NotoNastaliqUrdu.ttf", True, URDU_AUDIO, URDU_AUDIO_NAME),
     "ks": _lang("Kashmiri", "کٲشُر", "file:bayanul-furqan-koshur-quran", "Mirwaiz Muhammad Yusuf Shah (Bayanul Furqan)",
-                "NotoNastaliqUrdu.ttf", True, shape="ur"),
+                "NotoNastaliqUrdu.ttf", True, audio="ks.bolbosh", reader="Bolbosh AI voice (NIT Srinagar)", shape="ur"),
     "ur-roman": _lang("Roman Urdu", "Roman Urdu", "qdc:831", "Abul A'la Maududi", shape="ur-Latn"),
     "en": _lang("English", "English", "en.sahih", "Saheeh International", audio="en.walk", reader="Ibrahim Walk"),
     "sq": _lang("Albanian", "Shqip", "sq.ahmeti", "Sherif Ahmeti"),

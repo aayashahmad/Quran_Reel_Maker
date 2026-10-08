@@ -12,7 +12,7 @@ import uuid
 from flask import Flask, abort, jsonify, render_template, request, send_file, send_from_directory
 
 from config import WEB_OUT, READ_URDU
-from quran_data import load_quran, surah_ranges, audio_url
+from quran_data import load_quran, surah_ranges, audio_url, LOCAL_AUDIO, local_audio_complete
 from content import reel_info, metadata
 from main import build_reel, TooLong
 from quran_data import get_audio
@@ -32,9 +32,24 @@ SURAHS = [{"n": s, "en": QURAN[a]["surah_en"], "ar": QURAN[a]["surah_ar"], "coun
 def voice(lang):
     """The translation recording used for this language now, or None (the owner can switch off
     Kashmiri's AI voice on the admin page)."""
+    rec = LANGS[lang]["audio"]
     if lang == "ks" and not site_settings.get()["kashmiri_audio"]:
         return None
-    return LANGS[lang]["audio"]
+    if rec in LOCAL_AUDIO and not _complete(rec):   # used only once every ayah has been made
+        return None
+    return rec
+
+
+_done = {}
+
+
+def _complete(edition):
+    """local_audio_complete, re-checked at most once a minute (it lists 6,236 files)."""
+    ok, at = _done.get(edition, (False, 0))
+    if not ok and time.time() - at > 60:
+        ok = local_audio_complete(edition)
+        _done[edition] = (ok, time.time())
+    return ok
 
 
 def lang_options():
@@ -183,7 +198,11 @@ def audio(edition, n):
     """A translation recording, served from here (downloaded once and kept)."""
     if edition not in VOICES or not 1 <= n <= len(QURAN):
         abort(404)
-    return send_file(get_audio(QURAN[n - 1], edition), mimetype="audio/mpeg", max_age=86400)
+    try:
+        path = get_audio(QURAN[n - 1], edition)
+    except FileNotFoundError:            # a local recording not made yet
+        abort(404)
+    return send_file(path, mimetype="audio/mpeg", max_age=86400)
 
 
 @app.get("/bg/<style>.mp4")
