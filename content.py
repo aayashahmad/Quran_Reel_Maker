@@ -81,6 +81,8 @@ def _metadata_other(items, info, read_aloud, lang):
             f"Quran recitation with {name} translation{native}.\n\n")
     credits = (f"\n\nRecitation: {RECITER_NAME}\n{name} translation: {lang['translator']}\n"
                + (f"{name} audio: {lang['reader']}\n" if read_aloud else "")
+               + ("The Kashmiri voice is made with AI, so some words may be read wrongly; sorry for any mistake.\n"
+                  "Corrections: aayash.bhat.dev@gmail.com\n" if read_aloud and name == "Kashmiri" else "")
                + f"\n#Quran #Quran{ntag} #Surah{tag} #Tilawat #Islam #Shorts")
     body = ("\n".join(f"{x['ar']} ({x['ayah']})" for x in items) + f"\n\n{name} translation:\n"
             + "\n".join(f"{x['tr']} ({x['ayah']})" for x in items))

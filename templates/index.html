@@ -229,6 +229,11 @@
   .bg-auto { display: grid; place-items: center; text-align: center; padding: 8px; color: var(--gold2); font-size: 13px; line-height: 1.4;
     background: radial-gradient(circle at 50% 35%, rgba(212,175,95,.3), #062019 70%); }
   .bg-tile b { text-align: center; font-weight: 600; }
+  .ainote { margin: 10px 0 0; padding: 10px 12px; border-radius: 10px; border-left: 3px solid var(--gold);
+    background: rgba(212,175,95,.08); color: var(--muted); font: 13.5px/1.55 system-ui, -apple-system, sans-serif; }
+  .ainote[hidden] { display: none; }
+  .ainote a { color: var(--gold2); }
+  .ainote span { display: block; margin-top: 4px; font: 15px/2 "Noto Nastaliq Urdu", serif; }
   .langnote { color: var(--muted); font-size: 13.5px; margin: 8px 0 0; font-family: system-ui, -apple-system, sans-serif; }
 
   button, a.btn {
@@ -343,6 +348,10 @@
         </div>
       </div>
       <p class="langnote" id="langnote"></p>
+      <p class="ainote" id="ainote" hidden>
+      The Kashmiri voice is made with AI (Bolbosh), so some words may be read wrongly. We are sorry for any mistake.
+      Please tell us at <a href="mailto:aayash.bhat.dev@gmail.com?subject=Kashmiri%20audio%20mistake">aayash.bhat.dev@gmail.com</a>
+      <span lang="ur" dir="rtl">کشمیری آواز مصنوعی ذہانت (AI) سے بنائی گئی ہے، کسی غلطی کے لیے معذرت۔</span></p>
     </div>
     <div class="field">
       <label id="bglabel">Background</label>
@@ -380,6 +389,10 @@
   <section class="card result" id="reader">
     <div class="card-head"><div class="medallion">۝</div><div><h2 id="rd_title">Read and listen</h2><span class="ur" lang="ur" dir="rtl">پڑھیں اور سنیں</span></div></div>
     <p class="reader-note" id="rd_note"></p>
+    <p class="ainote" id="rd_ainote" hidden>
+      The Kashmiri voice is made with AI (Bolbosh), so some words may be read wrongly. We are sorry for any mistake.
+      Please tell us at <a href="mailto:aayash.bhat.dev@gmail.com?subject=Kashmiri%20audio%20mistake">aayash.bhat.dev@gmail.com</a>
+      <span lang="ur" dir="rtl">کشمیری آواز مصنوعی ذہانت (AI) سے بنائی گئی ہے، کسی غلطی کے لیے معذرت۔</span></p>
     <div class="player">
       <button type="button" class="ghost" id="rd_prev" aria-label="Previous ayah"><svg viewBox='0 0 24 24' fill='currentColor' aria-hidden='true'><path d='M6 5h2v14H6zM20 5v14L9 12z'/></svg></button>
       <button type="button" class="play" id="rd_play" aria-label="Play"><svg viewBox='0 0 24 24' fill='currentColor' aria-hidden='true'><path d='M7 4v16l13-8z'/></svg></button>
@@ -727,6 +740,7 @@ function syncLang() {
   read.closest(".check").classList.toggle("off", !audio);
   $("readlabel").textContent = audio ? "Read the translation aloud after each ayah"
                                      : "Read aloud (no recording for this language)";
+  $("ainote").hidden = !(o.value === "ks" && audio);      // the Kashmiri voice is AI-made
   $("langnote").textContent = `Translation by ${o.dataset.translator}.` +
     (audio ? ` Read aloud by ${o.dataset.reader}.` : " Shown on screen with the Arabic recitation.");
   try { localStorage.setItem("lang", o.value); } catch (e) {}
@@ -782,6 +796,7 @@ $("readbtn").onclick = async () => {
     const hasVoice = !!data.ayat[0].tr_audio;
     $("rd_tr").checked = hasVoice && $("read").checked; $("rd_tr").disabled = !hasVoice;
     $("rd_tr").closest(".check").classList.toggle("off", !hasVoice);
+    $("rd_ainote").hidden = !(data.lang === "ks" && hasVoice);
     $("rd_note").textContent = "Recitation by Mishary Rashid Alafasy. Tap any ayah to start from it." +
       (hasVoice ? "" : " This translation has no recording, so it is shown on screen only.");
     // start at the "From ayah" of the form (at the Bismillah when that is ayah 1)

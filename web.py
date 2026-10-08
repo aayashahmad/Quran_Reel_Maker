@@ -18,11 +18,13 @@ from main import build_reel, TooLong
 from quran_data import get_audio
 import admin
 import backgrounds
+import protect
 import site_settings
 from translations import LANGS, NO_SPACES, texts
 
 app = Flask(__name__)
 admin.setup(app)
+protect.setup(app)
 QURAN = load_quran()
 RANGES = surah_ranges(QURAN)
 SURAHS = [{"n": s, "en": QURAN[a]["surah_en"], "ar": QURAN[a]["surah_ar"], "count": b - a}
@@ -244,7 +246,8 @@ def sitemap():
 @app.get("/robots.txt")
 def robots():
     """Allow everything and point to the sitemap (Cloudflare adds its own lines above these)."""
-    return app.response_class(f"User-agent: *\nAllow: /\n\nSitemap: {SITE}/sitemap.xml\n", mimetype="text/plain")
+    rules = "User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /files/\nDisallow: /bg/\nDisallow: /admin\n"
+    return app.response_class(f"{rules}\nSitemap: {SITE}/sitemap.xml\n", mimetype="text/plain")
 
 
 @app.get("/api/job/<jid>")
