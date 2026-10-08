@@ -8,3 +8,4 @@ __pycache__/
 web_output/
 .env
 .DS_Store
+.wrangler/
