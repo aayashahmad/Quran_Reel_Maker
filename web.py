@@ -14,16 +14,30 @@ from quran_data import load_quran, surah_ranges, audio_url
 from content import reel_info, metadata
 from main import build_reel, TooLong
 from quran_data import get_audio
+import admin
 import backgrounds
+import site_settings
 from translations import LANGS, NO_SPACES, texts
 
 app = Flask(__name__)
+admin.setup(app)
 QURAN = load_quran()
 RANGES = surah_ranges(QURAN)
 SURAHS = [{"n": s, "en": QURAN[a]["surah_en"], "ar": QURAN[a]["surah_ar"], "count": b - a}
           for s, (a, b) in sorted(RANGES.items())]
-LANG_OPTIONS = [{"code": c, "name": l["name"], "native": l["native"], "translator": l["translator"],
-                 "audio": bool(l["audio"]), "reader": l["reader"]} for c, l in LANGS.items()]
+
+
+def voice(lang):
+    """The translation recording used for this language now, or None (the owner can switch off
+    Kashmiri's AI voice on the admin page)."""
+    if lang == "ks" and not site_settings.get()["kashmiri_audio"]:
+        return None
+    return LANGS[lang]["audio"]
+
+
+def lang_options():
+    return [{"code": c, "name": l["name"], "native": l["native"], "translator": l["translator"],
+             "audio": bool(voice(c)), "reader": l["reader"]} for c, l in LANGS.items()]
 JOBS = {}
 RENDER_LOCK = threading.Lock()      # one render at a time
 JOB_ID = re.compile(r"^[0-9a-f]{12}$")
@@ -108,7 +122,8 @@ def served_by(resp):
 
 @app.get("/")
 def index():
-    return render_template("index.html", surahs=SURAHS, langs=LANG_OPTIONS, read_urdu=READ_URDU,
+    return render_template("index.html", surahs=SURAHS, langs=lang_options(), read_urdu=READ_URDU,
+                           device_generation=site_settings.get()["device_generation"],
                            bgs=[{"style": s, "name": backgrounds.NAMES[s]} for s in backgrounds.STYLES])
 
 
@@ -124,7 +139,8 @@ def generate():
     bg = d.get("bg") or None                  # None = pick from the surah and ayah
     if bg is not None and bg not in backgrounds.STYLES:
         return jsonify(error="Unknown background."), 400
-    return start_job(run_job, *p, lang, bool(d.get("read", d.get("urdu", True))), bg)
+    read = bool(d.get("read", d.get("urdu", True))) and voice(lang) is not None
+    return start_job(run_job, *p, lang, read, bg)
 
 
 @app.get("/api/surah/<int:surah>")
@@ -135,16 +151,16 @@ def surah_data(surah):
     if surah not in RANGES or lang not in LANGS:
         abort(404)
     tr = texts(lang, QURAN, log=lambda m: None)
-    voice = LANGS[lang]["audio"]
+    rec = voice(lang)
     s0, s1 = RANGES[surah]
 
     def ayah(it):
         return {"n": it["ayah"], "words": it["words"], "segments": it["segments"], "audio": audio_url(it),
-                "tr": tr[it["n"] - 1], "tr_audio": audio_url(it, voice) if voice else None,
+                "tr": tr[it["n"] - 1], "tr_audio": audio_url(it, rec) if rec else None,
                 "sajda": it["sajda"], "gn": it["n"],
                 # same audio through this server, for making a reel on the device (islamic.network
                 # doesn't allow other sites to read its files; Quran.com does)
-                "tr_audio_local": f"/api/audio/{voice}/{it['n']}" if voice else None}
+                "tr_audio_local": f"/api/audio/{rec}/{it['n']}" if rec else None}
     first = QURAN[s0]
     return jsonify(surah=surah, en=first["surah_en"], ar=first["surah_ar"], lang=lang,
                    rtl=LANGS[lang]["rtl"], spaced=lang not in NO_SPACES,
@@ -185,7 +201,7 @@ def meta():
     tr = texts(lang, QURAN, log=lambda m: None)
     items = [dict(it, tr=tr[it["n"] - 1]) for it in QURAN[s0 + first - 1:s0 + last]]
     info = reel_info(items, 1, 1, first == 1 and last == s1 - s0)
-    read = request.args.get("read") == "1" and bool(LANGS[lang]["audio"])
+    read = request.args.get("read") == "1" and voice(lang) is not None
     title, desc, tags = metadata(items, info, read, lang)
     return jsonify(title=title, desc=desc, tags=", ".join(tags), name=file_name(surah, first, last, lang))
 

@@ -568,7 +568,9 @@ showBg();
 // ---- Generate: a popup asks where the video is made ----
 const genmodal = $("genmodal");
 function closeGen() { genmodal.hidden = true; $("go").focus(); }
+const DEVICE_GENERATION = {{ "true" if device_generation else "false" }};   // the owner's switch (admin page)
 $("go").onclick = () => {
+  if (!DEVICE_GENERATION) return generateCloud();     // only one way: no need to ask
   const ok = DeviceReel.supported();
   $("gen_device").disabled = !ok;
   if (!ok) $("gen_device_note").textContent = "This browser can't record video. Please use Generate in cloud.";
