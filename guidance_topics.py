@@ -282,6 +282,25 @@ TOPICS = [
          guide_en="Actions are judged by intentions. Do good for Allah, not to impress people, and even ordinary "
                   "things like work, study and caring for family become worship when your intention is right.",
          guide_ur="اعمال کا دارومدار نیتوں پر ہے۔ ہر کام اللہ کے لیے کریں، دکھاوے کے لیے نہیں۔"),
+    dict(id="qiyamah", en="The end of the world and the Day of Judgement", ur="قیامت اور دنیا کا خاتمہ",
+         words="qiyamah qiyamat qayamat kayamat end of the world doomsday judgement day last day hour signs "
+               "duniya dunya khatam akhri zamana قیامت دنیا ختم آخری زمانہ",
+         ayat=["7:187", "33:63", "31:34"], hadith=[("bukhari", 3688), ("bukhari", 4936)],
+         guide_en="Only Allah knows when the Hour will come; even the Prophet ﷺ was told to say its knowledge is with "
+                  "his Lord. He also said his coming and the Hour are close, like two fingers side by side. When a man "
+                  "asked him when it would be, he answered: what have you prepared for it? So the better question is "
+                  "how to be ready: pray, do good, and love Allah and His Messenger.",
+         guide_ur="قیامت کب آئے گی، یہ صرف اللہ جانتا ہے۔ نبی ﷺ نے فرمایا کہ میں اور قیامت ان دو انگلیوں کی طرح قریب ہیں۔ "
+                  "ایک شخص نے پوچھا قیامت کب ہے تو آپ ﷺ نے فرمایا: تم نے اس کے لیے کیا تیاری کی ہے؟ اصل سوال تیاری کا ہے۔"),
+    dict(id="dua", en="When your dua seems unanswered", ur="جب دعا قبول ہوتی نظر نہ آئے",
+         words="dua duaa prayer answered unanswered accepted not accepted allah not listening allah not hearing "
+               "qabool qubool sunta sunna دعا قبول سنتا",
+         ayat=["2:186", "40:60", "27:62"], hadith=[("muslim", 6934)],
+         guide_en="Allah is near and answers the one who calls on Him. The Prophet ﷺ said your dua is answered as long "
+                  "as you do not grow impatient and say 'I prayed but was not answered'. An answer may come as what you "
+                  "asked, as harm turned away, or as reward saved for you. Keep asking, with patience and trust.",
+         guide_ur="اللہ قریب ہے اور پکارنے والے کی دعا سنتا ہے۔ نبی ﷺ نے فرمایا دعا قبول ہوتی ہے جب تک بندہ جلدی نہ کرے اور یہ "
+                  "نہ کہے کہ میں نے دعا کی مگر قبول نہ ہوئی۔ صبر اور یقین سے مانگتے رہیں۔"),
     dict(id="crisis", en="Feeling like giving up on life", ur="زندگی سے مایوسی",
          words="suicide suicidal kill myself end my life want to die self harm hurt myself no reason to live "
                "khudkushi mar jana marna chahta zindagi khatam خودکشی مرنا چاہتا زندگی ختم",
