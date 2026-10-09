@@ -271,6 +271,13 @@ def guide():
         related = []
     tr = texts(lang, QURAN, log=lambda m: None)
     data = guidance.answer(topic, QURAN, RANGES, tr, lang)
+    rec = voice(lang)
+    for p in data["ayat"]:                  # audio + word timings, so each passage can play in its own card
+        s0 = RANGES[p["surah"]][0]
+        for v in p["verses"]:
+            it = QURAN[s0 + v["n"] - 1]
+            v.update(words=it["words"], segments=it["segments"], audio=audio_url(it),
+                     tr_audio=audio_url(it, rec) if rec else None)
     data["related"] = [{"id": t, "title": guidance.BY_ID[t]["en"]} for t in related]
     return jsonify(found=True, **data)
 

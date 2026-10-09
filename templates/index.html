@@ -250,6 +250,9 @@
   .passage .tr[dir="rtl"] { font: 17px/2.2 "Noto Nastaliq Urdu", serif; }
   .passage .row-btns { display: flex; flex-wrap: wrap; gap: 8px; }
   .passage .row-btns button { padding: 7px 14px; font-size: 13.5px; }
+  .passage .w { border-radius: 6px; padding: 0 2px; transition: background .12s, color .12s; }
+  .passage .w.hl { background: rgba(212,175,95,.3); color: var(--gold2); }
+  .passage .tr.on { color: var(--gold2); }
   .hadith { border-left: 3px solid var(--gold); padding: 6px 0 6px 14px; margin: 0 0 14px; }
   .hadith p { margin: 0 0 6px; color: var(--text); font: 15px/1.7 system-ui, sans-serif; }
   .hadith p[dir="rtl"] { font: 16px/2.2 "Noto Nastaliq Urdu", serif; }
@@ -930,7 +933,56 @@ if ($("ask")) {
     from.value = p.from; to.value = p.to;
     then();
   }
+  // plays one passage inside its own card: Arabic with word highlighting, then the translation recording
+  const askAudio = new Audio();
+  let playing = null;                      // { lines, button, stop }
+  function stopPassage() {
+    if (!playing) return;
+    askAudio.pause(); askAudio.removeAttribute("src");
+    playing.lines.forEach(l => { l.ar.querySelectorAll(".hl").forEach(e => e.classList.remove("hl")); l.tr.classList.remove("on"); });
+    playing.button.textContent = "🔊 Read and listen";
+    playing = null;
+  }
+  function playPassage(lines, button) {
+    const again = playing && playing.button === button;
+    stopPassage();
+    if (again) return;                     // second click = stop
+    player.pause();                        // the big Read and listen player, if it is playing
+    button.textContent = "⏸ Stop";
+    const me = playing = { lines, button };
+    const steps = [];
+    lines.forEach(l => {
+      steps.push({ l, src: l.v.audio, ar: true });
+      if (l.v.tr_audio && $("read").checked) steps.push({ l, src: l.v.tr_audio, ar: false });
+    });
+    let k = 0;
+    const next = () => {
+      if (playing !== me) return;
+      lines.forEach(x => { x.tr.classList.remove("on"); x.ar.querySelectorAll(".hl").forEach(e => e.classList.remove("hl")); });
+      if (k >= steps.length) return stopPassage();
+      const st = steps[k++];
+      if (!st.ar) st.l.tr.classList.add("on");
+      askAudio.src = st.src;
+      askAudio.onended = next; askAudio.onerror = next;
+      askAudio.play().catch(next);
+      const words = st.l.ar.querySelectorAll(".w");
+      const tick = () => {
+        if (playing !== me || askAudio.paused || askAudio.src.indexOf(st.src) < 0) return;
+        if (st.ar) {
+          const ms = askAudio.currentTime * 1000; let w = -1;
+          for (const [pos, start] of st.l.v.segments) if (start <= ms) w = pos - 1;
+          words.forEach((e, i) => e.classList.toggle("hl", i === w));
+        }
+        requestAnimationFrame(tick);
+      };
+      askAudio.onplay = () => requestAnimationFrame(tick);
+      if (!st.ar) words.forEach(e => e.classList.remove("hl"));
+    };
+    next();
+  }
+
   function showAnswer(d) {
+    stopPassage();
     $("ask_crisis").replaceChildren();
     if (d.crisis) {
       const box = el("div", "crisis-box");
@@ -945,13 +997,18 @@ if ($("ask")) {
       const card = el("div", "passage");
       const range = p.to !== p.from ? `${p.from}–${p.to}` : `${p.from}`;
       card.append(el("p", "ref", `Surah ${p.surah_en} · ${p.surah}:${range}`));
-      for (const v of p.verses) {
-        const ar = el("p", "ar", v.ar + " \u06DD" + AR_DIGITS(v.n)); ar.lang = "ar"; card.append(ar);
-        const tr = el("p", "tr", v.tr); tr.dir = "auto"; card.append(tr);
-      }
+      const lines = p.verses.map(v => {
+        const ar = el("p", "ar"); ar.lang = "ar";
+        v.words.forEach((w, k) => { ar.append(el("span", "w", w), k < v.words.length - 1 ? " " : ""); });
+        ar.append(" \u06DD" + AR_DIGITS(v.n));
+        const tr = el("p", "tr", v.tr); tr.dir = "auto";
+        card.append(ar, tr);
+        return { v, ar, tr };
+      });
       const row = el("div", "row-btns");
+      const listen = btn("🔊 Read and listen", true, () => playPassage(lines, listen));
       row.append(btn("🎬 Make a reel", false, () => useAyat(p, () => { $("go").scrollIntoView({ behavior: "smooth", block: "center" }); $("go").click(); })),
-                 btn("🔊 Read and listen", true, () => useAyat(p, () => $("readbtn").click())));
+                 listen);
       card.append(row);
       return card;
     }));
