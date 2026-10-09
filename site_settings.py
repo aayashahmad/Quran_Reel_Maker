@@ -14,6 +14,9 @@ SWITCHES = {   # name: (default, label, explanation)
                        "Read the Kashmiri translation aloud with the Bolbosh AI voice, where its audio has been made."),
     "device_generation": (True, "Generate on this device",
                           "Offer visitors the option to make the reel in their own browser."),
+    "ask_quran": (False, "Ask the Quran (life guidance)",
+                  "Visitors describe a problem and get related ayat, sahih hadith and guidance. Review the topics "
+                  "first at /admin/guidance."),
 }
 _lock = threading.Lock()
 _cache = {"mtime": None, "values": None}

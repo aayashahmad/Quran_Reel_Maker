@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Review · Ask the Quran</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Noto+Nastaliq+Urdu&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #f7f5ef; color: #1d2a24; font: 15px/1.6 system-ui, -apple-system, sans-serif; }
+  main { max-width: 900px; margin: 0 auto; padding: 24px 16px 60px; }
+  h1 { font: 700 28px Georgia, serif; color: #0b3d2e; margin: 0 0 4px; }
+  .sub { color: #5b6b63; margin: 0 0 24px; }
+  section { background: #fff; border: 1px solid #e4dfd2; border-radius: 12px; padding: 18px 20px; margin-bottom: 18px; }
+  h2 { margin: 0; font: 600 20px Georgia, serif; color: #0b3d2e; }
+  h2 small { font: 15px "Noto Nastaliq Urdu", serif; color: #6b5a2e; margin-left: 10px; }
+  .crisis { border-color: #c0392b; }
+  .words { color: #7a857f; font-size: 12.5px; margin: 6px 0 12px; }
+  h3 { font: 600 13px system-ui, sans-serif; letter-spacing: .5px; text-transform: uppercase; color: #8a6d1e; margin: 16px 0 6px; }
+  .ar { font: 24px/2 "Amiri Quran", serif; direction: rtl; text-align: right; margin: 4px 0; }
+  .ur { font: 16px/2.1 "Noto Nastaliq Urdu", serif; direction: rtl; text-align: right; margin: 2px 0; color: #34433b; }
+  .en { margin: 2px 0 10px; }
+  .ref { font-weight: 600; color: #0b3d2e; }
+  .hadith { border-left: 3px solid #d4af5f; padding: 4px 0 4px 12px; margin: 8px 0; }
+  a { color: #0b6b4f; }
+  .note { background: #fff8e1; border: 1px solid #f0d58a; border-radius: 10px; padding: 12px 14px; margin-bottom: 20px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Ask the Quran · review</h1>
+  <p class="sub">{{ items|length }} topics. Only you can see this page. <a href="/admin">Back to admin</a></p>
+  <p class="note">Please read every topic, ideally with someone knowledgeable. Every ayah comes from the site's own Quran
+    data and every hadith from Sahih al-Bukhari or Sahih Muslim, with its sunnah.com link checked. To change a topic,
+    edit <code>guidance_topics.py</code> and run <code>python build_guidance.py</code>.</p>
+  {% for t in items %}
+  <section class="{{ 'crisis' if t.crisis }}">
+    <h2>{{ loop.index }}. {{ t.title }} <small>{{ t.title_ur }}</small></h2>
+    <p class="words">Matches: {{ t.words }}</p>
+    <h3>Ayat</h3>
+    {% for p in t.ayat %}
+      <p class="ref">Surah {{ p.surah_en }} {{ p.surah }}:{{ p['from'] }}{% if p.to != p['from'] %}–{{ p.to }}{% endif %}</p>
+      {% for v in p.verses %}
+        <p class="ar" lang="ar">{{ v.ar }} ﴿{{ v.n }}﴾</p>
+        <p class="ur" lang="ur">{{ v.ur }}</p>
+        <p class="en">{{ v.tr }}</p>
+      {% endfor %}
+    {% endfor %}
+    <h3>Hadith</h3>
+    {% for h in t.hadith_full %}
+      <div class="hadith"><p class="ref"><a href="{{ h.url }}" target="_blank" rel="noopener">{{ h.collection }} {{ h.number }} ↗</a></p>
+        <p>{{ h.en }}</p>{% if h.ur %}<p class="ur" lang="ur">{{ h.ur }}</p>{% endif %}</div>
+    {% endfor %}
+    <h3>Guidance</h3>
+    <p>{{ t.guide_en }}</p>
+    <p class="ur" lang="ur">{{ t.guide_ur }}</p>
+  </section>
+  {% endfor %}
+</main>
+</body>
+</html>

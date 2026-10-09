@@ -234,6 +234,34 @@
   .ainote[hidden] { display: none; }
   .ainote a { color: var(--gold2); }
   .ainote span { display: block; margin-top: 4px; font: 15px/2 "Noto Nastaliq Urdu", serif; }
+  /* Ask the Quran */
+  #ask_q { min-height: 84px; font: 16px/1.5 system-ui, -apple-system, sans-serif; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 0; }
+  .chips button { padding: 6px 13px; font: 600 13px system-ui, -apple-system, sans-serif; background: transparent; color: var(--gold2);
+    box-shadow: inset 0 0 0 1px var(--line); }
+  .chips button:hover { background: rgba(212,175,95,.12); transform: none; }
+  .ask-title { font: 700 24px Amiri, serif; color: var(--gold); margin: 6px 0 2px; }
+  .ask-title small { display: block; font: 16px/2 "Noto Nastaliq Urdu", serif; color: var(--muted); }
+  .ask-h { font: 600 12.5px system-ui, sans-serif; letter-spacing: .6px; text-transform: uppercase; color: var(--gold); margin: 22px 0 8px; }
+  .passage { border: 1px solid var(--line-soft); border-radius: 14px; padding: 14px 16px; margin-bottom: 12px; background: rgba(3,22,17,.35); }
+  .passage .ref { font: 600 14px system-ui, sans-serif; color: var(--gold2); margin: 0 0 6px; }
+  .passage .ar { font: 26px/2.05 "Amiri Quran", Amiri, serif; text-align: right; direction: rtl; margin: 0; }
+  .passage .tr { color: var(--text); margin: 4px 0 10px; font: 16px/1.7 system-ui, sans-serif; }
+  .passage .tr[dir="rtl"] { font: 17px/2.2 "Noto Nastaliq Urdu", serif; }
+  .passage .row-btns { display: flex; flex-wrap: wrap; gap: 8px; }
+  .passage .row-btns button { padding: 7px 14px; font-size: 13.5px; }
+  .hadith { border-left: 3px solid var(--gold); padding: 6px 0 6px 14px; margin: 0 0 14px; }
+  .hadith p { margin: 0 0 6px; color: var(--text); font: 15px/1.7 system-ui, sans-serif; }
+  .hadith p[dir="rtl"] { font: 16px/2.2 "Noto Nastaliq Urdu", serif; }
+  .hadith a { color: var(--gold2); font: 600 13.5px system-ui, sans-serif; }
+  .guide { font: 16px/1.75 system-ui, sans-serif; color: var(--text); margin: 0; }
+  .guide[dir="rtl"] { font: 17px/2.2 "Noto Nastaliq Urdu", serif; }
+  .note { color: var(--muted); font: 13px/1.6 system-ui, sans-serif; padding: 10px 14px; border-left: 2px solid var(--gold);
+    background: rgba(212,175,95,.06); border-radius: 0 8px 8px 0; }
+  .crisis-box { border: 2px solid #ff9b8a; background: rgba(255,155,138,.1); border-radius: 14px; padding: 14px 16px; margin: 6px 0 4px;
+    color: var(--text); font: 15.5px/1.6 system-ui, sans-serif; }
+  .crisis-box b { color: #ffc2b6; }
+  .crisis-box a { color: #ffd9d1; font-weight: 700; }
   .langnote { color: var(--muted); font-size: 13.5px; margin: 8px 0 0; font-family: system-ui, -apple-system, sans-serif; }
 
   button, a.btn {
@@ -404,6 +432,30 @@
     <div id="rd_list"></div>
   </section>
 
+  {% if ask_quran %}
+  <section class="card" id="ask">
+    <div class="card-head"><div class="medallion">؟</div><div><h2>Ask the Quran</h2><span class="ur" lang="ur" dir="rtl">قرآن سے رہنمائی</span></div></div>
+    <p class="hint">Describe what you are going through, in English, Roman Urdu or Urdu. You will get related ayat, sahih hadith and gentle guidance.</p>
+    <label for="ask_q" class="sr-only">Your question</label>
+    <textarea id="ask_q" maxlength="500" placeholder="e.g. I feel anxious about my future · mujhe bohot gussa aata hai · مجھے بہت پریشانی ہے"></textarea>
+    <div class="chips" id="ask_chips">
+      {% for t in guide_topics[:8] %}<button type="button" data-topic="{{ t.id }}">{{ t.title }}</button>{% endfor %}
+    </div>
+    <div class="actions"><button id="ask_go" class="primary" type="button">Ask</button></div>
+    <div id="ask_status" class="status" role="status"></div>
+  </section>
+
+  <section class="card result" id="ask_result" aria-live="polite">
+    <div id="ask_crisis"></div>
+    <p class="ask-title" id="ask_title"></p>
+    <p class="ask-h">From the Quran</p><div id="ask_ayat"></div>
+    <p class="ask-h">From the Sunnah (sahih hadith)</p><div id="ask_hadith"></div>
+    <p class="ask-h">Guidance</p><p class="guide" id="ask_guide"></p>
+    <div id="ask_related"></div>
+    <p class="note" style="margin-top:18px">This is reflection to help you, not a fatwa. For religious rulings please ask a qualified scholar.
+      Ayat are from the Quran with your chosen translation; hadith are from Sahih al-Bukhari and Sahih Muslim, with links to check them on sunnah.com.</p>
+  </section>
+  {% endif %}
 </main>
 <div class="modal" id="bgmodal" hidden role="dialog" aria-modal="true" aria-labelledby="bgmodal-title">
   <div class="modal-box bg-box">
@@ -868,6 +920,74 @@ $("rd_play").onclick = () => {
 $("rd_prev").onclick = () => rd && playRow(Math.max(cur - 1, 0), "ar");
 $("rd_next").onclick = () => rd && playRow(Math.min(cur + 1, rd.rows.length - 1), "ar");
 $("rd_repeat").onclick = () => { repeatOn = !repeatOn; $("rd_repeat").setAttribute("aria-pressed", String(repeatOn)); };
+
+// ---- Ask the Quran: a visitor's problem -> verified ayat, sahih hadith and guidance ----
+if ($("ask")) {
+  const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+  const btn = (label, ghost, fn) => { const b = el("button", ghost ? "ghost" : "", label); b.type = "button"; b.onclick = fn; return b; };
+  function useAyat(p, then) {
+    surah.value = p.surah; surah.dispatchEvent(new Event("change")); syncPicker();
+    from.value = p.from; to.value = p.to;
+    then();
+  }
+  function showAnswer(d) {
+    $("ask_crisis").replaceChildren();
+    if (d.crisis) {
+      const box = el("div", "crisis-box");
+      box.append(el("b", "", "You are not alone. Please talk to someone now. "),
+                 "In India call Tele-MANAS ", Object.assign(el("a", "", "14416"), { href: "tel:14416" }),
+                 " (free, 24 hours) or emergency ", Object.assign(el("a", "", "112"), { href: "tel:112" }),
+                 ", or tell someone you trust.");
+      $("ask_crisis").append(box);
+    }
+    const title = $("ask_title"); title.replaceChildren(d.title, el("small", "", d.title_ur));
+    $("ask_ayat").replaceChildren(...d.ayat.map(p => {
+      const card = el("div", "passage");
+      const range = p.to !== p.from ? `${p.from}–${p.to}` : `${p.from}`;
+      card.append(el("p", "ref", `Surah ${p.surah_en} · ${p.surah}:${range}`));
+      for (const v of p.verses) {
+        const ar = el("p", "ar", v.ar + " \u06DD" + AR_DIGITS(v.n)); ar.lang = "ar"; card.append(ar);
+        const tr = el("p", "tr", v.tr); tr.dir = "auto"; card.append(tr);
+      }
+      const row = el("div", "row-btns");
+      row.append(btn("🎬 Make a reel", false, () => useAyat(p, () => { $("go").scrollIntoView({ behavior: "smooth", block: "center" }); $("go").click(); })),
+                 btn("🔊 Read and listen", true, () => useAyat(p, () => $("readbtn").click())));
+      card.append(row);
+      return card;
+    }));
+    $("ask_hadith").replaceChildren(...d.hadith.map(h => {
+      const box = el("div", "hadith");
+      const t = el("p", "", h.text); t.dir = h.rtl ? "rtl" : "ltr"; if (h.rtl) t.lang = "ur";
+      const a = Object.assign(el("a", "", `${h.ref} · check on sunnah.com ↗`), { href: h.url, target: "_blank", rel: "noopener" });
+      box.append(t, a);
+      return box;
+    }));
+    const g = $("ask_guide"); g.textContent = d.guide; g.dir = d.guide_rtl ? "rtl" : "ltr";
+    const rel = $("ask_related"); rel.replaceChildren();
+    if (d.related && d.related.length) {
+      rel.append(el("p", "ask-h", "Also related"));
+      const c = el("div", "chips"); d.related.forEach(r => c.append(btn(r.title, true, () => ask({ topic: r.id })))); rel.append(c);
+    }
+    $("ask_result").style.display = "block";
+    $("ask_result").scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+  async function ask(params) {
+    const st = $("ask_status"), go = $("ask_go");
+    go.disabled = true; setStatus("Finding guidance…", false, st, true);
+    try {
+      const qs = new URLSearchParams({ ...params, lang: $("lang").value });
+      const d = await api("/api/guide?" + qs);
+      if (!d.found) {
+        setStatus("We couldn't find a close match. Please choose the topic nearest to what you feel:", false, st);
+        $("ask_chips").replaceChildren(...d.topics.map(t => btn(t.title, true, () => ask({ topic: t.id }))));
+      } else { setStatus("", false, st); showAnswer(d); }
+    } catch (e) { setStatus(e.message, true, st); }
+    go.disabled = false;
+  }
+  $("ask_go").onclick = () => { const q = $("ask_q").value.trim(); if (q) ask({ q }); else $("ask_q").focus(); };
+  $("ask_q").addEventListener("keydown", e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); $("ask_go").click(); } });
+  document.querySelectorAll("#ask_chips button").forEach(b => b.onclick = () => ask({ topic: b.dataset.topic }));
+}
 
 document.querySelectorAll(".copy").forEach(b => b.onclick = () => {
   navigator.clipboard.writeText($(b.dataset.for).value);

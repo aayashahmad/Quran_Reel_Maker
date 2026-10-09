@@ -1,0 +1,1253 @@
+[
+ {
+  "id": "anxiety",
+  "en": "Anxiety and worry",
+  "ur": "پریشانی اور فکر",
+  "guide_en": "Worry is part of being human. The Quran teaches that hearts find rest in remembering Allah, that no soul is burdened beyond what it can bear, and that ease comes with hardship. Do what is in your hands, then leave the outcome to Allah. The Prophet ﷺ himself asked Allah for refuge from worry and grief, so make that dua part of your day.",
+  "guide_ur": "پریشانی انسان کی فطرت کا حصہ ہے۔ قرآن بتاتا ہے کہ دل اللہ کے ذکر سے سکون پاتے ہیں، کسی جان پر طاقت سے زیادہ بوجھ نہیں ڈالا جاتا، اور مشکل کے ساتھ آسانی ہے۔ جو آپ کے بس میں ہے وہ کریں اور نتیجہ اللہ پر چھوڑ دیں۔",
+  "crisis": false,
+  "words": "anxiety anxious worry worried stress stressed tension nervous overthinking panic restless fear future pareshan pareshani fikar tension ghabrahat dar bechaini پریشان پریشانی فکر گھبراہٹ بے چینی ڈر",
+  "ayat": [
+   {
+    "surah": 13,
+    "from": 28,
+    "to": 28
+   },
+   {
+    "surah": 2,
+    "from": 286,
+    "to": 286
+   },
+   {
+    "surah": 94,
+    "from": 5,
+    "to": 6
+   }
+  ],
+  "hadith": [
+   {
+    "collection": "Sahih al-Bukhari",
+    "number": "6369",
+    "url": "https://sunnah.com/bukhari:6369",
+    "en": "Narrated Anas bin Malik:The Prophet (ﷺ) used to say, \"O Allah! I seek refuge with You from worry and grief, from incapacity and laziness, from cowardice and miserliness, from being heavily in debt and from being overpowered by (other) men.\"",
+    "ur": "ہم سے خالد بن مخلد نے بیان کیا، انہوں نے کہا ہم سے سلیمان نے بیان کیا، انہوں نے کہا کہ مجھ سے عمرو بن ابی عمرو نے بیان کیا، انہوں نے کہا کہ میں نے انس بن مالک رضی اللہ عنہ سے سنا، کہا کہ نبی کریم صلی اللہ علیہ وسلم کہتے تھے «اللهم إني أعوذ بك من الهم والحزن،‏‏‏‏ والعجز والكسل،‏‏‏‏ والجبن والبخل،‏‏‏‏ وضلع الدين،‏‏‏‏ وغلبة الرجال» ”اے اللہ! میں تیری پناہ مانگتا ہوں غم و الم سے، عاجزی سے، سستی سے، بزدلی سے، بخل، قرض چڑھ جانے اور لوگوں کے غلبہ سے۔“"
+   },
+   {
+    "collection": "Sahih Muslim",
+    "number": "2999",
+    "url": "https://sunnah.com/muslim/55/82",
+    "en": "Suhaib reported that Allah's Messenger (ﷺ) said:Strange are the ways of a believer for there is good in every affair of his and this is not the case with anyone else except in the case of a believer for if he has an occasion to feel delight, he thanks (God), thus there is a good for him in it, and if he gets into trouble and shows resignation (and endures it patiently), there is a good for him in it",
+    "ur": "حضرت صہیب رضی اللہ تعالیٰ عنہ سے روایت ہے ، کہا : رسول اللہ صلی اللہ علیہ وسلم نے فرمایا : \" مومن کا معاملہ عجیب ہے ۔ اس کا ہرمعاملہ اس کے لیے بھلائی کا ہے ۔ اور یہ بات مومن کے سوا کسی اور کومیسر نہیں ۔ اسے خوشی اور خوشحالی ملے توشکر کرتا ہے ۔ اور یہ اس کے لیے اچھا ہوتا ہے اور اگر اسے کوئی نقصان پہنچے تو ( اللہ کی رضا کے لیے ) صبر کر تا ہے ، یہ ( ابھی ) اس کے لیے بھلائی ہوتی ہے ۔"
+   }
+  ]
+ },
+ {
+  "id": "sadness",
+  "en": "Sadness and low mood",
+  "ur": "غم اور اداسی",
+  "guide_en": "Sadness is not a sign of weak faith. Prophet Yaqub said he complains of his grief only to Allah, and Allah reassured the Prophet ﷺ that He had not abandoned him. Every pain a believer feels is not wasted. Talk to Allah, talk to someone you trust, and if sadness stays for weeks, please also see a doctor or counsellor: that is part of looking after the trust of your body and mind.",
+  "guide_ur": "اداسی کمزور ایمان کی علامت نہیں۔ حضرت یعقوبؑ نے اپنا غم صرف اللہ سے کہا۔ مومن کا کوئی دکھ ضائع نہیں جاتا۔ اللہ سے بات کریں، کسی بھروسے والے سے بات کریں، اور اگر اداسی ہفتوں رہے تو ڈاکٹر سے بھی ضرور ملیں۔",
+  "crisis": false,
+  "words": "sad sadness depressed depression unhappy down low cry crying broken heartbroken hopeless empty udaas udasi gham dukh rona dil toot مایوس اداس اداسی غم دکھ رونا",
+  "ayat": [
+   {
+    "surah": 12,
+    "from": 86,
+    "to": 86
+   },
+   {
+    "surah": 94,
+    "from": 5,
+    "to": 6
+   },
+   {
+    "surah": 93,
+    "from": 3,
+    "to": 5
+   }
+  ],
+  "hadith": [
+   {
+    "collection": "Sahih al-Bukhari",
+    "number": "5641",
+    "url": "https://sunnah.com/bukhari:5641",
+    "en": "Narrated Abu Sa`id Al-Khudri and Abu Huraira:The Prophet (ﷺ) said, \"No fatigue, nor disease, nor sorrow, nor sadness, nor hurt, nor distress befalls a Muslim, even if it were the prick he receives from a thorn, but that Allah expiates some of his sins for that",
+    "ur": ""
+   },
+   {
+    "collection": "Sahih Muslim",
+    "number": "2999",
+    "url": "https://sunnah.com/muslim/55/82",
+    "en": "Suhaib reported that Allah's Messenger (ﷺ) said:Strange are the ways of a believer for there is good in every affair of his and this is not the case with anyone else except in the case of a believer for if he has an occasion to feel delight, he thanks (God), thus there is a good for him in it, and if he gets into trouble and shows resignation (and endures it patiently), there is a good for him in it",
+    "ur": "حضرت صہیب رضی اللہ تعالیٰ عنہ سے روایت ہے ، کہا : رسول اللہ صلی اللہ علیہ وسلم نے فرمایا : \" مومن کا معاملہ عجیب ہے ۔ اس کا ہرمعاملہ اس کے لیے بھلائی کا ہے ۔ اور یہ بات مومن کے سوا کسی اور کومیسر نہیں ۔ اسے خوشی اور خوشحالی ملے توشکر کرتا ہے ۔ اور یہ اس کے لیے اچھا ہوتا ہے اور اگر اسے کوئی نقصان پہنچے تو ( اللہ کی رضا کے لیے ) صبر کر تا ہے ، یہ ( ابھی ) اس کے لیے بھلائی ہوتی ہے ۔"
+   }
+  ]
+ },
+ {
+  "id": "anger",
+  "en": "Anger",
+  "ur": "غصہ",
+  "guide_en": "Real strength is controlling yourself when angry. Allah praises those who swallow their anger and forgive people. When anger rises, stay silent, change your position, make wudu, and seek refuge in Allah from Shaytan. Decide nothing until you are calm.",
+  "guide_ur": "اصل طاقت غصے کے وقت خود پر قابو رکھنا ہے۔ اللہ غصہ پی جانے اور معاف کرنے والوں کو پسند کرتا ہے۔ غصہ آئے تو خاموش ہو جائیں، جگہ بدلیں، وضو کریں اور اعوذ باللہ پڑھیں۔ پرسکون ہونے تک کوئی فیصلہ نہ کریں۔",
+  "crisis": false,
+  "words": "anger angry rage temper mad furious shout shouting fight frustrated irritated gussa ghussa naraz jhagra chillana غصہ ناراض جھگڑا",
+  "ayat": [
+   {
+    "surah": 3,
+    "from": 133,
+    "to": 134
+   },
+   {
+    "surah": 42,
+    "from": 37,
+    "to": 37
+   }
+  ],
+  "hadith": [
+   {
+    "collection": "Sahih al-Bukhari",
+    "number": "6114",
+    "url": "https://sunnah.com/bukhari:6114",
+    "en": "Narrated Abu Huraira:Allah's Messenger (ﷺ) said, \"The strong is not the one who overcomes the people by his strength, but the strong is the one who controls himself while in anger",
+    "ur": "ہم سے عبداللہ بن یوسف نے بیان کیا، انہوں نے کہا ہم کو امام مالک نے خبر دی، انہیں ابن شہاب نے، انہیں سعید بن مسیب نے اور انہیں ابوہریرہ رضی اللہ عنہ نے کہ رسول اللہ صلی اللہ علیہ وسلم نے فرمایا ”پہلوان وہ نہیں ہے جو کشتی لڑنے میں غالب ہو جائے بلکہ اصلی پہلوان تو وہ ہے جو غصہ کی حالت میں اپنے آپ پر قابو پائے بے قابو نہ ہو جائے۔“"
+   },
+   {
+    "collection": "Sahih al-Bukhari",
+    "number": "6116",
+    "url": "https://sunnah.com/bukhari:6116",
+    "en": "Narrated Abu Huraira:A man said to the Prophet (ﷺ) , \"Advise me! \"The Prophet (ﷺ) said, \"Do not become angry and furious.\" The man asked (the same) again and again, and the Prophet (ﷺ) said in each case, \"Do not become angry and furious",
+    "ur": "مجھ سے یحییٰ بن یوسف نے بیان کیا، کہا ہم کو ابوبکر نے خبر دی جو ابن عیاش ہیں، انہیں ابوحصین نے، انہیں ابوصالح نے اور انہیں ابوہریرہ رضی اللہ عنہ نے کہ ایک شخص نے نبی کریم صلی اللہ علیہ وسلم سے عرض کیا کہ مجھے آپ کوئی نصیحت فرما دیجئیے۔ نبی کریم صلی اللہ علیہ وسلم نے فرمایا کہ غصہ نہ ہوا کر۔ انہوں نے کئی مرتبہ یہ سوال کیا اور نبی کریم صلی اللہ علیہ وسلم نے فرمایا کہ غصہ نہ ہوا کر۔"
+   }
+  ]
+ },
+ {
+  "id": "patience",
+  "en": "Patience in hard times",
+  "ur": "مشکل وقت میں صبر",
+  "guide_en": "Trials are part of every life, and Allah is with those who are patient. Patience is not giving up: it is staying steady, praying, and keeping going while trusting Allah. The Prophet ﷺ said whoever tries to be patient, Allah makes him patient.",
+  "guide_ur": "آزمائش ہر زندگی کا حصہ ہے اور اللہ صبر کرنے والوں کے ساتھ ہے۔ صبر ہار ماننا نہیں بلکہ ثابت قدم رہنا، نماز پڑھنا اور اللہ پر بھروسے کے ساتھ آگے بڑھنا ہے۔",
+  "crisis": false,
+  "words": "patience patient hardship difficult difficulty struggle trial test problems tough suffering calamity sabr mushkil musibat azmaish takleef صبر مشکل مصیبت آزمائش تکلیف",
+  "ayat": [
+   {
+    "surah": 2,
+    "from": 153,
+    "to": 153
+   },
+   {
+    "surah": 2,
+    "from": 155,
+    "to": 157
+   },
+   {
+    "surah": 39,
+    "from": 10,
+    "to": 10
+   }
+  ],
+  "hadith": [
+   {
+    "collection": "Sahih Muslim",
+    "number": "2999",
+    "url": "https://sunnah.com/muslim/55/82",
+    "en": "Suhaib reported that Allah's Messenger (ﷺ) said:Strange are the ways of a believer for there is good in every affair of his and this is not the case with anyone else except in the case of a believer for if he has an occasion to feel delight, he thanks (God), thus there is a good for him in it, and if he gets into trouble and shows resignation (and endures it patiently), there is a good for him in it",
+    "ur": "حضرت صہیب رضی اللہ تعالیٰ عنہ سے روایت ہے ، کہا : رسول اللہ صلی اللہ علیہ وسلم نے فرمایا : \" مومن کا معاملہ عجیب ہے ۔ اس کا ہرمعاملہ اس کے لیے بھلائی کا ہے ۔ اور یہ بات مومن کے سوا کسی اور کومیسر نہیں ۔ اسے خوشی اور خوشحالی ملے توشکر کرتا ہے ۔ اور یہ اس کے لیے اچھا ہوتا ہے اور اگر اسے کوئی نقصان پہنچے تو ( اللہ کی رضا کے لیے ) صبر کر تا ہے ، یہ ( ابھی ) اس کے لیے بھلائی ہوتی ہے ۔"
+   },
+   {
+    "collection": "Sahih al-Bukhari",
+    "number": "1469",
+    "url": "https://sunnah.com/bukhari:1469",
+    "en": "Narrated Abu Sa`id Al-Khudri:Some Ansari persons asked for (something) from Allah's Messenger (ﷺ) and he gave them. They again asked him for (something) and he again gave them. And then they asked him and he gave them again till all that was with him finished. And then he said \"If I had anything. I would not keep it away from you. (Remember) Whoever abstains from asking others, Allah will make him contented, and whoever tries to make himself self-sufficient, Allah will make him self-sufficient. And whoever remains patient, Allah will make him patient. Nobody can be given a blessing better and greater than patience",
+    "ur": "ہم سے عبداللہ بن یوسف نے بیان کیا ‘ کہا کہ ہمیں امام مالک نے ‘ ابن شہاب سے خبر دی ‘ انہیں عطاء بن یزید لیثی نے اور انہیں ابو سعید خدری رضی اللہ عنہ نے کہ انصار کے کچھ لوگوں نے رسول اللہ صلی اللہ علیہ وسلم سے سوال کیا تو آپ صلی اللہ علیہ وسلم نے انہیں دیا۔ پھر انہوں نے سوال کیا اور آپ صلی اللہ علیہ وسلم نے پھر دیا۔ یہاں تک کہ جو مال آپ صلی اللہ علیہ وسلم کے پاس تھا۔ اب وہ ختم ہو گیا۔ پھر آپ صلی اللہ علیہ وسلم نے فرمایا کہ اگر میرے پاس جو مال و دولت ہو تو میں اسے بچا کر نہیں رکھوں گا۔ مگر جو شخص سوال کرنے سے بچتا ہے تو اللہ تعالیٰ بھی اسے سوال کرنے سے محفوظ ہی رکھتا ہے۔ اور جو شخص بے نیازی برتتا ہے تو اللہ تعالیٰ اسے بےنیاز بنا دیتا ہے اور جو شخص اپنے اوپر زور ڈال کر بھی صبر کرتا ہے تو اللہ تعالیٰ بھی اسے صبر و استقلال دے دیتا ہے۔ اور کسی کو بھی صبر سے زیادہ بہتر اور اس سے زیادہ بےپایاں خیر نہیں ملی۔ ( صبر تمام نعمتوں سے بڑھ کر ہے ) ۔"
+   }
+  ]
+ },
+ {
+  "id": "illness",
+  "en": "Illness",
+  "ur": "بیماری",
+  "guide_en": "Allah is the One who cures, and He has sent a cure for every disease, so seeking treatment is part of trusting Him, not against it. Pain and illness wipe away sins for the believer. Take your medicine, make dua, and let the people around you help you.",
+  "guide_ur": "شفا دینے والا اللہ ہے، اور اس نے ہر بیماری کی دوا اتاری ہے، اس لیے علاج کروانا توکل کا حصہ ہے۔ بیماری مومن کے گناہ مٹاتی ہے۔ دوا لیں، دعا کریں اور اپنوں کی مدد قبول کریں۔",
+  "crisis": false,
+  "words": "ill illness sick sickness disease pain hospital cancer health treatment surgery bimar bimari marz dard hospital ilaj بیمار بیماری مرض درد علاج",
+  "ayat": [
+   {
+    "surah": 26,
+    "from": 80,
+    "to": 80
+   },
+   {
+    "surah": 17,
+    "from": 82,
+    "to": 82
+   },
+   {
+    "surah": 2,
+    "from": 286,
+    "to": 286
+   }
+  ],
+  "hadith": [
+   {
+    "collection": "Sahih al-Bukhari",
+    "number": "5678",
+    "url": "https://sunnah.com/bukhari:5678",
+    "en": "Narrated Abu Huraira:The Prophet (ﷺ) said, \"There is no disease that Allah has created, except that He also has created its treatment",
+    "ur": "ہم سے محمد بن مثنیٰ نے بیان کیا، انہوں نے کہا ہم سے ابواحمد زبیری نے بیان کیا، ان سے عمر بن سعید بن ابی حسین نے بیان کیا، انہوں نے کہا کہ مجھ سے عطاء بن ابی رباح نے بیان کیا اور ان سے ابوہریرہ رضی اللہ عنہ نے بیان کیا کہ نبی کریم صلی اللہ علیہ وسلم نے فرمایا کہ اللہ تعالیٰ نے کوئی ایسی بیماری نہیں اتاری جس کی دوا بھی نازل نہ کی ہو۔"
+   },
+   {
+    "collection": "Sahih al-Bukhari",
+    "number": "5641",
+    "url": "https://sunnah.com/bukhari:5641",
+    "en": "Narrated Abu Sa`id Al-Khudri and Abu Huraira:The Prophet (ﷺ) said, \"No fatigue, nor disease, nor sorrow, nor sadness, nor hurt, nor distress befalls a Muslim, even if it were the prick he receives from a thorn, but that Allah expiates some of his sins for that",
+    "ur": ""
+   }
+  ]
+ },
+ {
+  "id": "grief",
+  "en": "Death of a loved one",
+  "ur": "کسی پیارے کی وفات",
+  "guide_en": "Grief is love that has nowhere to go, and tears are not wrong: the Prophet ﷺ wept too. Every soul returns to Allah. Say inna lillahi wa inna ilayhi raji'un, make dua for the one you lost, give charity on their behalf, and be gentle with yourself while you heal.",
+  "guide_ur": "آنسو بہانا غلط نہیں، نبی ﷺ بھی روئے۔ ہر جان اللہ کی طرف لوٹتی ہے۔ انا للہ وانا الیہ راجعون پڑھیں، مرحوم کے لیے دعا اور صدقہ کریں، اور خود پر نرمی رکھیں۔",
+  "crisis": false,
+  "words": "death died dead passed away loss lost funeral grief grieving mourning mother father died maut wafat inteqal faut janaza wafaat موت وفات انتقال جنازہ",
+  "ayat": [
+   {
+    "surah": 2,
+    "from": 155,
+    "to": 157
+   },
+   {
+    "surah": 3,
+    "from": 185,
+    "to": 185
+   },
+   {
+    "surah": 29,
+    "from": 57,
+    "to": 57
+   }
+  ],
+  "hadith": [
+   {
+    "collection": "Sahih Muslim",
+    "number": "918a",
+    "url": "https://sunnah.com/muslim/11/4",
+    "en": "Umm Salama reported Allah's Messenger (ﷺ) as saying:If any Muslim who suffers some calamity says, what Allah has commanded him,\" We belong to Allah and to Him shall we return; O Allah, reward me for my affliction and give me something better than it in exchange for it,\" Allah will give him something better than it in exchange. When Abu Salama died she said: What Muslim is better than Abu Salama whose family was the first to emigrate to the Messenger of Allah (ﷺ). I then said the words, and Allah gave me God's Messenger (ﷺ) in exchange. She said: The Messenger of Allah (ﷺ) sent Hatib b. Abu Balta'a to deliver me the message of marriage with him. I said to him: I have a daughter (as my dependant) and I am of jealous temperament. He (the Holy Prophet) said: So far as her daughter is concerned, we would supplicate Allah, that He may free her (of her responsibility) and I would also supplicate Allah to do away with (her) jealous (temperament)",
+    "ur": "اسماعیل بن جعفر نےکہا : مجھے سعد بن سعید نے عمر بن کثیر بن افلح سے خبر دی ، انھوں نے ( عمر ) ابن سفینہ سے اور انھوں نے حضرت ام سلمہ رضی اللہ تعالیٰ عنہا سے روایت کی ، انھوں نے کہا : میں نے رسول اللہ صلی اللہ علیہ وسلم کو فرماتے ہوئے سنا : \"\" کوئی مسلمان نہیں جسے مصیبت پہنچے اور وہ ( وہی کچھ ) کہے جس کا اللہ نے اسے حکم دیا ہے : \"\" یقینا ہم اللہ کے ہیں اور اسی کی طرف لوٹنے والے ہیں ، اے اللہ!مجھے میری مصیبت پر اجر دے اور مجھے ( اس کا ) اس سے بہتر بدل عطا فرما \"\" مگر اللہ تعالیٰ اسے اس ( ضائع شدہ چیز ) کا بہتر بدل عطا فرمادیتا ہے ۔ \"\" ( ام سلمہ رضی اللہ تعالیٰ عنہا نے ) کہا : جب ( میرے خاوند ) ابو سلمہ رضی اللہ تعالیٰ عنہ فوت ہوگئے تو میں نے ( دل میں ) کہا : کون سا مسلمان ابو سلمہ رضی اللہ تعالیٰ عنہ سے بہتر ( ہوسکتا ) ہے!وہ پہلا گھرانہ ہے جس نے رسول اللہ صلی اللہ علیہ وسلم کی طرف ہجرت کی ۔ پھر میں نے وہ ( کلمات ) کہےتو اللہ تعالیٰ نے مجھے رسول اللہ صلی اللہ علیہ وسلم کی صورت میں اس کا بدل عطا فرمادیا ، کہا : رسول اللہ صلی اللہ علیہ وسلم نے اپنے لئے نکاح کا پیغام دیتے ہوئے حاطب بن ابی بلتعہ رضی اللہ تعالیٰ عنہ کو میرے پا س بھیجا تو میں نے کہا : میری ایک بیٹی ہے اور میں بہت غیرت کرنے والی ہوں ۔ اس پر آپ صلی اللہ علیہ وسلم نے فرمایا : \"\" اس کی بیٹی کے بارے میں ہم اللہ سے دعا کرتے ہیں کہ وہ اس کو اس ( ام سلمہ رضی اللہ تعالیٰ عنہا ) سے بے نیاز کردے اور میں اللہ سے دعا کرتا ہوں کہ وہ ( بے جا ) غیرت کو ( اس سے ) ہٹا دے ۔"
+   },
+   {
+    "collection": "Sahih al-Bukhari",
+    "number": "1283",
+    "url": "https://sunnah.com/bukhari:1283",
+    "en": "Narrated Anas bin Malik:The Prophet (ﷺ) passed by a woman who was weeping beside a grave. He told her to fear Allah and be patient. She said to him, \"Go away, for you have not been afflicted with a calamity like mine.\" And she did not recognize him. Then she was informed that he was the Prophet (ﷺ) . so she went to the house of the Prophet (ﷺ) and there she did not find any guard. Then she said to him, \"I did not recognize you.\" He said, \"Verily, the patience is at the first stroke of a calamity",
+    "ur": "ہم سے آدم بن ابی ایاس نے بیان کیا ‘ کہا کہ ہم سے شعبہ نے بیان کیا ‘ ان سے ثابت نے بیان کیا اور ان سے انس بن مالک رضی اللہ عنہ نے کہ نبی کریم صلی اللہ علیہ وسلم کا گزر ایک عورت پر ہوا جو قبر پر بیٹھی رو رہی تھی۔ آپ صلی اللہ علیہ وسلم نے فرمایا کہ اللہ سے ڈر اور صبر کر۔ وہ بولی جاؤ جی پرے ہٹو۔ یہ مصیبت تم پر پڑی ہوتی تو پتہ چلتا۔ وہ آپ صلی اللہ علیہ وسلم کو پہچان نہ سکی تھی۔ پھر جب لوگوں نے اسے بتایا کہ یہ نبی کریم صلی اللہ علیہ وسلم تھے، تو اب وہ ( گھبرا کر ) نبی کریم صلی اللہ علیہ وسلم کے دروازہ پر پہنچی۔ وہاں اسے کوئی دربان نہ ملا۔ پھر اس نے کہا کہ میں آپ کو پہچان نہ سکی تھی۔ ( معاف فرمائیے ) تو آپ صلی اللہ علیہ وسلم نے فرمایا کہ صبر تو جب صدمہ شروع ہو اس وقت کرنا چاہیے ( اب کیا ہوتا ہے ) ۔"
+   }
+  ]
+ },
+ {
+  "id": "parents",
+  "en": "Parents",
+  "ur": "والدین",
+  "guide_en": "After worshipping Allah, the Quran puts kindness to parents first. Speak to them gently, never with even a word of annoyance, and pray for them. Even when you disagree, stay respectful: serving them is one of the deeds most loved by Allah.",
+  "guide_ur": "اللہ کی عبادت کے بعد قرآن والدین سے حسن سلوک کو رکھتا ہے۔ ان سے نرمی سے بات کریں، اف تک نہ کہیں اور ان کے لیے دعا کریں۔ اختلاف ہو تب بھی ادب نہ چھوڑیں۔",
+  "crisis": false,
+  "words": "parents mother father mom mum dad mummy papa ammi abbu abba maa baap walidain والدین ماں باپ امی ابو",
+  "ayat": [
+   {
+    "surah": 17,
+    "from": 23,
+    "to": 24
+   },
+   {
+    "surah": 31,
+    "from": 14,
+    "to": 14
+   },
+   {
+    "surah": 46,
+    "from": 15,
+    "to": 15
+   }
+  ],
+  "hadith": [
+   {
+    "collection": "Sahih al-Bukhari",
+    "number": "5971",
+    "url": "https://sunnah.com/bukhari:5971",
+    "en": "Narrated Abu Huraira:A man came to Allah's Messenger (ﷺ) and said, \"O Allah's Messenger (ﷺ)! Who is more entitled to be treated with the best companionship by me?\" The Prophet (ﷺ) said, \"Your mother.\" The man said. \"Who is next?\" The Prophet said, \"Your mother.\" The man further said, \"Who is next?\" The Prophet (ﷺ) said, \"Your mother.\" The man asked for the fourth time, \"Who is next?\" The Prophet (ﷺ) said, \"Your father",
+    "ur": "ہم سے قتیبہ بن سعید نے بیان کیا، کہا ہم سے جریر نے بیان کیا، ان سے عمارہ بن قعقاع بن شبرمہ نے، ان سے ابوزرعہ نے اور ان سے ابوہریرہ رضی اللہ عنہ نے بیان کیا کہ ایک صحابی رسول اللہ صلی اللہ علیہ وسلم کی خدمت میں حاضر ہوئے اور عرض کیا کہ یا رسول اللہ! میرے اچھے سلوک کا سب سے زیادہ حقدار کون ہے؟ فرمایا کہ تمہاری ماں ہے۔ پوچھا اس کے بعد کون ہے؟ فرمایا کہ تمہاری ماں ہے۔ انہوں نے پھر پوچھا اس کے بعد کون؟ نبی کریم صلی اللہ علیہ وسلم نے فرمایا کہ تمہاری ماں ہے۔ انہوں نے پوچھا اس کے بعد کون ہے؟ نبی کریم صلی اللہ علیہ وسلم نے فرمایا کہ پھر تمہارا باپ ہے۔ ابن شبرمہ اور یحییٰ بن ایوب نے بیان کیا، کہا ہم سے ابوزرعہ نے اسی کے مطابق بیان کیا۔"
+   },
+   {
+    "collection": "Sahih al-Bukhari",
+    "number": "527",
+    "url": "https://sunnah.com/bukhari:527",
+    "en": "Narrated `Abdullah:I asked the Prophet (ﷺ) \"Which deed is the dearest to Allah?\" He replied, \"To offer the prayers at their early stated fixed times.\" I asked, \"What is the next (in goodness)?\" He replied, \"To be good and dutiful to your parents\" I again asked, \"What is the next (in goodness)?\" He replied, 'To participate in Jihad (religious fighting) in Allah's cause.\" `Abdullah added, \"I asked only that much and if I had asked more, the Prophet (ﷺ) would have told me more",
+    "ur": "ہم سے ابوالولید ہشام بن عبدالملک نے بیان کیا، کہا ہم سے شعبہ نے، انہوں نے کہا کہ مجھے ولید بن عیزار کوفی نے خبر دی، کہا کہ میں نے ابوعمر و شیبانی سے سنا، وہ کہتے تھے کہ میں نے اس گھر کے مالک سے سنا، (آپ عبداللہ بن مسعود رضی اللہ عنہ کے گھر کی طرف اشارہ کر رہے تھے) انہوں نے فرمایا کہ میں نے نبی کریم صلی اللہ علیہ وسلم سے پوچھا کہ اللہ تعالیٰ کی بارگاہ میں کون سا عمل زیادہ محبوب ہے؟ آپ صلی اللہ علیہ وسلم نے فرمایا کہ اپنے وقت پر نماز پڑھنا، پھر پوچھا، اس کے بعد، فرمایا والدین کے ساتھ نیک معاملہ رکھنا۔ پوچھا اس کے بعد، آپ صلی اللہ علیہ وسلم نے فرمایا کہ اللہ کی راہ میں جہاد کرنا۔ ابن مسعود رضی اللہ عنہ نے فرمایا کہ نبی کریم صلی اللہ علیہ وسلم نے مجھے یہ تفصیل بتائی اور اگر میں اور سوالات کرتا تو آپ صلی اللہ علیہ وسلم اور زیادہ بھی بتلاتے۔ ( لیکن میں نے بطور ادب خاموشی اختیار کی ) ۔"
+   }
+  ]
+ },
+ {
+  "id": "marriage",
+  "en": "Marriage and spouse",
+  "ur": "شادی اور میاں بیوی",
+  "guide_en": "Allah made spouses a source of peace, with love and mercy between them, and asks husbands to live with their wives in kindness. No spouse is perfect; the Prophet ﷺ taught that if you dislike one quality, you will be pleased with another. Speak kindly and solve problems together.",
+  "guide_ur": "اللہ نے میاں بیوی کو ایک دوسرے کے لیے سکون بنایا اور ان کے درمیان محبت اور رحمت رکھی۔ کوئی بھی کامل نہیں، ایک بات ناپسند ہو تو دوسری اچھی لگے گی۔ نرمی سے بات کریں اور مل کر مسائل حل کریں۔",
+  "crisis": false,
+  "words": "marriage married husband wife spouse rishta nikah shadi divorce talaq relationship partner shohar biwi miyan شادی نکاح شوہر بیوی طلاق رشتہ",
+  "ayat": [
+   {
+    "surah": 30,
+    "from": 21,
+    "to": 21
+   },
+   {
+    "surah": 4,
+    "from": 19,
+    "to": 19
+   }
+  ],
+  "hadith": [
+   {
+    "collection": "Sahih Muslim",
+    "number": "1468b",
+    "url": "https://sunnah.com/muslim/17/81",
+    "en": "Abu Huraira (Allah be pleased with him) reported Allah's Messenger (ﷺ) as saying:A believing man should not hate a believing woman; if he dislikes one of her characteristics, he will be pleased with another",
+    "ur": "ہمام بن منبہ سے روایت ہے ، انہوں نے کہا : یہ احادیث ہیں جو حضرت ابوہریرہ رضی اللہ عنہ نے ہمیں رسول اللہ صلی اللہ علیہ وسلم سے بیان کیں ، پھر انہوں نے متعدد احادیث بیان کیں ، ان میں ایک یہ تھی : اور رسول اللہ صلی اللہ علیہ وسلم نے فرمایا : \" اگر بنی اسرائیل نہ ہوتے تو کھانا خراب نہ ہوتا اور گوشت بدبودار نہ ہوتا اور اگر حواء علیہا السلام نہ ہوتیں تو کوئی عورت اپنے شوہر سے خیانت نہ کرتی"
+   }
+  ]
+ },
+ {
+  "id": "children",
+  "en": "Children",
+  "ur": "اولاد",
+  "guide_en": "Children are a blessing and a trust. Show them mercy and affection: the Prophet ﷺ kissed his grandchildren and said whoever does not show mercy is not shown mercy. A righteous child is a reward that continues after you die. Ask Allah to make your family a comfort to your eyes.",
+  "guide_ur": "اولاد نعمت بھی ہے اور امانت بھی۔ ان سے محبت اور شفقت کریں۔ نیک اولاد مرنے کے بعد بھی اجر کا ذریعہ ہے۔",
+  "crisis": false,
+  "words": "children child kids son daughter baby raising parenting no children infertility bacche bachay beta beti aulad اولاد بچے بیٹا بیٹی",
+  "ayat": [
+   {
+    "surah": 25,
+    "from": 74,
+    "to": 74
+   },
+   {
+    "surah": 18,
+    "from": 46,
+    "to": 46
+   },
+   {
+    "surah": 8,
+    "from": 28,
+    "to": 28
+   }
+  ],
+  "hadith": [
+   {
+    "collection": "Sahih al-Bukhari",
+    "number": "5997",
+    "url": "https://sunnah.com/bukhari:5997",
+    "en": "Narrated Abu Huraira:Allah's Messenger (ﷺ) kissed Al-Hasan bin `Ali while Al-Aqra' bin H`Abis at-Tamim was sitting beside him. Al-Aqra said, \"I have ten children and I have never kissed anyone of them,\" Allah's Messenger (ﷺ) cast a look at him and said, \"Whoever is not merciful to others will not be treated mercifully",
+    "ur": "ہم سے ابوالیمان نے بیان کیا، انہوں نے کہا ہم کو شعیب نے خبر دی، انہیں زہری نے خبر دی، ان سے ابوسلمہ بن عبدالرحمٰن نے بیان کیا اور ان سے ابوہریرہ رضی اللہ عنہ نے بیان کیا کہ رسول اللہ صلی اللہ علیہ وسلم نے حسن بن علی رضی اللہ عنہ کو بوسہ دیا۔ نبی کریم صلی اللہ علیہ وسلم کے پاس اقرع بن حابس رضی اللہ عنہ بیٹھے ہوئے تھے۔ اقرع رضی اللہ عنہ نے اس پر کہا کہ میرے دس لڑکے ہیں اور میں نے ان میں سے کسی کو بوسہ نہیں دیا۔ نبی کریم صلی اللہ علیہ وسلم نے ان کی طرف دیکھا اور فرمایا کہ جو اللہ کی مخلوق پر رحم نہیں کرتا اس پر بھی رحم نہیں کیا جاتا۔"
+   },
+   {
+    "collection": "Sahih Muslim",
+    "number": "1631",
+    "url": "https://sunnah.com/muslim/25/20",
+    "en": "Abu Huraira (Allah be pleased with him) reported Allah's Messenger (ﷺ) as saying:When a man dies, his acts come to an end, but three, recurring charity, or knowledge (by which people) benefit, or a pious son, who prays for him (for the deceased)",
+    "ur": "حضرت ابوہریرہ رضی اللہ عنہ سے روایت ہے کہ رسول اللہ صلی اللہ علیہ وسلم نے فرمایا : \" جب انسان فوت ہو جائے تو اس کا عمل منقطع ہو جاتا ہے سوائے تین اعمال کے ( وہ منقطع نہیں ہوتے ) : صدقہ جاریہ یا ایسا علم جس سے فائدہ اٹھایا جائے یا نیک بیٹا جو اس کے لیے دعا کرے"
+   }
+  ]
+ },
+ {
+  "id": "rizq",
+  "en": "Money, job and provision",
+  "ur": "رزق، روزگار اور پیسہ",
+  "guide_en": "Your provision is written by Allah, and whoever is mindful of Him, He provides from where they do not expect. Work honestly: the best food is what you earn with your own hands. Seek forgiveness often, avoid unnecessary debt, and remember that real richness is contentment of the heart.",
+  "guide_ur": "رزق اللہ نے لکھ دیا ہے، اور جو اللہ سے ڈرتا ہے اسے وہاں سے دیتا ہے جہاں سے گمان بھی نہ ہو۔ حلال محنت کریں، استغفار کثرت سے کریں، اور یاد رکھیں کہ اصل امیری دل کا غنا ہے۔",
+  "crisis": false,
+  "words": "money job work business salary unemployed debt loan poor poverty rich income rent bills rizq rozi naukri paisa karz qarz garibi kaam kaarobar رزق روزی نوکری پیسہ قرض غربت کام",
+  "ayat": [
+   {
+    "surah": 65,
+    "from": 3,
+    "to": 3
+   },
+   {
+    "surah": 11,
+    "from": 6,
+    "to": 6
+   },
+   {
+    "surah": 71,
+    "from": 10,
+    "to": 12
+   }
+  ],
+  "hadith": [
+   {
+    "collection": "Sahih al-Bukhari",
+    "number": "6446",
+    "url": "https://sunnah.com/bukhari:6446",
+    "en": "Narrated Abu Huraira:The Prophet (ﷺ) said, \"Wealth is not in having many possessions, but rather (true) wealth is feeling sufficiency in the soul",
+    "ur": "ہم سے احمد بن یونس نے بیان کیا، کہا ہم سے ابوبکر بن عیاش نے بیان کیا، کہا ہم سے ابوحصین نے بیان کیا، ان سے ابوصالح ذکوان نے اور ان سے ابوہریرہ رضی اللہ عنہ نے بیان کیا کہ نبی کریم صلی اللہ علیہ وسلم نے فرمایا ”تونگری یہ نہیں ہے کہ سامان زیادہ ہو، بلکہ امیری یہ ہے کہ دل غنی ہو۔“"
+   },
+   {
+    "collection": "Sahih al-Bukhari",
+    "number": "2072",
+    "url": "https://sunnah.com/bukhari:2072",
+    "en": "Narrated Al-Miqdam:The Prophet (ﷺ) said, \"Nobody has ever eaten a better meal than that which one has earned by working with one's own hands. The Prophet of Allah, David (ﷺ) used to eat from the earnings of his manual labor",
+    "ur": "ہم سے ابراہیم بن موسیٰ نے بیان کیا، انہوں نے کہا کہ ہم کو عیسیٰ بن یونس نے خبر دی، انہیں ثور نے خبر دی، انہیں خالد بن معدان نے اور انہیں مقدام رضی اللہ عنہ نے کہ رسول اللہ صلی اللہ علیہ وسلم نے فرمایا کسی انسان نے اس شخص سے بہتر روزی نہیں کھائی، جو خود اپنے ہاتھوں سے کما کر کھاتا ہے اللہ کے نبی داؤد علیہ السلام بھی اپنے ہاتھ سے کام کر کے روزی کھایا کرتے تھے۔"
+   },
+   {
+    "collection": "Sahih al-Bukhari",
+    "number": "6369",
+    "url": "https://sunnah.com/bukhari:6369",
+    "en": "Narrated Anas bin Malik:The Prophet (ﷺ) used to say, \"O Allah! I seek refuge with You from worry and grief, from incapacity and laziness, from cowardice and miserliness, from being heavily in debt and from being overpowered by (other) men.\"",
+    "ur": "ہم سے خالد بن مخلد نے بیان کیا، انہوں نے کہا ہم سے سلیمان نے بیان کیا، انہوں نے کہا کہ مجھ سے عمرو بن ابی عمرو نے بیان کیا، انہوں نے کہا کہ میں نے انس بن مالک رضی اللہ عنہ سے سنا، کہا کہ نبی کریم صلی اللہ علیہ وسلم کہتے تھے «اللهم إني أعوذ بك من الهم والحزن،‏‏‏‏ والعجز والكسل،‏‏‏‏ والجبن والبخل،‏‏‏‏ وضلع الدين،‏‏‏‏ وغلبة الرجال» ”اے اللہ! میں تیری پناہ مانگتا ہوں غم و الم سے، عاجزی سے، سستی سے، بزدلی سے، بخل، قرض چڑھ جانے اور لوگوں کے غلبہ سے۔“"
+   }
+  ]
+ },
+ {
+  "id": "study",
+  "en": "Exams, studies and knowledge",
+  "ur": "امتحان اور تعلیم",
+  "guide_en": "Seeking knowledge is worship, and the path of learning is a path to Paradise. Prepare well, then trust Allah with the result. Say: my Lord, increase me in knowledge. A bad result is not the end of your story; with hardship comes ease.",
+  "guide_ur": "علم حاصل کرنا عبادت ہے اور علم کا راستہ جنت کا راستہ ہے۔ اچھی تیاری کریں اور نتیجہ اللہ پر چھوڑیں۔ رب زدنی علما پڑھتے رہیں۔",
+  "crisis": false,
+  "words": "exam exams test study studies school college university result marks fail failed knowledge learn imtihan imtehan parhai padhai result fail ilm امتحان پڑھائی تعلیم علم نتیجہ",
+  "ayat": [
+   {
+    "surah": 20,
+    "from": 114,
+    "to": 114
+   },
+   {
+    "surah": 58,
+    "from": 11,
+    "to": 11
+   },
+   {
+    "surah": 94,
+    "from": 5,
+    "to": 6
+   }
+  ],
+  "hadith": [
+   {
+    "collection": "Sahih Muslim",
+    "number": "2699a",
+    "url": "https://sunnah.com/muslim/48/48",
+    "en": "Abu Huraira reported Allah's Messenger (ﷺ) as saying:He who alleviates the suffering of a brother out of the sufferings of the world, Allah would alleviate his suffering from the sufferings of the Day of Resurrection, and he who finds relief for one who is hard-pressed, Allah would make things easy for him in the Hereafter, and he who conceals (the faults) of a Muslim, Allah would conceal his faults in the world and in the Hereafter. Allah is at the back of a servant so long as the servant is at the back of his brother, and he who treads the path in search of knowledge, Allah would make that path easy, leading to Paradise for him and those persons who assemble in the house among the houses of Allah (mosques) and recite the Book of Allah and they learn and teach the Qur'an (among themselves) there would descend upon them tranquility and mercy would cover them and the angels would surround them and Allah mentions them in the presence of those near Him, and he who is slow-paced in doing good deeds, his (high) lineage does not make him go ahead",
+    "ur": "ابومعاویہ نے اعمش سے ، انہوں نے ابوصالح سے اور انہوں نے حضرت ابوہریرہ رضی اللہ عنہ سے روایت کی ، کہا : رسول اللہ صلی اللہ علیہ وسلم نے فرمایا : \" جس شخص نے کسی مسلمان کی دنیاوی تکلیفوں میں سے کوئی تکلیف دور کی ، اللہ تعالیٰ اس کی قیامت کی تکلیفوں میں سے کوئی تکلیف دور کرے گا اور جس شخص نے کسی تنگ دست کے لیے آسانی کی ، اللہ تعالیٰ اس کے لیے دنیا اور آخرت میں آسانی کرے گا اور جس نے کسی مسلمان کی پردہ پوشی کی ، اللہ تعالیٰ دنیا اور آخرت میں اس کی پردہ پشی کرے گا اور اللہ تعالیٰ اس وقت تک بندے کی مدد میں لگا رہتا ہے جب تک بندہ اپنے بھائی کی مدد میں لگا رہتا ہے اور جو شخص اس راستے پر چلتا ہے جس میں وہ علم حاصل کرنا چاہتا ہے تو اللہ تعالیٰ اس کے ذریعے سے اس کے لیے جنت کا راستہ آسان کر دیتا ہے ، اللہ کے گھروں میں سے کسی گھر میں لوگوں کا کوئی گروہ اکٹھا نہیں ہوتا ، وہ قرآن کی تلاوت کرتے ہیں اور اس کا درس و تدریس کرتے ہیں مگر ان پر سکینت ( اطمینان و سکون قلب ) کا نزول ہوتا ہے اور ( اللہ کی ) رحمت ان کو ڈھانپ لیتی ہے اور فرشتے ان کو اپنے گھیرے میں لے لیتے ہیں اور اللہ تعالیٰ اپنے مقربین میں جو اس کے پاس ہوتے ہیں ان کا ذکر کرتا ہے اور جس کے عمل نے اسے ( خیر کے حصول میں ) پیچھے رکھا ، اس کا نسب اسے تیز نہیں کر سکتا ۔"
+   },
+   {
+    "collection": "Sahih al-Bukhari",
+    "number": "71",
+    "url": "https://sunnah.com/bukhari:71",
+    "en": "Narrated Muawiya:I heard Allah's Messenger (ﷺ) saying, \"If Allah wants to do good to a person, He makes him comprehend the religion. I am just a distributor, but the grant is from Allah. (And remember) that this nation (true Muslims) will keep on following Allah's teachings strictly and they will not be harmed by any one going on a different path till Allah's order (Day of Judgment) is established",
+    "ur": "ہم سے سعید بن عفیر نے بیان کیا، ان سے وہب نے یونس کے واسطے سے نقل کیا، وہ ابن شہاب سے نقل کرتے ہیں، ان سے حمید بن عبدالرحمٰن نے کہا کہ میں نے معاویہ سے سنا۔ وہ خطبہ میں فرما رہے تھے کہ میں نے رسول اللہ صلی اللہ علیہ وسلم کو یہ فرماتے ہوئے سنا کہ جس شخص کے ساتھ اللہ تعالیٰ بھلائی کا ارادہ کرے اسے دین کی سمجھ عنایت فرما دیتا ہے اور میں تو محض تقسیم کرنے والا ہوں، دینے والا تو اللہ ہی ہے اور یہ امت ہمیشہ اللہ کے حکم پر قائم رہے گی اور جو شخص ان کی مخالفت کرے گا، انہیں نقصان نہیں پہنچا سکے گا، یہاں تک کہ اللہ کا حکم ( قیامت ) آ جائے ( اور یہ عالم فنا ہو جائے ) ۔"
+   }
+  ]
+ },
+ {
+  "id": "sin",
+  "en": "Guilt and repentance",
+  "ur": "گناہ اور توبہ",
+  "guide_en": "Never despair of Allah's mercy: He forgives all sins for those who return to Him. The Prophet ﷺ sought forgiveness more than seventy times a day. Stop the sin, regret it, sincerely intend not to return, and repair any harm to people. Allah can even turn bad deeds into good ones.",
+  "guide_ur": "اللہ کی رحمت سے کبھی مایوس نہ ہوں، وہ توبہ کرنے والوں کے سب گناہ معاف کرتا ہے۔ گناہ چھوڑیں، ندامت کریں، دوبارہ نہ کرنے کا ارادہ کریں اور اگر کسی کا حق ہے تو ادا کریں۔",
+  "crisis": false,
+  "words": "sin sins sinned guilt guilty repent repentance shame regret haram mistake mistakes bad deeds gunah tauba toba maafi sharminda گناہ توبہ معافی شرمندہ",
+  "ayat": [
+   {
+    "surah": 39,
+    "from": 53,
+    "to": 53
+   },
+   {
+    "surah": 4,
+    "from": 110,
+    "to": 110
+   },
+   {
+    "surah": 25,
+    "from": 70,
+    "to": 70
+   }
+  ],
+  "hadith": [
+   {
+    "collection": "Sahih al-Bukhari",
+    "number": "6307",
+    "url": "https://sunnah.com/bukhari:6307",
+    "en": "Narrated Abu Huraira:I heard Allah's Messenger (ﷺ) saying.\" By Allah! I ask for forgiveness from Allah and turn to Him in repentance more than seventy times a day",
+    "ur": "ہم سے ابوالیمان نے بیان کیا، انہوں نے کہا ہم کو شعیب نے خبر دی، انہیں زہری نے کہا کہ مجھے ابوسلمہ بن عبدالرحمٰن نے خبر دی، انہوں نے کہا کہ ابوہریرہ رضی اللہ عنہ نے بیان کیا کہ میں نے رسول اللہ صلی اللہ علیہ وسلم سے سنا، نبی کریم صلی اللہ علیہ وسلم نے فرمایا کہ اللہ کی قسم میں دن میں ستر مرتبہ سے زیادہ اللہ سے استغفار اور اس سے توبہ کرتا ہوں۔"
+   },
+   {
+    "collection": "Sahih Muslim",
+    "number": "2749",
+    "url": "https://sunnah.com/muslim/50/13",
+    "en": "Abu Huraira reported Allah's Messenger (ﷺ) having said:By Him in Whose Hand is my life, if you were not to commit sin, Allah would sweep you out of existence and He would replace (you by) those people who would commit sin and seek forgiveness from Allah, and He would have pardoned them",
+    "ur": "حضرت ابوہریرہ رضی اللہ عنہ سے روایت ہے ، انہوں نے کہا کہ رسول اللہ صلی اللہ علیہ وسلم نے فرمایا : \" اس ذات کی قسم جس کے ہاتھ میں میری جان ہے! اگر تم ( لوگ ) گناہ نہ کرو تو اللہ تعالیٰ تم کو ( اس دنیا سے ) لے جائے اور ( تمہارے بدلے میں ) ایسی قوم کو لے آئے جو گناہ کریں اور اللہ تعالیٰ سے مغفرت مانگیں تو وہ ان کی مغفرت فرمائے ۔"
+   }
+  ]
+ },
+ {
+  "id": "forgive",
+  "en": "Forgiving someone who hurt you",
+  "ur": "کسی کو معاف کرنا",
+  "guide_en": "Forgiving is not saying what happened was fine; it is freeing your heart. Allah asks: do you not love that Allah should forgive you? Whoever pardons, Allah raises their honour. You may still protect yourself and set boundaries while you forgive.",
+  "guide_ur": "معاف کرنا ظلم کو درست کہنا نہیں بلکہ اپنے دل کو آزاد کرنا ہے۔ کیا آپ نہیں چاہتے کہ اللہ آپ کو معاف کرے؟ معاف کرنے والے کی عزت اللہ بڑھاتا ہے۔",
+  "crisis": false,
+  "words": "forgive forgiving forgiveness pardon hurt betrayed revenge grudge wronged someone hurt me maaf muaf badla dhoka dil dukhaya معاف بدلہ دھوکہ",
+  "ayat": [
+   {
+    "surah": 24,
+    "from": 22,
+    "to": 22
+   },
+   {
+    "surah": 42,
+    "from": 40,
+    "to": 40
+   },
+   {
+    "surah": 7,
+    "from": 199,
+    "to": 199
+   }
+  ],
+  "hadith": [
+   {
+    "collection": "Sahih Muslim",
+    "number": "2588",
+    "url": "https://sunnah.com/muslim/45/90",
+    "en": "Abu Huraira reported Allah's Messenger (ﷺ) as saying:Charity does not decrease wealth, no one forgives another except that Allah increases his honor, and no one humbles himself for the sake of Allah except that Allah raises his status",
+    "ur": "حضرت ابوہریرہ رضی اللہ عنہ نے رسول اللہ صلی اللہ علیہ وسلم سے روایت کی کہ آپ صلی اللہ علیہ وسلم نے فرمایا : \" صدقے نے مال میں کبھی کوئی کمی نہیں کی اور معاف کرنے سے اللہ تعالیٰ بندے کو عزت ہی میں بڑھاتا ہے اور کوئی شخص ( صرف اور صرف ) اللہ کی خاطر تواضع ( انکسار ) اختیار نہیں کرتا مگر اللہ تعالیٰ اس کا مقام بلند کر دیتا ہے ۔"
+   }
+  ]
+ },
+ {
+  "id": "lonely",
+  "en": "Loneliness",
+  "ur": "تنہائی",
+  "guide_en": "You are never truly alone: Allah is near and answers the one who calls Him, closer than your jugular vein. Allah says He is as His servant thinks of Him and is with him when he remembers Him. Reach out to the masjid, family or a good friend too.",
+  "guide_ur": "آپ کبھی اکیلے نہیں، اللہ قریب ہے اور پکارنے والے کی سنتا ہے۔ اللہ کو یاد کریں، اور مسجد، خاندان یا اچھے دوستوں سے بھی رابطہ رکھیں۔",
+  "crisis": false,
+  "words": "lonely loneliness alone no friends nobody isolated left alone akela akelapan tanhai koi nahi تنہا تنہائی اکیلا",
+  "ayat": [
+   {
+    "surah": 2,
+    "from": 186,
+    "to": 186
+   },
+   {
+    "surah": 50,
+    "from": 16,
+    "to": 16
+   },
+   {
+    "surah": 57,
+    "from": 4,
+    "to": 4
+   }
+  ],
+  "hadith": [
+   {
+    "collection": "Sahih al-Bukhari",
+    "number": "7405",
+    "url": "https://sunnah.com/bukhari:7405",
+    "en": "Narrated Abu Huraira:The Prophet (ﷺ) said, \"Allah says: 'I am just as My slave thinks I am, (i.e. I am able to do for him what he thinks I can do for him) and I am with him if He remembers Me. If he remembers Me in himself, I too, remember him in Myself; and if he remembers Me in a group of people, I remember him in a group that is better than they; and if he comes one span nearer to Me, I go one cubit nearer to him; and if he comes one cubit nearer to Me, I go a distance of two outstretched arms nearer to him; and if he comes to Me walking, I go to him running",
+    "ur": "ہم سے عمر بن حفص نے بیان کیا، کہا ہم سے ہمارے والد نے، کہا ہم سے اعمش نے، کہا میں نے ابوصالح سے سنا اور ان سے ابوہریرہ رضی اللہ عنہ نے بیان کیا کہ نبی کریم صلی اللہ علیہ وسلم نے فرمایا ”اللہ تعالیٰ فرماتا ہے کہ میں اپنے بندے کے گمان کے ساتھ ہوں اور جب وہ مجھے اپنے دل میں یاد کرتا ہے تو میں بھی اسے اپنے دل میں یاد کرتا ہوں اور جب وہ مجھے مجلس میں یاد کرتا ہے تو میں اسے اس سے بہتر فرشتوں کی مجلس میں اسے یاد کرتا ہوں اور اگر وہ مجھ سے ایک بالشت قریب آتا ہے تو میں اس سے ایک ہاتھ قریب ہو جاتا ہوں اور اگر وہ مجھ سے ایک ہاتھ قریب آتا ہے تو میں اس سے دو ہاتھ قریب ہو جاتا ہوں اور اگر وہ میری طرف چل کر آتا ہے تو میں اس کے پاس دوڑ کر آ جاتا ہوں۔“"
+   }
+  ]
+ },
+ {
+  "id": "gratitude",
+  "en": "Gratitude and contentment",
+  "ur": "شکر اور قناعت",
+  "guide_en": "If you are grateful, Allah will give you more. Look at those who have less than you, not more, so you do not belittle Allah's blessings on you. Count three blessings every day and thank Allah for them.",
+  "guide_ur": "شکر کرو گے تو اللہ اور دے گا۔ اپنے سے کم والوں کو دیکھیں، زیادہ والوں کو نہیں، تاکہ اللہ کی نعمتوں کی ناقدری نہ ہو۔",
+  "crisis": false,
+  "words": "gratitude grateful thankful ungrateful compare comparison jealous of others never enough contentment shukar shukr qanaat شکر قناعت",
+  "ayat": [
+   {
+    "surah": 14,
+    "from": 7,
+    "to": 7
+   },
+   {
+    "surah": 2,
+    "from": 152,
+    "to": 152
+   },
+   {
+    "surah": 31,
+    "from": 12,
+    "to": 12
+   }
+  ],
+  "hadith": [
+   {
+    "collection": "Sahih Muslim",
+    "number": "2963c",
+    "url": "https://sunnah.com/muslim/55/14",
+    "en": "Abu Huraira reported Allah's Messenger (ﷺ) as saying:Look at those who stand at a lower level than you but don't look at those who stand at a higher level than you, for that is better-suited that you do not disparage Allah's favors. In the chain narrated by Abu Mu'awiya's he said: Upon you",
+    "ur": "جریر ، ابو معاویہ اور وکیع نے اعمش سے ، انھوں نے ابو صالح سے اورانھوں نے حضرت ابوہریرۃ رضی اللہ تعالیٰ عنہ سے روایت کی ، کہا : رسول اللہ صلی اللہ علیہ وسلم نے فرمایا : \"\" اس کی طرف دیکھو جو ( مال ور جمال میں ) تم سے کمتر ہے ، اس کی طرف مت دیکھو جو تم سے فائق ہے ، یہ لائق تر ہے اسکے کہ تم اللہ کی نعمت کو حقیر نہ سمجھو گے ۔ \"\" ابو معاویہ نےکہا : \"\" ( وہ نعمت ) جو تم پر کی گئی ۔"
+   },
+   {
+    "collection": "Sahih Muslim",
+    "number": "2999",
+    "url": "https://sunnah.com/muslim/55/82",
+    "en": "Suhaib reported that Allah's Messenger (ﷺ) said:Strange are the ways of a believer for there is good in every affair of his and this is not the case with anyone else except in the case of a believer for if he has an occasion to feel delight, he thanks (God), thus there is a good for him in it, and if he gets into trouble and shows resignation (and endures it patiently), there is a good for him in it",
+    "ur": "حضرت صہیب رضی اللہ تعالیٰ عنہ سے روایت ہے ، کہا : رسول اللہ صلی اللہ علیہ وسلم نے فرمایا : \" مومن کا معاملہ عجیب ہے ۔ اس کا ہرمعاملہ اس کے لیے بھلائی کا ہے ۔ اور یہ بات مومن کے سوا کسی اور کومیسر نہیں ۔ اسے خوشی اور خوشحالی ملے توشکر کرتا ہے ۔ اور یہ اس کے لیے اچھا ہوتا ہے اور اگر اسے کوئی نقصان پہنچے تو ( اللہ کی رضا کے لیے ) صبر کر تا ہے ، یہ ( ابھی ) اس کے لیے بھلائی ہوتی ہے ۔"
+   }
+  ]
+ },
+ {
+  "id": "envy",
+  "en": "Jealousy and envy",
+  "ur": "حسد",
+  "guide_en": "Do not wish for what Allah has given others; ask Allah from His bounty instead. Faith is complete when you love for your brother what you love for yourself. When you feel envy, make dua for that person's blessing to increase.",
+  "guide_ur": "دوسروں کی نعمت کی تمنا نہ کریں بلکہ اللہ سے اس کا فضل مانگیں۔ ایمان یہ ہے کہ اپنے بھائی کے لیے وہی پسند کریں جو اپنے لیے پسند کرتے ہیں۔",
+  "crisis": false,
+  "words": "jealous jealousy envy envious hasad compare others success hasad jalan حسد جلن",
+  "ayat": [
+   {
+    "surah": 4,
+    "from": 32,
+    "to": 32
+   },
+   {
+    "surah": 113,
+    "from": 1,
+    "to": 5
+   }
+  ],
+  "hadith": [
+   {
+    "collection": "Sahih al-Bukhari",
+    "number": "13",
+    "url": "https://sunnah.com/bukhari:13",
+    "en": "Narrated Anas: The Prophet (ﷺ) said, \"None of you will have faith till he wishes for his (Muslim) brother what he likes for himself",
+    "ur": "ہم سے حدیث بیان کی مسدد نے، ان کو یحییٰ نے، انہوں نے شعبہ سے نقل کیا، انہوں نے قتادہ سے، انہوں نے انس رضی اللہ عنہ خادم رسول اللہ صلی اللہ علیہ وسلم سے، انہوں نے نبی کریم صلی اللہ علیہ وسلم سے روایت کیا۔ اور شعبہ نے حسین معلم سے بھی روایت کیا، انہوں نے قتادہ سے، انہوں نے انس رضی اللہ عنہ سے، انہوں نے نبی کریم صلی اللہ علیہ وسلم سے نقل فرمایا کہ نبی کریم صلی اللہ علیہ وسلم نے فرمایا تم میں سے کوئی شخص ایماندار نہ ہو گا جب تک اپنے بھائی کے لیے وہ نہ چاہے جو اپنے نفس کے لیے چاہتا ہے۔"
+   },
+   {
+    "collection": "Sahih al-Bukhari",
+    "number": "73",
+    "url": "https://sunnah.com/bukhari:73",
+    "en": "Narrated `Abdullah bin Mas`ud:The Prophet (ﷺ) said, \"Do not wish to be like anyone except in two cases. (The first is) A person, whom Allah has given wealth and he spends it righteously; (the second is) the one whom Allah has given wisdom (the Holy Qur'an) and he acts according to it and teaches it to others.\" (Fath-al-Bari page 177 Vol)",
+    "ur": "ہم سے حمیدی نے بیان کیا، ان سے سفیان نے، ان سے اسماعیل بن ابی خالد نے دوسرے لفظوں میں بیان کیا، ان لفظوں کے علاوہ جو زہری نے ہم سے بیان کئے، وہ کہتے ہیں میں نے قیس بن ابی حازم سے سنا، انہوں نے عبداللہ بن مسعود رضی اللہ عنہ سے سنا، وہ کہتے ہیں کہ رسول اللہ صلی اللہ علیہ وسلم کا ارشاد ہے کہ حسد صرف دو باتوں میں جائز ہے۔ ایک تو اس شخص کے بارے میں جسے اللہ نے دولت دی ہو اور وہ اس دولت کو راہ حق میں خرچ کرنے پر بھی قدرت رکھتا ہو اور ایک اس شخص کے بارے میں جسے اللہ نے حکمت ( کی دولت ) سے نوازا ہو اور وہ اس کے ذریعہ سے فیصلہ کرتا ہو اور ( لوگوں کو ) اس حکمت کی تعلیم دیتا ہو۔"
+   }
+  ]
+ },
+ {
+  "id": "honesty",
+  "en": "Honesty and lying",
+  "ur": "سچائی اور جھوٹ",
+  "guide_en": "Truthfulness leads to goodness and goodness leads to Paradise. Speak the truth even when it is hard, and Allah will set your deeds right. Lying, breaking promises and betraying trust are signs of hypocrisy, so guard against them.",
+  "guide_ur": "سچ نیکی کی طرف اور نیکی جنت کی طرف لے جاتی ہے۔ مشکل ہو تب بھی سچ بولیں۔ جھوٹ، وعدہ خلافی اور خیانت منافق کی نشانیاں ہیں۔",
+  "crisis": false,
+  "words": "lie lied lies lying liar honest honesty truth truthful cheat cheated cheating trust jhoot jhooth sach sachai جھوٹ سچ سچائی",
+  "ayat": [
+   {
+    "surah": 9,
+    "from": 119,
+    "to": 119
+   },
+   {
+    "surah": 33,
+    "from": 70,
+    "to": 71
+   }
+  ],
+  "hadith": [
+   {
+    "collection": "Sahih al-Bukhari",
+    "number": "6094",
+    "url": "https://sunnah.com/bukhari:6094",
+    "en": "Narrated `Abdullah:The Prophet (ﷺ) said, \"Truthfulness leads to righteousness, and righteousness leads to Paradise. And a man keeps on telling the truth until he becomes a truthful person. Falsehood leads to Al-Fajur (i.e. wickedness, evil-doing), and Al-Fajur (wickedness) leads to the (Hell) Fire, and a man may keep on telling lies till he is written before Allah, a liar",
+    "ur": "ہم سے عثمان بن ابی شیبہ نے بیان کیا، انہوں نے کہا ہم سے جریر نے بیان کیا، ان سے منصور نے بیان کیا، ان سے ابووائل نے بیان کیا اور ان سے عبداللہ بن مسعود رضی اللہ عنہ نے بیان کیا کہ نبی کریم صلی اللہ علیہ وسلم نے فرمایا ”بلاشبہ سچ آدمی کو نیکی کی طرف بلاتا ہے اور نیکی جنت کی طرف لے جاتی ہے اور ایک شخص سچ بولتا رہتا ہے یہاں تک کہ وہ صدیق کا لقب اور مرتبہ حاصل کر لیتا ہے اور بلاشبہ جھوٹ برائی کی طرف لے جاتا ہے اور برائی جہنم کی طرف اور ایک شخص جھوٹ بولتا رہتا ہے، یہاں تک کہ وہ اللہ کے یہاں بہت جھوٹا لکھ دیا جاتا ہے۔“"
+   },
+   {
+    "collection": "Sahih al-Bukhari",
+    "number": "33",
+    "url": "https://sunnah.com/bukhari:33",
+    "en": "Narrated Abu Huraira: The Prophet (ﷺ) said, \"The signs of a hypocrite are three: 1. Whenever he speaks, he tells a lie. 2. Whenever he promises, he always breaks it (his promise ). 3. If you trust him, he proves to be dishonest. (If you keep something as a trust with him, he will not return it)",
+    "ur": "ہم سے سلیمان ابوالربیع نے بیان کیا، ان سے اسماعیل بن جعفر نے، ان سے نافع بن ابی عامر ابوسہیل نے، وہ اپنے باپ سے، وہ ابوہریرہ رضی اللہ عنہ سے روایت کرتے ہیں، وہ رسول اللہ صلی اللہ علیہ وسلم سے نقل کرتے ہیں کہ آپ صلی اللہ علیہ وسلم نے فرمایا، منافق کی علامتیں تین ہیں۔ جب بات کرے جھوٹ بولے، جب وعدہ کرے اس کے خلاف کرے اور جب اس کو امین بنایا جائے تو خیانت کرے۔"
+   }
+  ]
+ },
+ {
+  "id": "future",
+  "en": "Career, decisions and the future",
+  "ur": "مستقبل اور فیصلے",
+  "guide_en": "Plan, consult people you trust, pray istikhara, then decide and rely on Allah: He is enough for whoever relies on Him. The Prophet ﷺ said: strive for what benefits you, seek Allah's help, and do not give up; and if something happens, do not say 'if only', but 'Allah decreed it'.",
+  "guide_ur": "منصوبہ بنائیں، مشورہ کریں، استخارہ کریں، پھر فیصلہ کر کے اللہ پر بھروسہ کریں، جو اللہ پر بھروسہ کرے اللہ اس کے لیے کافی ہے۔",
+  "crisis": false,
+  "words": "future career decision decide choice confused what to do plan success fail failure goal dream mustaqbil faisla career kamyabi naakami مستقبل فیصلہ کامیابی ناکامی",
+  "ayat": [
+   {
+    "surah": 65,
+    "from": 3,
+    "to": 3
+   },
+   {
+    "surah": 3,
+    "from": 159,
+    "to": 159
+   },
+   {
+    "surah": 94,
+    "from": 5,
+    "to": 6
+   }
+  ],
+  "hadith": [
+   {
+    "collection": "Sahih Muslim",
+    "number": "2664",
+    "url": "https://sunnah.com/muslim/46/52",
+    "en": "Abu Huraira reported Allah's Messenger (ﷺ) as saying:A strong believer is better and is more lovable to Allah than a weak believer, and there is good in everyone, (but) cherish that which gives you benefit (in the Hereafter) and seek help from Allah and do not lose heart, and if anything (in the form of trouble) comes to you, don't say: If I had not done that, it would not have happened so and so, but say: Allah did that what He had ordained to do and your\" if\" opens the (gate) for the Satan",
+    "ur": "حضرت ابوہریرہ رضی اللہ عنہ سے روایت ہے ، کہا : رسول اللہ صلی اللہ علیہ وسلم نے فرمایا : \" طاقت ور مومن اللہ کے نزدیک کمزور مومن کی نسبت بہتر اور زیادہ محبوب ہے ، جبکہ خیر دونوں میں ( موجود ) ہے ۔ جس چیز سے تمہیں ( حقیقی ) نفع پہنچے اس میں حرص کرو اور اللہ سے مدد مانگو اور کمزور نہ پڑو ( مایوس ہو کر نہ بیٹھ ) جاؤ ، اگر تمہیں کوئی ( نقصان ) پہنچے تو یہ نہ کہو : کاش! میں ( اس طرح ) کرتا تو ایسا ایسا ہوتا ، بلکہ یہ کہو : ( یہ ) اللہ کی تقدیر ہے ، وہ جو چاہتا ہے کرتا ہے ، اس لیے کہ ( حشرت کرتے ہوئے ) کاش ( کہنا ) شیطان کے عمل ( کے دروازے ) کو کھول دیتا ہے ۔"
+   }
+  ]
+ },
+ {
+  "id": "prayer",
+  "en": "Struggling with prayer",
+  "ur": "نماز میں سستی",
+  "guide_en": "Prayer is a help, not a burden: seek help through patience and prayer. Five daily prayers wash sins away like bathing five times a day. Start small: pray the next prayer on time, then the next. Allah loves deeds done consistently, even if small.",
+  "guide_ur": "نماز مدد ہے، بوجھ نہیں۔ پانچ نمازیں گناہوں کو ایسے دھوتی ہیں جیسے دن میں پانچ بار نہانا۔ اگلی نماز وقت پر پڑھنے سے شروع کریں۔",
+  "crisis": false,
+  "words": "prayer pray salah salat namaz namaaz lazy miss prayers fajr motivation iman low faith weak namaz susti iman kamzor نماز سستی ایمان",
+  "ayat": [
+   {
+    "surah": 2,
+    "from": 45,
+    "to": 45
+   },
+   {
+    "surah": 29,
+    "from": 45,
+    "to": 45
+   },
+   {
+    "surah": 20,
+    "from": 14,
+    "to": 14
+   }
+  ],
+  "hadith": [
+   {
+    "collection": "Sahih al-Bukhari",
+    "number": "528",
+    "url": "https://sunnah.com/bukhari:528",
+    "en": "Narrated Abu Huraira:I heard Allah's Messenger (ﷺ) saying, \"If there was a river at the door of anyone of you and he took a bath in it five times a day would you notice any dirt on him?\" They said, \"Not a trace of dirt would be left.\" The Prophet (ﷺ) added, \"That is the example of the five prayers with which Allah blots out (annuls) evil deeds",
+    "ur": "ہم سے ابراہیم بن حمزہ نے بیان کیا، کہا ہم سے عبدالعزیز بن ابی حازم اور عبدالعزیز بن محمد دراوردی نے یزید بن عبداللہ کی روایت سے، انہوں نے محمد بن ابراہیم تیمی سے، انہوں نے ابوسلمہ بن عبدالرحمٰن بن عوف رضی اللہ عنہ سے، انہوں نے ابوہریرہ رضی اللہ عنہ سے کہ انہوں نے رسول اللہ صلی اللہ علیہ وسلم سے سنا آپ صلی اللہ علیہ وسلم فرماتے تھے کہ اگر کسی شخص کے دروازے پر نہر جاری ہو اور وہ روزانہ اس میں پانچ پانچ دفعہ نہائے تو تمہارا کیا گمان ہے۔ کیا اس کے بدن پر کچھ بھی میل باقی رہ سکتا ہے؟ صحابہ نے عرض کی کہ نہیں یا رسول اللہ! ہرگز نہیں۔ آپ صلی اللہ علیہ وسلم نے فرمایا کہ یہی حال پانچوں وقت کی نمازوں کا ہے کہ اللہ پاک ان کے ذریعہ سے گناہوں کو مٹا دیتا ہے۔"
+   },
+   {
+    "collection": "Sahih al-Bukhari",
+    "number": "527",
+    "url": "https://sunnah.com/bukhari:527",
+    "en": "Narrated `Abdullah:I asked the Prophet (ﷺ) \"Which deed is the dearest to Allah?\" He replied, \"To offer the prayers at their early stated fixed times.\" I asked, \"What is the next (in goodness)?\" He replied, \"To be good and dutiful to your parents\" I again asked, \"What is the next (in goodness)?\" He replied, 'To participate in Jihad (religious fighting) in Allah's cause.\" `Abdullah added, \"I asked only that much and if I had asked more, the Prophet (ﷺ) would have told me more",
+    "ur": "ہم سے ابوالولید ہشام بن عبدالملک نے بیان کیا، کہا ہم سے شعبہ نے، انہوں نے کہا کہ مجھے ولید بن عیزار کوفی نے خبر دی، کہا کہ میں نے ابوعمر و شیبانی سے سنا، وہ کہتے تھے کہ میں نے اس گھر کے مالک سے سنا، (آپ عبداللہ بن مسعود رضی اللہ عنہ کے گھر کی طرف اشارہ کر رہے تھے) انہوں نے فرمایا کہ میں نے نبی کریم صلی اللہ علیہ وسلم سے پوچھا کہ اللہ تعالیٰ کی بارگاہ میں کون سا عمل زیادہ محبوب ہے؟ آپ صلی اللہ علیہ وسلم نے فرمایا کہ اپنے وقت پر نماز پڑھنا، پھر پوچھا، اس کے بعد، فرمایا والدین کے ساتھ نیک معاملہ رکھنا۔ پوچھا اس کے بعد، آپ صلی اللہ علیہ وسلم نے فرمایا کہ اللہ کی راہ میں جہاد کرنا۔ ابن مسعود رضی اللہ عنہ نے فرمایا کہ نبی کریم صلی اللہ علیہ وسلم نے مجھے یہ تفصیل بتائی اور اگر میں اور سوالات کرتا تو آپ صلی اللہ علیہ وسلم اور زیادہ بھی بتلاتے۔ ( لیکن میں نے بطور ادب خاموشی اختیار کی ) ۔"
+   }
+  ]
+ },
+ {
+  "id": "friends",
+  "en": "Friends and company",
+  "ur": "دوستی اور صحبت",
+  "guide_en": "You become like those you sit with. A good friend is like a perfume seller: you benefit even by being near them. Choose friends who remind you of Allah, and gently distance yourself from those who pull you towards harm.",
+  "guide_ur": "انسان اپنے دوستوں جیسا بن جاتا ہے۔ اچھا دوست عطر بیچنے والے کی طرح ہے۔ ایسے دوست چنیں جو اللہ کی یاد دلائیں۔",
+  "crisis": false,
+  "words": "friend friends friendship company bad friends peer pressure toxic people dost dosti sohbat دوست دوستی صحبت",
+  "ayat": [
+   {
+    "surah": 25,
+    "from": 27,
+    "to": 29
+   },
+   {
+    "surah": 43,
+    "from": 67,
+    "to": 67
+   },
+   {
+    "surah": 18,
+    "from": 28,
+    "to": 28
+   }
+  ],
+  "hadith": [
+   {
+    "collection": "Sahih al-Bukhari",
+    "number": "2101",
+    "url": "https://sunnah.com/bukhari:2101",
+    "en": "Narrated Abu Musa:Allah's Messenger (ﷺ) said, \"The example of a good companion (who sits with you) in comparison with a bad one, is like that of the musk seller and the blacksmith's bellows (or furnace); from the first you would either buy musk or enjoy its good smell while the bellows would either burn your clothes or your house, or you get a bad nasty smell thereof",
+    "ur": "ہم سے موسیٰ بن اسماعیل نے بیان کیا، انہوں نے کہا کہ ہم سے عبدالواحد نے بیان کیا، انہوں نے کہا کہ ہم سے ابوبردہ بن عبداللہ نے بیان کیا، انہوں نے کہا کہ میں نے ابوبردہ بن ابی موسیٰ سے سنا اور ان سے ان کے والد موسیٰ رضی اللہ عنہ نے بیان کیا کہ رسول اللہ صلی اللہ علیہ وسلم نے فرمایا نیک ساتھی اور برے ساتھی کی مثال کستوری بیچنے والے عطار اور لوہار کی سی ہے۔ مشک بیچنے والے کے پاس سے تم دو اچھائیوں میں سے ایک نہ ایک ضرور پا لو گے۔ یا تو مشک ہی خرید لو گے ورنہ کم از کم اس کی خوشبو تو ضرور ہی پا سکو گے۔ لیکن لوہار کی بھٹی یا تمہارے بدن اور کپڑے کو جھلسا دے گی ورنہ بدبو تو اس سے تم ضرور پا لو گے۔"
+   }
+  ]
+ },
+ {
+  "id": "pride",
+  "en": "Arrogance and ego",
+  "ur": "تکبر",
+  "guide_en": "Allah does not love the arrogant. Even an atom's weight of pride is dangerous. Remember that every blessing you have is from Allah, walk humbly, and treat people with respect whatever their status.",
+  "guide_ur": "اللہ تکبر کرنے والوں کو پسند نہیں کرتا، ذرہ بھر تکبر بھی خطرناک ہے۔ ہر نعمت اللہ کی ہے، عاجزی اختیار کریں۔",
+  "crisis": false,
+  "words": "arrogance arrogant pride proud ego show off showing off takabbur ghamand ghuroor تکبر غرور گھمنڈ",
+  "ayat": [
+   {
+    "surah": 31,
+    "from": 18,
+    "to": 19
+   },
+   {
+    "surah": 17,
+    "from": 37,
+    "to": 37
+   }
+  ],
+  "hadith": [
+   {
+    "collection": "Sahih Muslim",
+    "number": "91a",
+    "url": "https://sunnah.com/muslim/1/171",
+    "en": "It Is narrated on the authority of Abdullah b. Mas'ud that the Messenger of Allah (ﷺ), observed:He who has in his heart the weight of a mustard seed of pride shall not enter Paradise. A person (amongst his hearers) said: Verily a person loves that his dress should be fine, and his shoes should be fine. He (the Holy Prophet) remarked: Verily, Allah is Graceful and He loves Grace. Pride is disdaining the truth (out of self-conceit) and contempt for the people",
+    "ur": "یحییٰ بن حماد نے کہا : ہمیں شعبہ نے ابان بن تغلب سے حدیث سنائی ، انہوں نے فضیل بن عمرو فقیمی سے ، انہوں نے ابراہیم نخعی سے ، انہوں نے علقمہ سے ، انہوں نے حضرت عبد اللہ بن مسعود ‌رضی ‌اللہ ‌عنہ ‌ ‌ سے اور انہوں نے نبی کریمﷺ سے روایت کی ، آپ نے فرمایا : ’’ جس کے دل میں ذرہ برابر تکبر ہو گا ، وہ جنت میں داخل نہ ہو گا ۔ ‘ ‘ ایک آدمی نے کہا : انسان چاہتا ہے کہ اس کے کپڑے اچھے ہوں اور اس کے جوتے اچھے ہوں ۔ آپ نے فرمایا : ’’ اللہ خود جمیل ہے ، وہ جمال کو پسند فرماتا ہے ۔ تکبر ، حق کو قبول نہ کرنا اورلوگوں کو حقیر سمجھنا ہے ۔ ‘ ‘"
+   }
+  ]
+ },
+ {
+  "id": "backbiting",
+  "en": "Backbiting and gossip",
+  "ur": "غیبت",
+  "guide_en": "Backbiting is mentioning about your brother what he would dislike, even if it is true. The Quran compares it to eating a dead brother's flesh. Speak good or stay silent, and if you have backbitten, repent and speak well of that person.",
+  "guide_ur": "غیبت یہ ہے کہ بھائی کے بارے میں ایسی بات کہی جائے جو اسے ناپسند ہو، چاہے سچ ہو۔ اچھی بات کہیں یا خاموش رہیں۔",
+  "crisis": false,
+  "words": "backbiting gossip talk behind back rumours slander bad mouth gheebat ghibat chugli غیبت چغلی",
+  "ayat": [
+   {
+    "surah": 49,
+    "from": 12,
+    "to": 12
+   },
+   {
+    "surah": 49,
+    "from": 11,
+    "to": 11
+   }
+  ],
+  "hadith": [
+   {
+    "collection": "Sahih Muslim",
+    "number": "2589",
+    "url": "https://sunnah.com/muslim/45/91",
+    "en": "Abu Huraira reported Allah's Messenger (ﷺ) as saying:Do you know what is backbiting? They (the Companions) said: Allah and His Messenger know best. Thereupon he (the Holy Prophet) said: Backbiting implies your talking about your brother in a manner which he does not like. It was said to him: What is your opinion about this that if I actually find (that failing) in my brother which I made a mention of? He said: If (that failing) is actually found (in him) what you assert, you in fact backbited him, and if that is not in him it is a slander",
+    "ur": "حضرت ابوہریرہ رضی اللہ عنہ سے روایت ہے کہ رسول اللہ صلی اللہ علیہ وسلم نے فرمایا : \" کیا تم جانتے ہو کہ غیبت کیا ہے؟ \" انہوں ( صحابہ ) نے عرض کی : اللہ اور اس کا رسول خوب جاننے والے ہیں ۔ آپ نے فرمایا : \" اپنے بھائی کا اس طرح تذکرہ کرنا جو اسے ناپسند ہو ۔ \" عرض کی گئی : آپ یہ دیکھئے کہ اگر میرے بھائی میں وہ بات واقعی موجود ہو جو میں کہتا ہوں ( تو؟ ) آپ نے فرمایا : \" جو کچھ تم کہتے ہو ، اگر اس میں موجود ہے تو تم نے اس کی غیبت کی ، اگر اس میں وہ ( عیب ) موجود نہیں تو تم نے اس پر بہتان لگایا ہے ۔"
+   },
+   {
+    "collection": "Sahih al-Bukhari",
+    "number": "6018",
+    "url": "https://sunnah.com/bukhari:6018",
+    "en": "Narrated Abu Huraira:Allah's Messenger (ﷺ) said, \"Anybody who believes in Allah and the Last Day should not harm his neighbor, and anybody who believes in Allah and the Last Day should entertain his guest generously and anybody who believes in Allah and the Last Day should talk what is good or keep quiet. (i.e. abstain from all kinds of evil and dirty talk)",
+    "ur": "ہم سے قتیبہ بن سعید نے بیان کیا، انہوں نے کہا ہم سے ابوالاحوص نے بیان، ان سے ابوحصین نے، ان سے ابوصالح نے اور ان سے ابوہریرہ رضی اللہ عنہ نے بیان کیا کہ رسول اللہ صلی اللہ علیہ وسلم نے فرمایا ”جو کوئی اللہ اور آخرت کے دن پر ایمان رکھتا ہو وہ اپنے پڑوسی کو تکلیف نہ پہنچائے اور جو کوئی اللہ اور آخرت کے دن پر ایمان رکھتا ہو وہ اپنے مہمان کی عزت کرے اور جو کوئی اللہ اور آخرت کے دن پر ایمان رکھتا ہو وہ اچھی بات زبان سے نکالے ورنہ خاموش رہے۔“"
+   }
+  ]
+ },
+ {
+  "id": "neighbours",
+  "en": "Neighbours and kindness to others",
+  "ur": "پڑوسی اور حسن سلوک",
+  "guide_en": "Jibril kept advising the Prophet ﷺ about neighbours until he thought they would inherit. Be kind to neighbours, relatives, the poor and travellers, and never harm the people around you.",
+  "guide_ur": "جبرائیلؑ پڑوسی کے بارے میں اتنی تاکید کرتے رہے کہ نبی ﷺ کو گمان ہوا کہ اسے وارث بنا دیا جائے گا۔ پڑوسیوں کو تکلیف نہ دیں۔",
+  "crisis": false,
+  "words": "neighbour neighbor neighbours kindness helping others community padosi hamsaya پڑوسی ہمسایہ",
+  "ayat": [
+   {
+    "surah": 4,
+    "from": 36,
+    "to": 36
+   }
+  ],
+  "hadith": [
+   {
+    "collection": "Sahih al-Bukhari",
+    "number": "6014",
+    "url": "https://sunnah.com/bukhari:6014",
+    "en": "Narrated `Aisha:The Prophet (ﷺ) said \"Gabriel continued to recommend me about treating the neighbors Kindly and politely so much so that I thought he would order me to make them as my heirs",
+    "ur": "ہم سے اسماعیل بن ابی اویس نے بیان کیا، کہا کہ مجھ سے امام مالک نے بیان کیا، ان سے یحییٰ بن سعید نے کہا کہ مجھے ابوبکر بن محمد نے خبر دی، انہیں عمرہ نے اور انہیں عائشہ رضی اللہ عنہا نے کہ نبی کریم صلی اللہ علیہ وسلم نے فرمایا ”جبرائیل علیہ السلام مجھے پڑوسی کے بارے میں باربار اس طرح وصیت کرتے رہے کہ مجھے خیال گزرا کہ شاید پڑوسی کو وراثت میں شریک نہ کر دیں۔“"
+   },
+   {
+    "collection": "Sahih al-Bukhari",
+    "number": "6018",
+    "url": "https://sunnah.com/bukhari:6018",
+    "en": "Narrated Abu Huraira:Allah's Messenger (ﷺ) said, \"Anybody who believes in Allah and the Last Day should not harm his neighbor, and anybody who believes in Allah and the Last Day should entertain his guest generously and anybody who believes in Allah and the Last Day should talk what is good or keep quiet. (i.e. abstain from all kinds of evil and dirty talk)",
+    "ur": "ہم سے قتیبہ بن سعید نے بیان کیا، انہوں نے کہا ہم سے ابوالاحوص نے بیان، ان سے ابوحصین نے، ان سے ابوصالح نے اور ان سے ابوہریرہ رضی اللہ عنہ نے بیان کیا کہ رسول اللہ صلی اللہ علیہ وسلم نے فرمایا ”جو کوئی اللہ اور آخرت کے دن پر ایمان رکھتا ہو وہ اپنے پڑوسی کو تکلیف نہ پہنچائے اور جو کوئی اللہ اور آخرت کے دن پر ایمان رکھتا ہو وہ اپنے مہمان کی عزت کرے اور جو کوئی اللہ اور آخرت کے دن پر ایمان رکھتا ہو وہ اچھی بات زبان سے نکالے ورنہ خاموش رہے۔“"
+   }
+  ]
+ },
+ {
+  "id": "oppression",
+  "en": "When someone wrongs you",
+  "ur": "جب کوئی ظلم کرے",
+  "guide_en": "Allah is not unaware of what the wrongdoers do. There is no barrier between the prayer of the oppressed and Allah. Seek justice through the right channels, protect yourself, and leave the rest to Allah. If you are in danger, contact someone you trust or the police.",
+  "guide_ur": "اللہ ظالموں کے کاموں سے غافل نہیں۔ مظلوم کی دعا اور اللہ کے درمیان کوئی پردہ نہیں۔ جائز طریقے سے انصاف مانگیں اور خطرہ ہو تو مدد حاصل کریں۔",
+  "crisis": false,
+  "words": "injustice unfair oppression oppressed wronged bullied bully harassed abuse cheated zulm na insafi zalim ظلم ناانصافی ظالم",
+  "ayat": [
+   {
+    "surah": 14,
+    "from": 42,
+    "to": 42
+   },
+   {
+    "surah": 42,
+    "from": 40,
+    "to": 43
+   }
+  ],
+  "hadith": [
+   {
+    "collection": "Sahih al-Bukhari",
+    "number": "2448",
+    "url": "https://sunnah.com/bukhari:2448",
+    "en": "Narrated Ibn `Abbas:The Prophet (ﷺ) sent Mu`adh to Yemen and said, \"Be afraid, from the curse of the oppressed as there is no screen between his invocation and Allah",
+    "ur": "ہم سے یحییٰ بن موسیٰ نے بیان کیا، کہا ہم سے وکیع نے بیان کیا، کہا ہم سے زکریا بن اسحاق مکی نے بیان کیا، ان سے یحییٰ بن عبداللہ صیفی نے، ان سے ابن عباس رضی اللہ عنہما کے غلام ابومعبد نے، اور ان سے ابن عباس رضی اللہ عنہما نے کہ نبی کریم صلی اللہ علیہ وسلم نے معاذ رضی اللہ عنہ کو جب ( عامل بنا کر ) یمن بھیجا، تو آپ صلی اللہ علیہ وسلم نے انہیں ہدایت فرمائی کہ مظلوم کی بددعا سے ڈرتے رہنا کہ اس ( دعا ) کے اور اللہ تعالیٰ کے درمیان کوئی پردہ نہیں ہوتا۔"
+   }
+  ]
+ },
+ {
+  "id": "hope",
+  "en": "Hope and Allah's mercy",
+  "ur": "امید اور اللہ کی رحمت",
+  "guide_en": "Do not despair of Allah's mercy; only those without faith despair. Allah divided mercy into a hundred parts and sent down only one to this world, from which all creatures show kindness. Hardship never comes without ease alongside it.",
+  "guide_ur": "اللہ کی رحمت سے مایوس نہ ہوں۔ اللہ نے رحمت کے سو حصے کیے اور دنیا میں صرف ایک اتارا۔ مشکل کے ساتھ آسانی ضرور ہے۔",
+  "crisis": false,
+  "words": "hope hopeless despair give up giving up no way out mercy umeed na umeed mayoos rehmat امید ناامید مایوس رحمت",
+  "ayat": [
+   {
+    "surah": 12,
+    "from": 87,
+    "to": 87
+   },
+   {
+    "surah": 39,
+    "from": 53,
+    "to": 53
+   },
+   {
+    "surah": 94,
+    "from": 5,
+    "to": 6
+   }
+  ],
+  "hadith": [
+   {
+    "collection": "Sahih al-Bukhari",
+    "number": "6000",
+    "url": "https://sunnah.com/bukhari:6000",
+    "en": "Narrated Abu Huraira:I heard Allah's Messenger (ﷺ) saying, Allah divided Mercy into one hundred parts. He kept ninety nine parts with Him and sent down one part to the earth, and because of that, its one single part, His Creations are merciful to each other, so that even the mare lifts up its hoofs away from its baby animal, lest it should trample on it",
+    "ur": "ہم سے حکم بن نافع نے بیان کیا، کہا ہم کو شعیب نے خبر دی، انہیں زہری نے، کہا ہم کو سعید بن مسیب نے خبر دی کہ ابوہریرہ رضی اللہ عنہ نے بیان کیا کہ میں نے رسول اللہ صلی اللہ علیہ وسلم سے سنا، نبی کریم صلی اللہ علیہ وسلم نے فرمایا کہ اللہ نے رحمت کے سو حصے بنائے اور اپنے پاس ان میں سے ننانوے حصے رکھے صرف ایک حصہ زمین پر اتارا اور اسی کی وجہ سے تم دیکھتے ہو کہ مخلوق ایک دوسرے پر رحم کرتی ہے، یہاں تک کہ گھوڑی بھی اپنے بچہ کو اپنے سم نہیں لگنے دیتی بلکہ سموں کو اٹھا لیتی ہے کہ کہیں اس سے اس کے بچہ کو تکلیف نہ پہنچے۔"
+   }
+  ]
+ },
+ {
+  "id": "dunya",
+  "en": "Death, the afterlife and this world",
+  "ur": "دنیا اور آخرت",
+  "guide_en": "This life is short and the home of the Hereafter is the true life. We were created to worship Allah. Live in this world like a stranger or a traveller: enjoy what is good, but keep your heart on the destination.",
+  "guide_ur": "یہ زندگی مختصر ہے اور آخرت ہی اصل زندگی ہے۔ دنیا میں اجنبی یا مسافر کی طرح رہیں۔",
+  "crisis": false,
+  "words": "death afterlife akhirah hereafter dunya world worldly materialism meaning of life purpose akhirat dunya maqsad زندگی کا مقصد آخرت دنیا",
+  "ayat": [
+   {
+    "surah": 3,
+    "from": 185,
+    "to": 185
+   },
+   {
+    "surah": 29,
+    "from": 64,
+    "to": 64
+   },
+   {
+    "surah": 51,
+    "from": 56,
+    "to": 56
+   }
+  ],
+  "hadith": [
+   {
+    "collection": "Sahih al-Bukhari",
+    "number": "6416",
+    "url": "https://sunnah.com/bukhari:6416",
+    "en": "Narrated Mujahid:`Abdullah bin `Umar said, \"Allah's Messenger (ﷺ) took hold of my shoulder and said, 'Be in this world as if you were a stranger or a traveler.\" The sub-narrator added: Ibn `Umar used to say, \"If you survive till the evening, do not expect to be alive in the morning, and if you survive till the morning, do not expect to be alive in the evening, and take from your health for your sickness, and (take) from your life for your death",
+    "ur": "ہم سے علی بن عبداللہ نے بیان کیا، انہوں نے کہا ہم سے محمد بن عبدالرحمٰن ابومنذر طفاوی نے بیان کیا، انہوں نے کہا ہم سے سلیمان اعمش نے بیان کیا، انہوں نے کہا مجھ سے مجاہد نے بیان کیا، انہوں نے کہا ہم سے عبداللہ بن عمر رضی اللہ عنہما نے بیان کیا کہ رسول اللہ صلی اللہ علیہ وسلم نے میرا شانہ پکڑ کر فرمایا ”دنیا میں اس طرح ہو جا جیسے تو مسافر یا راستہ چلنے والا ہو۔“ عبداللہ بن عمر رضی اللہ عنہما فرمایا کرتے تھے شام ہو جائے تو صبح کے منتظر نہ رہو اور صبح کے وقت شام کے منتظر نہ رہو، اپنی صحت کو مرض سے پہلے غنیمت جانو اور زندگی کو موت سے پہلے۔"
+   }
+  ]
+ },
+ {
+  "id": "desire",
+  "en": "Temptation and desires",
+  "ur": "خواہشات اور فتنے",
+  "guide_en": "Whoever restrains the soul from its desires, Paradise is their home. Lower your gaze, avoid what leads you to sin, and keep busy with good. The Prophet ﷺ advised young people to marry if they can, and to fast if they cannot. Every time you resist, you grow stronger.",
+  "guide_ur": "جو نفس کو خواہشات سے روکے، جنت اس کا ٹھکانا ہے۔ نظریں نیچی رکھیں، گناہ کے راستوں سے بچیں، اور نکاح نہ کر سکیں تو روزہ رکھیں۔",
+  "crisis": false,
+  "words": "temptation desire lust addiction porn haram relationship zina control myself nafs khwahish fitna شہوت نفس خواہش فتنہ",
+  "ayat": [
+   {
+    "surah": 79,
+    "from": 40,
+    "to": 41
+   },
+   {
+    "surah": 12,
+    "from": 53,
+    "to": 53
+   },
+   {
+    "surah": 24,
+    "from": 30,
+    "to": 31
+   }
+  ],
+  "hadith": [
+   {
+    "collection": "Sahih al-Bukhari",
+    "number": "6474",
+    "url": "https://sunnah.com/bukhari:6474",
+    "en": "Narrated Sahl bin Sa`d:Allah's Messenger (ﷺ) said, \"Whoever can guarantee (the chastity of) what is between his two jaw-bones and what is between his two legs (i.e. his tongue and his private parts), I guarantee Paradise for him",
+    "ur": "ہم سے محمد بن ابوبکر مقدمی نے بیان کیا، کہا ہم سے عمر بن علی نے بیان کیا، انہوں نے ابوحازم سے سنا، انہوں نے سہل بن سعد رضی اللہ عنہ سے کہ رسول اللہ صلی اللہ علیہ وسلم نے فرمایا ”میرے لیے جو شخص دونوں جبڑوں کے درمیان کی چیز ( زبان ) اور دونوں ٹانگوں کے درمیان کی چیز ( شرمگاہ ) کی ذمہ داری دیدے میں اس کے لیے جنت کی ذمہ داری دیتا ہوں۔“"
+   },
+   {
+    "collection": "Sahih al-Bukhari",
+    "number": "5066",
+    "url": "https://sunnah.com/bukhari:5066",
+    "en": "Narrated `Abdullah:We were with the Prophet (ﷺ) while we were young and had no wealth. So Allah's Messenger (ﷺ) said, \"O young people! Whoever among you can marry, should marry, because it helps him lower his gaze and guard his modesty (i.e. his private parts from committing illegal sexual intercourse etc.), and whoever is not able to marry, should fast, as fasting diminishes his sexual power",
+    "ur": "ہم سے عمر بن حفص بن غیاث نے بیان کیا، کہا مجھ سے میرے والد نے بیان کیا، کہا ہم سے اعمش نے بیان کیا، کہا کہ مجھ سے عمارہ نے بیان کیا، ان سے عبدالرحمٰن بن یزید نے بیان کیا، کہا کہ میں علقمہ اور اسود ( رحمہم اللہ ) کے ساتھ عبداللہ بن مسعود رضی اللہ عنہ کی خدمت میں حاضر ہوا، انہوں نے ہم سے کہا کہ ہم نبی کریم صلی اللہ علیہ وسلم کے زمانہ میں نوجوان تھے اور ہمیں کوئی چیز میسر نہیں تھی۔ نبی کریم صلی اللہ علیہ وسلم نے ہم سے فرمایا کہ نوجوانوں کی جماعت! تم میں جسے بھی نکاح کرنے کے لیے مالی طاقت ہو اسے نکاح کر لینا چاہئے کیونکہ یہ نظر کو نیچی رکھنے والا اور شرمگاہ کی حفاظت کرنے والا عمل ہے اور جو کوئی نکاح کی بوجہ غربت طاقت نہ رکھتا ہو اسے چاہیے کہ روزہ رکھے کیونکہ روزہ اس کی خواہشات نفسانی کو توڑ دے گا۔"
+   }
+  ]
+ },
+ {
+  "id": "charity",
+  "en": "Charity and greed",
+  "ur": "صدقہ اور بخل",
+  "guide_en": "Spending in Allah's path is like a seed that grows seven hundredfold, and charity never decreases wealth. Even a single date given from honest earnings is accepted and grown by Allah. Give regularly, even if small.",
+  "guide_ur": "اللہ کی راہ میں خرچ ایک دانے کی طرح ہے جو سات سو گنا بڑھتا ہے، اور صدقہ مال کم نہیں کرتا۔ تھوڑا ہی سہی، باقاعدگی سے دیں۔",
+  "crisis": false,
+  "words": "charity sadaqa sadaqah zakat give donate greedy stingy miser sadqa sadaqa zakat kanjoos bukhl صدقہ زکوٰۃ کنجوس بخل",
+  "ayat": [
+   {
+    "surah": 2,
+    "from": 261,
+    "to": 261
+   },
+   {
+    "surah": 3,
+    "from": 92,
+    "to": 92
+   }
+  ],
+  "hadith": [
+   {
+    "collection": "Sahih al-Bukhari",
+    "number": "1410",
+    "url": "https://sunnah.com/bukhari:1410",
+    "en": "Narrated Abu Huraira:Allah's Messenger (ﷺ) said, \"If one gives in charity what equals one date-fruit from the honestly earned money and Allah accepts only the honestly earned money --Allah takes it in His right (hand) and then enlarges its reward for that person (who has given it), as anyone of you brings up his baby horse, so much so that it becomes as big as a mountain",
+    "ur": "ہم سے عبداللہ بن منیر نے بیان کیا ‘ انہوں نے ابوالنضر سالم بن ابی امیہ سے سنا ‘ انہوں نے بیان کیا کہ مجھ سے عبدالرحمٰن بن عبداللہ بن دینار نے بیان کیا ‘ ان سے ان کے والد نے ‘ ان سے ابوصالح نے اور ان سے ابوہریرہ رضی اللہ عنہ نے کہ رسول اللہ صلی اللہ علیہ وسلم نے فرمایا جو شخص حلال کمائی سے ایک کھجور کے برابر صدقہ کرے اور اللہ تعالیٰ صرف حلال کمائی کے صدقہ کو قبول کرتا ہے تو اللہ تعالیٰ اسے اپنے داہنے ہاتھ سے قبول کرتا ہے پھر صدقہ کرنے والے کے فائدے کے لیے اس میں زیادتی کرتا ہے۔ بالکل اسی طرح جیسے کوئی اپنے جانور کے بچے کو کھلا پلا کر بڑھاتا ہے تاآنکہ اس کا صدقہ پہاڑ کے برابر ہو جاتا ہے۔ عبدالرحمٰن کے ساتھ اس روایت کی متابعت سلیمان نے عبداللہ بن دینار کی روایت سے کی ہے اور ورقاء نے ابن دینار سے کہا ‘ ان سے سعید بن یسار نے ‘ ان سے ابوہریرہ رضی اللہ عنہ نے اور ان سے نبی کریم صلی اللہ علیہ وسلم نے اور اس کی روایت مسلم بن ابی مریم ‘ زید بن اسلم اور سہیل نے ابوصالح سے کی ‘ ان سے ابوہریرہ رضی اللہ عنہ نے اور ان سے نبی کریم صلی اللہ علیہ وسلم نے۔"
+   },
+   {
+    "collection": "Sahih Muslim",
+    "number": "2588",
+    "url": "https://sunnah.com/muslim/45/90",
+    "en": "Abu Huraira reported Allah's Messenger (ﷺ) as saying:Charity does not decrease wealth, no one forgives another except that Allah increases his honor, and no one humbles himself for the sake of Allah except that Allah raises his status",
+    "ur": "حضرت ابوہریرہ رضی اللہ عنہ نے رسول اللہ صلی اللہ علیہ وسلم سے روایت کی کہ آپ صلی اللہ علیہ وسلم نے فرمایا : \" صدقے نے مال میں کبھی کوئی کمی نہیں کی اور معاف کرنے سے اللہ تعالیٰ بندے کو عزت ہی میں بڑھاتا ہے اور کوئی شخص ( صرف اور صرف ) اللہ کی خاطر تواضع ( انکسار ) اختیار نہیں کرتا مگر اللہ تعالیٰ اس کا مقام بلند کر دیتا ہے ۔"
+   }
+  ]
+ },
+ {
+  "id": "time",
+  "en": "Wasting time and laziness",
+  "ur": "وقت کا ضیاع اور سستی",
+  "guide_en": "By time, humanity is in loss, except those who believe, do good, and encourage truth and patience. Health and free time are two blessings many people lose. Plan your day, put your phone away during prayer and study, and ask Allah for refuge from laziness.",
+  "guide_ur": "زمانے کی قسم، انسان خسارے میں ہے سوائے ایمان اور نیک عمل والوں کے۔ صحت اور فارغ وقت دو نعمتیں ہیں جن میں لوگ نقصان اٹھاتے ہیں۔",
+  "crisis": false,
+  "words": "time waste wasting lazy laziness procrastination scrolling social media productive waqt sust susti waqt barbad وقت سستی کاہلی",
+  "ayat": [
+   {
+    "surah": 103,
+    "from": 1,
+    "to": 3
+   }
+  ],
+  "hadith": [
+   {
+    "collection": "Sahih al-Bukhari",
+    "number": "6412",
+    "url": "https://sunnah.com/bukhari:6412",
+    "en": "Narrated Ibn `Abbas:The Prophet (ﷺ) said: \"There are two blessings that many people are deceived into losing: health and free time",
+    "ur": "ہم سے مکی بن ابراہیم نے بیان کیا، انہوں نے کہا ہم کو عبداللہ بن سعید نے خبر دی، وہ ابوہند کے صاحب زادے ہیں، انہیں ان کے والد نے اور ان سے عبداللہ بن عباس رضی اللہ عنہما نے بیان کیا کہ نبی کریم صلی اللہ علیہ وسلم نے فرمایا ”دو نعمتیں ایسی ہیں کہ اکثر لوگ ان کی قدر نہیں کرتے، صحت اور فراغت۔“ عباس عنبری نے بیان کیا کہ ہم سے صفوان بن عیسیٰ نے بیان کیا، ان سے عبداللہ بن ابی ہند نے، ان سے ان کے والد نے کہ میں نے عبداللہ بن عباس رضی اللہ عنہما سے سنا، انہوں نے نبی کریم صلی اللہ علیہ وسلم سے اسی حدیث کی طرح۔"
+   },
+   {
+    "collection": "Sahih al-Bukhari",
+    "number": "6369",
+    "url": "https://sunnah.com/bukhari:6369",
+    "en": "Narrated Anas bin Malik:The Prophet (ﷺ) used to say, \"O Allah! I seek refuge with You from worry and grief, from incapacity and laziness, from cowardice and miserliness, from being heavily in debt and from being overpowered by (other) men.\"",
+    "ur": "ہم سے خالد بن مخلد نے بیان کیا، انہوں نے کہا ہم سے سلیمان نے بیان کیا، انہوں نے کہا کہ مجھ سے عمرو بن ابی عمرو نے بیان کیا، انہوں نے کہا کہ میں نے انس بن مالک رضی اللہ عنہ سے سنا، کہا کہ نبی کریم صلی اللہ علیہ وسلم کہتے تھے «اللهم إني أعوذ بك من الهم والحزن،‏‏‏‏ والعجز والكسل،‏‏‏‏ والجبن والبخل،‏‏‏‏ وضلع الدين،‏‏‏‏ وغلبة الرجال» ”اے اللہ! میں تیری پناہ مانگتا ہوں غم و الم سے، عاجزی سے، سستی سے، بزدلی سے، بخل، قرض چڑھ جانے اور لوگوں کے غلبہ سے۔“"
+   }
+  ]
+ },
+ {
+  "id": "character",
+  "en": "Good character and manners",
+  "ur": "اچھے اخلاق",
+  "guide_en": "The Prophet ﷺ was of great character, and the best of us are those with the best manners. Make things easy for people, speak the best words, and treat others as you would like to be treated.",
+  "guide_ur": "نبی ﷺ عظیم اخلاق والے تھے، اور تم میں بہترین وہ ہے جس کے اخلاق بہترین ہوں۔ لوگوں کے لیے آسانی پیدا کریں۔",
+  "crisis": false,
+  "words": "character manners behaviour behavior good person akhlaq rude harsh akhlaq tameez بداخلاقی اخلاق تمیز",
+  "ayat": [
+   {
+    "surah": 68,
+    "from": 4,
+    "to": 4
+   },
+   {
+    "surah": 33,
+    "from": 21,
+    "to": 21
+   },
+   {
+    "surah": 17,
+    "from": 53,
+    "to": 53
+   }
+  ],
+  "hadith": [
+   {
+    "collection": "Sahih al-Bukhari",
+    "number": "6029",
+    "url": "https://sunnah.com/bukhari:6029",
+    "en": "Narrated Masruq: Abdullah bin 'Amr mentioned Allah's Messenger (ﷺ) saying that he was neither a Fahish nor a Mutafahish. Abdullah bin 'Amr added, Allah's Messenger (ﷺ) said, 'The best among you are those who have the best manners and character",
+    "ur": "ہم سے حفص بن عمر بن حارث ابوعمرو حوش نے بیان کیا، کہا ہم سے شعبہ بن حجاج نے بیان کیا، ان سے سلیمان نے، انہوں نے ابووائل شقیق بن سلمہ سے سنا، انہوں نے مسروق سے سنا، انہوں نے بیان کیا کہ عمر رضی اللہ عنہ نے کہا (دوسری سند) امام بخاری رحمہ اللہ نے کہا ہم سے قتیبہ بن سعید نے بیان کیا، کہا ہم سے جریر نے بیان کیا، ان سے اعمش نے، ان سے شقیق بن سلمہ نے اور ان سے مسروق نے بیان کیا کہ جب معاویہ رضی اللہ عنہ کے ساتھ عبداللہ بن عمرو بن عاص کوفہ تشریف لائے تو ہم ان کی خدمت میں حاضر ہوئے۔ انہوں نے رسول اللہ صلی اللہ علیہ وسلم کا ذکر کیا اور بتلایا کہ نبی کریم صلی اللہ علیہ وسلم بدگو نہ تھے اور نہ آپ بدزبان تھے اور انہوں نے یہ بھی بیان کیا کہ آپ صلی اللہ علیہ وسلم نے فرمایا کہ تم میں سب سے بہتر وہ آدمی ہے، جس کے اخلاق سب سے اچھے ہوں۔"
+   },
+   {
+    "collection": "Sahih al-Bukhari",
+    "number": "6125",
+    "url": "https://sunnah.com/bukhari:6125",
+    "en": "Narrated Anas bin Malik:The Prophet (ﷺ) said, \"Make things easy for the people, and do not make it difficult for them, and make them calm (with glad tidings) and do not repulse (them)",
+    "ur": "ہم سے آدم بن ابی ایاس نے بیان کیا، انہوں نے کہا ہم سے شعبہ نے بیان کیا، ان سے ابوالتیاح نے بیان کیا، انہوں نے انس بن مالک رضی اللہ عنہ سے سنا، انہوں نے کہا کہ نبی کریم صلی اللہ علیہ وسلم نے فرمایا ”آسانی پیدا کرو، تنگی نہ پیدا کرو، لوگوں کو تسلی اور تشفی دو نفرت نہ دلاؤ۔“"
+   }
+  ]
+ },
+ {
+  "id": "family",
+  "en": "Family conflict and ties of kinship",
+  "ur": "رشتے داری اور خاندانی جھگڑے",
+  "guide_en": "Keeping family ties brings blessing in your life and provision. The one who truly keeps ties is the one who reaches out even when others cut them off. Make the first call, forgive, and keep it simple.",
+  "guide_ur": "صلہ رحمی سے عمر اور رزق میں برکت ہوتی ہے۔ اصل صلہ رحمی یہ ہے کہ کوئی تعلق توڑے تو بھی آپ جوڑیں۔",
+  "crisis": false,
+  "words": "family relatives fight brother sister cousin in laws cut off relations kinship rishtedar bhai behan khandan saas sasural قطع رحمی رشتہ دار بھائی بہن خاندان",
+  "ayat": [
+   {
+    "surah": 47,
+    "from": 22,
+    "to": 23
+   },
+   {
+    "surah": 4,
+    "from": 1,
+    "to": 1
+   },
+   {
+    "surah": 13,
+    "from": 21,
+    "to": 21
+   }
+  ],
+  "hadith": [
+   {
+    "collection": "Sahih al-Bukhari",
+    "number": "5986",
+    "url": "https://sunnah.com/bukhari:5986",
+    "en": "Narrated Anas bin Malik:Allah's Apostle said, \"Whoever loves that he be granted more wealth and that his lease of life be prolonged then he should keep good relations with his Kith and kin",
+    "ur": "ہم سے یحییٰ بن بکیر نے بیان کیا، کہا ہم سے لیث بن سعد نے بیان کیا، ان سے عقیل نے، ان سے ابن شہاب نے بیان کیا، کہا کہ مجھے انس بن مالک رضی اللہ عنہ نے خبر دی کہ رسول اللہ صلی اللہ علیہ وسلم نے فرمایا کہ جو چاہتا ہو کہ اس کے رزق میں فراخی ہو اور اس کی عمردراز ہو تو وہ صلہ رحمی کیا کرے۔"
+   },
+   {
+    "collection": "Sahih al-Bukhari",
+    "number": "5991",
+    "url": "https://sunnah.com/bukhari:5991",
+    "en": "Narrated `Abdullah bin `Amr:The Prophet (ﷺ) said, \"Al-Wasil is not the one who recompenses the good done to him by his relatives, but Al-Wasil is the one who keeps good relations with those relatives who had severed the bond of kinship with him",
+    "ur": "ہم سے محمد بن کثیر نے بیان کیا، کہا ہم کو سفیان ثوری نے خبر دی، انہیں اعمش اور حسن بن عمرو اور فطر بن خلیفہ نے، ان سے مجاہد بن جبیر نے اور ان سے عبداللہ بن عمرو رضی اللہ عنہما نے سفیان سے، کہا کہ اعمش نے یہ حدیث نبی کریم صلی اللہ علیہ وسلم تک مرفوع نہیں بیان کی لیکن حسن اور فطر نے نبی کریم صلی اللہ علیہ وسلم سے مرفوعاً بیان کیا، فرمایا کہ کسی کام کا بدلہ دینا صلہ رحمی نہیں ہے بلکہ صلہ رحمی کرنے والا وہ ہے کہ جب اس کے ساتھ صلہ رحمی کا معاملہ نہ کیا جا رہا ہو تب بھی وہ صلہ رحمی کرے۔"
+   }
+  ]
+ },
+ {
+  "id": "intention",
+  "en": "Sincerity and intention",
+  "ur": "نیت اور اخلاص",
+  "guide_en": "Actions are judged by intentions. Do good for Allah, not to impress people, and even ordinary things like work, study and caring for family become worship when your intention is right.",
+  "guide_ur": "اعمال کا دارومدار نیتوں پر ہے۔ ہر کام اللہ کے لیے کریں، دکھاوے کے لیے نہیں۔",
+  "crisis": false,
+  "words": "intention niyyah sincerity sincere showing off riya people pleasing niyat ikhlas dikhawa نیت اخلاص دکھاوا",
+  "ayat": [
+   {
+    "surah": 98,
+    "from": 5,
+    "to": 5
+   },
+   {
+    "surah": 6,
+    "from": 162,
+    "to": 162
+   }
+  ],
+  "hadith": [
+   {
+    "collection": "Sahih al-Bukhari",
+    "number": "1",
+    "url": "https://sunnah.com/bukhari:1",
+    "en": "Narrated 'Umar bin Al-Khattab: I heard Allah's Messenger (ﷺ) saying, \"The reward of deeds depends upon the intentions and every person will get the reward according to what he has intended. So whoever emigrated for worldly benefits or for a woman to marry, his emigration was for what he emigrated for",
+    "ur": "کو حمیدی نے یہ حدیث بیان کی، انہوں نے کہا کہ ہم کو سفیان نے یہ حدیث بیان کی، وہ کہتے ہیں ہم کو یحییٰ بن سعید انصاری نے یہ حدیث بیان کی، انہوں نے کہا کہ مجھے یہ حدیث محمد بن ابراہیم تیمی سے حاصل ہوئی۔ انہوں نے اس حدیث کو علقمہ بن وقاص لیثی سے سنا، ان کا بیان ہے کہ میں نے مسجد نبوی میں منبر رسول صلی اللہ علیہ وسلم پر عمر بن خطاب رضی اللہ عنہ کی زبان سے سنا، وہ فرما رہے تھے کہ میں نے جناب رسول اللہ صلی اللہ علیہ وسلم سے سنا آپ صلی اللہ علیہ وسلم فرما رہے تھے کہ تمام اعمال کا دارومدار نیت پر ہے اور ہر عمل کا نتیجہ ہر انسان کو اس کی نیت کے مطابق ہی ملے گا۔ پس جس کی ہجرت ( ترک وطن ) دولت دنیا حاصل کرنے کے لیے ہو یا کسی عورت سے شادی کی غرض ہو۔ پس اس کی ہجرت ان ہی چیزوں کے لیے ہو گی جن کے حاصل کرنے کی نیت سے اس نے ہجرت کی ہے۔"
+   }
+  ]
+ },
+ {
+  "id": "crisis",
+  "en": "Feeling like giving up on life",
+  "ur": "زندگی سے مایوسی",
+  "guide_en": "Your life is precious to Allah, and this pain can change. Please talk to someone right now: call Tele-MANAS on 14416 (free, 24 hours, India) or emergency 112, or tell a family member or friend you trust. The Prophet ﷺ taught us never to wish for death because of hardship, but to ask Allah for what is best for us.",
+  "guide_ur": "آپ کی زندگی اللہ کے نزدیک قیمتی ہے اور یہ تکلیف بدل سکتی ہے۔ ابھی کسی سے بات کریں: ٹیلی مانس 14416 (مفت، 24 گھنٹے) یا ایمرجنسی 112 پر کال کریں، یا کسی بھروسے والے کو بتائیں۔",
+  "crisis": true,
+  "words": "suicide suicidal kill myself end my life want to die self harm hurt myself no reason to live khudkushi mar jana marna chahta zindagi khatam خودکشی مرنا چاہتا زندگی ختم",
+  "ayat": [
+   {
+    "surah": 4,
+    "from": 29,
+    "to": 29
+   },
+   {
+    "surah": 39,
+    "from": 53,
+    "to": 53
+   },
+   {
+    "surah": 12,
+    "from": 87,
+    "to": 87
+   }
+  ],
+  "hadith": [
+   {
+    "collection": "Sahih al-Bukhari",
+    "number": "5671",
+    "url": "https://sunnah.com/bukhari:5671",
+    "en": "Narrated Anas bin Malik:The Prophet (ﷺ) said, \"None of you should wish for death because of a calamity befalling him; but if he has to wish for death, he should say: \"O Allah! Keep me alive as long as life is better for me, and let me die if death is better for me",
+    "ur": "ہم سے آدم بن ابی ایاس نے بیان کیا، کہا ہم سے شعبہ نے بیان کیا، کہا ہم سے ثابت بنانی نے بیان کیا اور ان سے انس بن مالک رضی اللہ عنہ نے کہ نبی کریم صلی اللہ علیہ وسلم نے فرمایا کہ کسی تکلیف میں اگر کوئی شخص مبتلا ہو تو اسے موت کی تمنا نہیں کرنی چاہیئے اور اگر کوئی موت کی تمنا کرنے ہی لگے تو یہ کہنا چاہیئے «اللهم أحيني ما كانت الحياة خيرا لي،‏‏‏‏ وتوفني إذا كانت الوفاة خيرا لي» ”اے اللہ! جب تک زندگی میرے لیے بہتر ہے مجھے زندہ رکھ اور جب موت میرے لیے بہتر ہو تو مجھ کو اٹھا لے۔“"
+   }
+  ]
+ }
+]

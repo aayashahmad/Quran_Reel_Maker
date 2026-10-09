@@ -9,7 +9,7 @@ import threading
 import time
 import uuid
 
-from flask import Flask, abort, jsonify, render_template, request, send_file, send_from_directory
+from flask import Flask, abort, jsonify, redirect, render_template, request, send_file, send_from_directory
 
 from config import WEB_OUT, READ_URDU
 from quran_data import load_quran, surah_ranges, audio_url, LOCAL_AUDIO, local_audio_complete
@@ -18,6 +18,7 @@ from main import build_reel, TooLong
 from quran_data import get_audio
 import admin
 import backgrounds
+import guidance
 import protect
 import site_settings
 from translations import LANGS, NO_SPACES, texts
@@ -146,6 +147,7 @@ def served_by(resp):
 def index():
     return render_template("index.html", surahs=SURAHS, langs=lang_options(), read_urdu=READ_URDU,
                            device_generation=site_settings.get()["device_generation"], static_v=STATIC_V,
+                           ask_quran=site_settings.get()["ask_quran"], guide_topics=guidance.topic_list(),
                            bgs=[{"style": s, "name": backgrounds.NAMES[s]} for s in backgrounds.STYLES])
 
 
@@ -248,6 +250,49 @@ def robots():
     """Allow everything and point to the sitemap (Cloudflare adds its own lines above these)."""
     rules = "User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /files/\nDisallow: /bg/\nDisallow: /admin\n"
     return app.response_class(f"{rules}\nSitemap: {SITE}/sitemap.xml\n", mimetype="text/plain")
+
+
+@app.get("/api/guide")
+def guide():
+    """Ask the Quran: ?q=<the visitor's words> or ?topic=<id>, &lang=<translation>."""
+    if not site_settings.get()["ask_quran"]:
+        abort(404)
+    lang = request.args.get("lang", "en")
+    if lang not in LANGS:
+        lang = "en"
+    q, topic = (request.args.get("q") or "")[:500], request.args.get("topic")
+    if topic not in guidance.BY_ID:
+        ranked = guidance.match(q)
+        if not ranked or ranked[0][0] < 2:
+            return jsonify(found=False, topics=guidance.topic_list())
+        topic = ranked[0][1]
+        related = [t for s, t in ranked[1:3] if s >= 2 and t != "crisis"]
+    else:
+        related = []
+    tr = texts(lang, QURAN, log=lambda m: None)
+    data = guidance.answer(topic, QURAN, RANGES, tr, lang)
+    data["related"] = [{"id": t, "title": guidance.BY_ID[t]["en"]} for t in related]
+    return jsonify(found=True, **data)
+
+
+@app.get("/admin/guidance")
+def guidance_review():
+    """Owner-only list of every topic with its full ayat, hadith and guidance, for checking."""
+    if not admin.is_admin():
+        return redirect("/admin", code=303)
+    tr = texts("ur", QURAN, log=lambda m: None)
+    en = texts("en", QURAN, log=lambda m: None)
+    items = []
+    for t in guidance.TOPICS:
+        a = guidance.answer(t["id"], QURAN, RANGES, en, "en")
+        for p in a["ayat"]:
+            s0 = RANGES[p["surah"]][0]
+            for v in p["verses"]:
+                v["ur"] = tr[s0 + v["n"] - 1]
+        items.append(dict(a, words=t["words"], guide_en=t["guide_en"], guide_ur=t["guide_ur"],
+                          hadith_full=t["hadith"]))
+    return render_template("guidance_review.html", items=items), 200, {"Cache-Control": "no-store",
+                                                                      "X-Robots-Tag": "noindex"}
 
 
 @app.get("/api/job/<jid>")

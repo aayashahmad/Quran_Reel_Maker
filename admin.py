@@ -76,6 +76,10 @@ def _failed(ip):
         _fails[ip] = (n + 1, time.time() if n + 1 >= MAX_FAILS else since)
 
 
+def is_admin():
+    return bool(session.get("admin"))
+
+
 def _csrf():
     if "csrf" not in session:
         session["csrf"] = secrets.token_urlsafe(32)

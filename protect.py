@@ -17,6 +17,7 @@ LIMITS = {
     "/api/generate": (20, 600),
     "/api/surah/": (60, 600),
     "/api/meta": (60, 600),
+    "/api/guide": (60, 600),
     "/api/audio/": (600, 600),      # a long reel made on the device needs a few hundred
     "/bg/": (120, 600),
     "/files/": (120, 600),
