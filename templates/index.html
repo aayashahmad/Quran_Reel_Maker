@@ -252,7 +252,9 @@
   .passage .row-btns button { padding: 7px 14px; font-size: 13.5px; }
   .passage .w { border-radius: 6px; padding: 0 2px; transition: background .12s, color .12s; }
   .passage .w.hl { background: rgba(212,175,95,.3); color: var(--gold2); }
-  .passage .tr.on { color: var(--gold2); }
+  .passage .tw, .hadith .tw { border-radius: 5px; padding: 0 1px; transition: background .12s, color .12s; }
+  .passage .tw.hl, .hadith .tw.hl { background: rgba(212,175,95,.3); color: var(--gold2); }
+  .hadith .listen { padding: 5px 12px; font-size: 13px; margin: 0 10px 0 0; }
   .hadith { border-left: 3px solid var(--gold); padding: 6px 0 6px 14px; margin: 0 0 14px; }
   .hadith p { margin: 0 0 6px; color: var(--text); font: 15px/1.7 system-ui, sans-serif; }
   .hadith p[dir="rtl"] { font: 16px/2.2 "Noto Nastaliq Urdu", serif; }
@@ -633,6 +635,14 @@ document.addEventListener("keydown", e => { if (e.key === "Escape" && !bgmodal.h
 try { const saved = localStorage.getItem("bg"); if (saved && bgTiles.some(t => t.dataset.bg === saved)) bgChoice = saved; } catch (e) {}
 showBg();
 
+// The visitor's question goes on the reel's title card when the reel was started from Ask the Quran
+// and the form still shows that passage.
+let askReel = null;                        // { question, surah, from, to }
+function reelQuestion() {
+  const a = askReel;
+  return a && +surah.value === a.surah && +from.value === a.from && +to.value === a.to ? a.question : "";
+}
+
 // ---- Generate: a popup asks where the video is made ----
 const genmodal = $("genmodal");
 function closeGen() { genmodal.hidden = true; $("go").focus(); }
@@ -656,7 +666,7 @@ async function generateDevice() {
   prev.hidden = false;
   try {
     const r = await DeviceReel.make({ surahNo: +surah.value, first: +from.value, last: +to.value, lang: $("lang").value,
-                                      read: $("read").checked, bg: bgChoice, preview: prev,
+                                      read: $("read").checked, bg: bgChoice, question: reelQuestion(), preview: prev,
                                       log: m => setStatus(m, false, null, true) });
     const name = r.meta.name, vurl = URL.createObjectURL(r.video), turl = URL.createObjectURL(r.thumb);
     $("vid").src = vurl; $("thumb").src = turl;
@@ -676,7 +686,7 @@ async function generateCloud() {
   try {
     const d = await api("/api/generate", { method: "POST", headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ surah: surah.value, from: from.value, to: to.value, lang: $("lang").value,
-                             read: $("read").checked, bg: bgChoice }) });
+                             read: $("read").checked, bg: bgChoice, question: reelQuestion() }) });
     poll(d.id);
   } catch (e) { setStatus(e.message, true); $("go").disabled = false; }
 };
@@ -939,7 +949,8 @@ if ($("ask")) {
   function stopPassage() {
     if (!playing) return;
     askAudio.pause(); askAudio.removeAttribute("src");
-    playing.lines.forEach(l => { l.ar.querySelectorAll(".hl").forEach(e => e.classList.remove("hl")); l.tr.classList.remove("on"); });
+    playing.lines.forEach(l => { l.ar.querySelectorAll(".hl").forEach(e => e.classList.remove("hl")); l.tr.classList.remove("on");
+                                 l.tr.querySelectorAll(".hl").forEach(e => e.classList.remove("hl")); });
     playing.button.textContent = "🔊 Read and listen";
     playing = null;
   }
@@ -947,6 +958,7 @@ if ($("ask")) {
     const again = playing && playing.button === button;
     stopPassage();
     if (again) return;                     // second click = stop
+    stopSpeaking();
     player.pause();                        // the big Read and listen player, if it is playing
     button.textContent = "⏸ Stop";
     const me = playing = { lines, button };
@@ -958,7 +970,8 @@ if ($("ask")) {
     let k = 0;
     const next = () => {
       if (playing !== me) return;
-      lines.forEach(x => { x.tr.classList.remove("on"); x.ar.querySelectorAll(".hl").forEach(e => e.classList.remove("hl")); });
+      lines.forEach(x => { x.tr.classList.remove("on"); x.ar.querySelectorAll(".hl").forEach(e => e.classList.remove("hl"));
+                           x.tr.querySelectorAll(".hl").forEach(e => e.classList.remove("hl")); });
       if (k >= steps.length) return stopPassage();
       const st = steps[k++];
       if (!st.ar) st.l.tr.classList.add("on");
@@ -972,6 +985,13 @@ if ($("ask")) {
           const ms = askAudio.currentTime * 1000; let w = -1;
           for (const [pos, start] of st.l.v.segments) if (start <= ms) w = pos - 1;
           words.forEach((e, i) => e.classList.toggle("hl", i === w));
+        } else if (askAudio.duration) {      // no timings for translations: share the time by word length
+          const tws = st.l.tr.querySelectorAll(".tw");
+          const weights = [...tws].map(e => e.textContent.replace(/[^\p{L}\p{N}]/gu, "").length + 1);
+          const total = weights.reduce((x, y) => x + y, 0), at = askAudio.currentTime / askAudio.duration * total;
+          let acc = 0, j = 0;
+          while (j < weights.length - 1 && acc + weights[j] <= at) acc += weights[j++];
+          tws.forEach((e, i) => e.classList.toggle("hl", i === j));
         }
         requestAnimationFrame(tick);
       };
@@ -981,8 +1001,44 @@ if ($("ask")) {
     next();
   }
 
+  // hadith are read by the visitor's own device voice (free, offline); words light up as they are spoken
+  let speaking = null;
+  function voiceFor(lang) {
+    return window.speechSynthesis && speechSynthesis.getVoices().find(v => v.lang.toLowerCase().startsWith(lang));
+  }
+  function stopSpeaking() {
+    if (!speaking) return;
+    speechSynthesis.cancel();
+    speaking.spans.forEach(s => s.classList.remove("hl"));
+    speaking.button.textContent = speaking.button.dataset.label;
+    if (speaking.hide) speaking.p.hidden = true;
+    speaking = null;
+  }
+  function speakHadith(w, lang, button) {
+    const { text, spans, p } = w;
+    const again = speaking && speaking.button === button;
+    stopSpeaking(); stopPassage(); player.pause();
+    if (again) return;
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = lang === "ur" ? "ur-PK" : "en-US";
+    const v = voiceFor(lang); if (v) u.voice = v;
+    u.rate = 0.95;
+    const me = speaking = { spans, button, p, hide: p.hidden };
+    p.hidden = false;
+    button.textContent = "⏸ Stop";
+    u.onboundary = e => {
+      if (speaking !== me || e.name && e.name !== "word") return;
+      let cur = null;
+      for (const s of spans) if (+s.dataset.at <= e.charIndex) cur = s;
+      spans.forEach(s => s.classList.toggle("hl", s === cur));
+    };
+    u.onend = u.onerror = () => { if (speaking === me) stopSpeaking(); };
+    speechSynthesis.speak(u);
+  }
+  if (window.speechSynthesis) speechSynthesis.getVoices();      // starts loading the device's voices
+
   function showAnswer(d) {
-    stopPassage();
+    stopPassage(); stopSpeaking();
     $("ask_crisis").replaceChildren();
     if (d.crisis) {
       const box = el("div", "crisis-box");
@@ -1001,22 +1057,48 @@ if ($("ask")) {
         const ar = el("p", "ar"); ar.lang = "ar";
         v.words.forEach((w, k) => { ar.append(el("span", "w", w), k < v.words.length - 1 ? " " : ""); });
         ar.append(" \u06DD" + AR_DIGITS(v.n));
-        const tr = el("p", "tr", v.tr); tr.dir = "auto";
+        const tr = el("p", "tr"); tr.dir = "auto";
+        if (d.spaced) v.tr.split(/\s+/).filter(Boolean).forEach((w, k) => tr.append(k ? " " : "", el("span", "tw", w)));
+        else tr.textContent = v.tr;
         card.append(ar, tr);
         return { v, ar, tr };
       });
       const row = el("div", "row-btns");
       const listen = btn("🔊 Read and listen", true, () => playPassage(lines, listen));
-      row.append(btn("🎬 Make a reel", false, () => useAyat(p, () => { $("go").scrollIntoView({ behavior: "smooth", block: "center" }); $("go").click(); })),
+      row.append(btn("🎬 Make a reel", false, () => useAyat(p, () => {
+                   askReel = { question: d.question || d.title, surah: p.surah, from: p.from, to: p.to };
+                   $("go").scrollIntoView({ behavior: "smooth", block: "center" }); $("go").click(); })),
                  listen);
       card.append(row);
       return card;
     }));
     $("ask_hadith").replaceChildren(...d.hadith.map(h => {
       const box = el("div", "hadith");
-      const t = el("p", "", h.text); t.dir = h.rtl ? "rtl" : "ltr"; if (h.rtl) t.lang = "ur";
+      const words = (text, rtl) => {     // the hadith as word spans, each knowing where it starts
+        const p = el("p"); p.dir = rtl ? "rtl" : "ltr"; if (rtl) p.lang = "ur";
+        const spans = []; let pos = 0;
+        for (const part of text.split(/(\s+)/)) {
+          if (part.trim()) { const s = el("span", "tw", part); s.dataset.at = pos; spans.push(s); p.append(s); } else p.append(part);
+          pos += part.length;
+        }
+        return { p, spans, text };
+      };
+      const shown = words(h.text, h.rtl);
+      box.append(shown.p);
+      // the device reads it aloud: Urdu text with an Urdu voice; without one, the English version (shown while it reads)
+      let spoken = shown, lang = h.rtl ? "ur" : "en", label = "🔊 Listen";
+      if (h.rtl && !voiceFor("ur")) {
+        spoken = words(h.en, false); spoken.p.hidden = true; box.append(spoken.p);
+        lang = "en"; label = "🔊 Listen (English)";
+      }
       const a = Object.assign(el("a", "", `${h.ref} · check on sunnah.com ↗`), { href: h.url, target: "_blank", rel: "noopener" });
-      box.append(t, a);
+      const foot = el("p");
+      if (window.speechSynthesis) {
+        const b = btn(label, true, () => speakHadith(spoken, lang, b));
+        b.dataset.label = label; b.classList.add("listen"); foot.append(b);
+      }
+      foot.append(a);
+      box.append(foot);
       return box;
     }));
     const g = $("ask_guide"); g.textContent = d.guide; g.dir = d.guide_rtl ? "rtl" : "ltr";
@@ -1034,6 +1116,7 @@ if ($("ask")) {
     try {
       const qs = new URLSearchParams({ ...params, lang: $("lang").value });
       const d = await api("/api/guide?" + qs);
+      if (params.q) d.question = params.q;
       if (!d.found) {
         setStatus("We couldn't find a close match. Please choose the topic nearest to what you feel:", false, st);
         $("ask_chips").replaceChildren(...d.topics.map(t => btn(t.title, true, () => ask({ topic: t.id }))));

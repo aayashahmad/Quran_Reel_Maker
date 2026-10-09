@@ -3,7 +3,7 @@
 // MediaRecorder. Recording runs in real time, so a 40-second reel takes about 40 seconds.
 // Uses the page's globals: $, api, setStatus, surah, from, to, showDeviceResult.
 const DeviceReel = (() => {
-  const W = 1080, H = 1920, INTRO = 1.5, MAX_SECONDS = 10 * 60;
+  const W = 1080, H = 1920, INTRO_BASE = 1.5, MAX_SECONDS = 10 * 60;
   const GOLD = "rgb(212,175,95)", WHITE = "rgb(245,245,240)", SOFT = "rgb(200,215,205)", MUTED = "rgb(140,170,155)";
   const DIM = "rgb(150,175,165)", HL_BG = "rgb(92,74,28)", RULE = "rgb(90,130,110)";
   const AR_DIGITS = n => String(n).replace(/\d/g, d => "٠١٢٣٤٥٦٧٨٩"[d]);
@@ -144,6 +144,14 @@ const DeviceReel = (() => {
   // ---- title card (mirrors video.card) ----
   function drawCard(ctx, info, data, w, h) {
     ctx.strokeStyle = GOLD; ctx.lineWidth = 4; ctx.strokeRect(26, 26, w - 52, h - 52);
+    if (info.question && h > w) {      // a reel made from Ask the Quran: the visitor's question opens it
+      const rtl = /[\u0600-\u06ff]/.test(info.question);
+      const cw = 760;                    // a centre column, clear of corner decorations such as the lanterns
+      ctx.save(); ctx.translate((w - cw) / 2, 0);
+      drawBlock(ctx, rtl ? info.question : `“${info.question}”`, rtl ? '"Noto Nastaliq Urdu"' : "Amiri, serif",
+                120, 250, 60, 36, "rgb(240,213,147)", rtl ? 2.0 : 1.35, rtl, cw);
+      ctx.restore();
+    }
     const withTranslation = (y, size) => {
       if (data.lang === "ur") return drawBlock(ctx, "قرآن پاک اردو ترجمہ کے ساتھ", '"Noto Nastaliq Urdu"', y, size * 3, size,
                                                Math.floor(size * 5 / 8), SOFT, 2.0, true, w);
@@ -231,7 +239,7 @@ const DeviceReel = (() => {
     return !!(window.MediaRecorder && HTMLCanvasElement.prototype.captureStream && (window.AudioContext || window.webkitAudioContext) && pickType());
   }
 
-  async function make({ surahNo, first, last, lang, read, bg: chosen, preview, log }) {
+  async function make({ surahNo, first, last, lang, read, bg: chosen, question, preview, log }) {
     const audio = new (window.AudioContext || window.webkitAudioContext)();   // created in the click: allowed to play
     try {
       log("Loading the surah…");
@@ -239,7 +247,9 @@ const DeviceReel = (() => {
       const ayat = data.ayat.slice(first - 1, last), full = first === 1 && last === data.ayat.length;
       const rows = (first === 1 && data.bismillah ? [{ ...data.bismillah, bism: true }] : []).concat(ayat);
       const rng = first === last ? `${first}` : `${first}-${last}`;
-      const info = { label: full ? `Full Surah  •  ${data.ayat.length} Ayat` : (first === last ? `Ayah ${rng}` : `Ayat ${rng}`) };
+      const info = { label: full ? `Full Surah  •  ${data.ayat.length} Ayat` : (first === last ? `Ayah ${rng}` : `Ayat ${rng}`),
+                     question: (question || "").replace(/\s+/g, " ").trim().slice(0, 140) };
+      const INTRO = INTRO_BASE + (info.question ? 2.5 : 0);         // time to read the question
       const style = data.styles.includes(chosen) ? chosen                               // chosen, or as backgrounds.pick
         : data.styles[(surahNo * 7919 + first * 131) % data.styles.length];
       const voice = read && !!rows[0].tr_audio_local;

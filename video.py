@@ -39,6 +39,7 @@ if not RAQM:
     from bidi.algorithm import get_display
 
 GOLD = (212, 175, 95)
+GOLD2 = (240, 213, 147)
 WHITE = (245, 245, 240)
 SOFT = (200, 215, 205)
 MUTED = (140, 170, 155)
@@ -298,6 +299,15 @@ def card(info, w, h, lang=None, clear=False):
     img = background(w, h, clear)
     d = ImageDraw.Draw(img)
     d.rectangle([24, 24, w - 25, h - 25], outline=GOLD, width=4)
+    question = info.get("question") if h > w else ""
+    if question:                       # a reel made from Ask the Quran: the visitor's question opens it
+        rtl = bool(re.search(r"[\u0600-\u06ff]", question))
+        cw = 760                           # a centre column, clear of corner decorations such as the lanterns
+        col = Image.new("RGBA", (cw, 260), (0, 0, 0, 0))
+        draw_block(ImageDraw.Draw(col), f"“{question}”" if not rtl else question,
+                   "NotoNastaliqUrdu.ttf" if rtl else "Amiri-Regular.ttf", 0, 250, 60, 36, GOLD2,
+                   2.0 if rtl else 1.35, rtl=rtl, lang="ur" if rtl else None, width=cw)
+        img.paste(col, ((w - cw) // 2, 120), col)
 
     def with_translation(y, size):
         if lang["code"] == "ur":
@@ -435,15 +445,16 @@ def render(items, audio_lists, info, out_path, workdir, log=print, lang=None, bg
         bg_loop = backgrounds.loop(bg)
 
     frames, wavs = [], []
-    if INTRO_SECONDS > 0:
+    intro = INTRO_SECONDS + (2.5 if info.get("question") else 0)   # time to read the question
+    if intro > 0:
         fp = workdir / "intro.png"
         img = card(info, W, H, lang, clear)
         (shadowed(img) if clear else img).save(fp)
         sil = workdir / "intro.wav"
         subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-f", "lavfi",
-                        "-i", "anullsrc=r=44100:cl=stereo", "-t", str(INTRO_SECONDS),
+                        "-i", "anullsrc=r=44100:cl=stereo", "-t", str(intro),
                         "-c:a", "pcm_s16le", str(sil)], check=True)
-        frames.append((fp, INTRO_SECONDS))
+        frames.append((fp, intro))
         wavs.append(sil)
 
     for i, (it, files) in enumerate(zip(items, audio_lists)):

@@ -59,7 +59,7 @@ def answer(topic, quran, ranges, tr, lang):
         "ayat": passages,
         "hadith": [{"ref": f"{h['collection']} {h['number']}", "url": h["url"],
                     "text": h["ur"] if urdu_side and h["ur"] else h["en"],
-                    "rtl": bool(urdu_side and h["ur"])} for h in t["hadith"]],
+                    "rtl": bool(urdu_side and h["ur"]), "en": h["en"]} for h in t["hadith"]],
     }
 
 

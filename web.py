@@ -108,7 +108,13 @@ def start_job(target, *args):
     return jsonify(id=jid)
 
 
-def run_job(jid, surah, first, last, lang, read_aloud, bg):
+def clean_question(q):
+    """A visitor's question for the reel's title card: one line of plain text, at most 140 characters."""
+    q = re.sub(r"[\x00-\x1f\x7f]", " ", str(q or ""))
+    return re.sub(r"\s+", " ", q).strip()[:140]
+
+
+def run_job(jid, surah, first, last, lang, read_aloud, bg, question=""):
     job = JOBS[jid]
 
     def log(msg):
@@ -124,7 +130,7 @@ def run_job(jid, surah, first, last, lang, read_aloud, bg):
             name = file_name(surah, first, last, lang)
             mp4, thumb, title, desc, tags, secs = build_reel(
                 items, info, WEB_OUT / jid, name, read_aloud=read_aloud, log=log,
-                max_seconds=WEB_MAX_SECONDS, lang=lang, bg=bg)
+                max_seconds=WEB_MAX_SECONDS, lang=lang, bg=bg, question=question)
         result = dict(video=mp4.name, thumb=thumb.name, title=title, desc=desc,
                       tags=", ".join(tags), seconds=round(secs))
         job.update(status="done", msg=f"Done: {int(secs // 60)} min {int(secs % 60)} s", **result)
@@ -164,7 +170,7 @@ def generate():
     if bg is not None and bg not in backgrounds.STYLES:
         return jsonify(error="Unknown background."), 400
     read = bool(d.get("read", d.get("urdu", True))) and voice(lang) is not None
-    return start_job(run_job, *p, lang, read, bg)
+    return start_job(run_job, *p, lang, read, bg, clean_question(d.get("question")))
 
 
 @app.get("/api/surah/<int:surah>")
@@ -279,6 +285,7 @@ def guide():
             v.update(words=it["words"], segments=it["segments"], audio=audio_url(it),
                      tr_audio=audio_url(it, rec) if rec else None)
     data["related"] = [{"id": t, "title": guidance.BY_ID[t]["en"]} for t in related]
+    data["spaced"] = lang not in NO_SPACES       # translation can be highlighted word by word
     return jsonify(found=True, **data)
 
 
