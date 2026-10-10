@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ "Privacy Policy" if page == "privacy" else "Terms of Use" }} · Quran Reel Maker</title>
+<meta name="description" content="{{ 'How Quran Reel Maker handles your data.' if page == 'privacy' else 'Terms for using Quran Reel Maker.' }}">
+<link rel="canonical" href="https://quranreelmaker.xyz/{{ page }}">
+<style>
+  :root { --bg: #05211a; --card: #0b3328; --line: rgba(212,175,95,.28); --gold: #d4af5f; --gold2: #f0d593;
+          --text: #f3efe2; --muted: #b3c7bc; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.65 system-ui, -apple-system, sans-serif; padding: 32px 16px 56px; }
+  main { width: min(760px, 100%); margin: 0 auto; background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 28px 24px; }
+  h1 { margin: 0 0 4px; font: 700 30px Georgia, serif; color: var(--gold); }
+  h2 { margin: 28px 0 6px; font: 600 19px Georgia, serif; color: var(--gold2); }
+  .sub { margin: 0 0 8px; color: var(--muted); font-size: 14px; }
+  a { color: var(--gold2); overflow-wrap: anywhere; }
+  ul { padding-left: 20px; }
+  li { margin: 4px 0; }
+  nav { width: min(760px, 100%); margin: 0 auto 14px; display: flex; gap: 18px; font-size: 14px; }
+  nav a { color: var(--gold); text-decoration: none; }
+</style>
+</head>
+<body>
+<nav><a href="/">← Quran Reel Maker</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a></nav>
+<main>
+{% if page == "privacy" %}
+  <h1>Privacy Policy</h1>
+  <p class="sub">Quran Reel Maker (quranreelmaker.xyz) · last updated 10 October 2026</p>
+  <p>Quran Reel Maker is a free website that makes short Quran videos (reels). There are no accounts, no ads and no tracking.</p>
+
+  <h2>What we collect</h2>
+  <ul>
+    <li><b>The choices you make</b> (surah, ayat, translation language, background, and any question you type into "Ask the Quran") are sent to our server only to make your reel or answer. They are not linked to you and are not stored after that.</li>
+    <li><b>Videos you make on our server</b> are deleted automatically within about an hour. Videos made "on this device" never leave your browser.</li>
+    <li><b>Your IP address</b> is kept in memory for a few minutes only, to stop abuse (speed limits). It is not written to disk or shared.</li>
+    <li><b>Your browser</b> remembers your last language and background choice (local storage) on your own device. You can clear it at any time.</li>
+  </ul>
+  <p>We do not use cookies for visitors, analytics, advertising or tracking, and we never sell or share data.</p>
+
+  <h2>Services we use</h2>
+  <ul>
+    <li><b>Cloudflare</b> delivers the website and protects it from attacks. It may process your IP address and request details under the <a href="https://www.cloudflare.com/privacypolicy/" rel="noopener">Cloudflare Privacy Policy</a>.</li>
+    <li>Quran text, recitation and translations are loaded from Quran.com, alquran.cloud and islamic.network by our server. Your browser may play recitation audio directly from these sources.</li>
+  </ul>
+
+  <h2>YouTube</h2>
+  <p>Our own YouTube channel posts Quran reels made by this project, using the YouTube API Services. This uses only the site owner's YouTube account, only to upload videos to that channel. No visitor ever signs in with Google or YouTube, and we access no visitor's YouTube or Google data.
+     See the <a href="https://policies.google.com/privacy" rel="noopener">Google Privacy Policy</a> and the <a href="https://www.youtube.com/t/terms" rel="noopener">YouTube Terms of Service</a>.
+     The owner can remove this access at any time from <a href="https://myaccount.google.com/permissions" rel="noopener">Google security settings</a>.</p>
+
+  <h2>Children</h2>
+  <p>The site collects no personal information from anyone, including children.</p>
+
+  <h2>Contact</h2>
+  <p>Questions, or something to correct: <b>Aayash Ahmad Bhat</b>, <a href="mailto:aayash.bhat.dev@gmail.com">aayash.bhat.dev@gmail.com</a>.</p>
+
+{% else %}
+  <h1>Terms of Use</h1>
+  <p class="sub">Quran Reel Maker (quranreelmaker.xyz) · last updated 10 October 2026</p>
+
+  <h2>Free to use</h2>
+  <p>You may use Quran Reel Maker for free to make reels and share them, for example on YouTube, Instagram, WhatsApp or TikTok. Please share the Quran with respect.</p>
+
+  <h2>Please be fair</h2>
+  <ul>
+    <li>Don't overload the site, scrape it in bulk, or try to get around its speed limits or security.</li>
+    <li>Don't change the Quran text, its translation or the recitation in a reel to mislead people.</li>
+  </ul>
+
+  <h2>Sources and accuracy</h2>
+  <p>Recitation is by Mishary Rashid Alafasy (via Quran.com); translations come from alquran.cloud and their translators. The Kashmiri audio is made by AI and may contain mistakes. "Ask the Quran" shows ayat and sahih hadith related to a question; it is not a fatwa, tafsir or a replacement for a scholar. If you find a mistake, please email us.</p>
+
+  <h2>YouTube</h2>
+  <p>Our YouTube channel uses the YouTube API Services. By watching it you also agree to the <a href="https://www.youtube.com/t/terms" rel="noopener">YouTube Terms of Service</a>.</p>
+
+  <h2>No warranty</h2>
+  <p>The site is offered as it is, without guarantees. It may sometimes be offline or change.</p>
+
+  <h2>Contact</h2>
+  <p><b>Aayash Ahmad Bhat</b>, <a href="mailto:aayash.bhat.dev@gmail.com">aayash.bhat.dev@gmail.com</a>. See also our <a href="/privacy">Privacy Policy</a>.</p>
+{% endif %}
+</main>
+</body>
+</html>

@@ -243,10 +243,16 @@ def meta():
 SITE = "https://quranreelmaker.xyz"
 
 
+@app.get("/privacy")
+@app.get("/terms")
+def legal():
+    return render_template("legal.html", page=request.path.strip("/"))
+
+
 @app.get("/sitemap.xml")
 def sitemap():
     """The pages search engines should index."""
-    urls = "".join(f"<url><loc>{SITE}{path}</loc></url>" for path in ["/"])
+    urls = "".join(f"<url><loc>{SITE}{path}</loc></url>" for path in ["/", "/privacy", "/terms"])
     xml = f'<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">{urls}</urlset>'
     return app.response_class(xml, mimetype="application/xml")
 
