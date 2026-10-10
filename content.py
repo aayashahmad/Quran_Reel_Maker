@@ -38,7 +38,8 @@ def metadata(items, info, read_urdu=True, lang="ur"):
         f" (Part {info['part']} of {info['parts']})" if info["parts"] > 1 else "")
     head = (f"Surah {en} ({ar}) — Surah no. {info['surah']} — {which}\n"
             f"Quran recitation with Urdu translation (اردو ترجمہ).\n\n")
-    credits = (f"\n\nRecitation: {RECITER_NAME}\nUrdu translation: {URDU_NAME}\n"
+    credits = (f"\n\nMake your own Quran reel, free: https://quranreelmaker.xyz"
+               f"\n\nRecitation: {RECITER_NAME}\nUrdu translation: {URDU_NAME}\n"
                + (f"Urdu audio: {URDU_AUDIO_NAME}\n" if read_urdu else "")
                + f"\n#Quran #QuranUrdu #Surah{tag} #UrduTarjuma #Tilawat #Islam #Shorts")
     body = ("\n".join(f"{x['ar']} ({x['ayah']})" for x in items) + "\n\nاردو ترجمہ:\n"
