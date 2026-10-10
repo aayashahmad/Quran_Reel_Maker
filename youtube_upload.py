@@ -17,6 +17,15 @@ SECRET = ROOT / "client_secret.json"
 
 def auth():
     """Run once on your own computer. Opens a browser to log in to your YouTube channel."""
+    if not SECRET.exists():
+        found = sorted(Path.home().glob("Downloads/client_secret*.json"), key=lambda p: p.stat().st_mtime)
+        if not found:
+            raise SystemExit(
+                "client_secret.json not found.\n"
+                "Google Cloud Console > APIs & Services > Credentials > your 'Desktop app' OAuth client >\n"
+                "Download JSON, then run this again (it is picked up from your Downloads folder).")
+        SECRET.write_bytes(found[-1].read_bytes())
+        print(f"Using {found[-1].name} from Downloads (saved as client_secret.json)")
     flow = InstalledAppFlow.from_client_secrets_file(str(SECRET), SCOPES)
     creds = flow.run_local_server(port=0)
     TOKEN.write_text(creds.to_json())
