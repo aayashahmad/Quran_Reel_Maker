@@ -51,7 +51,7 @@ def metadata(items, info, read_urdu=True, lang="ur"):
 
     tags = ["Quran", "Quran with Urdu translation", "Quran Urdu tarjuma", "Urdu tarjuma",
             f"Surah {en}", f"Surah {en} Urdu", f"Surah {en} full" if info["full"] else f"Surah {en} {rng}",
-            "Tilawat", "Quran recitation", "Mishary Alafasy", "Islamic shorts", "Quran shorts",
+            "Tilawat", "Quran recitation", RECITER_NAME, "Islamic shorts", "Quran shorts",
             "قرآن", "اردو ترجمہ", "تلاوت"]
     out, total = [], 0
     for t in tags:                      # YouTube allows about 500 characters of tags
@@ -94,7 +94,7 @@ def _metadata_other(items, info, read_aloud, lang):
 
     tags = ["Quran", f"Quran with {name} translation", f"Quran {name}", f"Surah {en}", f"Surah {en} {name}",
             f"Surah {en} full" if info["full"] else f"Surah {en} {rng}",
-            "Tilawat", "Quran recitation", "Mishary Alafasy", "Islamic shorts", "Quran shorts", "قرآن", "تلاوت"]
+            "Tilawat", "Quran recitation", RECITER_NAME, "Islamic shorts", "Quran shorts", "قرآن", "تلاوت"]
     out, total = [], 0
     for t in tags:                      # YouTube allows about 500 characters of tags
         if total + len(t) + 1 > 480:

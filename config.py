@@ -10,8 +10,10 @@ WEB_OUT = ROOT / "web_output"
 
 # Arabic text, recitation and word-by-word timings come from Quran.com (free API).
 # The timings belong to these exact audio files, which is what makes word highlighting line up.
-RECITATION_ID = 7                 # Quran.com recitation 7 = Mishary Rashid Alafasy (Murattal)
-RECITER_NAME = "Mishary Rashid Alafasy"
+RECITERS = {7: "Mishary Rashid Alafasy", 6: "Mahmoud Khalil Al-Husary", 9: "Mohamed Siddiq al-Minshawi",
+            3: "Abdur-Rahman as-Sudais", 10: "Saud ash-Shuraym", 4: "Abu Bakr al-Shatri", 5: "Hani ar-Rifai"}
+RECITATION_ID = int(os.getenv("QURAN_RECITER", "7"))   # Quran.com recitation id (7 = Alafasy); env for YouTube posts
+RECITER_NAME = RECITERS[RECITATION_ID]
 # Urdu translation, ruku and sajdah data come from alquran.cloud, Urdu audio from islamic.network.
 URDU_EDITION = "ur.jalandhry"     # Fateh Muhammad Jalandhry (other: ur.junagarhi, ur.kanzuliman)
 URDU_NAME = "Fateh Muhammad Jalandhry"

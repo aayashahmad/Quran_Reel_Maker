@@ -61,7 +61,7 @@ def load_quran():
     So it is removed from the ayah text and `bismillah` is set; reels show it as its own
     frame instead. Al-Fatiha 1:1 stays as is (there it is the first ayah)."""
     DATA.mkdir(exist_ok=True)
-    cache = DATA / "quran_v3.json"
+    cache = DATA / ("quran_v3.json" if RECITATION_ID == 7 else f"quran_v3_r{RECITATION_ID}.json")  # timings differ per reciter
     if cache.exists():
         return json.loads(cache.read_text(encoding="utf-8"))
 
@@ -114,7 +114,8 @@ def surah_ranges(quran):
 def audio_url(item, edition=None):
     """Where the Arabic recitation (edition None) or a translation audio edition of an ayah is online."""
     if edition is None:
-        return QDC_AUDIO.format(item["audio_url"])
+        u = item["audio_url"]                # a path on verses.quran.com, or a full link for some reciters
+        return "https:" + u if u.startswith("//") else u if u.startswith("http") else QDC_AUDIO.format(u)
     if edition in LOCAL_AUDIO:
         return f"/api/audio/{edition}/{item['n']}"
     return AUDIO.format(BITRATE.get(edition, 128), edition, item["n"])
