@@ -59,6 +59,11 @@ const DeviceReel = (() => {
     ctx.textAlign = "center"; ctx.textBaseline = "alphabetic";
     ctx.fillText(text, width / 2, y + ctx.measureText(text).fontBoundingBoxAscent); ctx.textAlign = "start";
   }
+  function brand(ctx, w, h) {          // the site's name in the bottom-right corner (as video.brand)
+    ctx.font = font("Amiri, serif", 36); ctx.direction = "ltr"; ctx.fillStyle = GOLD;
+    ctx.textAlign = "right"; ctx.textBaseline = "alphabetic";
+    ctx.fillText("quranreelmaker.xyz", w - 64, h - 112 + ctx.measureText("q").fontBoundingBoxAscent); ctx.textAlign = "start";
+  }
   // Word layout computed once per ayah; drawWords then paints it with any word highlighted.
   function layoutWords(ctx, tokens, y, maxH, size, minSize, lh, family, rtl, band, urdu) {
     const maxW = W - 140;
@@ -319,6 +324,7 @@ const DeviceReel = (() => {
             const [, , L, state] = plan[k];
             drawAyah(ctx, L, data, data.en, state);
           }
+          brand(ctx, W, H);
           log(`Recording on this device… ${Math.min(100, Math.round(Math.max(now, 0) / length * 100))}% (keep this tab open)`);
           if (now >= length + 0.15) return resolve();
           requestAnimationFrame(frame);

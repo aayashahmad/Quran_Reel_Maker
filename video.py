@@ -221,6 +221,15 @@ def center(d, text, size, y, color, width=W):
     d.text(((width - w) / 2, y), text, font=f, fill=color)
 
 
+SITE_LABEL = "quranreelmaker.xyz"
+
+
+def brand(d, w, h):
+    """The site's name in the bottom-right corner of every frame (inside the gold border)."""
+    f = font("Amiri-Regular.ttf", 36)
+    d.text((w - 64 - text_w(f, SITE_LABEL, rtl=False), h - 112), SITE_LABEL, font=f, fill=GOLD)
+
+
 @lru_cache(maxsize=4)
 def _gradient(w, h):
     top, bot = (11, 61, 46), (3, 20, 15)
@@ -287,8 +296,9 @@ def make_frame(item, path, hl=None, tr=None, tr_hl=None, lang=None, clear=False)
         draw_words(d, [(w, i) for i, w in enumerate(text.split())], y + 10, H - y - 260, size, min_size, lh,
                    color, tr_hl, fname=lang["font"], lang=lang["shape"], rtl=lang["rtl"], band=band)
 
-    if CHANNEL_TAG:
+    if CHANNEL_TAG and CHANNEL_TAG != SITE_LABEL:
         center(d, CHANNEL_TAG, 38, H - 150, MUTED)
+    brand(d, W, H)
     (shadowed(img) if clear else img).save(path)
 
 
@@ -327,8 +337,9 @@ def card(info, w, h, lang=None, clear=False):
         if info["part_label"]:
             center(d, info["part_label"], 60, 1080, SOFT, w)
         with_translation(1260, 64)
-        if CHANNEL_TAG:
+        if CHANNEL_TAG and CHANNEL_TAG != SITE_LABEL:
             center(d, CHANNEL_TAG, 42, h - 170, MUTED, w)
+        brand(d, w, h)
     else:       # landscape 16:9 thumbnail
         draw_block(d, info["surah_ar"], "Amiri-Regular.ttf", 50, 270, 170, 80, GOLD, 1.5, width=w)
         center(d, f"Surah {info['surah_en']}", 72, 330, WHITE, w)
