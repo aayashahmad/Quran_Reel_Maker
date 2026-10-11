@@ -3,8 +3,8 @@ import json
 import shutil
 from concurrent.futures import ThreadPoolExecutor
 
-from config import STATE_FILE, OUT, MAX_REEL_SECONDS, PRIVACY, READ_URDU, URDU_AUDIO
-from quran_data import load_quran, surah_ranges, get_audio, duration
+from config import STATE_FILE, OUT, MAX_REEL_SECONDS, PRIVACY, READ_URDU, URDU_AUDIO, QARI
+from quran_data import load_quran, surah_ranges, get_audio, duration, qari_file
 from content import reel_info, metadata
 import backgrounds
 import translations
@@ -187,6 +187,13 @@ def post_one(quran, ranges, state, dry):
         return False
     surah = quran[idx]["surah"]
     s0, s1 = ranges[surah]
+    if QARI:                             # post only what the qari has recorded: the rest of this surah
+        need = quran[idx:s1] + ([quran[0]] if any(a["bismillah"] for a in quran[idx:s1]) else [])
+        missing = [f"{a['surah']}:{a['ayah']}" for a in need if not qari_file(a).exists()]
+        if missing:
+            print(f"Waiting for recordings of Surah {quran[idx]['surah_en']}: {len(missing)} ayat missing "
+                  f"({', '.join(missing[:5])}{' …' if len(missing) > 5 else ''}). Nothing posted.")
+            return False
 
     plan = state.get("plan")
     if not plan or plan["surah"] != surah or idx not in [p[0] for p in plan["parts"]]:
@@ -216,8 +223,12 @@ def post_one(quran, ranges, state, dry):
 
 
 def main():
+    import sys
+    if sys.argv[1:2] == ["qari"]:            # a qari's own recordings: see qari.py
+        import qari
+        return qari.main(sys.argv[2:])
     ap = argparse.ArgumentParser()
-    ap.add_argument("cmd", choices=["auth", "run", "status", "web"])
+    ap.add_argument("cmd", choices=["auth", "run", "status", "web", "qari"])
     ap.add_argument("--count", type=int, default=1, help="reels to post in this run")
     ap.add_argument("--dry-run", action="store_true", help="render only, no upload")
     ap.add_argument("--port", type=int, default=5050, help="port for the website")

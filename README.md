@@ -42,6 +42,17 @@ Notes:
 - Uploads from a new, unaudited API project may be forced to *private*. Submit the project for the YouTube API audit (free, takes a few days), or use `YT_PRIVACY=private` and publish by hand until then.
 - Custom thumbnails need a phone-verified YouTube channel. Without it the video still uploads; only the thumbnail is skipped.
 
+## Recitation for YouTube: a qari's own recordings
+Well-known recitation recordings (Alafasy, Abdul Basit, Minshawi, ...) are registered in YouTube's Content ID by record labels, so reels using them are blocked. The channel therefore uses recordings made for it by a qari who has given permission.
+
+1. Get the qari's written permission (a WhatsApp message is fine) and keep it.
+2. `./run.sh qari new <id> "<Name>" "<how permission was given>"`, e.g. `hafiz-ahmad`.
+3. For each surah: `./run.sh qari add <id> <surah> <recording>`. A whole surah in one file is split at the pauses between ayat (ask the qari to pause about a second between ayat). Record Al-Fatiha first: its first ayah is also the Bismillah shown before other surahs. Use `--bismillah` if a recording starts with Bismillah, `--from/--to` for part of a surah.
+4. `./run.sh qari status <id>` shows what is ready. Commit the `recitations/` folder.
+5. GitHub repo, Settings, Secrets and variables, Actions, **Variables**: `QARI` = `<id>`.
+
+Word highlighting is estimated from the recording. Posting goes surah by surah and waits when the next surah has not been recorded yet.
+
 ## Free daily posting with GitHub Actions
 1. Create a **private** GitHub repo and push this folder. `client_secret.json`, `token.json` and `.env` are in `.gitignore`; keep it that way.
 2. Repo, Settings, Secrets and variables, Actions:

@@ -5,7 +5,7 @@ from concurrent.futures import ThreadPoolExecutor
 
 import requests
 
-from config import DATA, RECITATION_ID, URDU_EDITION
+from config import DATA, RECITATION_ID, URDU_EDITION, QARI, QARI_DIR
 
 API = "https://api.alquran.cloud/v1/quran/{}"
 AUDIO = "https://cdn.islamic.network/quran/audio/{}/{}/{}.mp3"
@@ -50,7 +50,7 @@ def _qdc_chapter(ch):
     return out
 
 
-def load_quran():
+def _load_quran():
     """Returns list of 6236 ayat dicts in Quran order. Cached in data/quran_v3.json.
 
     Arabic text is Quran.com's Uthmani word list (`words`), so that its word timings
@@ -102,6 +102,20 @@ def load_quran():
     return out
 
 
+def load_quran():
+    """The Quran (see _load_quran). With a QARI, word timings are estimated from their recording instead."""
+    out = _load_quran()
+    if QARI:
+        for a in out:
+            a["segments"] = []
+    return out
+
+
+def qari_file(item):
+    """The qari's recording of this ayah: recitations/<QARI>/SSSAAA.mp3 (Bismillah = 001001)."""
+    return QARI_DIR / f"{item['surah']:03d}{item['ayah']:03d}.mp3"
+
+
 def surah_ranges(quran):
     """{surah number: (start index, end index exclusive)} into the ayat list."""
     r = {}
@@ -123,6 +137,11 @@ def audio_url(item, edition=None):
 
 def get_audio(item, edition=None):
     """Arabic recitation (edition None, from Quran.com) or a translation audio edition, downloaded once."""
+    if edition is None and QARI:
+        f = qari_file(item)
+        if not f.exists():
+            raise FileNotFoundError(f"No recording of {item['surah']}:{item['ayah']} in {QARI_DIR}")
+        return f
     d = DATA / "audio"
     d.mkdir(parents=True, exist_ok=True)
     name = f"qdc{RECITATION_ID}" if edition is None else edition

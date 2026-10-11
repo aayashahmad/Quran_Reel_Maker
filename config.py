@@ -14,6 +14,13 @@ RECITERS = {7: "Mishary Rashid Alafasy", 6: "Mahmoud Khalil Al-Husary", 9: "Moha
             3: "Abdur-Rahman as-Sudais", 10: "Saud ash-Shuraym", 4: "Abu Bakr al-Shatri", 5: "Hani ar-Rifai"}
 RECITATION_ID = int(os.getenv("QURAN_RECITER", "7"))   # Quran.com recitation id (7 = Alafasy); env for YouTube posts
 RECITER_NAME = RECITERS[RECITATION_ID]
+# A qari's own recordings, used with their permission (recitations/<QARI>/, see qari.py). When set, the
+# recitation comes only from there: famous recordings are claimed by record labels on YouTube.
+QARI = os.getenv("QARI", "")
+QARI_DIR = ROOT / "recitations" / QARI
+if QARI:
+    import json
+    RECITER_NAME = json.loads((QARI_DIR / "qari.json").read_text(encoding="utf-8"))["name"]
 # Urdu translation, ruku and sajdah data come from alquran.cloud, Urdu audio from islamic.network.
 URDU_EDITION = "ur.jalandhry"     # Fateh Muhammad Jalandhry (other: ur.junagarhi, ur.kanzuliman)
 URDU_NAME = "Fateh Muhammad Jalandhry"

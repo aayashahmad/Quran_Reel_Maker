@@ -477,7 +477,10 @@ def render(items, audio_lists, info, out_path, workdir, log=print, lang=None, bg
             wavs.append(wv)
         read = len(files) > 1                   # the translation is read aloud after the Arabic
         words = it.get("words") or []
-        states = word_timeline(it.get("segments") or [], len(words), durs[0])
+        if it.get("segments"):
+            states = word_timeline(it["segments"], len(words), durs[0])
+        else:                                   # a recording without word timings (a qari's own): estimated
+            states = tr_timeline(workdir / f"a{i}_0.wav", words, durs[0])
         if read:
             if lang["code"] in NO_SPACES:       # no word boundaries: the whole translation is lit
                 states.append((durs[1], ("tr", None)))

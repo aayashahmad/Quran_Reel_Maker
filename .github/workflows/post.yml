@@ -32,8 +32,13 @@ jobs:
           key: quran-data-${{ github.run_id }}
           restore-keys: quran-data-
       - name: Render and upload one reel
-        run: python main.py run --count 1
+        # only a qari's own recordings (repo variable QARI = their folder in recitations/): famous
+        # recordings are blocked on YouTube by record labels' copyright claims
+        run: |
+          test -n "$QARI" || { echo "Set the repository variable QARI first (see qari.py)"; exit 1; }
+          python main.py run --count 1
         env:
+          QARI: ${{ vars.QARI }}
           YT_TOKEN_JSON: ${{ secrets.YT_TOKEN_JSON }}
           YT_PRIVACY: public
           CHANNEL_TAG: ${{ vars.CHANNEL_TAG }}
