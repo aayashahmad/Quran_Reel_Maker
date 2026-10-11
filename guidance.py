@@ -48,6 +48,24 @@ for _t in TOPICS:
                         [set(map(_shape, _words(p))) for p in _phrases(_t["id"])])
 
 
+def _hit(w, vocab, shapes):
+    """How well one question word matches a topic: exact 2, same spelling shape 1.5, same start 1, else 0."""
+    if w in vocab:
+        return 2
+    if _shape(w) in shapes and (len(_shape(w)) >= 3 or any(       # short shapes: words must look alike too
+            _shape(v) == _shape(w) and SequenceMatcher(None, _plain(v), _plain(w)).ratio() >= .8 for v in vocab)):
+        return 1.5
+    if len(w) >= 4 and any(v.startswith(w[:5]) or w.startswith(v[:5]) for v in vocab if len(v) >= 4):
+        return 1
+    return 0
+
+
+def coverage(words, tid):
+    """The share of these content words that the topic knows (1.0 = the whole question is about it)."""
+    vocab, shapes, _ = _INDEX[tid]
+    return sum(_hit(w, vocab, shapes) > 0 for w in words) / len(words) if words else 0.0
+
+
 def match(question):
     """Topics ranked for this question: [(score, topic id)], best first; under 2 = no real match.
     Each word counts once: exact word 2, same spelling shape 1.5, same start 1; plus up to 3 for the
@@ -56,15 +74,7 @@ def match(question):
     qs = {_shape(w) for w in q}
     scores = {}
     for tid, (vocab, shapes, examples) in _INDEX.items():
-        s = 0.0
-        for w in q:
-            if w in vocab:
-                s += 2
-            elif _shape(w) in shapes and (len(_shape(w)) >= 3 or any(       # short shapes: words must look alike too
-                    _shape(v) == _shape(w) and SequenceMatcher(None, _plain(v), _plain(w)).ratio() >= .8 for v in vocab)):
-                s += 1.5
-            elif len(w) >= 4 and any(v.startswith(w[:5]) or w.startswith(v[:5]) for v in vocab if len(v) >= 4):
-                s += 1
+        s = sum(_hit(w, vocab, shapes) for w in q)
         if s and examples:                                                   # only once a word really matched
             s += 3 * max(len(qs & e) / len(qs | e) for e in examples if e)
         scores[tid] = round(s, 2)

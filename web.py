@@ -19,6 +19,7 @@ from quran_data import get_audio
 import admin
 import backgrounds
 import guidance
+import quran_search
 import protect
 import site_settings
 from translations import LANGS, NO_SPACES, texts
@@ -273,16 +274,23 @@ def guide():
     if lang not in LANGS:
         lang = "en"
     q, topic = (request.args.get("q") or "")[:500], request.args.get("topic")
+    tr = texts(lang, QURAN, log=lambda m: None)
+    data = None
     if topic not in guidance.BY_ID:
         ranked = guidance.match(q)
-        if not ranked or ranked[0][0] < 2:
-            return jsonify(found=False, topics=guidance.topic_list())
-        topic = ranked[0][1]
-        related = [t for s, t in ranked[1:3] if s >= 2 and t != "crisis"]
+        best, topic = ranked[0] if ranked else (0, None)
+        # an explained topic answers when it covers most of the question; otherwise search the whole Quran
+        # and Sahih al-Bukhari / Muslim, and offer the nearest topics as related
+        if best < 100 and not (best >= 2 and guidance.coverage(quran_search.content_words(q), topic) >= 0.6):
+            data = quran_search.search(q, QURAN, RANGES, tr, lang)
+            related = [t for s, t in ranked[:2] if s >= 3 and t != "crisis"]
+        if data is None:
+            if best < 2:
+                return jsonify(found=False, topics=guidance.topic_list())
+            related = [t for s, t in ranked[1:3] if s >= 2 and t != "crisis"]
     else:
         related = []
-    tr = texts(lang, QURAN, log=lambda m: None)
-    data = guidance.answer(topic, QURAN, RANGES, tr, lang)
+    data = data or guidance.answer(topic, QURAN, RANGES, tr, lang)
     rec = voice(lang)
     for p in data["ayat"]:                  # audio + word timings, so each passage can play in its own card
         s0 = RANGES[p["surah"]][0]
