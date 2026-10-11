@@ -14,7 +14,7 @@ from config import DATA
 import guidance
 
 DB = DATA / "search.db"
-VERSION = "4"
+VERSION = "5"
 _lock = threading.Lock()
 
 # Roman Urdu (and a few English) words -> the words the English translations use
@@ -102,7 +102,7 @@ def _build():
                 if len(text) >= 40 and not (len(text) < 400 and re.search(
                         r"(same chain|chain of (narrators|transmitters)|has been (narrated|reported|transmitted) (by|on the authority|through))", text, re.I)
                         and not re.search(r'(said|saying)\s*[:,]?\s*["“]', text)):
-                    ref = json.dumps([col, h["hadithnumber"], h.get("reference") or {}])
+                    ref = json.dumps([col, h["hadithnumber"], h.get("reference") or {}, str(h.get("arabicnumber") or "")])
                     rows.append(("hadith", ref, code, h["text"]))
     c.executemany("insert into docs values (?, ?, ?, ?)", rows)
     c.execute("create table meta (k, v)")
@@ -202,14 +202,15 @@ def search(question, quran, ranges, tr, lang, n_ayat=3, n_hadith=3):
                              "surah_ar": quran[i]["surah_ar"], "verses": [{"n": a, "ar": quran[i]["ar"], "tr": tr[i]}]})
         hs = []
         for ref in hadith:
-            col, num, r = json.loads(ref)
+            col, num, r, std = json.loads(ref)
             en = c.execute("select text from docs where kind='hadith' and ref=? and lang='en'", (ref,)).fetchone()
             ur = c.execute("select text from docs where kind='hadith' and ref=? and lang='ur'", (ref,)).fetchone()
             en, ur = (en or ("",))[0].strip(), (ur or ("",))[0].strip()
             if col == "bukhari":
                 label, url = f"Sahih al-Bukhari {num}", f"https://sunnah.com/bukhari:{num}"
             else:
-                label = f"Sahih Muslim, Book {r.get('book')}, Hadith {r.get('hadith')}"
+                std = std.split(".")[0]          # the usual citation number (as sunnah.com shows it)
+                label = f"Sahih Muslim {std}" if std.isdigit() else f"Sahih Muslim, Book {r.get('book')}, Hadith {r.get('hadith')}"
                 url = f"https://sunnah.com/muslim/{r.get('book')}/{r.get('hadith')}"
             use_ur = urdu_side and bool(ur)
             hs.append({"ref": label, "url": url, "text": _short(ur if use_ur else en), "rtl": use_ur, "en": _short(en or ur)})

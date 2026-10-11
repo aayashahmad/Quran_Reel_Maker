@@ -453,9 +453,9 @@
   <section class="card result" id="ask_result" aria-live="polite">
     <div id="ask_crisis"></div>
     <p class="ask-title" id="ask_title"></p>
-    <p class="ask-h">From the Quran</p><div id="ask_ayat"></div>
-    <p class="ask-h">From the Sunnah (sahih hadith)</p><div id="ask_hadith"></div>
-    <p class="ask-h">Guidance</p><p class="guide" id="ask_guide"></p>
+    <p class="ask-h" id="ask_h_ayat">From the Quran</p><div id="ask_ayat"></div>
+    <p class="ask-h" id="ask_h_hadith">From the Sunnah (sahih hadith)</p><div id="ask_hadith"></div>
+    <p class="ask-h" id="ask_h_guide">Guidance</p><p class="guide" id="ask_guide"></p>
     <div id="ask_related"></div>
     <p class="note" style="margin-top:18px">This is reflection to help you, not a fatwa. For religious rulings please ask a qualified scholar.
       Ayat are from the Quran with your chosen translation; hadith are from Sahih al-Bukhari and Sahih Muslim, with links to check them on sunnah.com.</p>
@@ -1102,6 +1102,8 @@ if ($("ask")) {
       box.append(foot);
       return box;
     }));
+    $("ask_h_ayat").hidden = !d.ayat.length; $("ask_h_hadith").hidden = !d.hadith.length;
+    $("ask_h_guide").textContent = d.search ? "Please note" : "Guidance";   // search results, not explained guidance
     const g = $("ask_guide"); g.textContent = d.guide; g.dir = d.guide_rtl ? "rtl" : "ltr";
     const rel = $("ask_related"); rel.replaceChildren();
     if (d.related && d.related.length) {
