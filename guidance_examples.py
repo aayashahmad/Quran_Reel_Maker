@@ -93,6 +93,10 @@ EXAMPLES = {
     "dua": """my dua is not accepted | why doesn't Allah answer my prayers | Allah is not listening to me
         | I have been asking for years | does Allah hear me | meri dua qabool nahi hoti | Allah meri kyun nahi sunta
         | dua qubool kab hogi | itni duaen ki | میری دعا قبول نہیں ہوتی | اللہ میری کیوں نہیں سنتا""",
+    "jihad": """what is jihad | what does jihad mean | is jihad only fighting | what does islam say about jihad
+        | does islam allow killing innocent people | is islam a religion of violence | what is holy war in islam
+        | is terrorism allowed in islam | jihad kya hai | jihad ka matlab kya hai | islam mein jihad | jihad kis ko kehte hain
+        | kya jihad sirf larai hai | nafs se jihad | جہاد کیا ہے | جہاد کا مطلب | اسلام میں جہاد""",
     "crisis": """I want to die | I want to kill myself | I don't want to live anymore | life is not worth living
         | main mar jana chahta hun | khudkushi | zindagi khatam karna chahta hun | جینا نہیں چاہتا""",
 }

@@ -301,6 +301,20 @@ TOPICS = [
                   "asked, as harm turned away, or as reward saved for you. Keep asking, with patience and trust.",
          guide_ur="اللہ قریب ہے اور پکارنے والے کی دعا سنتا ہے۔ نبی ﷺ نے فرمایا دعا قبول ہوتی ہے جب تک بندہ جلدی نہ کرے اور یہ "
                   "نہ کہے کہ میں نے دعا کی مگر قبول نہ ہوئی۔ صبر اور یقین سے مانگتے رہیں۔"),
+    dict(id="jihad", en="What jihad means", ur="جہاد کا مطلب",
+         words="jihad jihaad jehad jahad jihaad mujahid mujahideen strive striving struggle holy war qital "
+               "terrorism terrorist extremism violence killing innocent جہاد مجاہد قتال دہشت",
+         ayat=["29:69", "2:190", "5:32"], hadith=[("bukhari", 3004), ("bukhari", 3015), ("bukhari", 6914)],
+         guide_en="Jihad means striving in the way of Allah. Much of it is daily: striving against your own desires, "
+                  "serving your parents (the Prophet ﷺ told a man who wanted to go to battle to strive in serving his "
+                  "parents), seeking knowledge and standing for truth and justice. Fighting is allowed only against those "
+                  "who fight, without transgressing, under rightful authority; killing women, children or anyone under "
+                  "protection is forbidden, and taking one innocent life is like killing all mankind. Questions of law "
+                  "belong with qualified scholars.",
+         guide_ur="جہاد کا مطلب ہے اللہ کی راہ میں کوشش کرنا۔ اس کا بڑا حصہ روزمرہ کا ہے: اپنے نفس سے جہاد، والدین کی خدمت (نبی ﷺ نے "
+                  "جنگ میں جانے کی اجازت مانگنے والے سے فرمایا: اپنے والدین کی خدمت میں جہاد کرو)، علم حاصل کرنا اور حق و انصاف پر "
+                  "قائم رہنا۔ لڑائی صرف ان سے جائز ہے جو لڑیں، بغیر زیادتی کے اور جائز حکومت کے تحت؛ عورتوں، بچوں اور امان والوں کا "
+                  "قتل حرام ہے، اور ایک بے گناہ کا قتل پوری انسانیت کے قتل جیسا ہے۔ شرعی مسائل مستند علماء سے پوچھیں۔"),
     dict(id="crisis", en="Feeling like giving up on life", ur="زندگی سے مایوسی",
          words="suicide suicidal kill myself end my life want to die self harm hurt myself no reason to live "
                "khudkushi mar jana marna chahta zindagi khatam خودکشی مرنا چاہتا زندگی ختم",

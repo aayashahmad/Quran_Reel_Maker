@@ -1293,6 +1293,55 @@
   ]
  },
  {
+  "id": "jihad",
+  "en": "What jihad means",
+  "ur": "جہاد کا مطلب",
+  "guide_en": "Jihad means striving in the way of Allah. Much of it is daily: striving against your own desires, serving your parents (the Prophet ﷺ told a man who wanted to go to battle to strive in serving his parents), seeking knowledge and standing for truth and justice. Fighting is allowed only against those who fight, without transgressing, under rightful authority; killing women, children or anyone under protection is forbidden, and taking one innocent life is like killing all mankind. Questions of law belong with qualified scholars.",
+  "guide_ur": "جہاد کا مطلب ہے اللہ کی راہ میں کوشش کرنا۔ اس کا بڑا حصہ روزمرہ کا ہے: اپنے نفس سے جہاد، والدین کی خدمت (نبی ﷺ نے جنگ میں جانے کی اجازت مانگنے والے سے فرمایا: اپنے والدین کی خدمت میں جہاد کرو)، علم حاصل کرنا اور حق و انصاف پر قائم رہنا۔ لڑائی صرف ان سے جائز ہے جو لڑیں، بغیر زیادتی کے اور جائز حکومت کے تحت؛ عورتوں، بچوں اور امان والوں کا قتل حرام ہے، اور ایک بے گناہ کا قتل پوری انسانیت کے قتل جیسا ہے۔ شرعی مسائل مستند علماء سے پوچھیں۔",
+  "crisis": false,
+  "words": "jihad jihaad jehad jahad jihaad mujahid mujahideen strive striving struggle holy war qital terrorism terrorist extremism violence killing innocent جہاد مجاہد قتال دہشت",
+  "ayat": [
+   {
+    "surah": 29,
+    "from": 69,
+    "to": 69
+   },
+   {
+    "surah": 2,
+    "from": 190,
+    "to": 190
+   },
+   {
+    "surah": 5,
+    "from": 32,
+    "to": 32
+   }
+  ],
+  "hadith": [
+   {
+    "collection": "Sahih al-Bukhari",
+    "number": "3004",
+    "url": "https://sunnah.com/bukhari:3004",
+    "en": "Narrated `Abdullah bin `Amr:A man came to the Prophet (ﷺ) asking his permission to take part in Jihad. The Prophet (ﷺ) asked him, \"Are your parents alive?\" He replied in the affirmative. The Prophet (ﷺ) said to him, \"Then exert yourself in their service",
+    "ur": "ہم سے آدم بن ابی ایاس نے بیان کیا، کہا ہم سے شعبہ نے کہا، ہم سے حبیب بن ابی ثابت نے بیان کیا، کہا کہ میں نے ابوالعباس (شاعر ہونے کے ساتھ) روایت حدیث میں بھی ثقہ اور قابل اعتماد تھے، انہوں نے بیان کیا کہ میں نے عبداللہ بن عمرو رضی اللہ عنہما سے سنا، آپ بیان کرتے تھے کہ ایک صحابی نبی کریم صلی اللہ علیہ وسلم کی خدمت میں حاضر ہوئے اور آپ صلی اللہ علیہ وسلم سے جہاد میں شرکت کی اجازت چاہی۔ آپ صلی اللہ علیہ وسلم نے ان سے دریافت فرمایا ”کیا تمہارے ماں باپ زندہ ہیں؟“ انہوں نے کہا کہ جی ہاں! آپ صلی اللہ علیہ وسلم نے فرمایا ”پھر انہیں میں جہاد کرو۔ ( یعنی ان کو خوش رکھنے کی کوشش کرو ) ۔“"
+   },
+   {
+    "collection": "Sahih al-Bukhari",
+    "number": "3015",
+    "url": "https://sunnah.com/bukhari:3015",
+    "en": "Narrated Ibn `Umar:During some of the Ghazawat of Allah's Messenger (ﷺ) a woman was found killed, so Allah's Messenger (ﷺ) forbade the killing of women and children",
+    "ur": "ہم سے اسحاق بن ابراہیم نے بیان کیا ‘ کہا کہ میں نے ابواسامہ سے پوچھا، کیا عبیداللہ نے آپ سے یہ حدیث بیان کی ہے کہ ان سے نافع نے اور ان سے عبداللہ بن عمر رضی اللہ عنہما نے کہ ایک عورت رسول اللہ صلی اللہ علیہ وسلم کے زمانہ میں کسی غزوے میں مقتول پائی گئی تو نبی کریم صلی اللہ علیہ وسلم نے عورتوں اور بچوں کے قتل سے منع فرمایا ( تو انہوں نے اس کا اقرار کیا ) ۔"
+   },
+   {
+    "collection": "Sahih al-Bukhari",
+    "number": "6914",
+    "url": "https://sunnah.com/bukhari:6914",
+    "en": "Narrated `Abdullah bin `Amr:The Prophet (ﷺ) said, \"Whoever killed a Mu'ahid (a person who is granted the pledge of protection by the Muslims) shall not smell the fragrance of Paradise though its fragrance can be smelt at a distance of forty years (of traveling)",
+    "ur": "ہم سے قیس بن حفص نے بیان کیا، کہا ہم سے عبدالواحد بن زیاد نے، کہا ہم سے حسن بن عمرو فقیمی نے، کہا ہم سے مجاہد نے، انہوں نے عبداللہ بن عمرو رضی اللہ عنہما سے، انہوں نے نبی کریم صلی اللہ علیہ وسلم سے، آپ صلی اللہ علیہ وسلم نے فرمایا ”جو شخص ایسی جان کو مار ڈاے جس سے عہد کر چکا ہو ( اس کی امان دے چکا ہو ) جیسے ذمی، کافر کو تو وہ جنت کی خوشبو بھی نہ سونگھے گا ( چہ جائے کہ اس میں داخل ہو ) حالانکہ بہشت کی خوشبو چالیس برس کی راہ سے معلوم ہوتی ہے۔“"
+   }
+  ]
+ },
+ {
   "id": "crisis",
   "en": "Feeling like giving up on life",
   "ur": "زندگی سے مایوسی",
