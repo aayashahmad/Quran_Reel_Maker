@@ -152,7 +152,9 @@ def only_through_the_domain():
     open for keep-awake pings and health checks."""
     if (os.getenv("RENDER") and request.host.endswith(".onrender.com") and request.path != "/robots.txt"
             and "X-Visitor-IP" not in request.headers):
-        return redirect("https://quranreelmaker.xyz" + request.full_path.rstrip("?"), 301)
+        resp = redirect("https://quranreelmaker.xyz" + request.full_path.rstrip("?"), 302)
+        resp.headers["Cache-Control"] = "no-store"     # never remembered by browsers or Cloudflare
+        return resp
 
 
 @app.after_request
