@@ -32,7 +32,8 @@ URDU_AUDIO_NAME = "Shamshad Ali Khan"
 
 # Reel rules: a whole surah if it fits, otherwise even parts split at ayah boundaries.
 # Backup server (Render, free and small): no video rendering there, reels are made on the visitor's device
-CLOUD_RENDER = os.getenv("CLOUD_RENDER", "1") != "0"
+ON_RENDER = bool(os.getenv("RENDER"))      # Render sets RENDER=true: backup mode without any setup
+CLOUD_RENDER = os.getenv("CLOUD_RENDER", "0" if ON_RENDER else "1") != "0"
 
 # YouTube treats vertical videos up to 3 minutes as Shorts.
 MAX_REEL_SECONDS = 170            # audio per reel (plus the title card)

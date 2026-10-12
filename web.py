@@ -63,7 +63,7 @@ def lang_options():
 JOBS = {}
 RENDER_LOCK = threading.Lock()      # one render at a time
 JOB_ID = re.compile(r"^[0-9a-f]{12}$")
-SERVER = os.getenv("SERVER_NAME") or socket.gethostname()
+SERVER = os.getenv("SERVER_NAME") or ("render-backup" if os.getenv("RENDER") else socket.gethostname())
 # version tag for static files, from their contents: a changed file gets a new URL, so browsers and
 # Cloudflare (which keep static files for hours) never run an old copy
 STATIC_V = hashlib.sha256(b"".join(p.read_bytes() for p in sorted(pathlib.Path(app.static_folder).glob("*")))).hexdigest()[:10]
