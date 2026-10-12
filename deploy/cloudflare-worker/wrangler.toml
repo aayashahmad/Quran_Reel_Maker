@@ -2,6 +2,7 @@
 name = "quranreelmaker-switching"
 main = "worker.js"
 compatibility_date = "2026-10-01"
+workers_dev = false        # only on quranreelmaker.xyz, no extra workers.dev address
 routes = [
   { pattern = "quranreelmaker.xyz/*", zone_name = "quranreelmaker.xyz" },
   { pattern = "www.quranreelmaker.xyz/*", zone_name = "quranreelmaker.xyz" },
