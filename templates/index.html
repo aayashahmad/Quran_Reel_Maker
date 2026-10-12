@@ -596,7 +596,7 @@ function setStatus(msg, err, el, busy) {
   el.classList.toggle("err", !!err); el.classList.toggle("busy", !!busy);
 }
 
-const OFFLINE = "We're switching servers right now. Please try again in 1–2 minutes.";
+const OFFLINE = "Quran Reel Maker is offline for a moment. Please try again in a few minutes.";
 // Calls the server and returns its JSON. When the server can't be reached, Cloudflare answers with
 // its own HTML error page instead, so anything that isn't JSON means "offline".
 async function api(url, opts) {
@@ -648,7 +648,12 @@ function reelQuestion() {
 const genmodal = $("genmodal");
 function closeGen() { genmodal.hidden = true; $("go").focus(); }
 const DEVICE_GENERATION = {{ "true" if device_generation else "false" }};   // the owner's switch (admin page)
+const CLOUD_GENERATION = {{ "true" if cloud_generation else "false" }};     // off on the small backup server
 $("go").onclick = () => {
+  if (!CLOUD_GENERATION) {                            // backup server: reels are made on the device only
+    if (DeviceReel.supported()) return generateDevice();
+    return setStatus("Making reels is paused for a few minutes on this browser. Please try again later, or use Chrome on a computer or phone.", true);
+  }
   if (!DEVICE_GENERATION) return generateCloud();     // only one way: no need to ask
   const ok = DeviceReel.supported();
   $("gen_device").disabled = !ok;

@@ -1,6 +1,7 @@
 """Local website: pick a surah, ayah range and translation language, generate a reel, download it.
 Run with:  ./run.sh web   then open http://localhost:5050"""
 import hashlib
+import os
 import pathlib
 import re
 import shutil
@@ -11,7 +12,7 @@ import uuid
 
 from flask import Flask, abort, jsonify, redirect, render_template, request, send_file, send_from_directory
 
-from config import WEB_OUT, READ_URDU
+from config import WEB_OUT, READ_URDU, CLOUD_RENDER
 from quran_data import load_quran, surah_ranges, audio_url, LOCAL_AUDIO, local_audio_complete
 from content import reel_info, metadata
 from main import build_reel, TooLong
@@ -62,7 +63,7 @@ def lang_options():
 JOBS = {}
 RENDER_LOCK = threading.Lock()      # one render at a time
 JOB_ID = re.compile(r"^[0-9a-f]{12}$")
-SERVER = socket.gethostname()
+SERVER = os.getenv("SERVER_NAME") or socket.gethostname()
 # version tag for static files, from their contents: a changed file gets a new URL, so browsers and
 # Cloudflare (which keep static files for hours) never run an old copy
 STATIC_V = hashlib.sha256(b"".join(p.read_bytes() for p in sorted(pathlib.Path(app.static_folder).glob("*")))).hexdigest()[:10]
@@ -154,12 +155,15 @@ def served_by(resp):
 def index():
     return render_template("index.html", surahs=SURAHS, langs=lang_options(), read_urdu=READ_URDU,
                            device_generation=site_settings.get()["device_generation"], static_v=STATIC_V,
+                           cloud_generation=CLOUD_RENDER,
                            ask_quran=site_settings.get()["ask_quran"], guide_topics=guidance.topic_list(),
                            bgs=[{"style": s, "name": backgrounds.NAMES[s]} for s in backgrounds.STYLES])
 
 
 @app.post("/api/generate")
 def generate():
+    if not CLOUD_RENDER:
+        return jsonify(error="Cloud reels are paused for a while. Please use Generate on this device."), 503
     d = request.get_json(force=True)
     p = pick(d)
     if isinstance(p, str):

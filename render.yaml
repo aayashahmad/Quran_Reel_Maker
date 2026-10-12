@@ -1,0 +1,19 @@
+# Free backup server on Render (render.com, Blueprint). Cloudflare's Worker (deploy/cloudflare-worker) sends
+# visitors here when the laptop is off. Set PROXY_SECRET in the Render dashboard (same value as the Worker's).
+services:
+  - type: web
+    name: quranreelmaker
+    runtime: docker
+    plan: free
+    region: singapore
+    autoDeploy: true
+    healthCheckPath: /robots.txt
+    envVars:
+      - key: CLOUD_RENDER
+        value: "0"
+      - key: SERVER_NAME
+        value: render-backup
+      - key: SETTINGS
+        value: '{"ask_quran": true, "device_generation": true, "kashmiri_audio": false}'
+      - key: PROXY_SECRET
+        sync: false

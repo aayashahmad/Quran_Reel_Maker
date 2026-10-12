@@ -6,6 +6,8 @@
 - Security headers on every page.
 
 Nothing here can stop someone recording audio while it plays; it makes copying in bulk impractical."""
+import hmac
+import os
 import threading
 import time
 from collections import defaultdict, deque
@@ -49,7 +51,11 @@ HEADERS = {
 
 
 def _visitor():
-    # through the tunnel every request comes from 127.0.0.1; Cloudflare names the real visitor
+    # through the tunnel every request comes from 127.0.0.1; Cloudflare names the real visitor. On the backup
+    # server requests come from the Cloudflare Worker, which passes the visitor on with a shared secret.
+    secret = os.getenv("PROXY_SECRET")
+    if secret and hmac.compare_digest(request.headers.get("X-Proxy-Secret", ""), secret):
+        return request.headers.get("X-Visitor-IP") or "?"
     return request.headers.get("CF-Connecting-IP") or request.remote_addr or "?"
 
 

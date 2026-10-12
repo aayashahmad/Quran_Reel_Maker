@@ -1,26 +1,41 @@
-// Sits in front of quranreelmaker.xyz. When neither computer is reachable (the ~1 minute while the
-// site moves between the laptop and the backup server), Cloudflare would show its own error page;
-// this shows a friendly "switching servers" page instead, which reloads itself until the site is back.
+// Sits in front of quranreelmaker.xyz. The laptop serves the site through a Cloudflare tunnel; when it can't be
+// reached (off, asleep, no internet), the same request goes to the free backup server on Render (BACKUP_URL),
+// with the visitor's address passed on under a shared secret (PROXY_SECRET, a Worker secret) so its speed
+// limits still apply per visitor. If neither answers, a friendly page reloads itself until the site is back.
+// A timer pings the backup every 10 minutes so Render's free server doesn't fall asleep.
 const DOWN = new Set([502, 503, 504, 520, 521, 522, 523, 524, 530]);
+const ours = r => r.headers.has("X-Served-By");      // our own server answered (even with an error)
 
 export default {
-  async fetch(request) {
-    let response;
+  async fetch(request, env) {
+    const spare = env.BACKUP_URL && !["GET", "HEAD"].includes(request.method) ? request.clone() : request;
     try {
-      response = await fetch(request);
-    } catch (e) {
-      return switching(request);
+      const response = await fetch(request);
+      // Cloudflare's own "can't reach it" pages lack X-Served-By; our server's errors are passed on
+      if (!(DOWN.has(response.status) && !ours(response))) return response;
+    } catch (e) { /* laptop unreachable */ }
+    if (env.BACKUP_URL) {
+      try {
+        const url = new URL(request.url), target = new URL(url.pathname + url.search, env.BACKUP_URL);
+        const headers = new Headers(spare.headers);
+        headers.set("X-Visitor-IP", request.headers.get("CF-Connecting-IP") || "");
+        if (env.PROXY_SECRET) headers.set("X-Proxy-Secret", env.PROXY_SECRET);
+        const r = await fetch(target, { method: spare.method, headers, redirect: "manual",
+                                        body: ["GET", "HEAD"].includes(spare.method) ? undefined : spare.body });
+        if (ours(r)) return r;
+      } catch (e) { /* backup unreachable too */ }
     }
-    // our own server's errors carry X-Served-By; only Cloudflare's "can't reach it" pages are replaced
-    if (DOWN.has(response.status) && !response.headers.has("X-Served-By")) return switching(request);
-    return response;
+    return switching(request);
+  },
+  async scheduled(event, env, ctx) {
+    if (env.BACKUP_URL) ctx.waitUntil(fetch(new URL("/robots.txt", env.BACKUP_URL)).catch(() => {}));
   },
 };
 
 function switching(request) {
   const headers = { "Retry-After": "60", "Cache-Control": "no-store", "X-Robots-Tag": "noindex" };
   if (new URL(request.url).pathname.startsWith("/api/")) {
-    return Response.json({ error: "We're switching servers right now. Please try again in 1–2 minutes." },
+    return Response.json({ error: "Quran Reel Maker is offline for a moment. Please try again in a few minutes." },
                          { status: 503, headers });
   }
   return new Response(PAGE, { status: 503, headers: { ...headers, "Content-Type": "text/html; charset=utf-8" } });
@@ -28,7 +43,7 @@ function switching(request) {
 
 const PAGE = `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Switching servers · Quran Reel Maker</title>
+<title>Back soon · Quran Reel Maker</title>
 <style>
   body { margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 24px 16px; box-sizing: border-box;
          background: radial-gradient(circle at 50% 20%, #0b3d2e, #05211a 70%); color: #f3efe2;
@@ -47,8 +62,8 @@ const PAGE = `<!doctype html>
 <body><main>
   <p class="ar">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</p>
   <h1>Quran Reel Maker</h1>
-  <p>We're switching servers right now.<br>Please visit again in 1–2 minutes.</p>
-  <p class="ur">ہم سرور تبدیل کر رہے ہیں، براہِ کرم 1–2 منٹ بعد دوبارہ آئیں۔</p>
+  <p>The site is offline for a moment.<br>Please visit again in a few minutes.</p>
+  <p class="ur">ویب سائٹ تھوڑی دیر کے لیے بند ہے، براہِ کرم چند منٹ بعد دوبارہ آئیں۔</p>
   <div class="spin" aria-hidden="true"></div>
   <p class="count" id="c" role="status">Trying again in 20 seconds…</p>
 </main>

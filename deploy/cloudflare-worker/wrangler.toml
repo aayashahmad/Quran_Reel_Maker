@@ -6,3 +6,10 @@ routes = [
   { pattern = "quranreelmaker.xyz/*", zone_name = "quranreelmaker.xyz" },
   { pattern = "www.quranreelmaker.xyz/*", zone_name = "quranreelmaker.xyz" },
 ]
+
+# keep the free Render backup awake (it sleeps after 15 idle minutes)
+[triggers]
+crons = ["*/10 * * * *"]
+
+[vars]
+BACKUP_URL = ""   # e.g. https://quranreelmaker.onrender.com ; PROXY_SECRET: npx wrangler secret put PROXY_SECRET

@@ -36,6 +36,10 @@ def get():
                     saved = json.loads(FILE.read_text())
                 except ValueError:
                     saved = {}           # half-written or damaged: fall back to the defaults
+            try:                         # e.g. SETTINGS='{"ask_quran": true}' on the backup server
+                saved |= json.loads(os.getenv("SETTINGS") or "{}")
+            except ValueError:
+                pass
             _cache["values"] = {k: bool(saved.get(k, d)) for k, (d, _, _) in SWITCHES.items()}
             _cache["mtime"] = mtime
         return dict(_cache["values"])
