@@ -12,4 +12,4 @@ routes = [
 crons = ["*/10 * * * *"]
 
 [vars]
-BACKUP_URL = ""   # e.g. https://quranreelmaker.onrender.com ; PROXY_SECRET: npx wrangler secret put PROXY_SECRET
+BACKUP_URL = "https://quran-reel-maker.onrender.com"   # Render free backup; PROXY_SECRET is a Worker secret
