@@ -148,10 +148,10 @@ def run_job(jid, surah, first, last, lang, read_aloud, bg, question=""):
 @app.before_request
 def only_through_the_domain():
     """The backup's own address (quran-reel-maker.onrender.com) sends people to quranreelmaker.xyz: visitors
-    reach the backup through the Cloudflare Worker, which marks its requests with CF-Worker. /robots.txt stays
+    reach the backup through the Cloudflare Worker, which adds X-Visitor-IP to its requests. /robots.txt stays
     open for keep-awake pings and health checks."""
     if (os.getenv("RENDER") and request.host.endswith(".onrender.com") and request.path != "/robots.txt"
-            and request.headers.get("CF-Worker") != "quranreelmaker.xyz"):
+            and "X-Visitor-IP" not in request.headers):
         return redirect("https://quranreelmaker.xyz" + request.full_path.rstrip("?"), 301)
 
 
