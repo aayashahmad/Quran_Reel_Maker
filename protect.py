@@ -6,8 +6,8 @@
 - Security headers on every page.
 
 Nothing here can stop someone recording audio while it plays; it makes copying in bulk impractical."""
+import hashlib
 import hmac
-import os
 import threading
 import time
 from collections import defaultdict, deque
@@ -50,11 +50,20 @@ HEADERS = {
 }
 
 
+# SHA-256 of the Cloudflare Worker's secret (a Worker secret, also in ~/.quranreel-proxy-secret on the laptop):
+# the backup can recognise the Worker without the secret itself being stored here or on the server.
+PROXY_SECRET_SHA256 = "e9afbaf226cdb060c7adee1927b60e4600b7afcdabcc6c7005ff11ef33834987"
+
+
+def _from_worker():
+    sent = request.headers.get("X-Proxy-Secret", "")
+    return bool(sent) and hmac.compare_digest(hashlib.sha256(sent.encode()).hexdigest(), PROXY_SECRET_SHA256)
+
+
 def _visitor():
     # through the tunnel every request comes from 127.0.0.1; Cloudflare names the real visitor. On the backup
-    # server requests come from the Cloudflare Worker, which passes the visitor on with a shared secret.
-    secret = os.getenv("PROXY_SECRET")
-    if secret and hmac.compare_digest(request.headers.get("X-Proxy-Secret", ""), secret):
+    # server requests come from the Cloudflare Worker, which passes the visitor on with its secret.
+    if _from_worker():
         return request.headers.get("X-Visitor-IP") or "?"
     return request.headers.get("CF-Connecting-IP") or request.remote_addr or "?"
 
