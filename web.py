@@ -145,6 +145,16 @@ def run_job(jid, surah, first, last, lang, read_aloud, bg, question=""):
         job.update(status="error", msg=f"Failed: {e}")
 
 
+@app.before_request
+def only_through_the_domain():
+    """The backup's own address (quran-reel-maker.onrender.com) sends people to quranreelmaker.xyz: visitors
+    reach the backup through the Cloudflare Worker, which marks its requests with CF-Worker. /robots.txt stays
+    open for keep-awake pings and health checks."""
+    if (os.getenv("RENDER") and request.host.endswith(".onrender.com") and request.path != "/robots.txt"
+            and request.headers.get("CF-Worker") != "quranreelmaker.xyz"):
+        return redirect("https://quranreelmaker.xyz" + request.full_path.rstrip("?"), 301)
+
+
 @app.after_request
 def served_by(resp):
     resp.headers["X-Served-By"] = SERVER     # which computer answered (main or backup)
