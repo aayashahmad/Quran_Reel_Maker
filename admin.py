@@ -15,10 +15,14 @@ import sys
 import threading
 import time
 from datetime import timedelta
+from urllib.parse import quote
 
 from flask import Blueprint, abort, redirect, render_template, request, session
 from werkzeug.security import check_password_hash, generate_password_hash
 
+import cloudflare_stats
+import dashboard
+import donation
 import site_settings
 from config import DATA
 
@@ -106,7 +110,10 @@ def page():
         return _page(state="login")
     values = site_settings.get()
     switches = [dict(name=k, label=label, help=help_, on=values[k]) for k, (_, label, help_) in site_settings.SWITCHES.items()]
-    return _page(state="settings", switches=switches, saved=request.args.get("saved") == "1")
+    msg = {"1": "Saved. The change is live now and reaches the backup server within 5 minutes.",
+           "donation": "Donation box saved.", "cf": "Cloudflare connected.", "cf-off": "Cloudflare token removed."}
+    return _page(state="settings", switches=switches, saved=msg.get(request.args.get("saved", "")),
+                 error=request.args.get("error", "")[:200], d=dashboard.collect(), donation=donation.get())
 
 
 @bp.post("/admin/login")
@@ -135,6 +142,32 @@ def save_settings():
         return redirect("/admin", code=303)
     site_settings.save({k: request.form.get(k) == "on" for k in site_settings.SWITCHES})
     return redirect("/admin?saved=1", code=303)
+
+
+def _admin_post(max_bytes=64 * 1024):
+    """Common checks for admin forms: size, CSRF token, logged in."""
+    if (request.content_length or 0) > max_bytes:
+        abort(413)
+    _check_csrf()
+    if not session.get("admin"):
+        abort(403)
+
+
+@bp.post("/admin/donation")
+def save_donation():
+    _admin_post(donation.MAX_UPLOAD + 64 * 1024)
+    err = donation.save(request.form, request.files.get("qr"), remove_qr=request.form.get("remove_qr") == "on")
+    return redirect(f"/admin?error={quote(err)}#donation" if err else "/admin?saved=donation#donation", code=303)
+
+
+@bp.post("/admin/cloudflare")
+def save_cloudflare():
+    _admin_post()
+    if request.form.get("forget") == "1":
+        cloudflare_stats.forget()
+        return redirect("/admin?saved=cf-off#traffic", code=303)
+    err = cloudflare_stats.save(request.form.get("token", ""), request.form.get("zone_id", ""))
+    return redirect(f"/admin?error={quote(err)}#traffic" if err else "/admin?saved=cf#traffic", code=303)
 
 
 @bp.post("/admin/logout")

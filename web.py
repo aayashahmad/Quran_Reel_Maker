@@ -22,6 +22,8 @@ import backgrounds
 import guidance
 import quran_search
 import seo
+import stats
+import donation
 import protect
 import site_settings
 from translations import LANGS, NO_SPACES, texts
@@ -158,6 +160,54 @@ def only_through_the_domain():
         return resp
 
 
+BOTS = ("bot", "crawl", "spider", "slurp", "preview", "headless", "curl", "python-requests", "monitor")
+
+
+@app.after_request
+def counted(resp):
+    """Anonymous daily totals for the admin dashboard (stats.py): no addresses, no typed text."""
+    if resp.status_code != 200 or request.method not in ("GET", "POST"):
+        return resp
+    p, a = request.path, request.args
+    if p == "/" or p in ("/surah", "/ask") or p.startswith(("/surah/", "/ask/")):
+        ua = (request.headers.get("User-Agent") or "").lower()
+        if any(b in ua for b in BOTS):
+            stats.count("bot")
+        else:
+            stats.count("page")
+            stats.count("home" if p == "/" else "surah_page" if p.startswith("/surah") else "ask_page")
+    elif p == "/api/generate":
+        d = request.get_json(silent=True) or {}
+        stats.count("reel_cloud", surah=d.get("surah"), lang=d.get("lang"))
+    elif p == "/api/meta":
+        stats.count("reel_device", surah=a.get("surah"), lang=a.get("lang"))
+    elif p == "/api/guide":
+        d = resp.get_json(silent=True) or {}
+        stats.count("ask" if d.get("found") else "ask_nomatch", topic=d.get("id"))
+    elif p.startswith("/api/surah/"):
+        stats.count("surah_loads", lang=a.get("lang"))
+    return resp
+
+
+@app.get("/api/public-config")
+def public_config():
+    """What the backup server copies from the main site: the switches and the donation box (no secrets)."""
+    resp = jsonify(settings=site_settings.get(), donation=donation.get())
+    resp.headers["Cache-Control"] = "no-store"
+    return resp
+
+
+@app.get("/donation-qr.png")
+def donation_qr():
+    if not donation.QR.exists():
+        abort(404)
+    return send_file(donation.QR, mimetype="image/png", max_age=300)
+
+
+if os.getenv("RENDER"):                     # the backup copies the main site's switches and donation box
+    donation.sync_from_main(seo.SITE, lambda values: site_settings.save(values) if values else None)
+
+
 @app.after_request
 def served_by(resp):
     resp.headers["X-Served-By"] = SERVER     # which computer answered (main or backup)
@@ -172,6 +222,7 @@ def index():
                            ask_quran=site_settings.get()["ask_quran"], guide_topics=guidance.topic_list(),
                            bgs=[{"style": s, "name": backgrounds.NAMES[s]} for s in backgrounds.STYLES],
                            jsonld=[seo.ld(j) for j in seo.home_ld()], faq=seo.HOME_FAQ,
+                           donation=donation.get() if site_settings.get()["donation"] else None,
                            popular=[{"path": seo.surah_path(n), "name": seo.surah_names(n)} for n in seo.POPULAR],
                            topic_links=[{"path": seo.topic_path(t["id"]), "title": t["en"]} for t in public_topics()][:14])
 

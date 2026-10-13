@@ -6,43 +6,66 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Admin · Quran Reel Maker</title>
 <style>
-  :root { --bg: #05211a; --card: #0b3328; --line: rgba(212,175,95,.28); --gold: #d4af5f; --gold2: #f0d593;
-          --text: #f3efe2; --muted: #b3c7bc; --err: #ffab9b; --ok: #9fd8b5; }
+  :root { --bg: #05211a; --card: #0b3328; --card2: #0e3b2f; --line: rgba(212,175,95,.28); --gold: #d4af5f; --gold2: #f0d593;
+          --text: #f3efe2; --muted: #b3c7bc; --err: #ffab9b; --ok: #9fd8b5; --warn: #ffd58a; }
   * { box-sizing: border-box; }
-  body { margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 24px 16px;
-         background: var(--bg); color: var(--text); font: 15px/1.5 system-ui, -apple-system, sans-serif; }
-  main { width: min(480px, 100%); background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 24px; }
-  h1 { margin: 0 0 4px; font: 700 24px Georgia, serif; color: var(--gold); }
-  .sub { margin: 0 0 20px; color: var(--muted); font-size: 13.5px; }
-  label.pw { display: block; color: var(--gold); font-size: 13px; letter-spacing: .5px; text-transform: uppercase; margin-bottom: 6px; }
-  input[type=password] { width: 100%; padding: 11px 12px; border-radius: 10px; border: 1px solid var(--line);
-         background: rgba(3,22,17,.7); color: var(--text); font: 16px system-ui, sans-serif; }
-  input[type=password]:focus { outline: none; border-color: var(--gold); }
-  button { margin-top: 16px; padding: 11px 22px; border: 0; border-radius: 999px; cursor: pointer; font: 600 15px system-ui, sans-serif;
+  body { margin: 0; min-height: 100vh; padding: 24px 16px 60px; background: var(--bg); color: var(--text);
+         font: 15px/1.5 system-ui, -apple-system, sans-serif; }
+  main { width: min(480px, 100%); margin: 0 auto; background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 24px; }
+  main.wide { width: min(1100px, 100%); background: none; border: 0; padding: 0; }
+  h1 { margin: 0 0 4px; font: 700 26px Georgia, serif; color: var(--gold); }
+  h2 { margin: 0 0 12px; font: 600 19px Georgia, serif; color: var(--gold2); }
+  .sub { margin: 0 0 18px; color: var(--muted); font-size: 13.5px; }
+  label.pw, .f label { display: block; color: var(--gold); font-size: 12.5px; letter-spacing: .5px; text-transform: uppercase; margin: 12px 0 6px; }
+  input[type=password], input[type=text], input[type=url], textarea {
+         width: 100%; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line); background: rgba(3,22,17,.7);
+         color: var(--text); font: 15px system-ui, sans-serif; }
+  textarea { min-height: 70px; resize: vertical; }
+  input:focus, textarea:focus { outline: none; border-color: var(--gold); }
+  button { margin-top: 14px; padding: 10px 20px; border: 0; border-radius: 999px; cursor: pointer; font: 600 14.5px system-ui, sans-serif;
            background: linear-gradient(180deg, var(--gold2), var(--gold)); color: #1b1405; }
   button.ghost { background: transparent; color: var(--gold); box-shadow: inset 0 0 0 1px var(--gold); }
-  .row { display: flex; gap: 14px; align-items: flex-start; padding: 14px 0; border-top: 1px solid var(--line); }
-  .row:first-of-type { border-top: 0; }
-  .row input { width: 20px; height: 20px; margin-top: 2px; accent-color: var(--gold); flex: none; }
-  .row b { display: block; }
-  .row span { color: var(--muted); font-size: 13.5px; }
+  a { color: var(--gold2); }
   .msg { padding: 10px 12px; border-radius: 10px; margin-bottom: 14px; font-size: 14px; }
   .err { background: rgba(255,171,155,.12); color: var(--err); }
   .ok { background: rgba(159,216,181,.12); color: var(--ok); }
-  .actions { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
   code { background: rgba(0,0,0,.3); padding: 2px 6px; border-radius: 6px; font-size: 13px; }
+
+  .top { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; margin-bottom: 14px; }
+  .top h1 { margin-right: auto; }
+  .top form button { margin: 0; }
+  nav.tabs { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 18px; position: sticky; top: 0; z-index: 2; padding: 8px 0; background: var(--bg); }
+  nav.tabs a { padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px; text-decoration: none; font-size: 13.5px; }
+  section.box { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 18px; margin: 0 0 16px; scroll-margin-top: 60px; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; margin-bottom: 14px; }
+  .c { background: var(--card2); border: 1px solid var(--line); border-radius: 12px; padding: 12px; }
+  .c b { display: block; font: 700 24px Georgia, serif; color: var(--gold2); }
+  .c span { color: var(--muted); font-size: 12.5px; }
+  .two { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; }
+  .bars { width: 100%; height: 90px; display: block; } .bars rect { fill: var(--gold); }
+  .chart { margin: 4px 0 14px; } .chart p { margin: 0 0 4px; color: var(--muted); font-size: 13px; }
+  ol.rank { margin: 0; padding-left: 20px; } ol.rank li { margin: 3px 0; } ol.rank em { color: var(--muted); font-style: normal; float: right; }
+  .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
+  .up { background: var(--ok); } .down { background: var(--err); } .off { background: #777; }
+  table.status { width: 100%; border-collapse: collapse; } table.status td { padding: 8px 4px; border-top: 1px solid var(--line); vertical-align: top; }
+  table.status td:first-child { width: 34%; color: var(--muted); }
+  .row { display: flex; gap: 14px; align-items: flex-start; padding: 12px 0; border-top: 1px solid var(--line); }
+  .row:first-of-type { border-top: 0; }
+  .row input { width: 20px; height: 20px; margin-top: 2px; accent-color: var(--gold); flex: none; }
+  .row b { display: block; } .row span { color: var(--muted); font-size: 13.5px; }
+  .qr { width: 160px; height: 160px; object-fit: contain; background: #fff; border-radius: 12px; padding: 8px; }
+  .warn { color: var(--warn); } .muted { color: var(--muted); font-size: 13.5px; }
 </style>
 </head>
 <body>
+{% if state != "settings" %}
 <main>
   <h1>Admin</h1>
   <p class="sub">Quran Reel Maker · only for the site owner</p>
-
   {% if state == "not-set" %}
     <p>No admin password is set on this computer yet. Set one in Terminal:</p>
     <p><code>cd ~/quran-reel-site &amp;&amp; .venv/bin/python admin.py set-password</code></p>
-
-  {% elif state == "login" %}
+  {% else %}
     {% if error %}<p class="msg err" role="alert">{{ error }}</p>{% endif %}
     <form method="post" action="/admin/login" autocomplete="off">
       <input type="hidden" name="csrf" value="{{ csrf }}">
@@ -50,25 +73,140 @@
       <input id="password" name="password" type="password" required autofocus autocomplete="current-password">
       <button type="submit">Log in</button>
     </form>
-
-  {% else %}
-    {% if saved %}<p class="msg ok" role="status">Saved. The change is live now and reaches the other computer within a minute.</p>{% endif %}
-    <form method="post" action="/admin/settings">
-      <input type="hidden" name="csrf" value="{{ csrf }}">
-      {% for s in switches %}
-      <label class="row">
-        <input type="checkbox" name="{{ s.name }}" {% if s.on %}checked{% endif %}>
-        <div><b>{{ s.label }}</b><span>{{ s.help }}</span></div>
-      </label>
-      {% endfor %}
-      <div class="actions"><button type="submit">Save</button>
-        <a href="/admin/guidance" style="color:var(--gold2)">Review Ask the Quran topics →</a></div>
-    </form>
-    <form method="post" action="/admin/logout">
-      <input type="hidden" name="csrf" value="{{ csrf }}">
-      <button type="submit" class="ghost">Log out</button>
-    </form>
   {% endif %}
 </main>
+{% else %}
+{% set s = d.stats %}{% set t = s.totals %}{% set today = s.today %}
+<main class="wide">
+  <div class="top">
+    <h1>Dashboard</h1>
+    <a href="/" target="_blank" rel="noopener">Open site ↗</a>
+    <a href="/admin/guidance">Ask topics review</a>
+    <form method="post" action="/admin/logout"><input type="hidden" name="csrf" value="{{ csrf }}"><button class="ghost" type="submit">Log out</button></form>
+  </div>
+  <nav class="tabs" aria-label="Sections">
+    <a href="#overview">Overview</a><a href="#traffic">Cloudflare</a><a href="#servers">Servers</a>
+    <a href="#switches">Switches</a><a href="#donation">Donation</a><a href="#youtube">YouTube</a><a href="#system">System</a>
+  </nav>
+  {% if saved %}<p class="msg ok" role="status">{{ saved }}</p>{% endif %}
+  {% if error %}<p class="msg err" role="alert">{{ error }}</p>{% endif %}
+
+  <section class="box" id="overview">
+    <h2>Overview</h2>
+    <div class="cards">
+      <div class="c"><b>{{ today.page or 0 }}</b><span>page views today</span></div>
+      <div class="c"><b>{{ (today.reel_cloud or 0) + (today.reel_device or 0) }}</b><span>reels made today</span></div>
+      <div class="c"><b>{{ t.page or 0 }}</b><span>page views, 30 days</span></div>
+      <div class="c"><b>{{ t.reel_cloud or 0 }} + {{ t.reel_device or 0 }}</b><span>reels, 30 days (cloud + device)</span></div>
+      <div class="c"><b>{{ t.ask or 0 }}</b><span>Ask the Quran answers{% if t.ask_nomatch %} · {{ t.ask_nomatch }} unmatched{% endif %}</span></div>
+      <div class="c"><b>{{ t.surah_page or 0 }} / {{ t.ask_page or 0 }}</b><span>surah pages / topic pages viewed</span></div>
+    </div>
+    <div class="two">
+      <div class="chart"><p>Page views per day (30 days)</p>{{ d.views_chart | safe }}</div>
+      <div class="chart"><p>Reels made per day (30 days)</p>{{ d.reels_chart | safe }}</div>
+    </div>
+    <div class="two">
+      <div><h2>Top surahs for reels</h2>{% if s.surahs %}<ol class="rank">{% for n, c in s.surahs %}<li>{{ n }} <em>{{ c }}</em></li>{% endfor %}</ol>{% else %}<p class="muted">No reels yet.</p>{% endif %}</div>
+      <div><h2>Top languages</h2>{% if s.langs %}<ol class="rank">{% for n, c in s.langs %}<li>{{ n }} <em>{{ c }}</em></li>{% endfor %}</ol>{% else %}<p class="muted">Nothing yet.</p>{% endif %}</div>
+      <div><h2>Ask the Quran topics</h2>{% if s.topics %}<ol class="rank">{% for n, c in s.topics %}<li>{{ n }} <em>{{ c }}</em></li>{% endfor %}</ol>{% else %}<p class="muted">No questions yet.</p>{% endif %}</div>
+    </div>
+    <p class="muted">Counted on this computer only (the backup serves visitors while the laptop is off). Anonymous daily totals: no addresses and no typed questions are stored. Bots: {{ t.bot or 0 }} page loads in 30 days, not included above.</p>
+  </section>
+
+  <section class="box" id="traffic">
+    <h2>Cloudflare</h2>
+    {% if d.cf %}
+      {% set cf = d.cf %}
+      {% if cf.error %}<p class="msg err">{{ cf.error }}</p>{% endif %}
+      {% if cf.totals %}
+      <div class="cards">
+        <div class="c"><b>{{ "{:,}".format(cf.totals.visitors) }}</b><span>visitors (sum of daily uniques, 30 days)</span></div>
+        <div class="c"><b>{{ "{:,}".format(cf.totals.views) }}</b><span>page views</span></div>
+        <div class="c"><b>{{ "{:,}".format(cf.totals.requests) }}</b><span>requests</span></div>
+        <div class="c"><b>{{ "%.2f" | format(cf.totals.bytes / 1e9) }} GB</b><span>data served</span></div>
+        <div class="c"><b>{{ (cf.totals.cached * 100 // cf.totals.requests) if cf.totals.requests else 0 }}%</b><span>served from Cloudflare's cache</span></div>
+        <div class="c"><b>{{ cf.totals.threats }}</b><span>threats blocked</span></div>
+        {% if cf.worker %}<div class="c"><b>{{ "{:,}".format(cf.worker.requests) }}</b><span>switching Worker runs{% if cf.worker.errors %} · {{ cf.worker.errors }} errors{% endif %}</span></div>{% endif %}
+      </div>
+      <div class="two">
+        <div class="chart"><p>Visitors per day</p>{{ d.cf_chart | safe }}</div>
+        <div><h2>Top countries</h2><ol class="rank">{% for n, c in cf.countries %}<li>{{ n }} <em>{{ "{:,}".format(c) }}</em></li>{% endfor %}</ol></div>
+      </div>
+      {% endif %}
+      <p class="muted">Updated {{ cf.checked }} (every 10 minutes).</p>
+      <form method="post" action="/admin/cloudflare"><input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="forget" value="1"><button class="ghost" type="submit">Remove Cloudflare token</button></form>
+    {% else %}
+      <p class="muted">Connect Cloudflare to see visitors, countries, data served and threats blocked. In Cloudflare: <b>My Profile → API Tokens → Create Token → "Read analytics and logs"</b> template → for your account and zone quranreelmaker.xyz → Create, then paste it here. It is read-only, stays on this computer only, and is never shown again.</p>
+      <form class="f" method="post" action="/admin/cloudflare" autocomplete="off">
+        <input type="hidden" name="csrf" value="{{ csrf }}">
+        <label for="token">API token</label><input id="token" name="token" type="password" required autocomplete="off">
+        <label for="zone_id">Zone ID (only if asked)</label><input id="zone_id" name="zone_id" type="text" placeholder="Cloudflare → quranreelmaker.xyz → Overview → Zone ID">
+        <button type="submit">Connect</button>
+      </form>
+    {% endif %}
+  </section>
+
+  <section class="box" id="servers">
+    <h2>Servers</h2>
+    {% set sv = d.servers %}
+    <table class="status">
+      <tr><td>Laptop (this computer)</td><td><span class="dot {{ 'up' if sv.tunnel else 'down' }}"></span>{{ sv.tunnel or 0 }} Cloudflare tunnel connections · up {{ d.system.uptime_h }} h</td></tr>
+      <tr><td>quranreelmaker.xyz</td><td><span class="dot {{ 'up' if sv.public.ok else 'down' }}"></span>{{ 'answering' if sv.public.ok else 'not answering' }}{% if sv.public.ms %} in {{ sv.public.ms }} ms{% endif %}{% if sv.public.by %} · served by {{ sv.public.by }}{% endif %}</td></tr>
+      <tr><td>Backup (Render, free)</td><td><span class="dot {{ 'up' if sv.backup.ok else 'down' }}"></span>{{ 'ready' if sv.backup.ok else 'not answering' }}{% if sv.backup.ms %} in {{ sv.backup.ms }} ms{% endif %} · takes over by itself when the laptop is off · <a href="https://dashboard.render.com" target="_blank" rel="noopener">Render ↗</a></td></tr>
+      <tr><td>Oracle</td><td><span class="dot off"></span>disabled by Oracle, not needed any more</td></tr>
+    </table>
+  </section>
+
+  <section class="box" id="switches">
+    <h2>Switches</h2>
+    <form method="post" action="/admin/settings">
+      <input type="hidden" name="csrf" value="{{ csrf }}">
+      {% for sw in switches %}
+      <label class="row"><input type="checkbox" name="{{ sw.name }}" {% if sw.on %}checked{% endif %}>
+        <div><b>{{ sw.label }}</b><span>{{ sw.help }}</span></div></label>
+      {% endfor %}
+      <button type="submit">Save switches</button>
+    </form>
+  </section>
+
+  <section class="box" id="donation">
+    <h2>Donation box</h2>
+    <p class="muted">Shown at the bottom of the site only while the <b>Donation box</b> switch is on ({{ 'on now' if switches | selectattr('name', 'equalto', 'donation') | selectattr('on') | list else 'off now' }}).</p>
+    <form class="f" method="post" action="/admin/donation" enctype="multipart/form-data">
+      <input type="hidden" name="csrf" value="{{ csrf }}">
+      <label for="dtitle">Title</label><input id="dtitle" name="title" type="text" maxlength="80" value="{{ donation.title }}" placeholder="Help keep Quran Reel Maker free">
+      <label for="dtext">Message</label><textarea id="dtext" name="text" maxlength="400" placeholder="e.g. Your support pays for the domain (₹2,499 a year) and keeps the site free for everyone.">{{ donation.text }}</textarea>
+      <label for="dupi">UPI ID (optional)</label><input id="dupi" name="upi" type="text" maxlength="80" value="{{ donation.upi }}" placeholder="yourname@upi">
+      <label for="dlink">Donation link (optional, https:// or upi://)</label><input id="dlink" name="link" type="text" maxlength="300" value="{{ donation.link }}">
+      <label for="dqr">QR code image (PNG/JPG/WebP, up to 3 MB)</label><input id="dqr" name="qr" type="file" accept="image/png,image/jpeg,image/webp">
+      {% if donation.has_qr %}<p><img class="qr" src="/donation-qr.png?v={{ donation.version }}" alt="Current QR code"></p>
+        <label class="row" style="border:0;padding:0"><input type="checkbox" name="remove_qr"><div><span>Remove the current QR image</span></div></label>{% endif %}
+      <button type="submit">Save donation box</button>
+    </form>
+  </section>
+
+  <section class="box" id="youtube">
+    <h2>YouTube auto-posting</h2>
+    {% set y = d.youtube %}
+    <table class="status">
+      <tr><td>Status</td><td><span class="dot {{ 'off' if y.paused else 'up' }}"></span>{{ 'Paused (waiting for a qari\'s own recordings)' if y.paused else 'Posting 2 reels a day' }}</td></tr>
+      <tr><td>Reels posted</td><td>{{ y.videos }} · next ayah index {{ y.next_index }}</td></tr>
+      <tr><td>Qari recordings</td><td>{{ y.qari | join(", ") if y.qari else "none yet: see qari.py" }}</td></tr>
+    </table>
+  </section>
+
+  <section class="box" id="system">
+    <h2>System</h2>
+    {% set sy = d.system %}
+    <table class="status">
+      <tr><td>Domain</td><td class="{{ 'warn' if sy.domain_days < 60 else '' }}">quranreelmaker.xyz renews {{ sy.domain_expires }} ({{ sy.domain_days }} days left; auto-renew is off)</td></tr>
+      <tr><td>Version</td><td>{{ sy.commit | truncate(90) }}</td></tr>
+      <tr><td>Disk</td><td>{{ sy.disk_free_gb }} GB free ({{ sy.disk_pct }}% used)</td></tr>
+      <tr><td>Kashmiri AI audio</td><td>{{ sy.kashmiri_audio }} / 6236 ayat</td></tr>
+      <tr><td>Search & SEO</td><td><a href="/sitemap.xml" target="_blank">sitemap.xml</a> · <a href="/llms.txt" target="_blank">llms.txt</a> · <a href="https://search.google.com/search-console" target="_blank" rel="noopener">Search Console ↗</a> · <a href="https://www.bing.com/webmasters" target="_blank" rel="noopener">Bing ↗</a></td></tr>
+    </table>
+  </section>
+</main>
+{% endif %}
 </body>
 </html>

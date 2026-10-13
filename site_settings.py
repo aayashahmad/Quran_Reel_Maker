@@ -17,6 +17,8 @@ SWITCHES = {   # name: (default, label, explanation)
     "ask_quran": (False, "Ask the Quran (life guidance)",
                   "Visitors describe a problem and get related ayat, sahih hadith and guidance. Review the topics "
                   "first at /admin/guidance."),
+    "donation": (False, "Donation box",
+                 "Show the donation box (your QR code, title and message, set below) at the bottom of the site."),
 }
 _lock = threading.Lock()
 _cache = {"mtime": None, "values": None}
@@ -36,9 +38,10 @@ def get():
                     saved = json.loads(FILE.read_text())
                 except ValueError:
                     saved = {}           # half-written or damaged: fall back to the defaults
-            try:                         # e.g. SETTINGS='{"ask_quran": true}' on the backup server
-                backup = '{"ask_quran": true, "device_generation": true, "kashmiri_audio": false}'
-                saved |= json.loads(os.getenv("SETTINGS") or (backup if os.getenv("RENDER") else "{}"))
+            if os.getenv("RENDER"):      # backup server: the main site's switches (copied by donation.sync_from_main)
+                saved = {"ask_quran": True, "device_generation": True} | saved | {"kashmiri_audio": False}
+            try:                         # fixed values, e.g. SETTINGS='{"ask_quran": true}'
+                saved |= json.loads(os.getenv("SETTINGS") or "{}")
             except ValueError:
                 pass
             _cache["values"] = {k: bool(saved.get(k, d)) for k, (d, _, _) in SWITCHES.items()}

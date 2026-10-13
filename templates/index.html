@@ -329,6 +329,12 @@
 
 
   .about { max-width: 860px; margin: 28px auto 0; }
+  .donate { max-width: 560px; margin: 24px auto 0; text-align: center; }
+  .donate h2 { font: 600 22px Georgia, serif; color: var(--gold2); margin: 0 0 8px; }
+  .donate img { width: 220px; height: 220px; object-fit: contain; background: #fff; border-radius: 14px; padding: 10px; margin: 8px auto; display: block; }
+  .donate .upi { font-family: system-ui, sans-serif; overflow-wrap: anywhere; }
+  .donate .thanks { color: var(--muted); font-size: 14px; margin-bottom: 0; }
+  .donate a.primary { display: inline-block; padding: 10px 22px; border-radius: 999px; text-decoration: none; }
   .about h2 { font: 600 21px Georgia, serif; color: var(--gold2); margin: 22px 0 10px; }
   .about h2:first-child { margin-top: 0; }
   .about ol { padding-left: 22px; margin: 0; } .about li { margin: 6px 0; }
@@ -531,6 +537,16 @@
   <h2>What does the Quran say about…</h2>
   <p class="links">{% for t in topic_links %}<a href="{{ t.path }}">{{ t.title }}</a>{% endfor %}<a href="/ask">All topics →</a></p>
 </section>
+{% if donation and (donation.title or donation.has_qr) %}
+<section class="card donate" aria-labelledby="donate-h">
+  <h2 id="donate-h">{{ donation.title or "Support Quran Reel Maker" }}</h2>
+  {% if donation.text %}<p>{{ donation.text }}</p>{% endif %}
+  {% if donation.has_qr %}<img src="/donation-qr.png?v={{ donation.version }}" alt="QR code to donate" width="220" height="220" loading="lazy">{% endif %}
+  {% if donation.upi %}<p class="upi">UPI: <b>{{ donation.upi }}</b></p>{% endif %}
+  {% if donation.link %}<p><a class="primary" href="{{ donation.link }}" rel="noopener">Donate</a></p>{% endif %}
+  <p class="thanks">جزاکم اللہ خیرا · May Allah reward you</p>
+</section>
+{% endif %}
 <footer>
   <div class="divider" aria-hidden="true"><i></i></div>
   <p class="ayah" lang="ar">وَرَتِّلِ ٱلْقُرْءَانَ تَرْتِيلًا</p>
