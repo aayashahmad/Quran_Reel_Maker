@@ -1,0 +1,28 @@
+{% extends "_page.html" %}
+{% block body %}
+<p class="crumbs"><a href="/">Home</a> › <a href="/surah">Surahs</a> › Surah {{ s.englishName }}</p>
+<h1>Surah {{ names }} with Urdu and English translation</h1>
+<p class="ar" style="text-align:left;direction:rtl;font-size:34px">{{ s.name }}</p>
+<p class="lead">Surah {{ s.englishName }} ("{{ s.englishNameTranslation }}") is surah {{ s.number }} of the Quran:
+  {{ s.numberOfAyahs }} ayat, revealed in {{ "Makkah" if s.revelationType == "Meccan" else "Madinah" }}. Read the Arabic
+  text with the Urdu translation by Fateh Muhammad Jalandhry and the English translation (Saheeh International), listen
+  to Mishary Rashid Alafasy's recitation with each word highlighted, or make a reel of any ayat.</p>
+<p><a class="btn" href="/?surah={{ s.number }}#go">🎬 Make a reel of Surah {{ s.englishName }}</a>
+   <a class="btn ghost" href="/?surah={{ s.number }}&amp;listen=1">🔊 Read and listen</a></p>
+
+{% if bismillah %}<p class="ar" style="text-align:center">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</p>{% endif %}
+{% for a in ayat %}
+<section class="card" id="ayah-{{ a.n }}">
+  <p class="ref"><span>{{ s.number }}:{{ a.n }}</span><a href="/?surah={{ s.number }}&amp;from={{ a.n }}&amp;to={{ a.n }}#go">Make a reel of this ayah</a></p>
+  <p class="ar" lang="ar">{{ a.ar }} ﴿{{ a.n }}﴾</p>
+  <p class="ur" lang="ur">{{ a.ur }}</p>
+  <p class="en">{{ a.en }}</p>
+</section>
+{% endfor %}
+
+<nav class="ref" style="margin-top:22px" aria-label="Surahs">
+  {% if prev %}<a href="{{ prev.path }}">← Surah {{ prev.name }}</a>{% else %}<span></span>{% endif %}
+  {% if next %}<a href="{{ next.path }}">Surah {{ next.name }} →</a>{% endif %}
+</nav>
+<p class="note">Arabic text and word timings: Quran.com. Translations: alquran.cloud.</p>
+{% endblock %}

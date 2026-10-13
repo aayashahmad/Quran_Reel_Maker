@@ -21,6 +21,7 @@ import admin
 import backgrounds
 import guidance
 import quran_search
+import seo
 import protect
 import site_settings
 from translations import LANGS, NO_SPACES, texts
@@ -169,7 +170,10 @@ def index():
                            device_generation=site_settings.get()["device_generation"], static_v=STATIC_V,
                            cloud_generation=CLOUD_RENDER,
                            ask_quran=site_settings.get()["ask_quran"], guide_topics=guidance.topic_list(),
-                           bgs=[{"style": s, "name": backgrounds.NAMES[s]} for s in backgrounds.STYLES])
+                           bgs=[{"style": s, "name": backgrounds.NAMES[s]} for s in backgrounds.STYLES],
+                           jsonld=[seo.ld(j) for j in seo.home_ld()], faq=seo.HOME_FAQ,
+                           popular=[{"path": seo.surah_path(n), "name": seo.surah_names(n)} for n in seo.POPULAR],
+                           topic_links=[{"path": seo.topic_path(t["id"]), "title": t["en"]} for t in public_topics()][:14])
 
 
 @app.post("/api/generate")
@@ -268,10 +272,127 @@ def legal():
 
 @app.get("/sitemap.xml")
 def sitemap():
-    """The pages search engines should index."""
-    urls = "".join(f"<url><loc>{SITE}{path}</loc></url>" for path in ["/", "/privacy", "/terms"])
-    xml = f'<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">{urls}</urlset>'
+    """Every page search engines should index: home, the 114 surahs, the Ask the Quran topics."""
+    lastmod = time.strftime("%Y-%m-%d", time.gmtime(max(pathlib.Path(__file__).stat().st_mtime,
+                                                        pathlib.Path(guidance.__file__).stat().st_mtime)))
+    xml = ('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
+           + seo.sitemap_urls(guidance.TOPICS, lastmod) + "</urlset>")
     return app.response_class(xml, mimetype="application/xml")
+
+
+@app.get("/llms.txt")
+def llms():
+    """A plain summary of the site for AI assistants (llmstxt.org)."""
+    return app.response_class(seo.llms_txt(guidance.TOPICS), mimetype="text/plain")
+
+
+@app.get("/<key>.txt")
+def indexnow_key(key):
+    if key != seo.INDEXNOW_KEY:
+        abort(404)
+    return app.response_class(key, mimetype="text/plain")
+
+
+@app.get("/favicon.ico")
+def favicon():
+    return send_from_directory(app.static_folder, "favicon.ico", max_age=604800)
+
+
+def page(template, title, description, path, jsonld=(), **kw):
+    resp = app.make_response(render_template(template, title=title, description=description, path=path,
+                                             site=seo.SITE, jsonld=[seo.ld(j) for j in jsonld], **kw))
+    resp.headers["Cache-Control"] = "public, max-age=3600"
+    return resp
+
+
+EN_TR = []
+
+
+def english():
+    if not EN_TR:
+        EN_TR.extend(texts("en", QURAN, log=lambda m: None))
+    return EN_TR
+
+
+@app.get("/surah")
+def surah_index():
+    item = lambda n: {"path": seo.surah_path(n), "name": seo.surah_names(n), "number": n, "ar": seo.BY_NUMBER[n]["name"],
+                      "ayat": seo.BY_NUMBER[n]["numberOfAyahs"], "meaning": seo.BY_NUMBER[n]["englishNameTranslation"]}
+    return page("surahs.html", "All 114 Surahs of the Quran with Urdu & English Translation | Quran Reel Maker",
+                "Read all 114 surahs of the Quran in Arabic with Urdu and English translation, listen to Mishary "
+                "Alafasy's recitation with word-by-word highlighting, and make Quran reels for free.", "/surah",
+                [seo.breadcrumbs(("Home", "/"), ("Surahs", "/surah"))],
+                popular=[item(n) for n in seo.POPULAR], surahs=[item(s["number"]) for s in seo.SURAHS])
+
+
+@app.get("/surah/<int:n>")
+@app.get("/surah/<int:n>-<name>")
+def surah_page(n, name=None):
+    if n not in seo.BY_NUMBER:
+        abort(404)
+    path = seo.surah_path(n)
+    if request.path != path:
+        return redirect(path, 301)
+    s, en = seo.BY_NUMBER[n], english()
+    s0, s1 = RANGES[n]
+    ayat = [{"n": q["ayah"], "ar": q["ar"], "ur": q["ur"], "en": en[s0 + i]} for i, q in enumerate(QURAN[s0:s1])]
+    names = seo.surah_names(n)
+    other = lambda k: {"path": seo.surah_path(k), "name": seo.surah_names(k)} if k in seo.BY_NUMBER else None
+    title = f"Surah {seo.ALIASES.get(n, s['englishName'])} with Urdu & English Translation | Read & Listen"
+    first = " ".join(en[s0].split()[:22])
+    desc = (f"Surah {s['englishName']} ({s['englishNameTranslation']}), surah {n}, {s['numberOfAyahs']} ayat: Arabic text "
+            f"with Urdu and English translation and Mishary Alafasy's recitation. \u201c{first}…\u201d")
+    chapter = {"@context": "https://schema.org", "@type": "Chapter", "name": f"Surah {s['englishName']}",
+               "alternateName": [s["name"], f"Surah {seo.ALIASES.get(n, s['englishName'])}"],
+               "position": n, "inLanguage": ["ar", "ur", "en"], "url": seo.SITE + path,
+               "isPartOf": {"@type": "Book", "name": "The Holy Quran", "alternateName": "القرآن الكريم"},
+               "description": f"{s['englishNameTranslation']}. {s['numberOfAyahs']} ayat, revealed in "
+                              f"{'Makkah' if s['revelationType'] == 'Meccan' else 'Madinah'}."}
+    return page("surah.html", title, desc[:300], path,
+                [chapter, seo.breadcrumbs(("Home", "/"), ("Surahs", "/surah"), (f"Surah {s['englishName']}", path))],
+                og_type="article", s=s, names=names, ayat=ayat, bismillah=n not in (1, 9),
+                prev=other(n - 1), next=other(n + 1))
+
+
+def public_topics():
+    return [t for t in guidance.TOPICS if t["id"] not in seo.PRIVATE_TOPICS]
+
+
+@app.get("/ask")
+def topic_index():
+    topics = [{"path": seo.topic_path(t["id"]), "q": seo.question(t), "title_ur": t["ur"]} for t in public_topics()]
+    return page("topics.html", "What Does the Quran Say? Ayat & Sahih Hadith for Life's Problems | Quran Reel Maker",
+                "What the Quran and authentic hadith say about anxiety, anger, grief, marriage, money, exams, guilt, "
+                "hope and more, with every reference checked. In English and Urdu.", "/ask",
+                [seo.breadcrumbs(("Home", "/"), ("Ask the Quran", "/ask"))], topics=topics)
+
+
+@app.get("/ask/<tid>")
+def topic_page(tid):
+    t = guidance.BY_ID.get(tid)
+    if not t or tid in seo.PRIVATE_TOPICS:
+        abort(404)
+    en, ur = english(), texts("ur", QURAN, log=lambda m: None)
+    data = guidance.answer(tid, QURAN, RANGES, en, "en")
+    for p in data["ayat"]:
+        s0 = RANGES[p["surah"]][0]
+        p["surah_path"] = seo.surah_path(p["surah"])
+        for v in p["verses"]:
+            v.update(en=en[s0 + v["n"] - 1], ur=ur[s0 + v["n"] - 1])
+    hadith = [{"ref": f"{h['collection']} {h['number']}", "url": h["url"], "en": h["en"], "ur": h["ur"]} for h in t["hadith"]]
+    data["hadith"] = hadith
+    q, path = seo.question(t), seo.topic_path(tid)
+    answer = t["guide_en"] + " " + " ".join(f"Quran {p['surah']}:{p['from']}" + (f"-{p['to']}" if p["to"] != p["from"] else "")
+                                            + ": " + " ".join(v["en"] for v in p["verses"]) for p in data["ayat"][:2])
+    faq = {"@context": "https://schema.org", "@type": "FAQPage",
+           "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": answer}}]}
+    others = [x for x in public_topics() if x["id"] != tid]
+    ranked = [x for _, x in sorted(((len(set(x["words"].split()) & set(t["words"].split())), x) for x in others),
+                                   key=lambda r: -r[0])][:4]
+    return page("topic.html", f"{q} | Quran & Sahih Hadith", (t["guide_en"])[:300], path,
+                [faq, seo.breadcrumbs(("Home", "/"), ("Ask the Quran", "/ask"), (t["en"], path))],
+                og_type="article", t=data, q=q, guide_en=t["guide_en"], guide_ur=t["guide_ur"],
+                related=[{"path": seo.topic_path(x["id"]), "q": seo.question(x)} for x in ranked])
 
 
 @app.get("/robots.txt")

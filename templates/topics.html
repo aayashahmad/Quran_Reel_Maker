@@ -1,0 +1,10 @@
+{% extends "_page.html" %}
+{% block body %}
+<p class="crumbs"><a href="/">Home</a> › Ask the Quran</p>
+<h1>What does the Quran say? Guidance for life's problems</h1>
+<p class="lead">Anxiety, anger, grief, marriage, money, exams, guilt, hope and more: for each, the related ayat of the
+  Quran and authentic (sahih) hadith from Sahih al-Bukhari and Sahih Muslim, every reference checked, with short guidance
+  in English and Urdu. Or <a href="/?ask=#ask_q">ask your own question</a> in English, Urdu or Roman Urdu.</p>
+<ul class="grid">{% for t in topics %}<li><a href="{{ t.path }}">{{ t.q }}<small>{{ t.title_ur }}</small></a></li>{% endfor %}</ul>
+<p class="note">Guidance from the Quran and Sunnah, not a fatwa: for rulings, please ask a qualified scholar.</p>
+{% endblock %}

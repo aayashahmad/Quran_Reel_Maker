@@ -1,0 +1,42 @@
+{% extends "_page.html" %}
+{% block body %}
+<p class="crumbs"><a href="/">Home</a> › <a href="/ask">Ask the Quran</a> › {{ t.title }}</p>
+<h1>{{ q }}</h1>
+<p class="ur" lang="ur" style="text-align:left">{{ t.title_ur }}</p>
+<section class="card">
+  <h2 style="margin-top:0">In short</h2>
+  <p class="en">{{ guide_en }}</p>
+  <p class="ur" lang="ur">{{ guide_ur }}</p>
+</section>
+
+<h2>From the Quran</h2>
+{% for p in t.ayat %}
+<section class="card">
+  <p class="ref"><span>Surah {{ p.surah_en }} {{ p.surah }}:{{ p.from }}{% if p.to != p.from %}–{{ p.to }}{% endif %}</span>
+    <a href="{{ p.surah_path }}#ayah-{{ p.from }}">Read in context</a></p>
+  {% for v in p.verses %}
+  <p class="ar" lang="ar">{{ v.ar }} ﴿{{ v.n }}﴾</p>
+  <p class="ur" lang="ur">{{ v.ur }}</p>
+  <p class="en">{{ v.en }}</p>
+  {% endfor %}
+  <p style="margin:10px 0 0"><a class="btn ghost" href="/?surah={{ p.surah }}&amp;from={{ p.from }}&amp;to={{ p.to }}#go">🎬 Make a reel of this</a></p>
+</section>
+{% endfor %}
+
+{% if t.hadith %}
+<h2>From the Sunnah (sahih hadith)</h2>
+{% for h in t.hadith %}
+<section class="card">
+  <p class="en">{{ h.en }}</p>
+  {% if h.ur %}<p class="ur" lang="ur">{{ h.ur }}</p>{% endif %}
+  <p class="ref" style="margin-top:8px"><a href="{{ h.url }}" rel="noopener">{{ h.ref }} · check on sunnah.com ↗</a></p>
+</section>
+{% endfor %}
+{% endif %}
+
+<p><a class="btn" href="/?ask={{ t.id }}#ask_q">Ask your own question</a></p>
+<p class="note">Every ayah reference is checked against the Quran text and every hadith against Sahih al-Bukhari / Sahih
+  Muslim and sunnah.com. This is guidance from the Quran and Sunnah, not a fatwa: for a ruling, please ask a qualified scholar.</p>
+{% if related %}<h2>Related</h2>
+<ul class="grid">{% for r in related %}<li><a href="{{ r.path }}">{{ r.q }}</a></li>{% endfor %}</ul>{% endif %}
+{% endblock %}

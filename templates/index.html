@@ -3,7 +3,30 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Quran Reel Maker</title>
+<title>Quran Reel Maker – Free Quran Reels with Word-by-Word Highlighting & Urdu Translation</title>
+<meta name="description" content="Make free Quran reels and shorts: Mishary Alafasy's recitation with each Arabic word highlighted, translations in 46+ languages (Urdu, English, Roman Urdu, Hindi, Kashmiri), read and listen to any surah, and ask the Quran for guidance. No sign-up.">
+<link rel="canonical" href="https://quranreelmaker.xyz/">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="author" content="Aayash Ahmad Bhat">
+<meta name="theme-color" content="#05211a">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Quran Reel Maker">
+<meta property="og:title" content="Quran Reel Maker – Free Quran Reels with Word-by-Word Highlighting">
+<meta property="og:description" content="Make Quran reels for Instagram, YouTube Shorts, TikTok and WhatsApp: Alafasy's recitation, word-by-word highlighting, 46+ translations. Free, no sign-up.">
+<meta property="og:url" content="https://quranreelmaker.xyz/">
+<meta property="og:image" content="https://quranreelmaker.xyz/static/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Quran Reel Maker: Quran reels with word-by-word highlighting">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Quran Reel Maker – Free Quran Reels with Word-by-Word Highlighting">
+<meta name="twitter:description" content="Alafasy's recitation, each word highlighted, 46+ translations. Free, no sign-up.">
+<meta name="twitter:image" content="https://quranreelmaker.xyz/static/og.png">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/static/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/static/apple-touch-icon.png">
+<link rel="manifest" href="/static/manifest.webmanifest">
+{% for block in jsonld %}<script type="application/ld+json">{{ block | safe }}</script>
+{% endfor %}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Amiri+Quran&family=Noto+Nastaliq+Urdu:wght@400;600&family=Lora:wght@400;600&display=swap" rel="stylesheet">
 <style>
@@ -305,6 +328,15 @@
   .warn { color: var(--err); }
 
 
+  .about { max-width: 860px; margin: 28px auto 0; }
+  .about h2 { font: 600 21px Georgia, serif; color: var(--gold2); margin: 22px 0 10px; }
+  .about h2:first-child { margin-top: 0; }
+  .about ol { padding-left: 22px; margin: 0; } .about li { margin: 6px 0; }
+  .about details { border-top: 1px solid var(--line-soft); padding: 10px 2px; }
+  .about summary { cursor: pointer; color: var(--text); font-weight: 600; }
+  .about details p { color: var(--muted); margin: 8px 0 0; }
+  .about .links { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; }
+  .about .links a { padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px; color: var(--gold2); text-decoration: none; font-size: 14px; }
   footer { text-align: center; padding: 10px 16px 44px; color: var(--muted); }
   footer .ayah { font-family: "Amiri Quran", Amiri, serif; color: var(--gold2); font-size: 28px; line-height: 2; margin: 0; }
   footer .tr { font-size: 14px; margin: 0; }
@@ -483,6 +515,22 @@
     <button type="button" class="ghost" id="gen_cancel">Cancel</button>
   </div>
 </div>
+<section class="card about" aria-labelledby="about-h">
+  <h2 id="about-h">How to make a Quran reel</h2>
+  <ol>
+    <li><b>Choose a surah and ayat.</b> Any of the 114 surahs, a single ayah or the full surah.</li>
+    <li><b>Pick a translation.</b> 46+ languages: Urdu, English, Roman Urdu, Hindi, Bengali, Kashmiri and more, optionally read aloud.</li>
+    <li><b>Pick a background</b> from 11 animated Islamic styles.</li>
+    <li><b>Generate</b> in the cloud or on your own device, then download the MP4 with its title, description and tags, ready for Instagram Reels, YouTube Shorts, TikTok and WhatsApp status.</li>
+  </ol>
+  <h2>Frequently asked questions</h2>
+  {% for q, a in faq %}<details><summary>{{ q }}</summary><p>{{ a }}</p></details>
+  {% endfor %}
+  <h2>Read a surah</h2>
+  <p class="links">{% for p in popular %}<a href="{{ p.path }}">Surah {{ p.name }}</a>{% endfor %}<a href="/surah">All 114 surahs →</a></p>
+  <h2>What does the Quran say about…</h2>
+  <p class="links">{% for t in topic_links %}<a href="{{ t.path }}">{{ t.title }}</a>{% endfor %}<a href="/ask">All topics →</a></p>
+</section>
 <footer>
   <div class="divider" aria-hidden="true"><i></i></div>
   <p class="ayah" lang="ar">وَرَتِّلِ ٱلْقُرْءَانَ تَرْتِيلًا</p>
@@ -1148,6 +1196,26 @@ if ($("ask")) {
   $("ask_go").onclick = () => { const q = $("ask_q").value.trim(); if (q) ask({ q }); else $("ask_q").focus(); };
   $("ask_q").addEventListener("keydown", e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); $("ask_go").click(); } });
   document.querySelectorAll("#ask_chips button").forEach(b => b.onclick = () => ask({ topic: b.dataset.topic }));
+  // a link such as /?ask=anger (a topic) or /?ask=my question opens Ask the Quran with it
+  const asked = new URLSearchParams(location.search).get("ask");
+  if (asked !== null) {
+    $("ask_q").scrollIntoView({ block: "center" });
+    if (document.querySelector(`#ask_chips button[data-topic="${CSS.escape(asked)}"]`)) ask({ topic: asked });
+    else if (asked.trim()) { $("ask_q").value = asked; ask({ q: asked }); }
+    else $("ask_q").focus();
+  }
+}
+
+// a link such as /?surah=36&from=1&to=5 (from the surah pages) chooses those ayat; &listen=1 opens Read and listen
+{
+  const P = new URLSearchParams(location.search), n = +P.get("surah");
+  if (n >= 1 && n <= 114) {
+    surah.value = String(n); surah.dispatchEvent(new Event("change"));
+    const a = +P.get("from"), b = +P.get("to"), max = +to.max;
+    if (a >= 1 && a <= max) { from.value = a; to.value = Math.min(Math.max(b || a, a), max); }
+    if (P.get("listen")) $("readbtn").click();
+    else $("go").scrollIntoView({ block: "center" });
+  }
 }
 
 document.querySelectorAll(".copy").forEach(b => b.onclick = () => {

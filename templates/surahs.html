@@ -1,0 +1,12 @@
+{% extends "_page.html" %}
+{% block body %}
+<p class="crumbs"><a href="/">Home</a> › Surahs</p>
+<h1>All 114 surahs of the Quran with Urdu and English translation</h1>
+<p class="lead">Read every surah in Arabic with the Urdu translation (Fateh Muhammad Jalandhry) and the English translation
+  (Saheeh International), listen to Mishary Rashid Alafasy's recitation with word-by-word highlighting, and make a Quran
+  reel of any ayat for Instagram, YouTube Shorts, TikTok or WhatsApp status.</p>
+<h2>Popular surahs</h2>
+<ul class="grid">{% for p in popular %}<li><a href="{{ p.path }}">Surah {{ p.name }}<small>{{ p.ayat }} ayat · {{ p.meaning }}</small></a></li>{% endfor %}</ul>
+<h2>All surahs</h2>
+<ul class="grid">{% for p in surahs %}<li><a href="{{ p.path }}">{{ p.number }}. Surah {{ p.name }}<small>{{ p.ar }} · {{ p.ayat }} ayat · {{ p.meaning }}</small></a></li>{% endfor %}</ul>
+{% endblock %}
