@@ -7,6 +7,7 @@ the main site every few minutes (sync_from_main), and keeps showing the last cop
 import io
 import json
 import os
+import re
 import threading
 import time
 
@@ -18,7 +19,8 @@ from config import DATA
 FILE = DATA / "donation.json"
 QR = DATA / "donation_qr.png"
 MAX_UPLOAD = 3 * 1024 * 1024
-FIELDS = {"title": 80, "text": 400, "upi": 80, "link": 300}
+FIELDS = {"title": 80, "text": 400, "upi": 80, "link": 300,
+          "holder": 80, "account": 20, "ifsc": 11, "bank": 80, "branch": 80}     # bank transfer (India), optional
 
 
 def get():
@@ -37,6 +39,13 @@ def save(form, upload=None, remove_qr=False):
     link = form.get("link", "").strip()
     if link and not link.startswith(("https://", "upi://")):
         return "The link must start with https:// or upi://"
+    account = re.sub(r"\s", "", form.get("account", ""))
+    ifsc = form.get("ifsc", "").strip().upper()
+    if account and not re.fullmatch(r"\d{9,18}", account):
+        return "The account number should be 9 to 18 digits."
+    if ifsc and not re.fullmatch(r"[A-Z]{4}0[A-Z0-9]{6}", ifsc):
+        return "The IFSC code should look like SBIN0001234 (11 characters, the 5th is a zero)."
+    form = {**form.to_dict(), "account": account, "ifsc": ifsc} if hasattr(form, "to_dict") else {**form, "account": account, "ifsc": ifsc}
     if upload is not None and upload.filename:
         data = upload.read(MAX_UPLOAD + 1)
         if len(data) > MAX_UPLOAD:

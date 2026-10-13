@@ -178,6 +178,12 @@
       <label for="dtext">Message</label><textarea id="dtext" name="text" maxlength="400" placeholder="e.g. Your support pays for the domain (₹2,499 a year) and keeps the site free for everyone.">{{ donation.text }}</textarea>
       <label for="dupi">UPI ID (optional)</label><input id="dupi" name="upi" type="text" maxlength="80" value="{{ donation.upi }}" placeholder="yourname@upi">
       <label for="dlink">Donation link (optional, https:// or upi://)</label><input id="dlink" name="link" type="text" maxlength="300" value="{{ donation.link }}">
+      <p class="muted" style="margin:16px 0 0"><b>Bank transfer (optional)</b> · shown to visitors exactly as typed; an account number and IFSC only let people send money, never take it.</p>
+      <label for="dholder">Account holder name</label><input id="dholder" name="holder" type="text" maxlength="80" value="{{ donation.holder }}">
+      <label for="dacc">Account number</label><input id="dacc" name="account" type="text" inputmode="numeric" maxlength="20" value="{{ donation.account }}">
+      <label for="difsc">IFSC code</label><input id="difsc" name="ifsc" type="text" maxlength="11" value="{{ donation.ifsc }}" placeholder="e.g. SBIN0001234" style="text-transform:uppercase">
+      <label for="dbank">Bank name</label><input id="dbank" name="bank" type="text" maxlength="80" value="{{ donation.bank }}">
+      <label for="dbranch">Branch / region</label><input id="dbranch" name="branch" type="text" maxlength="80" value="{{ donation.branch }}" placeholder="e.g. Srinagar, Jammu & Kashmir">
       <label for="dqr">QR code image (PNG/JPG/WebP, up to 3 MB)</label><input id="dqr" name="qr" type="file" accept="image/png,image/jpeg,image/webp">
       {% if donation.has_qr %}<p><img class="qr" src="/donation-qr.png?v={{ donation.version }}" alt="Current QR code"></p>
         <label class="row" style="border:0;padding:0"><input type="checkbox" name="remove_qr"><div><span>Remove the current QR image</span></div></label>{% endif %}

@@ -333,6 +333,12 @@
   .donate h2 { font: 600 22px Georgia, serif; color: var(--gold2); margin: 0 0 8px; }
   .donate img { width: 220px; height: 220px; object-fit: contain; background: #fff; border-radius: 14px; padding: 10px; margin: 8px auto; display: block; }
   .donate .upi { font-family: system-ui, sans-serif; overflow-wrap: anywhere; }
+  .donate .bank { display: grid; grid-template-columns: auto 1fr; gap: 6px 12px; text-align: left; max-width: 380px; margin: 12px auto;
+                  font-family: system-ui, sans-serif; font-size: 15px; }
+  .donate .bank dt { color: var(--muted); } .donate .bank dd { margin: 0; overflow-wrap: anywhere; }
+  .donate .bank dt:first-child { color: var(--gold2); font-weight: 600; grid-column: 1 / -1; }
+  .donate .copybank { font: 600 12px system-ui, sans-serif; padding: 3px 10px; border-radius: 999px; border: 1px solid var(--line);
+                      background: transparent; color: var(--gold); cursor: pointer; margin-left: 6px; }
   .donate .thanks { color: var(--muted); font-size: 14px; margin-bottom: 0; }
   .donate a.primary { display: inline-block; padding: 10px 22px; border-radius: 999px; text-decoration: none; }
   .about h2 { font: 600 21px Georgia, serif; color: var(--gold2); margin: 22px 0 10px; }
@@ -544,6 +550,16 @@
   {% if donation.has_qr %}<img src="/donation-qr.png?v={{ donation.version }}" alt="QR code to donate" width="220" height="220" loading="lazy">{% endif %}
   {% if donation.upi %}<p class="upi">UPI: <b>{{ donation.upi }}</b></p>{% endif %}
   {% if donation.link %}<p><a class="primary" href="{{ donation.link }}" rel="noopener">Donate</a></p>{% endif %}
+  {% if donation.account %}
+  <dl class="bank">
+    <dt>Bank transfer</dt><dd></dd>
+    {% if donation.holder %}<dt>Name</dt><dd>{{ donation.holder }}</dd>{% endif %}
+    <dt>Account no.</dt><dd><b id="don_acc">{{ donation.account }}</b> <button type="button" class="copybank" data-copy="don_acc">Copy</button></dd>
+    {% if donation.ifsc %}<dt>IFSC</dt><dd><b id="don_ifsc">{{ donation.ifsc }}</b> <button type="button" class="copybank" data-copy="don_ifsc">Copy</button></dd>{% endif %}
+    {% if donation.bank %}<dt>Bank</dt><dd>{{ donation.bank }}</dd>{% endif %}
+    {% if donation.branch %}<dt>Branch</dt><dd>{{ donation.branch }}</dd>{% endif %}
+  </dl>
+  {% endif %}
   <p class="thanks">جزاکم اللہ خیرا · May Allah reward you</p>
 </section>
 {% endif %}
@@ -1234,6 +1250,10 @@ if ($("ask")) {
   }
 }
 
+document.querySelectorAll(".copybank").forEach(b => b.onclick = () => {
+  navigator.clipboard.writeText($(b.dataset.copy).textContent.trim());
+  b.textContent = "Copied"; setTimeout(() => b.textContent = "Copy", 1200);
+});
 document.querySelectorAll(".copy").forEach(b => b.onclick = () => {
   navigator.clipboard.writeText($(b.dataset.for).value);
   b.textContent = "Copied"; setTimeout(() => b.textContent = "Copy", 1200);
