@@ -11,6 +11,7 @@ from datetime import date
 import requests
 
 import cloudflare_stats
+import live
 import guidance
 import seo
 import stats
@@ -156,4 +157,5 @@ def collect():
             "cf": cf, "cf_configured": cloudflare_stats.configured(),
             "cf_chart": area([("visitors", [x["visitors"] for x in cf_days], "l1")], [x["date"] for x in cf_days]) if cf_days else "",
             "healthy": bool(sv["public"]["ok"] and sv["backup"]["ok"]),
-            "servers": sv, "youtube": youtube(), "system": system(), "now": time.strftime("%A, %d %B %Y · %H:%M")}
+            "servers": sv, "youtube": youtube(), "system": system(), "now": time.strftime("%A, %d %B %Y · %H:%M"),
+            "live": live.snapshot()}

@@ -58,6 +58,19 @@
 
   .grid { display: grid; gap: 16px; }
   .kpis { grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); margin-bottom: 16px; }
+  .livecard { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 22px; margin-bottom: 16px;
+              background: linear-gradient(135deg, rgba(52,211,153,.10), rgba(52,211,153,0) 55%), var(--card); border-color: rgba(52,211,153,.25); }
+  .livecard .big { font-size: 46px; font-weight: 700; letter-spacing: -.03em; line-height: 1; font-variant-numeric: tabular-nums; }
+  .livecard .lbl { display: flex; align-items: center; gap: 8px; color: var(--accent); font-weight: 600; font-size: 13px; margin-bottom: 6px; }
+  .pulse { width: 9px; height: 9px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 0 rgba(52,211,153,.6); animation: pulse 1.8s infinite; }
+  @keyframes pulse { 70% { box-shadow: 0 0 0 10px rgba(52,211,153,0); } 100% { box-shadow: 0 0 0 0 rgba(52,211,153,0); } }
+  @media (prefers-reduced-motion: reduce) { .pulse { animation: none; } }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { padding: 6px 11px; border-radius: 10px; background: rgba(255,255,255,.04); border: 1px solid var(--line); font-size: 13px; color: var(--muted); }
+  .chip b { color: var(--text); font-variant-numeric: tabular-nums; margin-right: 4px; }
+  .livecard .side { text-align: right; color: var(--muted); font-size: 12.5px; }
+  .livecard .side b { display: block; color: var(--text); font-size: 18px; }
+  @media (max-width: 700px) { .livecard { grid-template-columns: 1fr; gap: 12px; } .livecard .side { text-align: left; } }
   .cols-3 { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); }
   .cols-eq { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
   .card { background: var(--card); border: 1px solid var(--line); border-radius: var(--r); padding: 18px; min-width: 0; scroll-margin-top: 20px; }
@@ -241,6 +254,19 @@
     </header>
 
     <section id="overview">
+      {% set lv = d.live %}
+      <div class="card livecard" aria-live="polite">
+        <div><div class="lbl"><span class="pulse"></span>Active now</div><div class="big" id="lv_now">{{ lv.now }}</div></div>
+        <div class="chips">
+          <span class="chip"><b id="lv_home">{{ lv.where.home }}</b>on the home page</span>
+          <span class="chip"><b id="lv_surah">{{ lv.where.surah }}</b>reading surah pages</span>
+          <span class="chip"><b id="lv_askp">{{ lv.where.ask }}</b>on Ask pages</span>
+          <span class="chip"><b id="lv_reel">{{ lv.acts.reel }}</b>making a reel</span>
+          <span class="chip"><b id="lv_listen">{{ lv.acts.listen }}</b>listening</span>
+          <span class="chip"><b id="lv_ask">{{ lv.acts.ask }}</b>asking the Quran</span>
+        </div>
+        <div class="side">Peak today<b id="lv_peak">{{ lv.peak }}</b><span id="lv_peakat">at {{ lv.peak_at }}</span> · updated <span id="lv_time">{{ lv.time }}</span></div>
+      </div>
       <div class="grid kpis">
         <div class="card kpi"><div class="top">Page views today<span class="ic"><svg class="i"><use href="#i-eye"/></svg></span></div>
           <div class="v">{{ "{:,}".format(today.page or 0) }}</div><div class="d">{{ dl(d.d_views) }}</div>{{ d.spark_views | safe }}</div>
@@ -392,6 +418,22 @@
   </main>
 </div>
 <script>
+  // "Active now": refresh every 10 seconds while this page is open
+  const setT = (id, v) => { const e = document.getElementById(id); if (e) e.textContent = v; };
+  async function refreshLive() {
+    if (document.hidden) return;
+    try {
+      const r = await fetch("/admin/live", { cache: "no-store" });
+      if (!r.ok) return;
+      const v = await r.json();
+      setT("lv_now", v.now); setT("lv_home", v.where.home); setT("lv_surah", v.where.surah); setT("lv_askp", v.where.ask);
+      setT("lv_reel", v.acts.reel); setT("lv_listen", v.acts.listen); setT("lv_ask", v.acts.ask);
+      setT("lv_peak", v.peak); setT("lv_peakat", "at " + v.peak_at); setT("lv_time", v.time);
+    } catch (e) { /* offline for a moment: try again next time */ }
+  }
+  setInterval(refreshLive, 10000);
+  document.addEventListener("visibilitychange", refreshLive);
+
   // highlight the section in view in the sidebar
   const links = [...document.querySelectorAll("aside nav a")];
   const io = new IntersectionObserver(es => es.forEach(e => {

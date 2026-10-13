@@ -756,8 +756,11 @@ $("dlv").addEventListener("click", e => {
   navigator.share({ files: [deviceFile], title: $("title").value }).catch(() => {});
 });
 
+// what this visitor is doing, for the anonymous "active now" count (static/live.js)
+const act = a => { window.QRM_ACT = a; window.QRM_PING?.(); };
+
 async function generateDevice() {
-  const go = $("go"), prev = $("devpreview");
+  const go = $("go"), prev = $("devpreview"); act("reel");
   go.disabled = true; $("parts").innerHTML = ""; $("result").style.display = "none"; deviceFile = null;
   prev.hidden = false;
   try {
@@ -776,11 +779,11 @@ async function generateDevice() {
       : `Done: saved as WebM (this browser can't record MP4). WhatsApp and Instagram prefer MP4; use Generate in cloud for that.`);
     $("result").scrollIntoView({ behavior: "smooth", block: "start" });
   } catch (e) { setStatus(e.message || "Could not make the video on this device.", true); }
-  prev.hidden = true; go.disabled = false;
+  prev.hidden = true; go.disabled = false; act("");
 }
 
 async function generateCloud() {
-  $("go").disabled = true; $("parts").innerHTML = ""; setStatus("Starting…", false, null, true);
+  act("reel"); $("go").disabled = true; $("parts").innerHTML = ""; setStatus("Starting…", false, null, true);
   try {
     const d = await api("/api/generate", { method: "POST", headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ surah: surah.value, from: from.value, to: to.value, lang: $("lang").value,
@@ -794,7 +797,7 @@ async function poll(id) {
   try { j = await api(`/api/job/${id}`); }
   catch (e) { $("go").disabled = false; return setStatus(e.message, true); }
   if (j.status === "running") { setStatus(j.msg + "…", false, null, true); return setTimeout(() => poll(id), 1000); }
-  $("go").disabled = false;
+  $("go").disabled = false; act("");
   if (j.status === "error") return setStatus(j.msg, true);
   if (j.status === "toolong") return showParts(j);
   setStatus(j.msg);
@@ -1003,8 +1006,8 @@ function afterPart() {
 }
 player.onended = afterPart;
 player.onerror = () => { if (rd && player.getAttribute("src")) afterPart(); };   // a missing file: go on
-player.onplay = () => { $("rd_play").innerHTML = PAUSE; $("rd_play").setAttribute("aria-label", "Pause"); requestAnimationFrame(tick); };
-player.onpause = () => { $("rd_play").innerHTML = PLAY; $("rd_play").setAttribute("aria-label", "Play"); };
+player.onplay = () => { act("listen"); $("rd_play").innerHTML = PAUSE; $("rd_play").setAttribute("aria-label", "Pause"); requestAnimationFrame(tick); };
+player.onpause = () => { act(""); $("rd_play").innerHTML = PLAY; $("rd_play").setAttribute("aria-label", "Play"); };
 
 function light(el) { if (el && !el.classList.contains("hl")) { clearLit(); el.classList.add("hl"); lit = [el]; } }
 function tick() {
@@ -1212,7 +1215,7 @@ if ($("ask")) {
     $("ask_result").scrollIntoView({ behavior: "smooth", block: "start" });
   }
   async function ask(params) {
-    const st = $("ask_status"), go = $("ask_go");
+    const st = $("ask_status"), go = $("ask_go"); act("ask");
     go.disabled = true; setStatus("Finding guidance…", false, st, true);
     try {
       const qs = new URLSearchParams({ ...params, lang: $("lang").value });
@@ -1260,5 +1263,6 @@ document.querySelectorAll(".copy").forEach(b => b.onclick = () => {
 });
 </script>
 <script src="/static/device-reel.js?v={{ static_v }}"></script>
+<script src="/static/live.js?v={{ static_v }}" defer></script>
 </body>
 </html>

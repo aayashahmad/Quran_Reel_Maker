@@ -24,6 +24,7 @@ import quran_search
 import seo
 import stats
 import donation
+import live
 import protect
 import site_settings
 from translations import LANGS, NO_SPACES, texts
@@ -189,6 +190,14 @@ def counted(resp):
     return resp
 
 
+@app.post("/api/ping")
+def ping():
+    """'This tab is open' from static/live.js, for the anonymous active-now count (live.py)."""
+    d = request.get_json(silent=True, force=True) or {}
+    live.ping(str(d.get("sid", "")), str(d.get("where", "")), str(d.get("act", "")), bool(d.get("leave")))
+    return "", 204
+
+
 @app.get("/api/public-config")
 def public_config():
     """What the backup server copies from the main site: the switches and the donation box (no secrets)."""
@@ -351,7 +360,7 @@ def favicon():
 
 def page(template, title, description, path, jsonld=(), **kw):
     resp = app.make_response(render_template(template, title=title, description=description, path=path,
-                                             site=seo.SITE, jsonld=[seo.ld(j) for j in jsonld], **kw))
+                                             site=seo.SITE, jsonld=[seo.ld(j) for j in jsonld], static_v=STATIC_V, **kw))
     resp.headers["Cache-Control"] = "public, max-age=3600"
     return resp
 

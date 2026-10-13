@@ -23,6 +23,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 import cloudflare_stats
 import dashboard
 import donation
+import live
 import site_settings
 from config import DATA
 
@@ -142,6 +143,14 @@ def save_settings():
         return redirect("/admin", code=303)
     site_settings.save({k: request.form.get(k) == "on" for k in site_settings.SWITCHES})
     return redirect("/admin?saved=1", code=303)
+
+
+@bp.get("/admin/live")
+def live_now():
+    """People on the site right now (the dashboard refreshes this every 10 seconds)."""
+    if not session.get("admin"):
+        abort(403)
+    return live.snapshot(), 200, {"Cache-Control": "no-store"}
 
 
 def _admin_post(max_bytes=64 * 1024):
