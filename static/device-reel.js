@@ -246,6 +246,9 @@ const DeviceReel = (() => {
 
   async function make({ surahNo, first, last, lang, read, bg: chosen, question, preview, log }) {
     const audio = new (window.AudioContext || window.webkitAudioContext)();   // created in the click: allowed to play
+    audio.resume();                    // iPhones may still start it paused; resuming inside the click is allowed
+    let wake = null, interrupted = false;
+    const onHide = () => { if (document.hidden) interrupted = true; };
     try {
       log("Loading the surah…");
       const data = await api(`/api/surah/${surahNo}?lang=${encodeURIComponent(lang)}`);
@@ -304,6 +307,10 @@ const DeviceReel = (() => {
       rec.ondataavailable = e => e.data.size && chunks.push(e.data);
       const stopped = new Promise(res => rec.onstop = res);
       await bg.play();
+      // recording runs in real time: keep the screen on, and notice if the phone locks or the app is switched
+      try { wake = await navigator.wakeLock?.request("screen"); } catch (e) { /* not supported: just keep it open */ }
+      document.addEventListener("visibilitychange", onHide);
+      if (audio.state !== "running") await audio.resume();
       rec.start(1000);
       const t0 = audio.currentTime + 0.3;
       for (const [at, buf] of sounds) {
@@ -326,18 +333,22 @@ const DeviceReel = (() => {
           }
           brand(ctx, W, H);
           log(`Recording on this device… ${Math.min(100, Math.round(Math.max(now, 0) / length * 100))}% (keep this tab open)`);
-          if (now >= length + 0.15) return resolve();
+          if (now >= length + 0.15 || interrupted) return resolve();
           requestAnimationFrame(frame);
         };
         requestAnimationFrame(frame);
       });
       rec.stop(); await stopped; bg.pause();
+      if (interrupted) throw new Error("Recording stopped because the screen locked or you left this page. " +
+        "Please try again and keep this page open on screen until it finishes (or use Generate in cloud).");
       const ext = type.startsWith("video/mp4") ? "mp4" : "webm";
       const video = new Blob(chunks, { type: type.split(";")[0] });
       log("Writing the title and description…");
       const meta = await api(`/api/meta?surah=${surahNo}&from=${first}&to=${last}&lang=${encodeURIComponent(lang)}&read=${voice ? 1 : 0}`);
       return { video, ext, thumb: await thumbnail(info, data), meta, seconds: length };
     } finally {
+      document.removeEventListener("visibilitychange", onHide);
+      wake?.release().catch(() => {});
       audio.close();
     }
   }

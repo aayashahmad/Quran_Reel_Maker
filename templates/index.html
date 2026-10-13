@@ -666,9 +666,19 @@ document.addEventListener("keydown", e => { if (e.key === "Escape" && !genmodal.
 $("gen_cloud").onclick = () => { genmodal.hidden = true; generateCloud(); };
 $("gen_device").onclick = () => { genmodal.hidden = true; generateDevice(); };
 
+// Phones: "Download" of a reel made on the device opens the share menu instead (iPhone: Save Video -> Photos),
+// since a plain download lands in the Files app where people don't find it.
+let deviceFile = null;
+const PHONE = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+$("dlv").addEventListener("click", e => {
+  if (!deviceFile || !PHONE || !navigator.canShare?.({ files: [deviceFile] })) return;
+  e.preventDefault();
+  navigator.share({ files: [deviceFile], title: $("title").value }).catch(() => {});
+});
+
 async function generateDevice() {
   const go = $("go"), prev = $("devpreview");
-  go.disabled = true; $("parts").innerHTML = ""; $("result").style.display = "none";
+  go.disabled = true; $("parts").innerHTML = ""; $("result").style.display = "none"; deviceFile = null;
   prev.hidden = false;
   try {
     const r = await DeviceReel.make({ surahNo: +surah.value, first: +from.value, last: +to.value, lang: $("lang").value,
@@ -677,9 +687,11 @@ async function generateDevice() {
     const name = r.meta.name, vurl = URL.createObjectURL(r.video), turl = URL.createObjectURL(r.thumb);
     $("vid").src = vurl; $("thumb").src = turl;
     $("dlv").href = vurl; $("dlv").download = `${name}.${r.ext}`;
+    deviceFile = new File([r.video], `${name}.${r.ext}`, { type: r.video.type });
     $("dlt").href = turl; $("dlt").download = `${name}_thumbnail.jpg`;
     $("title").value = r.meta.title; $("desc").value = r.meta.desc; $("tags").value = r.meta.tags;
     $("result").style.display = "block";
+    if (PHONE && navigator.canShare?.({ files: [deviceFile] })) $("dlv").textContent = "Save video";
     setStatus(r.ext === "mp4" ? `Done on this device: ${fmt(Math.round(r.seconds))}`
       : `Done: saved as WebM (this browser can't record MP4). WhatsApp and Instagram prefer MP4; use Generate in cloud for that.`);
     $("result").scrollIntoView({ behavior: "smooth", block: "start" });
@@ -715,6 +727,7 @@ function showResult(id, j) {
   $("vid").src = base + j.video; $("thumb").src = base + j.thumb;
   $("dlv").href = base + j.video + "?dl=1"; $("dlt").href = base + j.thumb + "?dl=1";
   $("dlv").removeAttribute("download"); $("dlt").removeAttribute("download");   // the server names the file
+  deviceFile = null; $("dlv").textContent = "Download video";
   $("title").value = j.title; $("desc").value = j.desc; $("tags").value = j.tags;
   $("result").style.display = "block";
 }
