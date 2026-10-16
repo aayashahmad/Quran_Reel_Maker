@@ -220,6 +220,15 @@ if os.getenv("RENDER"):                     # the backup copies the main site's 
 
 
 @app.after_request
+def static_cache(resp):
+    """Static files: a year when the URL carries the content version (?v=...), else a day."""
+    if request.path.startswith("/static/") and resp.status_code == 200:
+        resp.headers["Cache-Control"] = ("public, max-age=31536000, immutable" if request.args.get("v")
+                                         else "public, max-age=86400")
+    return resp
+
+
+@app.after_request
 def served_by(resp):
     resp.headers["X-Served-By"] = SERVER     # which computer answered (main or backup)
     return resp

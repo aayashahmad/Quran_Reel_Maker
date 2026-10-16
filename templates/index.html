@@ -28,7 +28,9 @@
 {% for block in jsonld %}<script type="application/ld+json">{{ block | safe }}</script>
 {% endfor %}
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Amiri+Quran&family=Noto+Nastaliq+Urdu:wght@400;600&family=Lora:wght@400;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Amiri+Quran&family=Noto+Nastaliq+Urdu:wght@400;600&family=Lora:wght@400;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Amiri+Quran&family=Noto+Nastaliq+Urdu:wght@400;600&family=Lora:wght@400;600&display=swap"></noscript>
 <style>
   :root {
     --bg: #05211a; --bg2: #0a2f25; --card: #0b3328; --card2: #0e3b2f;

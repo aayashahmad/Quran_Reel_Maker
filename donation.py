@@ -34,6 +34,12 @@ def get():
     return out
 
 
+def small(img):
+    """A QR code has few colours: a 64-colour palette keeps it sharp at a fraction of the size."""
+    bg = Image.new("RGBA", img.size, (255, 255, 255, 255))
+    return Image.alpha_composite(bg, img).convert("RGB").quantize(64, method=Image.Quantize.MEDIANCUT)
+
+
 def save(form, upload=None, remove_qr=False):
     """Save the text fields and, if given, a new QR image. Returns an error message or None."""
     link = form.get("link", "").strip()
@@ -57,11 +63,11 @@ def save(form, upload=None, remove_qr=False):
             if img.format not in ("PNG", "JPEG", "WEBP", "GIF"):
                 return "Please upload a PNG, JPG or WebP image."
             img = img.convert("RGBA")
-            img.thumbnail((1000, 1000))
+            img.thumbnail((600, 600))                     # shown at 220 px: 600 stays sharp on any screen
         except Exception:
             return "That file is not an image we can read."
         tmp = QR.with_suffix(".tmp")
-        img.save(tmp, "PNG", optimize=True)               # re-drawn: no metadata or hidden content survives
+        small(img).save(tmp, "PNG", optimize=True)        # re-drawn: no metadata or hidden content survives
         os.replace(tmp, QR)
     elif remove_qr:
         QR.unlink(missing_ok=True)
