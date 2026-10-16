@@ -91,10 +91,22 @@ def _csrf():
     return session["csrf"]
 
 
+class _Expired(Exception):
+    """The form's security token doesn't match this browser's session (page left open a long time, cookies
+    cleared, or the form came from the other server): show the page again instead of a bare error."""
+
+
+@bp.errorhandler(_Expired)
+def _expired(_):
+    if request.path == "/admin/login":
+        return _page(state="login", error="The login page had expired. Please type your password again.")
+    return redirect("/admin?error=" + quote("That page had expired, so nothing was saved. Please try again."), code=303)
+
+
 def _check_csrf():
     sent = request.form.get("csrf", "")
     if not session.get("csrf") or not hmac.compare_digest(sent, session["csrf"]):
-        abort(400)
+        raise _Expired()
 
 
 def _page(**kw):
