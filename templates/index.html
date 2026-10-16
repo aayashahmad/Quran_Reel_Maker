@@ -767,6 +767,16 @@ async function generateDevice() {
     const r = await DeviceReel.make({ surahNo: +surah.value, first: +from.value, last: +to.value, lang: $("lang").value,
                                       read: $("read").checked, bg: bgChoice, question: reelQuestion(), preview: prev,
                                       log: m => setStatus(m, false, null, true) });
+    // Chrome/Android recordings have no length in the file (Instagram then sees ~1 second) and are often WebM:
+    // the server re-packs them as a normal MP4. Safari (iPhone/iPad/Mac) already records a complete MP4.
+    if (!/Apple/.test(navigator.vendor)) {
+      setStatus("Finishing the video for Instagram and WhatsApp…", false, null, true);
+      try {
+        const fd = new FormData(); fd.append("video", r.video, `reel.${r.ext}`);
+        const res = await fetch("/api/finish-video", { method: "POST", body: fd });
+        if (res.ok) { r.video = await res.blob(); r.ext = "mp4"; }
+      } catch (e) { /* keep the recording as it is */ }
+    }
     const name = r.meta.name, vurl = URL.createObjectURL(r.video), turl = URL.createObjectURL(r.thumb);
     $("vid").src = vurl; $("thumb").src = turl;
     $("dlv").href = vurl; $("dlv").download = `${name}.${r.ext}`;

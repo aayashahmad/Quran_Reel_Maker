@@ -1,11 +1,13 @@
 """Local website: pick a surah, ayah range and translation language, generate a reel, download it.
 Run with:  ./run.sh web   then open http://localhost:5050"""
 import hashlib
+import io
 import os
 import pathlib
 import re
 import shutil
 import socket
+import subprocess
 import threading
 import time
 import uuid
@@ -234,6 +236,50 @@ def index():
                            donation=donation.get() if site_settings.get()["donation"] else None,
                            popular=[{"path": seo.surah_path(n), "name": seo.surah_names(n)} for n in seo.POPULAR],
                            topic_links=[{"path": seo.topic_path(t["id"]), "title": t["en"]} for t in public_topics()][:14])
+
+
+FINISH_MAX = 150 * 1024 * 1024
+FINISH_SLOTS = threading.Semaphore(2)
+
+
+@app.post("/api/finish-video")
+def finish_video():
+    """A reel recorded in the browser (Android/Chrome: WebM, or MP4 without its length) made into a proper MP4
+    that Instagram, WhatsApp and galleries read in full. H.264 video is only re-packed (seconds); other video
+    is converted, which the small backup server can't do."""
+    if (request.content_length or 0) > FINISH_MAX:
+        return jsonify(error="This video is too big to finish here."), 413
+    f = request.files.get("video")
+    if not f:
+        return jsonify(error="No video received."), 400
+    if not FINISH_SLOTS.acquire(timeout=60):
+        return jsonify(error="Busy, please try again in a minute."), 503
+    work = WEB_OUT / f"finish_{uuid.uuid4().hex}"
+    try:
+        work.mkdir(parents=True)
+        src, out = work / "in", work / "reel.mp4"
+        f.save(src)
+        codec = subprocess.run(["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries", "stream=codec_name",
+                                "-of", "csv=p=0", str(src)], capture_output=True, text=True, timeout=60).stdout.strip()
+        if not codec:
+            return jsonify(error="That is not a video we can read."), 400
+        if codec == "h264":
+            video = ["-c:v", "copy"]
+        elif CLOUD_RENDER:
+            video = ["-c:v", "libx264", "-preset", "veryfast", "-crf", "21", "-pix_fmt", "yuv420p"]
+        else:
+            return jsonify(error="convert-unavailable"), 503
+        r = subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-fflags", "+genpts", "-i", str(src), *video,
+                            "-r", "30", "-c:a", "aac", "-b:a", "160k", "-ar", "44100", "-movflags", "+faststart", str(out)],
+                           capture_output=True, text=True, timeout=900)
+        if r.returncode or not out.exists():
+            return jsonify(error="Could not finish this video."), 500
+        resp = send_file(io.BytesIO(out.read_bytes()), mimetype="video/mp4")
+        resp.headers["Cache-Control"] = "no-store"
+        return resp
+    finally:
+        FINISH_SLOTS.release()
+        shutil.rmtree(work, ignore_errors=True)
 
 
 @app.post("/api/generate")

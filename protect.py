@@ -17,6 +17,7 @@ from flask import abort, jsonify, request
 # path prefix: (requests allowed, per seconds) for one visitor
 LIMITS = {
     "/api/generate": (20, 600),
+    "/api/finish-video": (20, 600),
     "/api/surah/": (60, 600),
     "/api/meta": (60, 600),
     "/api/guide": (60, 600),
