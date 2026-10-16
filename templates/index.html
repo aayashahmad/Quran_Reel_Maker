@@ -749,7 +749,9 @@ $("gen_device").onclick = () => { genmodal.hidden = true; generateDevice(); };
 // Phones: "Download" of a reel made on the device opens the share menu instead (iPhone: Save Video -> Photos),
 // since a plain download lands in the Files app where people don't find it.
 let deviceFile = null;
-const PHONE = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+// iPhone/iPad only: there a plain download lands in the Files app, so "Save video" opens the share menu
+// (Save Video -> Photos). Android and computers download the file directly.
+const PHONE = /iPhone|iPad|iPod/i.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
 $("dlv").addEventListener("click", e => {
   if (!deviceFile || !PHONE || !navigator.canShare?.({ files: [deviceFile] })) return;
   e.preventDefault();
