@@ -123,7 +123,7 @@ def page():
         return _page(state="login")
     values = site_settings.get()
     switches = [dict(name=k, label=label, help=help_, on=values[k]) for k, (_, label, help_) in site_settings.SWITCHES.items()]
-    msg = {"1": "Saved. The change is live now and reaches the backup server within 5 minutes.",
+    msg = {"1": "Saved. Visitors see it within 2 minutes (pages are cached near them), the backup within 5.",
            "donation": "Donation box saved.", "cf": "Cloudflare connected.", "cf-off": "Cloudflare token removed."}
     return _page(state="settings", switches=switches, saved=msg.get(request.args.get("saved", "")),
                  error=request.args.get("error", "")[:200], d=dashboard.collect(), donation=donation.get())

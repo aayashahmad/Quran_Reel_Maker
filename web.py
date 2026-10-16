@@ -175,10 +175,7 @@ def counted(resp):
     if p == "/" or p in ("/surah", "/ask") or p.startswith(("/surah/", "/ask/")):
         ua = (request.headers.get("User-Agent") or "").lower()
         if any(b in ua for b in BOTS):
-            stats.count("bot")
-        else:
-            stats.count("page")
-            stats.count("home" if p == "/" else "surah_page" if p.startswith("/surah") else "ask_page")
+            stats.count("bot")                 # (pages served from Cloudflare's cache don't reach here)
     elif p == "/api/generate":
         d = request.get_json(silent=True) or {}
         stats.count("reel_cloud", surah=d.get("surah"), lang=d.get("lang"))
@@ -197,6 +194,10 @@ def ping():
     """'This tab is open' from static/live.js, for the anonymous active-now count (live.py)."""
     d = request.get_json(silent=True, force=True) or {}
     live.ping(str(d.get("sid", "")), str(d.get("where", "")), str(d.get("act", "")), bool(d.get("leave")))
+    if d.get("view") and not d.get("leave"):   # a page view, counted by the page (works with Cloudflare's cache)
+        where = d.get("where")
+        stats.count("page")
+        stats.count({"home": "home", "surah": "surah_page", "ask": "ask_page"}.get(where, "other_page"))
     return "", 204
 
 

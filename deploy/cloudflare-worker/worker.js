@@ -3,11 +3,48 @@
 // with the visitor's address passed on under a shared secret (PROXY_SECRET, a Worker secret) so its speed
 // limits still apply per visitor. If neither answers, a friendly page reloads itself until the site is back.
 // A timer pings the backup every 10 minutes so Render's free server doesn't fall asleep.
+// Public pages (home, surahs, Ask topics...) are kept in Cloudflare's cache near each visitor, so they open at
+// once anywhere: a copy is served immediately and, when older than FRESH seconds, refreshed in the background.
 const DOWN = new Set([502, 503, 504, 520, 521, 522, 523, 524, 530]);
 const ours = r => r.headers.has("X-Served-By");      // our own server answered (even with an error)
 
+const FRESH = 120, KEEP = 86400;
+const PAGES = ["/", "/surah", "/ask", "/privacy", "/terms", "/llms.txt", "/sitemap.xml", "/robots.txt"];
+const cacheable = (req, url) => req.method === "GET" && (PAGES.includes(url.pathname) || /^\/(surah|ask)\/[\w-]+$/.test(url.pathname))
+  && !(req.headers.get("Cookie") || "").includes("qrm_admin");
+
 export default {
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
+    const url = new URL(request.url);
+    if (!cacheable(request, url)) return origin(request, env);
+    const key = new Request(url.origin + url.pathname + url.search), cache = caches.default;
+    const hit = await cache.match(key);
+    const refresh = async () => {
+      const r = await origin(new Request(key, { headers: { "User-Agent": request.headers.get("User-Agent") || "" } }), env);
+      if (r.status === 200 && ours(r) && !r.headers.has("Set-Cookie")) {
+        const copy = new Response(r.clone().body, r);
+        copy.headers.set("Cache-Control", `public, max-age=${KEEP}`); copy.headers.set("X-Cached-At", String(Date.now()));
+        await cache.put(key, copy);
+      }
+      return r;
+    };
+    if (hit) {
+      if (Date.now() - Number(hit.headers.get("X-Cached-At") || 0) > FRESH * 1000) ctx.waitUntil(refresh().catch(() => {}));
+      const out = new Response(hit.body, hit);
+      out.headers.set("Cache-Control", "public, max-age=60"); out.headers.set("X-Edge-Cache", "HIT");
+      return out;
+    }
+    const r = await refresh();
+    const out = new Response(r.body, r); out.headers.set("X-Edge-Cache", "MISS");
+    return out;
+  },
+  async scheduled(event, env, ctx) {
+    if (env.BACKUP_URL) ctx.waitUntil(fetch(new URL("/robots.txt", env.BACKUP_URL)).catch(() => {}));
+  },
+};
+
+async function origin(request, env) {
+  {
     const spare = env.BACKUP_URL && !["GET", "HEAD"].includes(request.method) ? request.clone() : request;
     try {
       const response = await fetch(request);
@@ -26,11 +63,8 @@ export default {
       } catch (e) { /* backup unreachable too */ }
     }
     return switching(request);
-  },
-  async scheduled(event, env, ctx) {
-    if (env.BACKUP_URL) ctx.waitUntil(fetch(new URL("/robots.txt", env.BACKUP_URL)).catch(() => {}));
-  },
-};
+  }
+}
 
 function switching(request) {
   const headers = { "Retry-After": "60", "Cache-Control": "no-store", "X-Robots-Tag": "noindex" };

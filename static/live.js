@@ -4,7 +4,8 @@
   const sid = Array.from(crypto.getRandomValues(new Uint8Array(12)), b => (b % 36).toString(36)).join("");
   const p = location.pathname;
   const where = p === "/" ? "home" : p.startsWith("/surah") ? "surah" : p.startsWith("/ask") ? "ask" : "other";
-  const body = leave => JSON.stringify({ sid, where, act: window.QRM_ACT || "", leave });
+  let view = true;                 // the first ping of this page also counts one page view
+  const body = leave => { const b = JSON.stringify({ sid, where, act: window.QRM_ACT || "", leave, view }); view = false; return b; };
   const send = () => { if (!document.hidden) fetch("/api/ping", { method: "POST", headers: { "Content-Type": "application/json" }, body: body(false), keepalive: true }).catch(() => {}); };
   send();
   setInterval(send, 30000);
