@@ -66,7 +66,13 @@ async function origin(request, env) {
   }
 }
 
+// robots.txt must never fail (Google slows or stops crawling when it can't be read): a built-in copy
+const ROBOTS = "User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /files/\nDisallow: /bg/\nDisallow: /admin\n\n" +
+               "Sitemap: https://quranreelmaker.xyz/sitemap.xml\n";
+
 function switching(request) {
+  if (new URL(request.url).pathname === "/robots.txt")
+    return new Response(ROBOTS, { headers: { "Content-Type": "text/plain; charset=utf-8", "Cache-Control": "public, max-age=3600" } });
   const headers = { "Retry-After": "60", "Cache-Control": "no-store", "X-Robots-Tag": "noindex" };
   if (new URL(request.url).pathname.startsWith("/api/")) {
     return Response.json({ error: "Quran Reel Maker is offline for a moment. Please try again in a few minutes." },
