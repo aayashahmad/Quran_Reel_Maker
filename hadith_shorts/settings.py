@@ -14,8 +14,8 @@ def _bool(name, default):
 HADITH_COLLECTIONS = [c.strip() for c in os.getenv("HADITH_COLLECTIONS", "bukhari,muslim").split(",") if c.strip()]
 NARRATION_MODE = os.getenv("NARRATION_MODE", "en")         # en | ar_en (needs ARABIC_AUDIO_DIR recordings)
 TTS_ENGINE = os.getenv("TTS_ENGINE", "edge")               # edge (Microsoft Edge neural voices) | say (macOS, testing)
-ENGLISH_VOICE = os.getenv("ENGLISH_VOICE", "en-GB-RyanNeural")
-ENGLISH_RATE = os.getenv("ENGLISH_RATE", "-6%")
+ENGLISH_VOICE = os.getenv("ENGLISH_VOICE", "en-US-AndrewMultilingualNeural")
+ENGLISH_RATE = os.getenv("ENGLISH_RATE", "-8%")
 SAY_VOICE = os.getenv("SAY_VOICE", "Daniel")
 ARABIC_AUDIO_DIR = Path(os.getenv("ARABIC_AUDIO_DIR", str(HERE / "arabic_audio")))  # <ref>.mp3, human-recorded
 PAUSE_SECONDS = float(os.getenv("PAUSE_SECONDS", "0.35"))
