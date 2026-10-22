@@ -1,0 +1,3 @@
+# Daily Sahih Hadith Shorts (on top of the main requirements.txt)
+edge-tts>=7,<8
+pytest>=8
