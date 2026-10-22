@@ -331,6 +331,9 @@
 
 
   .about { max-width: 860px; margin: 28px auto 0; }
+  .more-read { margin: 14px 0 0; font: 14px system-ui, sans-serif; color: var(--muted); }
+  .more-read a { color: var(--gold2); }
+  .more-read span { display: block; font-size: 12.5px; opacity: .8; margin-top: 2px; }
   .donate { text-align: center; max-height: calc(100vh - 32px); overflow-y: auto; position: relative; }
   .donate h2 { padding: 0 34px; }
   .modal-x { position: absolute; top: 8px; right: 10px; width: 36px; height: 36px; border-radius: 50%; border: 0; background: transparent;
@@ -508,6 +511,8 @@
     </div>
     <div class="actions"><button id="ask_go" class="primary" type="button">Ask</button></div>
     <div id="ask_status" class="status" role="status"></div>
+    <p class="more-read">📖 More to read: <a href="https://hayatus-sahaba.vercel.app/" target="_blank" rel="noopener">Hayatus Sahaba (Urdu) ↗</a>
+      <span>stories of the Sahaba, on another website, not checked by us</span></p>
   </section>
 
   <section class="card result" id="ask_result" aria-live="polite">
@@ -592,6 +597,7 @@
   <p class="tr">“And recite the Quran with measured recitation.” (Al-Muzzammil 73:4)</p>
   <p class="credit">Recitation: Mishary Rashid Alafasy • Translations: alquran.cloud • Urdu: Fateh Muhammad Jalandhry, read by Shamshad Ali Khan</p>
   <p class="dev">Developed by <strong>Aayash Ahmad Bhat</strong> • <a href="mailto:aayash.bhat.dev@gmail.com">aayash.bhat.dev@gmail.com</a></p>
+  <p class="dev"><a href="https://hayatus-sahaba.vercel.app/" target="_blank" rel="noopener">Read Hayatus Sahaba ↗</a></p>
   <p class="dev"><a href="/privacy">Privacy</a> • <a href="/terms">Terms</a>{% if donation and (donation.title or donation.has_qr or donation.account or donation.upi) %} • <a href="#" id="support_link">Support us</a>{% endif %}</p>
 </footer>
 <script>
