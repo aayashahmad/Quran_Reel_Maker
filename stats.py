@@ -122,3 +122,10 @@ def all_time():
     with _lock:
         _load_all()
         return dict(_all)
+
+
+def reels_today():
+    with _lock:
+        _load()
+        c = _days[time.strftime("%Y-%m-%d")]["counts"] if time.strftime("%Y-%m-%d") in _days else {}
+        return c.get("reel_cloud", 0) + c.get("reel_device", 0)

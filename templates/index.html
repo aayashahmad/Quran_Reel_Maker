@@ -345,6 +345,7 @@
   footer .made { display: inline-block; margin: 0 0 12px; padding: 6px 14px; border-radius: 999px; font: 13.5px system-ui, sans-serif;
                  color: var(--gold2); background: rgba(212,175,95,.10); border: 1px solid var(--line); }
   footer .made b { color: var(--gold); font-weight: 700; }
+  footer .made .sep { opacity: .6; margin: 0 4px; }
   .donate h2 { font: 600 22px Georgia, serif; color: var(--gold2); margin: 0 0 8px; }
   .donate img { width: 220px; height: 220px; object-fit: contain; background: #fff; border-radius: 14px; padding: 10px; margin: 8px auto; display: block; }
   .donate .upi { font-family: system-ui, sans-serif; overflow-wrap: anywhere; }
@@ -586,7 +587,7 @@
 {% endif %}
 <footer>
   <div class="divider" aria-hidden="true"><i></i></div>
-  {% if reels_made %}<p class="made"><span>🎬</span> <b>{{ "{:,}".format(reels_made) }}</b> reels made with Quran Reel Maker</p>{% endif %}
+  {% if reels_made %}<p class="made"><span>🎬</span> <b>{{ "{:,}".format(reels_made) }}</b> reels made with Quran Reel Maker <span class="sep">·</span> <b>{{ "{:,}".format(reels_today) }}</b> today</p>{% endif %}
   <p class="ayah" lang="ar">وَرَتِّلِ ٱلْقُرْءَانَ تَرْتِيلًا</p>
   <p class="tr">“And recite the Quran with measured recitation.” (Al-Muzzammil 73:4)</p>
   <p class="credit">Recitation: Mishary Rashid Alafasy • Translations: alquran.cloud • Urdu: Fateh Muhammad Jalandhry, read by Shamshad Ali Khan</p>

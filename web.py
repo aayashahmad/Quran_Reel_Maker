@@ -204,7 +204,7 @@ def ping():
 @app.get("/api/public-config")
 def public_config():
     """What the backup server copies from the main site: the switches and the donation box (no secrets)."""
-    resp = jsonify(settings=site_settings.get(), donation=donation.get(), reels_made=stats.reels_made())
+    resp = jsonify(settings=site_settings.get(), donation=donation.get(), reels_made=stats.reels_made(), reels_today=stats.reels_today())
     resp.headers["Cache-Control"] = "no-store"
     return resp
 
@@ -216,16 +216,21 @@ def donation_qr():
     return send_file(donation.QR, mimetype="image/png", max_age=300)
 
 
-MAIN_REELS = [0]                            # backup server: the main site's all-time reel count
+MAIN_REELS = [0, 0]                         # backup server: the main site's reel counts (all time, today)
 
 
 def reels_made():
     return MAIN_REELS[0] if os.getenv("RENDER") else stats.reels_made()
 
 
+def reels_today():
+    return MAIN_REELS[1] if os.getenv("RENDER") else stats.reels_today()
+
+
 if os.getenv("RENDER"):                     # the backup copies the main site's switches and donation box
     donation.sync_from_main(seo.SITE, lambda values: site_settings.save(values) if values else None,
-                            on_config=lambda cfg: MAIN_REELS.__setitem__(0, int(cfg.get("reels_made") or 0)))
+                            on_config=lambda cfg: MAIN_REELS.__setitem__(slice(None), [int(cfg.get("reels_made") or 0),
+                                                                                   int(cfg.get("reels_today") or 0)]))
 
 
 @app.after_request
@@ -252,7 +257,7 @@ def index():
                            bgs=[{"style": s, "name": backgrounds.NAMES[s]} for s in backgrounds.STYLES],
                            jsonld=[seo.ld(j) for j in seo.home_ld()], faq=seo.HOME_FAQ,
                            donation=donation.get() if site_settings.get()["donation"] else None,
-                           reels_made=reels_made(),
+                           reels_made=reels_made(), reels_today=reels_today(),
                            popular=[{"path": seo.surah_path(n), "name": seo.surah_names(n)} for n in seo.POPULAR],
                            topic_links=[{"path": seo.topic_path(t["id"]), "title": t["en"]} for t in public_topics()][:14])
 
