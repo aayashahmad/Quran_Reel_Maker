@@ -331,7 +331,20 @@
 
 
   .about { max-width: 860px; margin: 28px auto 0; }
-  .donate { max-width: 560px; margin: 24px auto 0; text-align: center; }
+  .donate { text-align: center; max-height: calc(100vh - 32px); overflow-y: auto; position: relative; }
+  .donate h2 { padding: 0 34px; }
+  .modal-x { position: absolute; top: 8px; right: 10px; width: 36px; height: 36px; border-radius: 50%; border: 0; background: transparent;
+             color: var(--gold2); font-size: 26px; line-height: 1; cursor: pointer; }
+  .support-fab { position: fixed; right: 16px; bottom: calc(16px + env(safe-area-inset-bottom)); z-index: 40; display: inline-flex; align-items: center; gap: 8px;
+                 padding: 11px 16px; border-radius: 999px; border: 1px solid rgba(240,213,147,.6); cursor: pointer;
+                 background: linear-gradient(180deg, #f0d593, #d4af5f); color: #1b1405; font: 600 14px system-ui, sans-serif;
+                 box-shadow: 0 8px 24px rgba(0,0,0,.45); transition: transform .15s; }
+  .support-fab:hover { transform: translateY(-2px); }
+  .support-fab svg { width: 18px; height: 18px; fill: #8b1e1e; }
+  @media (max-width: 520px) { .support-fab { padding: 11px; } .support-fab span { display: none; } }
+  footer .made { display: inline-block; margin: 0 0 12px; padding: 6px 14px; border-radius: 999px; font: 13.5px system-ui, sans-serif;
+                 color: var(--gold2); background: rgba(212,175,95,.10); border: 1px solid var(--line); }
+  footer .made b { color: var(--gold); font-weight: 700; }
   .donate h2 { font: 600 22px Georgia, serif; color: var(--gold2); margin: 0 0 8px; }
   .donate img { width: 220px; height: 220px; object-fit: contain; background: #fff; border-radius: 14px; padding: 10px; margin: 8px auto; display: block; }
   .donate .upi { font-family: system-ui, sans-serif; overflow-wrap: anywhere; }
@@ -545,8 +558,13 @@
   <h2>What does the Quran say about…</h2>
   <p class="links">{% for t in topic_links %}<a href="{{ t.path }}">{{ t.title }}</a>{% endfor %}<a href="/ask">All topics →</a></p>
 </section>
-{% if donation and (donation.title or donation.has_qr) %}
-<section class="card donate" aria-labelledby="donate-h">
+{% if donation and (donation.title or donation.has_qr or donation.account or donation.upi) %}
+<button type="button" class="support-fab" id="support_open" aria-haspopup="dialog" aria-controls="supportmodal">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-9.2-8.6C1.2 8.2 3.2 4.5 6.8 4.5c2 0 3.4 1.1 5.2 3 1.8-1.9 3.2-3 5.2-3 3.6 0 5.6 3.7 4 6.9C19 15.6 12 20 12 20z"/></svg>
+  <span>Support us</span></button>
+<div class="modal" id="supportmodal" hidden role="dialog" aria-modal="true" aria-labelledby="donate-h">
+  <div class="modal-box donate">
+    <button type="button" class="modal-x" id="support_close" aria-label="Close">×</button>
   <h2 id="donate-h">{{ donation.title or "Support Quran Reel Maker" }}</h2>
   {% if donation.text %}<p>{{ donation.text }}</p>{% endif %}
   {% if donation.has_qr %}<img src="/donation-qr.png?v={{ donation.version }}" alt="QR code to donate" width="220" height="220" loading="lazy">{% endif %}
@@ -554,7 +572,7 @@
   {% if donation.link %}<p><a class="primary" href="{{ donation.link }}" rel="noopener">Donate</a></p>{% endif %}
   {% if donation.account %}
   <dl class="bank">
-    <dt>Bank transfer</dt><dd></dd>
+    <dt>Bank transfer</dt>
     {% if donation.holder %}<dt>Name</dt><dd>{{ donation.holder }}</dd>{% endif %}
     <dt>Account no.</dt><dd><b id="don_acc">{{ donation.account }}</b> <button type="button" class="copybank" data-copy="don_acc">Copy</button></dd>
     {% if donation.ifsc %}<dt>IFSC</dt><dd><b id="don_ifsc">{{ donation.ifsc }}</b> <button type="button" class="copybank" data-copy="don_ifsc">Copy</button></dd>{% endif %}
@@ -563,15 +581,17 @@
   </dl>
   {% endif %}
   <p class="thanks">جزاکم اللہ خیرا · May Allah reward you</p>
-</section>
+  </div>
+</div>
 {% endif %}
 <footer>
   <div class="divider" aria-hidden="true"><i></i></div>
+  {% if reels_made %}<p class="made"><span>🎬</span> <b>{{ "{:,}".format(reels_made) }}</b> reels made with Quran Reel Maker</p>{% endif %}
   <p class="ayah" lang="ar">وَرَتِّلِ ٱلْقُرْءَانَ تَرْتِيلًا</p>
   <p class="tr">“And recite the Quran with measured recitation.” (Al-Muzzammil 73:4)</p>
   <p class="credit">Recitation: Mishary Rashid Alafasy • Translations: alquran.cloud • Urdu: Fateh Muhammad Jalandhry, read by Shamshad Ali Khan</p>
   <p class="dev">Developed by <strong>Aayash Ahmad Bhat</strong> • <a href="mailto:aayash.bhat.dev@gmail.com">aayash.bhat.dev@gmail.com</a></p>
-  <p class="dev"><a href="/privacy">Privacy</a> • <a href="/terms">Terms</a></p>
+  <p class="dev"><a href="/privacy">Privacy</a> • <a href="/terms">Terms</a>{% if donation and (donation.title or donation.has_qr or donation.account or donation.upi) %} • <a href="#" id="support_link">Support us</a>{% endif %}</p>
 </footer>
 <script>
 const $ = id => document.getElementById(id);
@@ -1267,6 +1287,19 @@ if ($("ask")) {
   }
 }
 
+// "Support us": the floating button and the footer link open the donation popup
+{
+  const m = $("supportmodal");
+  if (m) {
+    let back = null;
+    const open = e => { e && e.preventDefault(); back = document.activeElement; m.hidden = false; $("support_close").focus(); };
+    const close = () => { m.hidden = true; back?.focus?.(); };
+    $("support_open").onclick = open; $("support_link") && ($("support_link").onclick = open);
+    $("support_close").onclick = close;
+    m.onclick = e => { if (e.target === m) close(); };
+    document.addEventListener("keydown", e => { if (e.key === "Escape" && !m.hidden) close(); });
+  }
+}
 document.querySelectorAll(".copybank").forEach(b => b.onclick = () => {
   navigator.clipboard.writeText($(b.dataset.copy).textContent.trim());
   b.textContent = "Copied"; setTimeout(() => b.textContent = "Copy", 1200);

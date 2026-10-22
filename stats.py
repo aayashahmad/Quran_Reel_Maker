@@ -10,10 +10,24 @@ from collections import Counter, defaultdict
 from config import DATA
 
 FILE = DATA / "stats.json"
+ALL_FILE = DATA / "stats_total.json"   # all-time totals (kept forever; daily details only for KEEP_DAYS)
 KEEP_DAYS = 90
 _lock = threading.Lock()
 _days = None                       # {"2026-10-13": {"counts": Counter, "surahs": Counter, "langs": Counter, "topics": Counter}}
 _dirty = False
+_all = None                    # Counter of all-time totals
+
+
+def _load_all():
+    global _all
+    if _all is None:
+        try:
+            _all = Counter(json.loads(ALL_FILE.read_text()))
+        except (FileNotFoundError, ValueError):     # first run: start from the days already counted
+            _load()
+            _all = Counter()
+            for g in _days.values():
+                _all.update(g["counts"])
 
 
 def _load():
@@ -36,6 +50,8 @@ def count(what, surah=None, lang=None, topic=None):
         _load()
         d = _days[day]
         d["counts"][what] += 1
+        _load_all()
+        _all[what] += 1
         if surah:
             d["surahs"][str(surah)] += 1
         if lang:
@@ -58,6 +74,11 @@ def save():
     tmp = FILE.with_suffix(".tmp")
     tmp.write_text(json.dumps(data))
     os.replace(tmp, FILE)
+    with _lock:
+        everything = dict(_all or {})
+    tmp = ALL_FILE.with_suffix(".tmp")
+    tmp.write_text(json.dumps(everything))
+    os.replace(tmp, ALL_FILE)
 
 
 def _saver():
@@ -88,3 +109,16 @@ def summary(days=30):
                     top[k].update(_days[d][k])
     return {"per_day": per_day, "totals": dict(totals), "today": per_day[-1][1],
             **{k: v.most_common(8) for k, v in top.items()}}
+
+
+def reels_made():
+    """Reels made on this site, all time (in the cloud and on visitors' devices)."""
+    with _lock:
+        _load_all()
+        return _all["reel_cloud"] + _all["reel_device"]
+
+
+def all_time():
+    with _lock:
+        _load_all()
+        return dict(_all)

@@ -84,7 +84,7 @@ def _write(d):
     os.replace(tmp, FILE)
 
 
-def sync_from_main(site, apply_settings, every=300):
+def sync_from_main(site, apply_settings, every=300, on_config=None):
     """Backup server only: copy the switches and the donation box from the main site (the laptop) every
     `every` seconds. Answers from the backup itself (X-Served-By: render-backup) are ignored."""
     def loop():
@@ -94,6 +94,8 @@ def sync_from_main(site, apply_settings, every=300):
                 if r.ok and r.headers.get("X-Served-By") != "render-backup":
                     cfg = r.json()
                     apply_settings(cfg.get("settings", {}))
+                    if on_config:
+                        on_config(cfg)
                     don = cfg.get("donation", {})
                     if don.get("version") != get()["version"]:
                         if don.get("has_qr"):

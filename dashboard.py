@@ -158,4 +158,4 @@ def collect():
             "cf_chart": area([("visitors", [x["visitors"] for x in cf_days], "l1")], [x["date"] for x in cf_days]) if cf_days else "",
             "healthy": bool(sv["public"]["ok"] and sv["backup"]["ok"]),
             "servers": sv, "youtube": youtube(), "system": system(), "now": time.strftime("%A, %d %B %Y · %H:%M"),
-            "live": live.snapshot()}
+            "live": live.snapshot(), "all_time": stats.all_time()}

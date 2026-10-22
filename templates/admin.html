@@ -272,6 +272,9 @@
           <div class="v">{{ "{:,}".format(today.page or 0) }}</div><div class="d">{{ dl(d.d_views) }}</div>{{ d.spark_views | safe }}</div>
         <div class="card kpi"><div class="top">Reels made today<span class="ic g"><svg class="i"><use href="#i-film"/></svg></span></div>
           <div class="v">{{ (today.reel_cloud or 0) + (today.reel_device or 0) }}</div><div class="d">{{ dl(d.d_reels) }}</div>{{ d.spark_reels | safe }}</div>
+        <div class="card kpi"><div class="top">Reels made · all time<span class="ic g"><svg class="i"><use href="#i-film"/></svg></span></div>
+          <div class="v">{{ "{:,}".format((d.all_time.reel_cloud or 0) + (d.all_time.reel_device or 0)) }}</div>
+          <div class="d">{{ "{:,}".format(d.all_time.reel_cloud or 0) }} in the cloud · {{ "{:,}".format(d.all_time.reel_device or 0) }} on devices · shown in the site footer</div></div>
         <div class="card kpi"><div class="top">Visitors · 30 days<span class="ic b"><svg class="i"><use href="#i-users"/></svg></span></div>
           {% if cf and cf.totals %}<div class="v">{{ "{:,}".format(cf.totals.visitors) }}</div><div class="d">from Cloudflare</div>{{ d.spark_cf | safe }}
           {% else %}<div class="v">–</div><div class="d"><a href="#traffic">Connect Cloudflare</a> to see visitors</div>{% endif %}</div>
