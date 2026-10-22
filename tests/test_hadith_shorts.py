@@ -118,3 +118,19 @@ def test_rendered_day1_video_if_present():
 def test_sunnah_verification():
     ok, detail = source.verify(source.get("bukhari:1"))
     assert ok, detail
+
+
+def test_two_videos_a_day(tmp_path, monkeypatch):
+    from hadith_shorts import __main__ as job
+    monkeypatch.setattr(settings, "DB_PATH", tmp_path / "h.sqlite")
+    monkeypatch.setattr(settings, "VIDEOS_PER_DAY", 2)
+    db = store.connect()
+    date = job.today()
+    store.add_video(db, date, "bukhari:1", "t", "p.mp4", "uploaded")
+    picked = []
+    monkeypatch.setattr(job, "daily_slot", lambda db, day: picked.append(day) or 0)
+    job.daily(db)
+    assert picked == [f"{date}#2"]                 # the second slot comes next
+    store.add_video(db, f"{date}#2", "bukhari:13", "t", "p.mp4", "uploaded")
+    picked.clear()
+    assert job.daily(db) == 0 and picked == []     # both done: nothing more today

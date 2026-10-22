@@ -32,7 +32,7 @@ def check_source(db, h):
 
 
 def make(db, h, day, upload=False):
-    out = settings.OUTPUT_DIRECTORY / day
+    out = settings.OUTPUT_DIRECTORY / day.replace("#", "_")
     out.mkdir(parents=True, exist_ok=True)
     problems = validate.arabic_shaping()
     if problems:
@@ -73,12 +73,26 @@ def do_upload(db, vid, day, path, thumb, title, desc, tags, ref):
                           f"{', publishes ' + when if when else ''})", ref)
 
 
+def slot_key(date, slot):
+    """The day's n-th video: '2026-10-22' for the first (as before), '2026-10-22#2' for the second..."""
+    return date if slot == 1 else f"{date}#{slot}"
+
+
 def daily(db):
-    day = today()
-    rows = store.for_day(db, day)
-    if any(r["status"] == "uploaded" for r in rows):
-        print(f"{day}: already uploaded, nothing to do.")
+    """Make (and upload) the next of today's VIDEOS_PER_DAY videos; run it once per slot (e.g. 12:00 and 20:00)."""
+    date = today()
+    for slot in range(1, settings.VIDEOS_PER_DAY + 1):
+        day = slot_key(date, slot)
+        if not any(r["status"] == "uploaded" for r in store.for_day(db, day)):
+            break
+    else:
+        print(f"{date}: all {settings.VIDEOS_PER_DAY} videos are uploaded, nothing to do.")
         return 0
+    return daily_slot(db, day)
+
+
+def daily_slot(db, day):
+    rows = store.for_day(db, day)
     if any(r["status"] == "uploading" for r in rows):
         store.log(db, "error", f"{day}: an earlier upload's result is unknown. Check YouTube Studio, then run "
                                f"'python -m hadith_shorts resolve {day} <video id or none>'.")

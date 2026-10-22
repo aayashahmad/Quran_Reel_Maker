@@ -2,7 +2,8 @@ name: Daily Sahih Hadith Short
 
 on:
   schedule:
-    - cron: "30 6 * * *"     # 12:00 IST (uploads only when the repository variable HADITH_PUBLISH is true)
+    - cron: "30 6 * * *"     # 12:00 IST  } two hadith a day (VIDEOS_PER_DAY); uploads only when
+    - cron: "30 14 * * *"    # 20:00 IST  } the repository variable HADITH_PUBLISH is true
   workflow_dispatch:
 
 permissions:
@@ -37,6 +38,7 @@ jobs:
           ENABLE_PUBLICATION: ${{ vars.HADITH_PUBLISH || 'false' }}
           YOUTUBE_PRIVACY_STATUS: ${{ vars.HADITH_PRIVACY || 'private' }}
           PUBLISH_TIME: ${{ vars.HADITH_PUBLISH_TIME || '' }}
+          VIDEOS_PER_DAY: ${{ vars.HADITH_PER_DAY || '2' }}
       - name: Keep the video for review
         if: always()
         uses: actions/upload-artifact@v4

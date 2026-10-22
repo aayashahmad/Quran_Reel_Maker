@@ -29,8 +29,8 @@ def metadata(h, title):
 
 def publish_at(day):
     """RFC 3339 time to publish (for a scheduled public video), or None to publish at once."""
-    if not settings.PUBLISH_TIME or settings.YOUTUBE_PRIVACY_STATUS != "public":
-        return None
+    if not settings.PUBLISH_TIME or settings.YOUTUBE_PRIVACY_STATUS != "public" or "#" in day:
+        return None                                  # (only the day's first video is scheduled)
     hh, mm = (int(x) for x in settings.PUBLISH_TIME.split(":"))
     tz = ZoneInfo(settings.TIMEZONE)
     when = datetime.fromisoformat(day).replace(hour=hh, minute=mm, tzinfo=tz)
