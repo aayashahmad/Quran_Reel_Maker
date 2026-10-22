@@ -18,6 +18,10 @@ AR_FONT, EN_FONT = "Amiri-Regular.ttf", "Amiri-Regular.ttf"
 INTRO, OUTRO = 3.0, 4.0
 DIMMED = (165, 185, 175)
 FADE = 0.6
+# voice polish: remove rumble and hiss, a little less boom, a little more presence (clear words), gentle
+# compression, and YouTube's loudness standard (-14 LUFS) so it sounds full on phones
+CLEAR_VOICE = ("highpass=f=70,lowpass=f=11000,equalizer=f=180:t=q:w=1:g=-2,equalizer=f=3200:t=q:w=1.2:g=3,"
+               "acompressor=threshold=-20dB:ratio=2.5:attack=8:release=120:makeup=2,loudnorm=I=-14:TP=-1.5:LRA=9")
 
 
 def _fit(text, fname, max_w, max_h, size, min_size, lh, rtl):
@@ -205,7 +209,7 @@ def build(h, out_dir, log=print):
     graph = ";".join([bgf, "[1:v]format=rgba[ov]",
                       f"[bg][ov]overlay=0:0:format=auto:eof_action=repeat,fade=t=in:st=0:d={FADE},"
                       f"fade=t=out:st={total - FADE:.3f}:d={FADE},format=yuv420p[v]"] + chains +
-                     [f"{mix}amix=inputs={len(chains)}:normalize=0,apad,atrim=0:{total:.3f},"
+                     [f"{mix}amix=inputs={len(chains)}:normalize=0,{CLEAR_VOICE},apad,atrim=0:{total:.3f},"
                       f"afade=t=out:st={total - FADE:.3f}:d={FADE}[a]"])
     mp4 = out_dir / f"{h.collection}_{h.number}.mp4"
     log("Rendering the video")

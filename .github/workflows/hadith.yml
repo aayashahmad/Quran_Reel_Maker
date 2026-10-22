@@ -39,6 +39,8 @@ jobs:
           YOUTUBE_PRIVACY_STATUS: ${{ vars.HADITH_PRIVACY || 'private' }}
           PUBLISH_TIME: ${{ vars.HADITH_PUBLISH_TIME || '' }}
           VIDEOS_PER_DAY: ${{ vars.HADITH_PER_DAY || '2' }}
+          ENGLISH_VOICE: ${{ vars.HADITH_VOICE || 'en-GB-RyanNeural' }}
+          ENGLISH_RATE: ${{ vars.HADITH_VOICE_RATE || '-6%' }}
       - name: Keep the video for review
         if: always()
         uses: actions/upload-artifact@v4
