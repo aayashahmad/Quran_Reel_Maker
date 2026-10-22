@@ -20,7 +20,7 @@ reuses the shared hadith data, fonts, animated backgrounds and the YouTube login
 
 ## Commands
 ```
-.venv/bin/python -m pip install -r hadith_shorts/requirements.txt   # once (edge-tts, pytest)
+DYLD_LIBRARY_PATH=/opt/homebrew/opt/expat/lib .venv/bin/python -m pip install -r hadith_shorts/requirements.txt  # once
 .venv/bin/python -m hadith_shorts make --ref bukhari:1              # a video, no upload
 .venv/bin/python -m hadith_shorts make --ref bukhari:1 --upload     # ... uploaded (privacy from settings)
 .venv/bin/python -m hadith_shorts daily                             # the daily job
@@ -28,7 +28,8 @@ reuses the shared hadith data, fonts, animated backgrounds and the YouTube login
 .venv/bin/python -m hadith_shorts resolve 2026-10-22 <id|none>      # settle an upload with an unknown result
 .venv/bin/python -m pytest tests -q                                 # tests (RUN_NETWORK_TESTS=1 for sunnah.com)
 ```
-Locally, use `./run.sh`-style library paths if Pillow needs them: `DYLD_LIBRARY_PATH=/opt/homebrew/lib`.
+On this Mac, prefix commands with `DYLD_LIBRARY_PATH=/opt/homebrew/opt/expat/lib:/opt/homebrew/lib` (Homebrew's Python
+needs Homebrew's expat; without it pip and uv fail with "platform.mac_ver() returned an empty value").
 `TTS_ENGINE=say` uses the Mac's own voice for quick tests without the internet.
 
 ## Settings
