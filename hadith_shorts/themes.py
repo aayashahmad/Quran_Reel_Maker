@@ -5,7 +5,7 @@ import re
 
 # id: (title, keywords, background styles, colour grade, camera, closing reflection - only shown if enabled)
 THEMES = {
-    "intention": ("On Intentions", r"intention|intend|sincer|for the sake of allah|show off",
+    "intention": ("On Intentions", r"intention|intend|sincer|for the sake of allah|show off|\bhearts?\b",
                   ["rays", "aurora"], "dawn", "zoom-in", "Check your intention before you act: do it for Allah."),
     "patience": ("On Patience", r"patien|calamit|affliction|harm befalls|trial|grief|sorrow",
                  ["waves", "night"], "cool", "pan-up", "Hardship is not wasted: be patient and hope in Allah."),
@@ -17,7 +17,7 @@ THEMES = {
               ["aurora", "waves"], "cool", "zoom-out", "Be merciful to others, and Allah will be merciful to you."),
     "prayer": ("On Prayer", r"\bprayer|salat|prostrat|mosque|wudu|ablution|night prayer",
                ["mosque", "arches"], "dawn", "zoom-in", "Guard your prayers: they are your meeting with Allah."),
-    "honesty": ("On Truthfulness", r"truth|lie|lying|liar|honest|trust|betray|promise",
+    "honesty": ("On Truthfulness", r"truth|\blies?\b|lying|liar|honest|\btrust|betray|promise",
                 ["waves", "stars"], "cool", "pan-up", "Speak the truth, even when it is hard."),
     "gratitude": ("On Gratitude", r"grateful|thank|gratitude|blessing|favour|favor",
                   ["rays", "desert"], "warm", "zoom-out", "Count your blessings and thank Allah for them."),
@@ -27,15 +27,15 @@ THEMES = {
                 ["lanterns", "arches"], "warm", "zoom-out", "Honour your parents while you still can."),
     "dua": ("On Supplication", r"supplicat|invoke|\bdua\b|ask allah|remembrance|glorif|subhan",
             ["night", "stars"], "cool", "pan-up", "Call upon Allah: He is near and He answers."),
-    "repentance": ("On Repentance", r"repent|forgive|forgiveness|sin",
+    "repentance": ("On Repentance", r"repent|forgive|forgiveness|\bsins?\b",
                    ["aurora", "night"], "dawn", "zoom-in", "Turn back to Allah: His forgiveness is greater than any sin."),
-    "hereafter": ("On the Hereafter", r"paradise|hell|\bfire\b|day of resurrection|grave|death|die",
+    "hereafter": ("On the Hereafter", r"paradise|\bhell\b|\bfire\b|day of resurrection|\bgraves?\b|\bdeath\b|\bdie\b|\bdied\b",
                   ["desert", "night"], "cool", "zoom-out", "Prepare today for the life that does not end."),
-    "faith": ("On Faith", r"faith|believ|iman|islam is|religion",
+    "faith": ("On Faith", r"faith|believ|\biman\b|islam is|religion",
               ["stars", "rosette"], "dawn", "zoom-in", "Strengthen your faith with deeds, every day."),
-    "fasting": ("On Fasting", r"fast|ramadan|suhur|iftar",
+    "fasting": ("On Fasting", r"\bfast(ing|ed)?\b|ramadan|suhur|iftar",
                 ["lanterns", "night"], "warm", "pan-up", "Fasting is a shield: guard it with good words."),
-    "quran": ("On the Quran", r"qur'?an|recit",
+    "quran": ("On the Quran", r"qur'?an|\brecit",
               ["rosette", "rays"], "dawn", "zoom-in", "Make the Quran part of every day."),
 }
 DEFAULT = ("Daily Hadith", "", ["particles", "stars"], "dawn", "zoom-in", "Learn it, live it, and share it.")

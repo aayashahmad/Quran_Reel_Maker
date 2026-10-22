@@ -20,10 +20,20 @@ TRANSLATORS = {"bukhari": "Dr. Muhammad Muhsin Khan", "muslim": "Abdul Hamid Sid
 DATASET = "fawazahmed0/hadith-api (github.com/fawazahmed0/hadith-api)"
 # books used for the automatic daily choice: faith, knowledge, character, worship and the heart, not legal
 # details that need a teacher's context (any reference can still be made by hand with --ref)
-GOOD_BOOKS = {"bukhari": {2, 3, 24, 30, 46, 51, 53, 66, 69, 75, 78, 80, 81, 82, 96, 97},
-              "muslim": {1, 12, 45, 47, 48, 49, 53, 55}}
+GOOD_BOOKS = {"bukhari": {2, 3, 30, 46, 51, 53, 66, 69, 75, 78, 80, 81, 82, 96, 97},
+              "muslim": {1, 45, 47, 48, 49, 53, 55}}
+# narrations that need a teacher's context when shown alone in a 30-second clip: manual choice only (--ref)
+NEEDS_CONTEXT = __import__("re").compile(
+    r"\bfight|\bkill|\bwar\b|\bslaves?\b|booty|captive|punish|\bston(e|ed|ing)\b|flog|lash|\bblood|\bsword|"
+    r"polytheist|\bjews?\b|christian|unbeliev|infidel|apostat|hypocrit|menstru|sexual|intercourse|\bzakat|nisab|"
+    r"\bawsuq|\bdinar|\bdirham|inherit|divorc|\bcurse", __import__("re").I)
 SAW = "صلى الله عليه وسلم"
 MAX_EN_WORDS, MAX_AR_WORDS = 95, 70
+# variants that point back to another narration ("...like the one above", "with this chain") are incomplete alone
+PARTIAL_EN = re.compile(r"has been (transmitted|narrated|reported)|same chain|stated above|mentioned above|"
+                        r"like (this|that|it|the one)|rest of the hadith|similar|with (some|this|the) (addition|variation|change)|"
+                        r"\bon the authority of [^.:]+ through another chain|words are|but (with|in) the version", re.I)
+PARTIAL_AR = re.compile("|".join(r"[\u064B-\u065F\u0670]*".join(w) for w in ("بمثله", "نحوه", "بهذا الإسناد", "بمعناه")))
 
 
 class SourceError(Exception):
@@ -83,6 +93,9 @@ def arabic_excerpt(text):
     if q < 0:
         return None
     part = re.sub(r"[\u200e\u200f]", "", rest[q + 1:])          # invisible direction marks
+    end = part.find('"')                                         # stop at the closing quote: what follows is narration
+    if end > 0:
+        part = part[:end]
     part = re.sub(r'["\s.]+$', "", part).strip().strip('"').strip(" ،,")
     return part if 3 <= len(part.split()) <= MAX_AR_WORDS else None
 
@@ -127,7 +140,9 @@ def eligible(h):
     en_all, _ = _edition(h.collection, "eng")
     book_no = (en_all[h.number].get("reference") or {}).get("book")
     return (book_no in GOOD_BOOKS[h.collection] and 18 <= len(h.english.split()) <= MAX_EN_WORDS
-            and h.arabic_is_excerpt and "(See" not in h.english)
+            and h.arabic_is_excerpt and "(See" not in h.english and not PARTIAL_EN.search(h.english)
+            and not NEEDS_CONTEXT.search(h.english)
+            and not PARTIAL_AR.search(h.arabic_full) and len(h.arabic.split()) >= 4)
 
 
 def candidates(collections, seed=1446):
@@ -164,6 +179,7 @@ def verify(h, session=None):
     ar_words = [w for w in plain(h.arabic).split() if len(w) >= 4][:8]
     ar_page = plain(page)
     ar_hits = sum(w in ar_page for w in ar_words)
-    if en_hits < max(3, len(en_words) - 3) or ar_hits < max(3, len(ar_words) - 3):
+    need = lambda n: max(min(3, n), n - 3)                       # nearly all words (all of them when there are few)
+    if en_hits < need(len(en_words)) or ar_hits < need(len(ar_words)):
         return False, f"{h.url}: text does not match (English {en_hits}/{len(en_words)}, Arabic {ar_hits}/{len(ar_words)})"
     return True, f"{h.url} matches {h.citation} (English {en_hits}/{len(en_words)}, Arabic {ar_hits}/{len(ar_words)})"

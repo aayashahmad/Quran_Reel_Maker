@@ -1,9 +1,8 @@
 name: Daily Sahih Hadith Short
 
 on:
-  # Turned on after the test video is approved: remove the #s.
-  # schedule:
-  #   - cron: "30 6 * * *"     # 12:00 IST
+  schedule:
+    - cron: "30 6 * * *"     # 12:00 IST (uploads only when the repository variable HADITH_PUBLISH is true)
   workflow_dispatch:
 
 permissions:
