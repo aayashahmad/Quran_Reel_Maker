@@ -428,7 +428,14 @@ def favicon():
     return send_from_directory(app.static_folder, "favicon.ico", max_age=604800)
 
 
+def snippet(text, limit=155):
+    """A meta description Google shows in full: cut at a word, at most `limit` characters."""
+    text = " ".join(text.split())
+    return text if len(text) <= limit else text[:limit - 1].rsplit(" ", 1)[0].rstrip(",;:") + "…"
+
+
 def page(template, title, description, path, jsonld=(), **kw):
+    description = snippet(description)
     resp = app.make_response(render_template(template, title=title, description=description, path=path,
                                              site=seo.SITE, jsonld=[seo.ld(j) for j in jsonld], static_v=STATIC_V, **kw))
     resp.headers["Cache-Control"] = "public, max-age=3600"
@@ -448,7 +455,7 @@ def english():
 def surah_index():
     item = lambda n: {"path": seo.surah_path(n), "name": seo.surah_names(n), "number": n, "ar": seo.BY_NUMBER[n]["name"],
                       "ayat": seo.BY_NUMBER[n]["numberOfAyahs"], "meaning": seo.BY_NUMBER[n]["englishNameTranslation"]}
-    return page("surahs.html", "All 114 Surahs of the Quran with Urdu & English Translation | Quran Reel Maker",
+    return page("surahs.html", "All 114 Surahs with Urdu & English Translation",
                 "Read all 114 surahs of the Quran in Arabic with Urdu and English translation, listen to Mishary "
                 "Alafasy's recitation with word-by-word highlighting, and make Quran reels for free.", "/surah",
                 [seo.breadcrumbs(("Home", "/"), ("Surahs", "/surah"))],
@@ -491,7 +498,7 @@ def public_topics():
 @app.get("/ask")
 def topic_index():
     topics = [{"path": seo.topic_path(t["id"]), "q": seo.question(t), "title_ur": t["ur"]} for t in public_topics()]
-    return page("topics.html", "What Does the Quran Say? Ayat & Sahih Hadith for Life's Problems | Quran Reel Maker",
+    return page("topics.html", "What Does the Quran Say? Ayat & Sahih Hadith",
                 "What the Quran and authentic hadith say about anxiety, anger, grief, marriage, money, exams, guilt, "
                 "hope and more, with every reference checked. In English and Urdu.", "/ask",
                 [seo.breadcrumbs(("Home", "/"), ("Ask the Quran", "/ask"))], topics=topics)

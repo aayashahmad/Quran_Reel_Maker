@@ -94,11 +94,19 @@ HOME_FAQ = [
 ]
 
 
+ORGANIZATION = {"@context": "https://schema.org", "@type": "Organization", "@id": SITE + "/#org", "name": NAME,
+                "url": SITE + "/", "logo": SITE + "/static/icon-512.png", "founder": AUTHOR,
+                "email": "aayash.bhat.dev@gmail.com",
+                "description": "Free website for Quran reels with word-by-word highlighting, translations in 46+ languages "
+                               "(including Kashmiri), and verified ayat and sahih hadith for life's questions.",
+                "sameAs": ["https://www.instagram.com/quranreelmaker/"]}
+
+
 def home_ld():
-    return [
+    return [ORGANIZATION,
         {"@context": "https://schema.org", "@type": "WebSite", "name": NAME, "url": SITE + "/",
          "description": "Free Quran reel maker with word-by-word highlighting and 46+ translations.",
-         "inLanguage": ["en", "ur", "ar"],
+         "inLanguage": ["en", "ur", "ar"], "publisher": {"@id": SITE + "/#org"},
          "potentialAction": {"@type": "SearchAction", "target": SITE + "/?ask={search_term_string}",
                              "query-input": "required name=search_term_string"}},
         {"@context": "https://schema.org", "@type": "WebApplication", "name": NAME, "url": SITE + "/",
