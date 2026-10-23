@@ -9,7 +9,13 @@ from hadith_shorts import settings, source
 HASHTAGS = "#SahihHadith #DailyHadith #Hadith #IslamicShorts #Sunnah #Islam #Shorts"
 
 
-def metadata(h, title):
+UR_NAMES = {"bukhari": "صحیح بخاری", "muslim": "صحیح مسلم"}
+HASHTAGS_UR = "#حدیث #SahihHadith #DailyHadith #UrduHadith #IslamicShorts #Islam #Shorts"
+
+
+def metadata(h, title, lang="en"):
+    if lang == "ur":
+        return metadata_ur(h, title)
     yt_title = f"{title} | {h.citation} | Daily Sahih Hadith #Shorts"
     if len(yt_title) > 100:
         yt_title = f"{title} | {h.citation} #Shorts"[:100]
@@ -63,3 +69,19 @@ def upload(path, title, desc, tags, thumbnail=None, when=None):
         except HttpError as e:
             print(f"Thumbnail not set (needs a phone-verified channel): {e.reason if hasattr(e, 'reason') else e}")
     return vid
+
+
+def metadata_ur(h, title):
+    yt_title = f"{title} | {UR_NAMES[h.collection]} {h.display_number} | روزانہ حدیث #Shorts"[:100]
+    lines = [f"{title}: {UR_NAMES[h.collection]} سے ایک صحیح حدیث۔", "",
+             h.urdu + (" (رسول اللہ ﷺ کے الفاظ، مکمل روایت میں سے)" if h.urdu != h.urdu_full else ""), "",
+             h.arabic, "",
+             f"حوالہ: {h.citation}" + (f", {h.book}" if h.book else ""),
+             f"Source: {h.url}",
+             f"Urdu translation: {source.URDU_SOURCE}. Arabic: {source.DATASET}.",
+             "Narration: AI voice (Microsoft Edge neural text-to-speech)." if settings.TTS_ENGINE == "edge" else "",
+             "", "یہ حدیث جیسی روایت ہوئی ویسی پیش کی گئی ہے، فتویٰ نہیں۔ شرعی مسئلے کے لیے مستند عالم سے پوچھیں۔",
+             "", "اپنی قرآن ریل مفت بنائیں: https://quranreelmaker.xyz", "", HASHTAGS_UR]
+    tags = ["حدیث", "صحیح حدیث", "Urdu Hadith", "Hadith in Urdu", "Sahih Hadith", "Daily Hadith", source.NAMES[h.collection],
+            UR_NAMES[h.collection], "Islamic Shorts", "Islam"]
+    return yt_title, "\n".join(lines)[:4900], tags

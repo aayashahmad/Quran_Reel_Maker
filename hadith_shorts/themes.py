@@ -77,3 +77,12 @@ def scene_plan(h, tid, segments, intro, outro):
                  "duration": outro, "captions": h.citation, "transition": "fade to black"})
     return {"theme": tid, "title": title, "style": style, "grade": GRADES[grade], "camera": camera,
             "reflection": reflection, "scenes": plan}
+
+UR_TITLES = {"intention": "نیت", "patience": "صبر", "charity": "صدقہ", "knowledge": "علم", "mercy": "رحمت",
+             "prayer": "نماز", "honesty": "سچائی", "gratitude": "شکر", "character": "اچھے اخلاق", "parents": "والدین",
+             "dua": "دعا", "repentance": "توبہ", "hereafter": "آخرت", "faith": "ایمان", "fasting": "روزہ",
+             "quran": "قرآن", "default": "آج کی حدیث"}
+
+
+def title(tid, lang="en"):
+    return UR_TITLES.get(tid, UR_TITLES["default"]) if lang == "ur" else theme(tid)[0]

@@ -1,6 +1,7 @@
 # Daily Sahih Hadith Shorts
 
-Two authentic hadith from Sahih al-Bukhari or Sahih Muslim a day (12:00 and 20:00 IST; VIDEOS_PER_DAY), as a 1080×1920 YouTube Short. It lives in the
+Two authentic hadith from Sahih al-Bukhari or Sahih Muslim a day: 12:00 IST in English (voice: Andrew) and 20:00 IST
+in Urdu (voice: Asad, Urdu text from the dataset's Urdu edition); see SLOT_LANGS and VIDEOS_PER_DAY, as a 1080×1920 YouTube Short. It lives in the
 same repository as quranreelmaker.xyz but is separate from the website: the site never imports it, and it only
 reuses the shared hadith data, fonts, animated backgrounds and the YouTube login.
 

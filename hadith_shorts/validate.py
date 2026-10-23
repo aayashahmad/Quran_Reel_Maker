@@ -9,8 +9,14 @@ from PIL import features
 from hadith_shorts import settings, source
 
 
-def content(h):
+def content(h, lang="en"):
     problems = []
+    if lang == "ur":
+        squash = lambda t: re.sub(r"[\s\"“”’‘]", "", t)
+        if not h.urdu:
+            problems.append("no clear Urdu text of the Prophet's words")
+        elif squash(h.urdu) not in squash(h.urdu_full):
+            problems.append("the Urdu shown is not part of the source translation")
     if source.plain(h.arabic) not in source.plain(h.arabic_full):
         problems.append("the Arabic shown is not part of the source narration")
     for name in ("english", "arabic", "url", "display_number", "translator"):

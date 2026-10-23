@@ -18,6 +18,7 @@ from config import DATA
 NAMES = {"bukhari": "Sahih al-Bukhari", "muslim": "Sahih Muslim"}
 TRANSLATORS = {"bukhari": "Dr. Muhammad Muhsin Khan", "muslim": "Abdul Hamid Siddiqui"}
 DATASET = "fawazahmed0/hadith-api (github.com/fawazahmed0/hadith-api)"
+URDU_SOURCE = "the Urdu edition of fawazahmed0/hadith-api"
 # books used for the automatic daily choice: faith, knowledge, character, worship and the heart, not legal
 # details that need a teacher's context (any reference can still be made by hand with --ref)
 GOOD_BOOKS = {"bukhari": {2, 3, 30, 46, 51, 53, 66, 69, 75, 78, 80, 81, 82, 96, 97},
@@ -53,6 +54,8 @@ class Hadith:
     english: str
     narrator: str
     translator: str
+    urdu_full: str = ""
+    urdu: str = ""               # the Prophet's ﷺ words in Urdu, cut from urdu_full ("" when not clear)
     source: str = DATASET
     checks: list = field(default_factory=list)
 
@@ -100,6 +103,20 @@ def arabic_excerpt(text):
     return part if 3 <= len(part.split()) <= MAX_AR_WORDS else None
 
 
+def urdu_excerpt(text):
+    """The Prophet's ﷺ words in the Urdu translation: what follows the last 'peace be upon him ... said (that)'."""
+    found = list(re.finditer(r"صلی اللہ علیہ وسلم|ﷺ", text))
+    if not found:
+        return ""
+    rest = text[found[-1].end():]
+    m = re.match(r"^[^۔:]{0,60}?(?:فرمایاَ?|فرما رہے تھے|فرماتے تھے|فرماتے سنا)\s*(?:کہ)?\s*[:：]?\s*", rest)
+    if not m:
+        return ""
+    part = re.sub(r"[\"“”’‘]+", "", rest[m.end():])
+    part = re.sub(r"\s+", " ", part).strip(" ،,")
+    return part if 4 <= len(part.split()) <= 110 else ""
+
+
 def narrator_of(english):
     m = re.match(r"\s*(?:Narrated\s+)?([^:]{3,80}?)\s*(?::|\breported\b|\bnarrated\b)", english)
     return m.group(1).strip(" '`") if m else ""
@@ -130,12 +147,18 @@ def get(ref):
     full = ar["text"].strip()
     excerpt = arabic_excerpt(full)
     english = re.sub(r"\s+", " ", en["text"]).strip()
+    try:
+        ur_full = re.sub(r"\s+", " ", (_edition(col, "urd")[0].get(num) or {}).get("text", "")).strip()
+    except SourceError:
+        ur_full = ""
     return Hadith(col, num, display, url, book, full, excerpt or full, bool(excerpt), english,
-                  narrator_of(english), TRANSLATORS[col])
+                  narrator_of(english), TRANSLATORS[col], ur_full, urdu_excerpt(ur_full))
 
 
-def eligible(h):
-    """Short enough for a Short, with a clear Arabic quote, from a general-audience book."""
+def eligible(h, lang="en"):
+    """Short enough for a Short, with a clear Arabic quote (and Urdu, for Urdu videos), from a general-audience book."""
+    if lang == "ur" and not (h.urdu and 0.6 <= len(h.urdu.split()) / max(1, len(h.arabic.split())) <= 4):
+        return False
     _, meta = _edition(h.collection, "eng")
     en_all, _ = _edition(h.collection, "eng")
     book_no = (en_all[h.number].get("reference") or {}).get("book")
@@ -145,14 +168,14 @@ def eligible(h):
             and not PARTIAL_AR.search(h.arabic_full) and len(h.arabic.split()) >= 4)
 
 
-def candidates(collections, seed=1446):
+def candidates(collections, seed=1446, lang="en"):
     """Every eligible reference, in a fixed shuffled order (the same order on every run)."""
     refs = []
     for col in collections:
         en_all, _ = _edition(col, "eng")
         for num in sorted(en_all):
             try:
-                if eligible(get(f"{col}:{num}")):
+                if eligible(get(f"{col}:{num}"), lang):
                     refs.append(f"{col}:{num}")
             except SourceError:
                 continue

@@ -18,16 +18,17 @@ class TTSError(Exception):
     pass
 
 
-def segments(english, max_words=16):
+def segments(english, max_words=16, lang="en"):
     """Caption parts: sentences, and long sentences split at commas or semicolons."""
     out = []
-    for sent in re.split(r'(?<=[.!?])\s+(?=["“A-Z(])', english.strip()):
+    ends = r"(?<=[۔!؟])\s+" if lang == "ur" else r'(?<=[.!?])\s+(?=["“A-Z(])'
+    for sent in re.split(ends, english.strip()):
         words = sent.split()
         if len(words) <= max_words:
             out.append(sent)
             continue
         cur = []
-        for part in re.split(r"(?<=[,;:])\s+", sent):
+        for part in re.split(r"(?<=[,;:،])\s+", sent):
             if cur and len(" ".join(cur + [part]).split()) > max_words:
                 out.append(" ".join(cur))
                 cur = []
@@ -46,38 +47,41 @@ def duration(path):
         raise TTSError(f"could not read the length of {path}")
 
 
-def spoken(text):
-    """What the voice says: the text, with the ﷺ sign spoken out."""
+def spoken(text, lang="en"):
+    """What the voice says: the text, with the ﷺ sign spoken out (and the brackets of explanations dropped)."""
+    if lang == "ur":
+        return re.sub(r"[()]", " ", text.replace("ﷺ", "صلی اللہ علیہ وسلم"))
     return text.replace("(ﷺ)", "(peace be upon him)").replace("ﷺ", "peace be upon him").replace("`", "'")
 
 
-def _edge(text, out):
+def _edge(text, out, lang="en"):
     try:
         import edge_tts
     except ImportError:
         raise TTSError("edge-tts is not installed: pip install -r hadith_shorts/requirements.txt")
 
     async def run():
-        await edge_tts.Communicate(spoken(text), settings.ENGLISH_VOICE, rate=settings.ENGLISH_RATE).save(str(out))
+        voice, rate = (settings.URDU_VOICE, settings.URDU_RATE) if lang == "ur" else (settings.ENGLISH_VOICE, settings.ENGLISH_RATE)
+        await edge_tts.Communicate(spoken(text, lang), voice, rate=rate).save(str(out))
     try:
         asyncio.run(run())
     except Exception as e:                       # network or service errors
         raise TTSError(f"edge-tts failed: {e.__class__.__name__}: {e}")
 
 
-def _say(text, out):
+def _say(text, out, lang="en"):
     with tempfile.TemporaryDirectory() as tmp:
         aiff = Path(tmp) / "a.aiff"
-        r = subprocess.run(["say", "-v", settings.SAY_VOICE, "-o", str(aiff), spoken(text)], capture_output=True)
+        r = subprocess.run(["say", "-v", settings.SAY_VOICE, "-o", str(aiff), spoken(text, lang)], capture_output=True)
         if r.returncode:
             raise TTSError(f"say failed: {r.stderr.decode()[:200]}")
         subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(aiff), str(out)], check=True)
 
 
-def speak(text, out):
+def speak(text, out, lang="en"):
     """Speak `text` into `out` (mp3/wav). Returns its length in seconds."""
     out = Path(out)
-    {"edge": _edge, "say": _say}.get(settings.TTS_ENGINE, _edge)(text, out)
+    {"edge": _edge, "say": _say}.get(settings.TTS_ENGINE, _edge)(text, out, lang)
     if not out.exists() or out.stat().st_size < 1000:
         raise TTSError(f"no audio was produced for: {text[:60]}")
     seconds = duration(out)

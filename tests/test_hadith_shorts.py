@@ -56,7 +56,7 @@ def test_caption_segments_cover_text():
 
 def test_tts_failure_is_reported(monkeypatch, tmp_path):
     monkeypatch.setattr(settings, "TTS_ENGINE", "edge")
-    monkeypatch.setattr(tts, "_edge", lambda text, out: (_ for _ in ()).throw(tts.TTSError("service down")))
+    monkeypatch.setattr(tts, "_edge", lambda text, out, lang="en": (_ for _ in ()).throw(tts.TTSError("service down")))
     with pytest.raises(tts.TTSError):
         tts.speak("hello", tmp_path / "x.mp3")
 
@@ -128,9 +128,19 @@ def test_two_videos_a_day(tmp_path, monkeypatch):
     date = job.today()
     store.add_video(db, date, "bukhari:1", "t", "p.mp4", "uploaded")
     picked = []
-    monkeypatch.setattr(job, "daily_slot", lambda db, day: picked.append(day) or 0)
+    monkeypatch.setattr(job, "daily_slot", lambda db, day, lang="en": picked.append((day, lang)) or 0)
     job.daily(db)
-    assert picked == [f"{date}#2"]                 # the second slot comes next
+    assert picked == [(f"{date}#2", "ur")]         # the second slot comes next, in Urdu
     store.add_video(db, f"{date}#2", "bukhari:13", "t", "p.mp4", "uploaded")
     picked.clear()
     assert job.daily(db) == 0 and picked == []     # both done: nothing more today
+
+
+def test_urdu_text_and_metadata():
+    h = source.get("bukhari:1")
+    assert h.urdu.startswith("تمام اعمال کا دارومدار نیت پر ہے") and validate.content(h, "ur") == []
+    parts = tts.segments(h.urdu, 18, "ur")
+    assert " ".join(parts).split() == h.urdu.split()
+    title, desc, tags = publish.metadata(h, "نیت", "ur")
+    assert "صحیح بخاری 1" in title and h.url in desc and "حدیث" in tags
+    assert source.eligible(source.get("bukhari:6415"), "ur") in (True, False)

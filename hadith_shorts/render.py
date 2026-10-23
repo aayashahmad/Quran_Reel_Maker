@@ -14,7 +14,11 @@ from video import font, shape, text_w, wrap, GOLD, GOLD2, WHITE, MUTED
 from hadith_shorts import settings, themes, tts
 
 W, H = settings.VIDEO_WIDTH, settings.VIDEO_HEIGHT
-AR_FONT, EN_FONT = "Amiri-Regular.ttf", "Amiri-Regular.ttf"
+AR_FONT, EN_FONT, UR_FONT = "Amiri-Regular.ttf", "Amiri-Regular.ttf", "NotoNastaliqUrdu.ttf"
+TEXT = {"en": {"head": "DAILY SAHIH HADITH", "excerpt": "(the Prophet's ﷺ words, from the full narration)",
+               "share": "Learn it · Live it · Share it"},
+        "ur": {"head": "روزانہ صحیح حدیث", "excerpt": "(رسول اللہ ﷺ کے الفاظ، مکمل روایت میں سے)",
+               "share": "سیکھیں · عمل کریں · آگے پہنچائیں"}}
 INTRO, OUTRO = 3.0, 4.0
 DIMMED = (165, 185, 175)
 FADE = 0.6
@@ -33,11 +37,20 @@ def _fit(text, fname, max_w, max_h, size, min_size, lh, rtl):
         size -= 2
 
 
-def _center(d, text, fname, size, y, color, rtl=False):
+def _center(d, text, fname, size, y, color, rtl=False, lang="ar", width=None):
+    width = width or W
     f = font(fname, size)
     s = shape(text) if rtl else text
-    w = text_w(f, s, rtl, "ar")
-    d.text(((W - w) / 2, y), s, font=f, fill=color, **(dict(direction="rtl", language="ar") if rtl and video.RAQM else {}))
+    w = text_w(f, s, rtl, lang)
+    d.text(((width - w) / 2, y), s, font=f, fill=color, **(dict(direction="rtl", language=lang) if rtl and video.RAQM else {}))
+
+
+def _say(d, text, size, y, color, lang, width=None):
+    """A centred line in the video's language (Urdu in Nastaliq)."""
+    if lang == "ur":
+        _center(d, text, UR_FONT, size, y, color, rtl=True, lang="ur", width=width)
+    else:
+        _center(d, text, EN_FONT, size, y, color, width=width)
 
 
 def _arabic(d, text, y, max_h, size=58, min_size=36, color=WHITE):
@@ -76,6 +89,35 @@ def _english(d, parts, lit, y, max_h):
     return y
 
 
+def _urdu(d, parts, lit, y, max_h):
+    """The Urdu translation right to left in Nastaliq, the part being read bright, the rest dimmed."""
+    text = " ".join(parts)
+    lh = 2.15
+    f, size, _ = _fit(text, UR_FONT, W - 150, max_h, 44, 28, lh, True)
+    kw = dict(direction="rtl", language="ur") if video.RAQM else {}
+    width = lambda s: text_w(f, shape(s), True, "ur")
+    space = width("ا ا") - 2 * width("ا")
+    words = [(w, i) for i, p in enumerate(parts) for w in p.split()]
+    lines, cur, cur_w = [], [], 0
+    for w, i in words:
+        ww = width(w)
+        if cur and cur_w + space + ww > W - 150:
+            lines.append((cur, cur_w))
+            cur, cur_w = [], 0
+        cur_w += (space if cur else 0) + ww
+        cur.append((w, i, ww))
+    if cur:
+        lines.append((cur, cur_w))
+    for line, lw in lines:
+        x = (W + lw) / 2                                  # right edge: Urdu runs right to left
+        for w, i, ww in line:
+            x -= ww
+            d.text((x, y), shape(w), font=f, fill=WHITE if i == lit else DIMMED if lit is not None else WHITE, **kw)
+            x -= space
+        y += int(size * lh)
+    return y
+
+
 def _layer():
     img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     return img, ImageDraw.Draw(img)
@@ -86,37 +128,48 @@ def _finish(img, path):
     video.shadowed(img).save(path)
 
 
-def intro_layer(h, title, path):
+def _citation(h, lang):
+    from hadith_shorts.publish import UR_NAMES
+    return f"{UR_NAMES[h.collection]} {h.display_number}" if lang == "ur" else h.citation
+
+
+def intro_layer(h, title, path, lang="en"):
     img, d = _layer()
-    _center(d, "DAILY SAHIH HADITH", EN_FONT, 40, 420, GOLD)
+    _say(d, TEXT[lang]["head"], 40, 400 if lang == "ur" else 420, GOLD, lang)
     d.line([(W / 2 - 160, 490), (W / 2 + 160, 490)], fill=GOLD, width=2)
     hook = h.arabic.split("،")[0] if len(h.arabic.split("،")[0].split()) <= 8 else " ".join(h.arabic.split()[:6]) + " …"
     _arabic(d, hook, 600, 420, 84, 56, GOLD2)
-    _center(d, title, EN_FONT, 72, 1130, WHITE)
-    _center(d, h.citation, EN_FONT, 44, 1240, MUTED)
+    _say(d, title, 72 if lang == "en" else 64, 1110 if lang == "ur" else 1130, WHITE, lang)
+    _say(d, _citation(h, lang), 44 if lang == "en" else 40, 1250, MUTED, lang)
     _finish(img, path)
 
 
-def main_layer(h, parts, lit, path):
+def main_layer(h, parts, lit, path, lang="en"):
     img, d = _layer()
-    _center(d, "DAILY SAHIH HADITH", EN_FONT, 34, 150, GOLD)
-    y = _arabic(d, h.arabic, 240, 640)
+    _say(d, TEXT[lang]["head"], 34, 130 if lang == "ur" else 150, GOLD, lang)
+    y = _arabic(d, h.arabic, 240, 560 if lang == "ur" else 640)
     if h.arabic_is_excerpt:
-        _center(d, "(the Prophet's ﷺ words, from the full narration)", EN_FONT, 26, y + 2, MUTED)
-        y += 40
+        _say(d, TEXT[lang]["excerpt"], 26 if lang == "en" else 24, y + 2, MUTED, lang)
+        y += 40 if lang == "en" else 56
     d.line([(W / 2 - 180, y + 24), (W / 2 + 180, y + 24)], fill=GOLD, width=2)
-    _english(d, parts, lit, y + 64, H - (y + 64) - 330)
-    _center(d, f"{h.citation}" + (f" · {h.book}" if h.book else ""), EN_FONT, 34, H - 250, GOLD)
+    (_urdu if lang == "ur" else _english)(d, parts, lit, y + 64, H - (y + 64) - 330)
+    if lang == "ur":
+        _say(d, _citation(h, lang), 32, H - 260, GOLD, lang)
+    else:
+        _center(d, f"{h.citation}" + (f" · {h.book}" if h.book else ""), EN_FONT, 34, H - 250, GOLD)
     _finish(img, path)
 
 
-def outro_layer(h, reflection, path):
+def outro_layer(h, reflection, path, lang="en"):
     img, d = _layer()
     _center(d, h.citation, EN_FONT, 66, 520, GOLD2)
     if h.book:
         _center(d, f"Book of {h.book}" if not h.book.lower().startswith("the book") else h.book, EN_FONT, 38, 620, WHITE)
     _center(d, h.url.replace("https://", ""), EN_FONT, 36, 700, MUTED)
-    _center(d, f"English: {h.translator}", EN_FONT, 30, 770, MUTED)
+    if lang == "ur":
+        _say(d, "اردو ترجمہ: hadith-api کا اردو ایڈیشن", 28, 760, MUTED, lang)
+    else:
+        _center(d, f"English: {h.translator}", EN_FONT, 30, 770, MUTED)
     if reflection:
         _center(d, "Reflection (not part of the hadith)", EN_FONT, 30, 950, GOLD)
         f, size, lines = _fit(reflection, EN_FONT, W - 200, 240, 44, 32, 1.4, False)
@@ -125,11 +178,11 @@ def outro_layer(h, reflection, path):
             w = text_w(f, ln, False)
             d.text(((W - w) / 2, y), ln, font=f, fill=WHITE)
             y += int(size * 1.4)
-    _center(d, "Learn it · Live it · Share it", EN_FONT, 50, 1350, WHITE)
+    _say(d, TEXT[lang]["share"], 50 if lang == "en" else 46, 1340, WHITE, lang)
     _finish(img, path)
 
 
-def thumbnail(h, title, style, path):
+def thumbnail(h, title, style, path, lang="en"):
     frame = Path(path).with_suffix(".bg.png")
     subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-ss", "3", "-i", str(backgrounds.loop(style)), "-frames:v", "1",
                     "-vf", "scale=1280:-2,crop=1280:720", str(frame)], check=True)
@@ -144,22 +197,27 @@ def thumbnail(h, title, style, path):
         f = font(AR_FONT, f.size - 6)
     d.text(((1280 - text_w(f, s, True, "ar")) / 2, 150), s, font=f, fill=GOLD2,
            **(dict(direction="rtl", language="ar") if video.RAQM else {}))
-    for text, size, y, color in (("DAILY SAHIH HADITH", 40, 60, GOLD), (title, 78, 420, WHITE), (h.citation, 46, 540, GOLD)):
-        f = font(EN_FONT, size)
-        d.text(((1280 - text_w(f, text, False)) / 2, y), text, font=f, fill=color)
+    for text, size, y, color in ((TEXT[lang]["head"], 40, 50, GOLD), (title, 78 if lang == "en" else 70, 400, WHITE),
+                                 (h.citation, 46, 545, GOLD)):
+        if lang == "ur" and text is not h.citation:
+            _center(d, text, UR_FONT, size, y, color, rtl=True, lang="ur", width=1280)
+        else:
+            _center(d, text, EN_FONT, size, y, color, width=1280)
     Image.alpha_composite(img, video.shadowed(over)).convert("RGB").save(path, "JPEG", quality=90)
 
 
-def build(h, out_dir, log=print):
+def build(h, out_dir, log=print, lang="en"):
     """Narration, layers and video for one hadith. Returns a dict with the files and the scene plan."""
     out_dir = Path(out_dir)
     work = out_dir / "work"
     shutil.rmtree(work, ignore_errors=True)
     work.mkdir(parents=True)
     tid = themes.detect(h.english)
-    title = themes.theme(tid)[0]
-
-    parts = tts.segments(h.english)
+    title = themes.title(tid, lang)
+    text = h.urdu if lang == "ur" else h.english
+    if not text:
+        raise ValueError(f"{h.ref} has no {lang} text to narrate")
+    parts = tts.segments(text, 18 if lang == "ur" else 16, lang)
     log(f"Narrating {len(parts)} parts ({settings.TTS_ENGINE})")
     segs, audio = [], []
     arabic = tts.arabic_recording(h) if settings.NARRATION_MODE == "ar_en" else None
@@ -167,7 +225,7 @@ def build(h, out_dir, log=print):
         log("No approved Arabic recording for this hadith: English narration only")
     for i, p in enumerate(parts):
         f = work / f"en{i}.mp3"
-        segs.append({"text": p, "seconds": tts.speak(p, f) + settings.PAUSE_SECONDS, "file": f})
+        segs.append({"text": p, "seconds": tts.speak(p, f, lang) + settings.PAUSE_SECONDS, "file": f})
 
     plan = themes.scene_plan(h, tid, segs, INTRO, OUTRO)
     style = plan["style"]
@@ -175,13 +233,13 @@ def build(h, out_dir, log=print):
 
     # text layers and their times
     layers = [(work / "intro.png", INTRO + (tts.duration(arabic) + 0.4 if arabic else 0))]
-    intro_layer(h, title, layers[0][0])
+    intro_layer(h, title, layers[0][0], lang)
     for i, s in enumerate(segs):
         p = work / f"main{i}.png"
-        main_layer(h, parts, i, p)
+        main_layer(h, parts, i, p, lang)
         layers.append((p, s["seconds"]))
     p = work / "outro.png"
-    outro_layer(h, reflection, p)
+    outro_layer(h, reflection if lang == "en" else "", p, lang)
     layers.append((p, OUTRO))
     total = sum(sec for _, sec in layers)
     if total > settings.VIDEO_MAX_SECONDS:
@@ -211,7 +269,7 @@ def build(h, out_dir, log=print):
                       f"fade=t=out:st={total - FADE:.3f}:d={FADE},format=yuv420p[v]"] + chains +
                      [f"{mix}amix=inputs={len(chains)}:normalize=0,{CLEAR_VOICE},apad,atrim=0:{total:.3f},"
                       f"afade=t=out:st={total - FADE:.3f}:d={FADE}[a]"])
-    mp4 = out_dir / f"{h.collection}_{h.number}.mp4"
+    mp4 = out_dir / f"{h.collection}_{h.number}{'_ur' if lang == 'ur' else ''}.mp4"
     log("Rendering the video")
     cmd = ["ffmpeg", "-y", "-loglevel", "error", "-stream_loop", "-1", "-i", str(backgrounds.loop(style)),
            "-f", "concat", "-safe", "0", "-i", str(lst), *inputs, "-filter_complex", graph, "-map", "[v]", "-map", "[a]",
@@ -220,8 +278,8 @@ def build(h, out_dir, log=print):
     r = subprocess.run(cmd, capture_output=True, text=True)
     if r.returncode:
         raise RuntimeError(f"ffmpeg failed: {r.stderr[-800:]}")
-    thumb = out_dir / f"{h.collection}_{h.number}_thumbnail.jpg"
-    thumbnail(h, title, style, thumb)
+    thumb = mp4.with_name(mp4.stem + "_thumbnail.jpg")
+    thumbnail(h, title, style, thumb, lang)
     plan["captions"] = []
     t = layers[0][1]
     for s in segs:

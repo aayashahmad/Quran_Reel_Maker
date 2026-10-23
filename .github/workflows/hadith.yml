@@ -25,7 +25,7 @@ jobs:
       - name: Hadith data (fawazahmed0/hadith-api), fonts and backgrounds
         run: |
           mkdir -p data/hadith data/bg && cp deploy/bg/*.mp4 data/bg/
-          for f in ara-bukhari eng-bukhari ara-muslim eng-muslim; do
+          for f in ara-bukhari eng-bukhari urd-bukhari ara-muslim eng-muslim urd-muslim; do
             curl -sfL --retry 3 -o data/hadith/$f.json "https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions/$f.json"
           done
           python -c "import video; video.ensure_fonts()"
@@ -41,6 +41,7 @@ jobs:
           VIDEOS_PER_DAY: ${{ vars.HADITH_PER_DAY || '2' }}
           ENGLISH_VOICE: ${{ vars.HADITH_VOICE || 'en-US-AndrewMultilingualNeural' }}
           ENGLISH_RATE: ${{ vars.HADITH_VOICE_RATE || '-8%' }}
+          SLOT_LANGS: ${{ vars.HADITH_LANGS || 'en,ur' }}
       - name: Keep the video for review
         if: always()
         uses: actions/upload-artifact@v4

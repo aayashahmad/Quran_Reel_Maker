@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS videos (
   day TEXT,                        -- the publishing day (local date)
   ref TEXT, title TEXT, path TEXT,
   status TEXT,                     -- rendered | uploading | uploaded | failed
+  lang TEXT,                       -- en | ur
   youtube_id TEXT, privacy TEXT, publish_at TEXT, error TEXT,
   created TEXT, updated TEXT);
 CREATE UNIQUE INDEX IF NOT EXISTS one_video_per_day ON videos(day) WHERE status IN ('uploading', 'uploaded');
@@ -31,6 +32,9 @@ def connect(path=None):
     db = sqlite3.connect(path or settings.DB_PATH)
     db.row_factory = sqlite3.Row
     db.executescript(SCHEMA)
+    if "lang" not in [r[1] for r in db.execute("PRAGMA table_info(videos)")]:
+        db.execute("ALTER TABLE videos ADD COLUMN lang TEXT")       # databases from before Urdu videos
+        db.commit()
     return db
 
 
@@ -58,9 +62,10 @@ def for_day(db, day):
     return db.execute("SELECT * FROM videos WHERE day = ? ORDER BY id DESC", (day,)).fetchall()
 
 
-def add_video(db, day, ref, title, path, status, privacy=None, publish_at=None):
-    cur = db.execute("INSERT INTO videos(day, ref, title, path, status, privacy, publish_at, created, updated) "
-                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", (day, ref, title, str(path), status, privacy, publish_at, now(), now()))
+def add_video(db, day, ref, title, path, status, privacy=None, publish_at=None, lang="en"):
+    cur = db.execute("INSERT INTO videos(day, ref, title, path, status, privacy, publish_at, lang, created, updated) "
+                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (day, ref, title, str(path), status, privacy, publish_at, lang,
+                                                               now(), now()))
     db.commit()
     return cur.lastrowid
 

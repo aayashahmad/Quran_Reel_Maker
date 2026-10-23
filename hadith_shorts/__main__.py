@@ -31,23 +31,26 @@ def check_source(db, h):
     return ok
 
 
-def make(db, h, day, upload=False):
+def make(db, h, day, upload=False, lang="en"):
     out = settings.OUTPUT_DIRECTORY / day.replace("#", "_")
     out.mkdir(parents=True, exist_ok=True)
     problems = validate.arabic_shaping()
     if problems:
         raise RuntimeError("; ".join(problems))
-    res = render.build(h, out, log=lambda m: print("  " + m))
+    problems = validate.content(h, lang)
+    if problems:
+        raise RuntimeError("; ".join(problems))
+    res = render.build(h, out, log=lambda m: print("  " + m), lang=lang)
     problems = validate.media(res["video"])
     if problems:
         raise RuntimeError("video check failed: " + "; ".join(problems))
-    title, desc, tags = publish.metadata(h, res["title"])
-    meta = {"ref": h.ref, "citation": h.citation, "url": h.url, "book": h.book, "narrator": h.narrator,
+    title, desc, tags = publish.metadata(h, res["title"], lang)
+    meta = {"ref": h.ref, "lang": lang, "urdu_shown": h.urdu if lang == "ur" else "", "citation": h.citation, "url": h.url, "book": h.book, "narrator": h.narrator,
             "translator": h.translator, "source": h.source, "arabic_shown": h.arabic, "arabic_is_excerpt": h.arabic_is_excerpt,
             "english": h.english, "theme": res["theme"], "seconds": round(res["seconds"], 2), "youtube_title": title,
             "youtube_description": desc, "tags": tags, "plan": res["plan"]}
     res["video"].with_suffix(".json").write_text(json.dumps(meta, ensure_ascii=False, indent=1), encoding="utf-8")
-    vid = store.add_video(db, day, h.ref, title, res["video"], "rendered")
+    vid = store.add_video(db, day, h.ref, title, res["video"], "rendered", lang=lang)
     store.log(db, "info", f"rendered {res['video'].name} ({res['seconds']:.1f}s), all checks passed", h.ref)
     if upload:
         do_upload(db, vid, day, res["video"], res["thumbnail"], title, desc, tags, h.ref)
@@ -88,10 +91,10 @@ def daily(db):
     else:
         print(f"{date}: all {settings.VIDEOS_PER_DAY} videos are uploaded, nothing to do.")
         return 0
-    return daily_slot(db, day)
+    return daily_slot(db, day, settings.SLOT_LANGS[(slot - 1) % len(settings.SLOT_LANGS)])
 
 
-def daily_slot(db, day):
+def daily_slot(db, day, lang="en"):
     rows = store.for_day(db, day)
     if any(r["status"] == "uploading" for r in rows):
         store.log(db, "error", f"{day}: an earlier upload's result is unknown. Check YouTube Studio, then run "
@@ -104,14 +107,15 @@ def daily_slot(db, day):
         path = Path(done["path"])
         if path.exists() and not validate.media(path):
             h = source.get(done["ref"])
-            title, desc, tags = publish.metadata(h, themes.theme(themes.detect(h.english))[0])
+            vlang = done["lang"] or "en"
+            title, desc, tags = publish.metadata(h, themes.title(themes.detect(h.english), vlang), vlang)
             thumb = path.with_name(path.stem + "_thumbnail.jpg")
             do_upload(db, done["id"], day, path, thumb if thumb.exists() else None, title, desc, tags, h.ref)
             return 0
     if done and not settings.ENABLE_PUBLICATION:
         print(f"{day}: already made ({done['ref']}); publication is off.")
         return 0
-    for ref in source.candidates(settings.HADITH_COLLECTIONS):
+    for ref in source.candidates(settings.HADITH_COLLECTIONS, lang=lang):
         if store.used(db, ref):
             continue
         row = store.checked(db, ref)
@@ -120,7 +124,7 @@ def daily_slot(db, day):
         h = source.get(ref)
         if not check_source(db, h):
             continue
-        make(db, h, day, upload=settings.ENABLE_PUBLICATION)
+        make(db, h, day, upload=settings.ENABLE_PUBLICATION, lang=lang)
         return 0
     store.log(db, "error", "no eligible hadith left")
     return 1
@@ -132,6 +136,7 @@ def main(argv=None):
     m = sub.add_parser("make")
     m.add_argument("--ref", required=True, help="e.g. bukhari:1 or muslim:5218")
     m.add_argument("--upload", action="store_true")
+    m.add_argument("--lang", choices=["en", "ur"], default="en")
     sub.add_parser("daily")
     sub.add_parser("status")
     r = sub.add_parser("resolve")
@@ -142,7 +147,7 @@ def main(argv=None):
         h = source.get(a.ref)
         if not check_source(db, h):
             return 1
-        res = make(db, h, today(), upload=a.upload)
+        res = make(db, h, today(), upload=a.upload, lang=a.lang)
         print(f"Video: {res['video']}\nThumbnail: {res['thumbnail']}")
         return 0
     if a.cmd == "daily":
