@@ -29,6 +29,16 @@ short scenes with paper-collage visuals, big headings and verified ayah/hadith c
 7. **For you**: the lesson turned to the viewer, in second person. "WHEN IT GETS DARK, | *REMEMBER THIS*".
 8. **Share**: "SEND THIS TO SOMEONE | *…*".
 
+## Length and parts
+A video must stay under 3 minutes (YouTube Shorts). A story longer than about 14 scenes or 2:40 is split with
+`"parts": [[1, 8], [9, 16]]` (scene numbers); each part should end on a natural pause and part 2+ should open with
+a scene that reminds the viewer where the story is. The queue publishes parts in order.
+
+## Footage
+Scenes show real footage from Pexels for their `art` (see qissa/footage.py QUERIES), or a scene's own
+`"footage": "<search words>"`. Only people-free subjects (sea, sky, rain, desert, mountains, boats, old towns, plants,
+animals the story mentions). `"art": "paper"` scenes stay plain paper (cards, duas, hadith).
+
 ## Writing
 - Headings: CAPITALS, 2–6 words per line, at most 2 lines split by `|`; the key phrase in `*stars*` (shown red).
 - Labels: 1–3 words, CAPITALS ("THE SHIP", "FOR YOU").

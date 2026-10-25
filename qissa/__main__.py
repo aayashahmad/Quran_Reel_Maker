@@ -3,6 +3,7 @@
   python -m qissa check yunus            check the script: both languages, art, every ayah/hadith exists and verifies
   python -m qissa make yunus --lang en   make the video (en or hi); both: --lang all
   python -m qissa list                   the stories
+  python -m qissa daily                  the daily job: next video in the queue, uploaded private, public 5 h later
 """
 import argparse
 import sys
@@ -19,7 +20,13 @@ def main(argv=None):
     m.add_argument("story")
     m.add_argument("--lang", choices=["en", "hi", "all"], default="all")
     sub.add_parser("list")
+    sub.add_parser("daily")
     a = ap.parse_args(argv)
+    if a.cmd == "daily":
+        from qissa import daily
+        out = build.ROOT / "output" / "qissa"
+        out.mkdir(parents=True, exist_ok=True)
+        return daily.run(out)
     if a.cmd == "list":
         for f in sorted(build.STORIES.glob("*.json")):
             s = build.load(f.stem)
@@ -33,7 +40,9 @@ def main(argv=None):
     out = build.ROOT / "output" / "qissa"
     out.mkdir(parents=True, exist_ok=True)
     for lang in (["en", "hi"] if a.lang == "all" else [a.lang]):
-        print(f"Video: {build.make(a.story, lang, out)}")
+        for k, _ in build.parts_of(story):
+            res = build.make(a.story, lang, out, part=k)
+            print(f"Video: {res['video']} ({res['seconds']:.0f}s, part {k}/{res['parts']})")
     return 0
 
 
