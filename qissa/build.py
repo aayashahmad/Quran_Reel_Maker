@@ -83,6 +83,23 @@ def ayah_card(ref, lang, part=None):
     return {"arabic": arabic, "meaning": meaning, "ref": f"{name.upper()} · {s}:{a}" + (f"-{b}" if b != a else "")}
 
 
+def hadith_quote(english):
+    """The words quoted in a narration (what was said), cut from the translation as it is: the quote that opens
+    the narration, else the first full quote, else the narration without its 'Narrated X:' opening."""
+    body = re.sub(r"^\s*(Narrated\s+[^:]{2,80}:|[^:\n]{2,80}\b(reported|narrated)[^:]{0,80}:)\s*", "", english).strip()
+    m = re.match(r"""^['"“]([^"”]+?)[,.]?["”']""", body)
+    if m and len(m.group(1).split()) >= 4:
+        return m.group(1).strip(" ,")
+    for q in re.findall(r'"([^"]+)"', body):
+        q = q.strip(" ,")
+        if len(q.split()) >= 4 and not q[0].islower():
+            return q
+    m = re.search(r'"([^"]{12,})$', body)                       # a quote the source never closes
+    if m and not m.group(1).strip()[0].islower():
+        return m.group(1).strip(" ,")
+    return body
+
+
 def hadith_card(ref, lang, verify=True):
     from hadith_shorts import source
     h = source.get(ref)
@@ -90,8 +107,7 @@ def hadith_card(ref, lang, verify=True):
         ok, detail = source.verify(h)
         if not ok:
             raise StoryError(f"{ref} failed the sunnah.com check: {detail}")
-    quote = re.search(r'"([^"]+)', h.english)
-    meaning = (h.urdu or h.english) if lang == "hi" and False else (quote.group(1).strip() if quote else h.english)
+    meaning = hadith_quote(h.english)
     return {"arabic": h.arabic, "meaning": meaning, "ref": h.citation.upper(), "url": h.url}
 
 
