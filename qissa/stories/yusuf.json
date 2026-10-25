@@ -1,0 +1,831 @@
+{
+  "id": "yusuf",
+  "number": 6,
+  "title": {
+    "en": "Yusuf (AS): The Best of Stories",
+    "hi": "Yusuf (AS): Sabse Behtareen Qissa"
+  },
+  "status": "draft: to be checked by a scholar before public release",
+  "sources": [
+    "Quran 12:3-101 (Surah Yusuf)",
+    "Sahih al-Bukhari 6992",
+    "Sahih al-Bukhari 3390"
+  ],
+  "parts": [
+    [
+      1,
+      11
+    ],
+    [
+      12,
+      21
+    ],
+    [
+      22,
+      32
+    ],
+    [
+      33,
+      44
+    ]
+  ],
+  "scenes": [
+    {
+      "art": "sea-night",
+      "footage": "stars night sky",
+      "heading": {
+        "en": "ELEVEN STARS, | *THE SUN AND THE MOON*",
+        "hi": "GYARAH SITARE, | *SOORAJ AUR CHAAND*"
+      },
+      "card": {
+        "ayah": "12:3"
+      },
+      "say": {
+        "en": "A boy, a dream, a well, a prison, and a throne. Allah Himself calls it the best of stories.",
+        "hi": "Ek bachcha, ek khwaab, ek kuan, ek qaidkhana, aur ek takht. Allah khud ise sabse behtareen qissa kehta hai."
+      }
+    },
+    {
+      "art": "town-dusk",
+      "footage": "stars night sky",
+      "label": {
+        "en": "THE DREAM",
+        "hi": "KHWAAB"
+      },
+      "heading": {
+        "en": "THEY WERE | *BOWING TO ME*",
+        "hi": "WOH MUJHE | *SAJDA KAR RAHE THE*"
+      },
+      "card": {
+        "ayah": "12:4"
+      },
+      "say": {
+        "en": "Yusuf said to his father: O my father, I saw eleven stars, and the sun and the moon. I saw them bowing down to me.",
+        "hi": "Yusuf ne apne walid se kaha: Abba jaan, maine gyarah sitare, sooraj aur chaand dekhe. Maine unhein apne aage sajda karte dekha."
+      }
+    },
+    {
+      "art": "paper",
+      "label": {
+        "en": "THE FATHER",
+        "hi": "WALID"
+      },
+      "heading": {
+        "en": "DO NOT TELL | *YOUR BROTHERS*",
+        "hi": "APNE BHAIYON KO | *MAT BATANA*"
+      },
+      "card": {
+        "ayah": "12:5"
+      },
+      "say": {
+        "en": "His father said: My son, do not tell your dream to your brothers, or they will plot against you. Shaytan is a clear enemy to man.",
+        "hi": "Walid ne kaha: beta, apna khwaab apne bhaiyon ko mat batana, warna woh tumhare khilaf chaal chalenge. Shaitan insaan ka khula dushman hai."
+      }
+    },
+    {
+      "art": "dawn",
+      "label": {
+        "en": "THE PROMISE",
+        "hi": "WAADA"
+      },
+      "heading": {
+        "en": "YOUR LORD | *WILL CHOOSE YOU*",
+        "hi": "TUMHARA RABB | *TUMHEIN CHUNEGA*"
+      },
+      "card": {
+        "ayah": "12:6"
+      },
+      "say": {
+        "en": "And so your Lord will choose you, and teach you the meaning of events, and complete His favour on you and the family of Yaqub.",
+        "hi": "Aur isi tarah tumhara Rabb tumhein chunega, tumhein baaton ki taabeer sikhayega, aur tumpar aur Yaqub ke ghar walon par apni nemat poori karega."
+      }
+    },
+    {
+      "art": "town-dusk",
+      "label": {
+        "en": "THE BROTHERS",
+        "hi": "BHAI"
+      },
+      "heading": {
+        "en": "KILL HIM | *OR CAST HIM AWAY*",
+        "hi": "USAY MAAR DO | *YA KAHIN PHENK DO*"
+      },
+      "card": {
+        "ayah": "12:8-9"
+      },
+      "say": {
+        "en": "His brothers said: Our father loves Yusuf and his brother more than us. Kill Yusuf, or throw him out to some land, and our father's face will be ours alone.",
+        "hi": "Bhaiyon ne kaha: Abba Yusuf aur uske bhai ko hum se zyada chahte hain. Yusuf ko maar do, ya kisi zameen par phenk do, phir Abba ki tawajjoh sirf hamari hogi."
+      }
+    },
+    {
+      "art": "darkness",
+      "footage": "old stone well",
+      "label": {
+        "en": "THE PLAN",
+        "hi": "SAAZISH"
+      },
+      "heading": {
+        "en": "THROW HIM | *INTO THE WELL*",
+        "hi": "USAY KUEN MEIN | *DAAL DO*"
+      },
+      "card": {
+        "ayah": "12:10"
+      },
+      "say": {
+        "en": "One of them said: Do not kill Yusuf. Throw him into the bottom of the well, and some travellers will pick him up.",
+        "hi": "Unmein se ek ne kaha: Yusuf ko qatl mat karo. Usay kuen ki gehraai mein daal do, koi qaafila usay utha le jayega."
+      }
+    },
+    {
+      "art": "paper",
+      "label": {
+        "en": "THE WORRY",
+        "hi": "FIKR"
+      },
+      "heading": {
+        "en": "I FEAR | *A WOLF WILL EAT HIM*",
+        "hi": "MUJHE DAR HAI | *BHEDIYA KHA JAYEGA*"
+      },
+      "card": {
+        "ayah": "12:13"
+      },
+      "say": {
+        "en": "They asked their father to send Yusuf with them. He said: It saddens me that you take him, and I fear a wolf will eat him while you are not watching.",
+        "hi": "Unhone walid se kaha ke Yusuf ko hamare saath bhej dein. Walid ne kaha: uska jaana mujhe gham deta hai, aur mujhe dar hai ke tumhari ghaflat mein bhediya usay kha jayega."
+      }
+    },
+    {
+      "art": "darkness",
+      "footage": "old stone well",
+      "label": {
+        "en": "THE WELL",
+        "hi": "KUAN"
+      },
+      "heading": {
+        "en": "ALONE IN THE WELL, | *BUT NOT FORGOTTEN*",
+        "hi": "KUEN MEIN AKELE, | *MAGAR BHOOLE NAHI*"
+      },
+      "card": {
+        "ayah": "12:15"
+      },
+      "say": {
+        "en": "So they took him and put him into the bottom of the well. But Allah inspired him: one day you will tell them of this, while they do not know you.",
+        "hi": "To woh usay le gaye aur kuen ki gehraai mein daal diya. Magar Allah ne unke dil mein daala: ek din tum unhein yeh sab bataoge, aur woh tumhein pehchanenge bhi nahi."
+      }
+    },
+    {
+      "art": "town-dusk",
+      "label": {
+        "en": "THE SHIRT",
+        "hi": "QAMEEZ"
+      },
+      "heading": {
+        "en": "FALSE BLOOD. | *BEAUTIFUL PATIENCE.*",
+        "hi": "JHOOTA KHOON. | *SABR-E-JAMEEL.*"
+      },
+      "card": {
+        "ayah": "12:18"
+      },
+      "say": {
+        "en": "At night they came to their father, weeping, with false blood on his shirt. Yaqub said: Patience is most fitting, and Allah is the One whose help is sought.",
+        "hi": "Raat ko woh rote hue walid ke paas aaye, qameez par jhoota khoon laga kar. Yaqub ne kaha: sabr hi behtar hai, aur Allah hi se madad maangi jaati hai."
+      }
+    },
+    {
+      "art": "shore",
+      "footage": "desert caravan camels",
+      "label": {
+        "en": "THE CARAVAN",
+        "hi": "QAAFILA"
+      },
+      "heading": {
+        "en": "GOOD NEWS! | *HERE IS A BOY*",
+        "hi": "KHUSHKHABRI! | *YEH TO EK LADKA HAI*"
+      },
+      "card": {
+        "ayah": "12:19"
+      },
+      "say": {
+        "en": "Travellers came and sent down their water drawer. He let down his bucket and said: Good news! Here is a boy.",
+        "hi": "Ek qaafila aaya, unhone paani bharne wala bheja. Usne apna dol daala aur kaha: khushkhabri! Yeh to ek ladka hai."
+      }
+    },
+    {
+      "art": "town-dusk",
+      "footage": "desert caravan camels",
+      "label": {
+        "en": "SOLD",
+        "hi": "BECH DIYA"
+      },
+      "heading": {
+        "en": "SOLD FOR | *A FEW COINS*",
+        "hi": "CHAND SIKKON MEIN | *BECH DIYA*"
+      },
+      "card": {
+        "ayah": "12:20"
+      },
+      "say": {
+        "en": "They sold him for a small price, a few dirhams. The boy from the well was now a slave. And Allah knew what they did.",
+        "hi": "Unhone usay maamooli qeemat par bech diya, chand dirhamon mein. Kuen wala bachcha ab ek ghulaam tha. Aur Allah jaanta tha jo woh kar rahe the."
+      }
+    },
+    {
+      "art": "town-dusk",
+      "footage": "desert caravan camels",
+      "label": {
+        "en": "SO FAR",
+        "hi": "AB TAK"
+      },
+      "heading": {
+        "en": "FROM THE WELL | *TO EGYPT*",
+        "hi": "KUEN SE | *MISR TAK*"
+      },
+      "say": {
+        "en": "His own brothers threw Yusuf into a well, and travellers sold him for a few coins. Now he is taken to Egypt.",
+        "hi": "Apne hi bhaiyon ne Yusuf ko kuen mein daala, aur qaafile walon ne usay chand sikkon mein bech diya. Ab woh Misr pahunchte hain."
+      }
+    },
+    {
+      "art": "town-dawn",
+      "footage": "palace columns",
+      "label": {
+        "en": "THE HOUSE",
+        "hi": "GHAR"
+      },
+      "heading": {
+        "en": "MAKE HIS STAY | *HONOURABLE*",
+        "hi": "ISKO IZZAT SE | *RAKHNA*"
+      },
+      "card": {
+        "ayah": "12:21"
+      },
+      "say": {
+        "en": "The man from Egypt who bought him told his wife: Make his stay comfortable. Perhaps he will benefit us, or we will take him as a son. And so Allah settled Yusuf in the land.",
+        "hi": "Misr ke jis shakhs ne usay khareeda, usne apni biwi se kaha: isay izzat se rakhna, shayad yeh hamare kaam aaye, ya hum isay beta bana lein. Aur yun Allah ne Yusuf ko us zameen mein jagah di."
+      }
+    },
+    {
+      "art": "dawn",
+      "label": {
+        "en": "THE GIFT",
+        "hi": "TOHFA"
+      },
+      "heading": {
+        "en": "JUDGMENT | *AND KNOWLEDGE*",
+        "hi": "HIKMAT | *AUR ILM*"
+      },
+      "card": {
+        "ayah": "12:22"
+      },
+      "say": {
+        "en": "When he reached full strength, Allah gave him judgment and knowledge. And this is how Allah rewards those who do good.",
+        "hi": "Jab woh jawani ko pahunche, Allah ne unhein hikmat aur ilm diya. Aur Allah neki karne walon ko isi tarah badla deta hai."
+      }
+    },
+    {
+      "art": "town-dusk",
+      "label": {
+        "en": "THE TEST",
+        "hi": "IMTIHAAN"
+      },
+      "heading": {
+        "en": "THE DOORS WERE CLOSED. | *I SEEK REFUGE IN ALLAH*",
+        "hi": "DARWAZE BAND THE. | *ALLAH KI PANAAH*"
+      },
+      "card": {
+        "ayah": "12:23"
+      },
+      "say": {
+        "en": "The woman of the house tried to tempt him. She closed the doors. He said: I seek refuge in Allah. Wrongdoers never succeed.",
+        "hi": "Jis ghar mein woh the, us aurat ne unhein bahkane ki koshish ki aur darwaze band kar diye. Unhone kaha: Allah ki panaah! Zaalim kabhi kamyaab nahi hote."
+      }
+    },
+    {
+      "art": "darkness",
+      "label": {
+        "en": "THE DOOR",
+        "hi": "DARWAZA"
+      },
+      "heading": {
+        "en": "TORN | *FROM THE BACK*",
+        "hi": "PEECHE SE | *PHATI QAMEEZ*"
+      },
+      "card": {
+        "ayah": "12:25"
+      },
+      "say": {
+        "en": "He ran for the door, and she tore his shirt from the back. At the door stood her husband. She blamed Yusuf at once.",
+        "hi": "Woh darwaze ki taraf bhaage, aur usne peeche se unki qameez phaad di. Darwaze par uska shohar khada tha. Usne foran Yusuf par ilzaam laga diya."
+      }
+    },
+    {
+      "art": "paper",
+      "label": {
+        "en": "THE WITNESS",
+        "hi": "GAWAH"
+      },
+      "heading": {
+        "en": "THE SHIRT | *TOLD THE TRUTH*",
+        "hi": "QAMEEZ NE | *SACH BATA DIYA*"
+      },
+      "card": {
+        "ayah": "12:27"
+      },
+      "say": {
+        "en": "A witness from her own family said: If his shirt is torn from the back, she has lied, and he is truthful. And it was torn from the back.",
+        "hi": "Uske apne khandaan ke ek gawah ne kaha: agar qameez peeche se phati hai, to aurat jhooti hai aur woh sachcha hai. Aur qameez peeche se hi phati thi."
+      }
+    },
+    {
+      "art": "town-dusk",
+      "label": {
+        "en": "THE WOMEN",
+        "hi": "AURATEIN"
+      },
+      "heading": {
+        "en": "THEY CUT | *THEIR OWN HANDS*",
+        "hi": "UNHONE APNE | *HAATH KAAT LIYE*"
+      },
+      "card": {
+        "ayah": "12:31"
+      },
+      "say": {
+        "en": "The women of the city talked. She invited them, gave each a knife, and called Yusuf out. They cut their hands and said: This is no man, this is a noble angel.",
+        "hi": "Shehar ki auratein baatein karne lagin. Usne unhein bulaya, har ek ko chhuri di, aur Yusuf ko saamne aane ko kaha. Unhone apne haath kaat liye aur kaha: yeh insaan nahi, yeh to ek izzat wala farishta hai."
+      }
+    },
+    {
+      "art": "paper",
+      "label": {
+        "en": "THE CHOICE",
+        "hi": "FAISLA"
+      },
+      "heading": {
+        "en": "PRISON IS DEARER | *TO ME*",
+        "hi": "MUJHE QAID | *ZYADA PASAND HAI*"
+      },
+      "card": {
+        "ayah": "12:33"
+      },
+      "say": {
+        "en": "Yusuf said: My Lord, prison is dearer to me than what they call me to. If You do not turn their plot away from me, I may lean towards them.",
+        "hi": "Yusuf ne dua ki: mere Rabb, jis cheez ki taraf yeh mujhe bulati hain, us se mujhe qaid zyada pasand hai. Agar Tu inki chaal mujh se na hataye, to main inki taraf jhuk jaunga."
+      }
+    },
+    {
+      "art": "darkness",
+      "footage": "dark stone corridor",
+      "label": {
+        "en": "THE PRISON",
+        "hi": "QAIDKHANA"
+      },
+      "heading": {
+        "en": "INNOCENT, | *YET IN PRISON*",
+        "hi": "BEGUNAAH, | *PHIR BHI QAID MEIN*"
+      },
+      "card": {
+        "ayah": "12:34-35"
+      },
+      "say": {
+        "en": "His Lord answered him and turned their plot away. Then, after seeing the signs, they decided to put him in prison for a time.",
+        "hi": "Uske Rabb ne uski dua qubool ki aur unki chaal hata di. Phir nishaniyan dekhne ke baad bhi, unhone usay kuch waqt ke liye qaid karne ka faisla kiya."
+      }
+    },
+    {
+      "art": "darkness",
+      "footage": "dark stone corridor",
+      "label": {
+        "en": "SO FAR",
+        "hi": "AB TAK"
+      },
+      "heading": {
+        "en": "HE CHOSE PRISON | *OVER SIN*",
+        "hi": "GUNAAH KE BAJAAYE | *QAID CHUNI*"
+      },
+      "say": {
+        "en": "Thrown in a well, sold as a slave, and now in prison for a sin he refused. But inside the prison, Allah opens another door.",
+        "hi": "Kuen mein phenka gaya, ghulaam bana kar becha gaya, aur ab us gunaah ki wajah se qaid jisse unhone inkaar kiya. Magar qaid ke andar Allah ek aur darwaza kholta hai."
+      }
+    },
+    {
+      "art": "town-dusk",
+      "label": {
+        "en": "TWO DREAMS",
+        "hi": "DO KHWAAB"
+      },
+      "heading": {
+        "en": "WINE, BREAD | *AND THE BIRDS*",
+        "hi": "SHARAAB, ROTI | *AUR PARINDE*"
+      },
+      "card": {
+        "ayah": "12:36",
+        "part": "start"
+      },
+      "say": {
+        "en": "Two young men entered the prison with him. One dreamt he was pressing wine. The other, that he carried bread on his head, and birds were eating from it.",
+        "hi": "Do naujawan unke saath qaid mein aaye. Ek ne khwaab dekha ke woh sharaab nichod raha hai. Doosre ne dekha ke uske sar par roti hai aur parinde usmein se kha rahe hain."
+      }
+    },
+    {
+      "art": "paper",
+      "label": {
+        "en": "THE CALL",
+        "hi": "DAWAT"
+      },
+      "heading": {
+        "en": "MANY LORDS, | *OR ALLAH, THE ONE?*",
+        "hi": "BAHUT SE RABB, | *YA EK ALLAH?*"
+      },
+      "card": {
+        "ayah": "12:39"
+      },
+      "say": {
+        "en": "Before explaining their dreams, Yusuf called them to Allah: O my two prison companions, are many separate lords better, or Allah, the One, the Prevailing?",
+        "hi": "Taabeer batane se pehle Yusuf ne unhein Allah ki taraf bulaya: aye mere qaid ke saathiyon, kya alag alag bahut se rabb behtar hain, ya ek Allah jo sab par ghalib hai?"
+      }
+    },
+    {
+      "art": "town-dusk",
+      "label": {
+        "en": "THE MEANING",
+        "hi": "TAABEER"
+      },
+      "heading": {
+        "en": "ONE WILL BE FREED. | *ONE WILL NOT.*",
+        "hi": "EK AZAAD HOGA. | *EK NAHI.*"
+      },
+      "card": {
+        "ayah": "12:41"
+      },
+      "say": {
+        "en": "Yusuf said: One of you will pour wine for his master. The other will be crucified, and birds will eat from his head. The matter is decided.",
+        "hi": "Yusuf ne kaha: tum mein se ek apne aaqa ko sharaab pilayega. Doosre ko sooli di jayegi aur parinde uske sar se khayenge. Faisla ho chuka hai."
+      }
+    },
+    {
+      "art": "darkness",
+      "footage": "dark stone corridor",
+      "label": {
+        "en": "FORGOTTEN",
+        "hi": "BHULA DIYA"
+      },
+      "heading": {
+        "en": "MENTION ME | *TO YOUR MASTER*",
+        "hi": "APNE AAQA SE | *MERA ZIKR KARNA*"
+      },
+      "card": {
+        "ayah": "12:42"
+      },
+      "say": {
+        "en": "Yusuf told the one who would go free: Mention me to your master. But Shaytan made him forget, and Yusuf stayed in prison several years.",
+        "hi": "Yusuf ne azaad hone wale se kaha: apne aaqa se mera zikr karna. Magar Shaitan ne usay bhula diya, aur Yusuf kai saal qaid mein rahe."
+      }
+    },
+    {
+      "art": "town-dawn",
+      "footage": "wheat field",
+      "label": {
+        "en": "THE KING",
+        "hi": "BADSHAH"
+      },
+      "heading": {
+        "en": "SEVEN FAT COWS, | *SEVEN LEAN*",
+        "hi": "SAAT MOTI GAAYEIN, | *SAAT DUBLI*"
+      },
+      "card": {
+        "ayah": "12:43",
+        "part": "start"
+      },
+      "say": {
+        "en": "Then the king dreamt of seven fat cows eaten by seven lean ones, and seven green ears of grain, and others dry. No one could explain it. Then the freed man remembered Yusuf.",
+        "hi": "Phir badshah ne khwaab dekha: saat moti gaayein jinhein saat dubli kha rahi hain, aur saat hari baaliyan aur baaqi sookhi. Koi taabeer na de saka. Tab azaad hone wale ko Yusuf yaad aaye."
+      }
+    },
+    {
+      "art": "town-dawn",
+      "footage": "wheat field",
+      "label": {
+        "en": "THE ANSWER",
+        "hi": "JAWAB"
+      },
+      "heading": {
+        "en": "SEVEN YEARS TO SOW, | *SEVEN YEARS OF HARDSHIP*",
+        "hi": "SAAT SAAL KHETI, | *SAAT SAAL SAKHTI*"
+      },
+      "card": {
+        "ayah": "12:47-48"
+      },
+      "say": {
+        "en": "Yusuf said: Plant for seven years, and leave what you harvest in its ears, except a little to eat. Then seven hard years will come and eat up what you saved.",
+        "hi": "Yusuf ne kaha: saat saal kheti karo, aur jo kaato usay baaliyon mein hi rehne do, sirf thoda sa khao. Phir saat sakht saal aayenge jo tumhara bachaya hua kha jayenge."
+      }
+    },
+    {
+      "art": "paper",
+      "label": {
+        "en": "NOT YET",
+        "hi": "ABHI NAHI"
+      },
+      "heading": {
+        "en": "FIRST, | *CLEAR MY NAME*",
+        "hi": "PEHLE MERI | *BEGUNAAHI SAABIT HO*"
+      },
+      "card": {
+        "ayah": "12:50"
+      },
+      "say": {
+        "en": "The king said: Bring him to me. But Yusuf said to the messenger: Go back and ask him about the women who cut their hands.",
+        "hi": "Badshah ne kaha: usay mere paas lao. Magar Yusuf ne qaasid se kaha: wapas jao aur unse poochho, un auraton ka kya maamla tha jinhone apne haath kaat liye the."
+      }
+    },
+    {
+      "art": "paper",
+      "label": {
+        "en": "HIS PATIENCE",
+        "hi": "UNKA SABR"
+      },
+      "heading": {
+        "en": "THE PROPHET ﷺ SAID",
+        "hi": "NABI ﷺ NE FARMAYA"
+      },
+      "card": {
+        "hadith": "bukhari:6992"
+      },
+      "say": {
+        "en": "The Prophet, peace be upon him, said: If I had stayed in prison as long as Yusuf stayed, and then the messenger came, I would have answered the call.",
+        "hi": "Nabi sallallahu alaihi wasallam ne farmaya: agar main itna arsa qaid mein rehta jitna Yusuf rahe, aur phir bulane wala aata, to main uski baat maan leta."
+      }
+    },
+    {
+      "art": "town-dawn",
+      "label": {
+        "en": "THE TRUTH",
+        "hi": "SACH"
+      },
+      "heading": {
+        "en": "NOW THE TRUTH | *IS CLEAR*",
+        "hi": "AB SACH | *SAAMNE AA GAYA*"
+      },
+      "card": {
+        "ayah": "12:51"
+      },
+      "say": {
+        "en": "The women said: We know nothing bad about him. And the wife of al-Aziz said: Now the truth is clear. It was I who tried to tempt him, and he is truthful.",
+        "hi": "Auraton ne kaha: hum uske baare mein koi buraai nahi jaante. Aur Aziz ki biwi ne kaha: ab sach saamne aa gaya. Maine hi usay bahkane ki koshish ki thi, aur woh sachcha hai."
+      }
+    },
+    {
+      "art": "town-dawn",
+      "footage": "palace columns",
+      "label": {
+        "en": "TRUSTED",
+        "hi": "AMANATDAAR"
+      },
+      "heading": {
+        "en": "OVER THE STOREHOUSES | *OF THE LAND*",
+        "hi": "MULK KE KHAZANON | *PAR*"
+      },
+      "card": {
+        "ayah": "12:54-55"
+      },
+      "say": {
+        "en": "The king said: Today you are with us, established and trusted. Yusuf said: Put me over the storehouses of the land. I will guard them with knowledge.",
+        "hi": "Badshah ne kaha: aaj se tum hamare yahan mo'tabar aur amanatdaar ho. Yusuf ne kaha: mujhe mulk ke khazanon par muqarrar kijiye, main hifazat karne wala aur ilm wala hoon."
+      }
+    },
+    {
+      "art": "town-dawn",
+      "footage": "palace columns",
+      "label": {
+        "en": "SO FAR",
+        "hi": "AB TAK"
+      },
+      "heading": {
+        "en": "FROM THE WELL | *TO THE STOREHOUSES*",
+        "hi": "KUEN SE | *KHAZANON TAK*"
+      },
+      "say": {
+        "en": "The boy his brothers threw into a well now guards the storehouses of Egypt. And one day, his brothers walk in.",
+        "hi": "Jis bachche ko bhaiyon ne kuen mein phenka tha, aaj woh Misr ke khazanon ka nigraan hai. Aur ek din, wahi bhai uske saamne aate hain."
+      }
+    },
+    {
+      "art": "town-dusk",
+      "label": {
+        "en": "THE BROTHERS",
+        "hi": "BHAI"
+      },
+      "heading": {
+        "en": "HE KNEW THEM. | *THEY DID NOT KNOW HIM.*",
+        "hi": "WOH PEHCHAAN GAYE. | *WOH NA PEHCHAANE.*"
+      },
+      "card": {
+        "ayah": "12:58-59"
+      },
+      "say": {
+        "en": "His brothers came and entered upon him. He knew them, but they did not know him. He said: Next time, bring your brother from your father.",
+        "hi": "Unke bhai aaye aur unke saamne haazir hue. Yusuf ne unhein pehchaan liya, woh unhein na pehchaan sake. Yusuf ne kaha: agli baar apne walid ki taraf se apne bhai ko bhi lana."
+      }
+    },
+    {
+      "art": "paper",
+      "label": {
+        "en": "THE FATHER",
+        "hi": "WALID"
+      },
+      "heading": {
+        "en": "ALLAH IS | *THE BEST GUARDIAN*",
+        "hi": "ALLAH HI | *BEHTAREEN HIFAZAT KARNE WALA*"
+      },
+      "card": {
+        "ayah": "12:64"
+      },
+      "say": {
+        "en": "Yaqub said: Shall I trust you with him as I trusted you with his brother before? But Allah is the best guardian.",
+        "hi": "Yaqub ne kaha: kya main iske baare mein tum par waisa hi bharosa karoon jaisa pehle iske bhai ke baare mein kiya tha? Magar Allah hi behtareen hifazat karne wala hai."
+      }
+    },
+    {
+      "art": "dawn",
+      "label": {
+        "en": "MY BROTHER",
+        "hi": "MERA BHAI"
+      },
+      "heading": {
+        "en": "I AM | *YOUR BROTHER*",
+        "hi": "MAIN TUMHARA | *BHAI HOON*"
+      },
+      "card": {
+        "ayah": "12:69"
+      },
+      "say": {
+        "en": "When they came again, Yusuf took his brother close and said: I am your brother. Do not grieve over what they used to do.",
+        "hi": "Jab woh dobara aaye, Yusuf ne apne bhai ko apne paas bulaya aur kaha: main tumhara bhai hoon. Jo yeh karte rahe, uska gham na karo."
+      }
+    },
+    {
+      "art": "town-dusk",
+      "footage": "desert caravan camels",
+      "label": {
+        "en": "THE CUP",
+        "hi": "PYAALA"
+      },
+      "heading": {
+        "en": "THUS DID WE PLAN | *FOR YUSUF*",
+        "hi": "YUN HUMNE YUSUF KE LIYE | *TADBEER KI*"
+      },
+      "card": {
+        "ayah": "12:76"
+      },
+      "say": {
+        "en": "The king's measure was brought out of his brother's bag, and so Yusuf kept his brother with him. Allah says: Thus did We plan for Yusuf.",
+        "hi": "Badshah ka naapne wala pyaala bhai ke saaman se nikla, aur yun Yusuf ne apne bhai ko apne paas rok liya. Allah farmata hai: yun humne Yusuf ke liye tadbeer ki."
+      }
+    },
+    {
+      "art": "darkness",
+      "label": {
+        "en": "THE GRIEF",
+        "hi": "GHAM"
+      },
+      "heading": {
+        "en": "MY GRIEF | *IS ONLY TO ALLAH*",
+        "hi": "MERA DUKH | *SIRF ALLAH SE*"
+      },
+      "card": {
+        "ayah": "12:84-86"
+      },
+      "say": {
+        "en": "Yaqub's eyes turned white from grief for Yusuf. Yet he said: I only complain of my grief and sorrow to Allah.",
+        "hi": "Yusuf ke gham mein Yaqub ki aankhein safed ho gayin. Phir bhi unhone kaha: main apne dukh aur gham ki shikayat sirf Allah se karta hoon."
+      }
+    },
+    {
+      "art": "dawn",
+      "label": {
+        "en": "THE MOMENT",
+        "hi": "WOH LAMHA"
+      },
+      "heading": {
+        "en": "I AM | *YUSUF*",
+        "hi": "MAIN | *YUSUF HOON*"
+      },
+      "card": {
+        "ayah": "12:90"
+      },
+      "say": {
+        "en": "They asked: Are you Yusuf? He said: I am Yusuf, and this is my brother. Whoever fears Allah and is patient, Allah never wastes his reward.",
+        "hi": "Unhone poochha: kya tum Yusuf ho? Kaha: main Yusuf hoon, aur yeh mera bhai hai. Jo Allah se dare aur sabr kare, Allah uska ajr zaya nahi karta."
+      }
+    },
+    {
+      "art": "town-dawn",
+      "label": {
+        "en": "FORGIVENESS",
+        "hi": "MAAFI"
+      },
+      "heading": {
+        "en": "NO BLAME | *ON YOU TODAY*",
+        "hi": "AAJ TUM PAR | *KOI MALAAMAT NAHI*"
+      },
+      "card": {
+        "ayah": "12:92"
+      },
+      "say": {
+        "en": "The brothers who threw him in the well heard him say: No blame on you today. Allah will forgive you, and He is the Most Merciful of the merciful.",
+        "hi": "Jin bhaiyon ne unhein kuen mein phenka tha, unse Yusuf ne kaha: aaj tum par koi malaamat nahi. Allah tumhein maaf kare, aur woh sab se badh kar raham karne wala hai."
+      }
+    },
+    {
+      "art": "dawn",
+      "label": {
+        "en": "THE SHIRT",
+        "hi": "QAMEEZ"
+      },
+      "heading": {
+        "en": "HIS SIGHT | *CAME BACK*",
+        "hi": "UNKI BEENAAI | *LAUT AAYI*"
+      },
+      "card": {
+        "ayah": "12:96"
+      },
+      "say": {
+        "en": "Yusuf sent his shirt to his father. It was cast over his face, and his sight came back. Yaqub said: Did I not tell you, I know from Allah what you do not know?",
+        "hi": "Yusuf ne apni qameez walid ke paas bheji. Woh unke chehre par daali gayi, aur unki beenaai laut aayi. Yaqub ne kaha: kya maine nahi kaha tha, main Allah ki taraf se woh jaanta hoon jo tum nahi jaante?"
+      }
+    },
+    {
+      "art": "town-dawn",
+      "footage": "stars night sky",
+      "label": {
+        "en": "THE DREAM",
+        "hi": "KHWAAB"
+      },
+      "heading": {
+        "en": "MY LORD | *MADE IT TRUE*",
+        "hi": "MERE RABB NE | *ISAY SACH KAR DIYA*"
+      },
+      "card": {
+        "ayah": "12:100",
+        "part": "start"
+      },
+      "say": {
+        "en": "He raised his parents up on the throne, and they bowed down before him. Yusuf said: O my father, this is the meaning of my dream of long ago. My Lord has made it true.",
+        "hi": "Unhone apne walidain ko takht par bithaya, aur woh unke aage sajde mein jhuk gaye. Yusuf ne kaha: Abba jaan, yeh mere puraane khwaab ki taabeer hai. Mere Rabb ne isay sach kar diya."
+      }
+    },
+    {
+      "art": "paper",
+      "label": {
+        "en": "HONOUR",
+        "hi": "IZZAT"
+      },
+      "heading": {
+        "en": "THE PROPHET ﷺ SAID",
+        "hi": "NABI ﷺ NE FARMAYA"
+      },
+      "card": {
+        "hadith": "bukhari:3390"
+      },
+      "say": {
+        "en": "The Prophet, peace be upon him, said: The honourable, son of the honourable, son of the honourable, son of the honourable: Yusuf, son of Yaqub, son of Ishaq, son of Ibrahim.",
+        "hi": "Nabi sallallahu alaihi wasallam ne farmaya: izzat wale, izzat wale ke bete, izzat wale ke bete, izzat wale ke bete: Yusuf bin Yaqub bin Ishaq bin Ibrahim."
+      }
+    },
+    {
+      "art": "sea-night",
+      "footage": "stars night sky",
+      "label": {
+        "en": "FOR YOU",
+        "hi": "AAPKE LIYE"
+      },
+      "heading": {
+        "en": "NEVER LOSE HOPE | *IN ALLAH*",
+        "hi": "ALLAH KI RAHMAT SE | *KABHI MAYOOS NA HONA*"
+      },
+      "card": {
+        "ayah": "12:87"
+      },
+      "say": {
+        "en": "The well, the lie, the prison, the years of grief. Allah was planning through all of it. So whatever you are in today, do not lose hope in His mercy.",
+        "hi": "Kuan, jhoot, qaid, gham ke saal. Allah in sab ke beech tadbeer kar raha tha. To aaj aap jis haal mein bhi hon, uski rahmat se kabhi mayoos na hona."
+      }
+    },
+    {
+      "art": "dawn",
+      "label": {
+        "en": "SHARE",
+        "hi": "SHARE"
+      },
+      "heading": {
+        "en": "SEND THIS TO SOMEONE | *WAITING ON ALLAH*",
+        "hi": "YEH USAY BHEJEIN | *JO ALLAH SE UMEED LAGAYE HAI*"
+      },
+      "say": {
+        "en": "Send this to someone who is waiting for Allah's help today.",
+        "hi": "Yeh video usay bhejein, jo aaj Allah ki madad ka intezaar kar raha hai."
+      }
+    }
+  ]
+}

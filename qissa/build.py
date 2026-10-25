@@ -100,14 +100,19 @@ def hadith_quote(english):
     return body
 
 
-def hadith_card(ref, lang, verify=True):
+def hadith_card(ref, lang, verify=True, quote_from=None):
     from hadith_shorts import source
     h = source.get(ref)
     if verify:
         ok, detail = source.verify(h)
         if not ok:
             raise StoryError(f"{ref} failed the sunnah.com check: {detail}")
-    meaning = hadith_quote(h.english)
+    if quote_from:                                   # an exact sentence of the narration, chosen in the script
+        if quote_from not in h.english:
+            raise StoryError(f"{ref}: quote_from is not word-for-word in the narration")
+        meaning = re.sub(r"(\w)- (\w)", r"\1\2", quote_from)   # rejoin words the source split across lines
+    else:
+        meaning = hadith_quote(h.english)
     return {"arabic": h.arabic, "meaning": meaning, "ref": h.citation.upper(), "url": h.url}
 
 
@@ -130,7 +135,7 @@ def check(story, verify=True):
             if "ayah" in card:
                 ayah_card(card["ayah"], "en", card.get("part"))
             if "hadith" in card:
-                hadith_card(card["hadith"], "en", verify)
+                hadith_card(card["hadith"], "en", verify, card.get("quote_from"))
         except Exception as e:
             problems.append(f"scene {i}: {e}")
         if "fact" in card and not card.get("ref"):
@@ -195,7 +200,10 @@ def card(img, c, lang, y, bottom=None):
             lines = wrap(c["arabic"], f_ar, inner, True, "ar")
         blocks.append(("ar", (f_ar, lines)))
         f_m = font(SERIF, 34)
-        mlines = wrap(c["meaning"], f_m, inner, False, None)[:4]
+        mlines = wrap(c["meaning"], f_m, inner, False, None)
+        if len(mlines) > 4:                              # never cut silently: show that the text continues
+            mlines = mlines[:4]
+            mlines[-1] = mlines[-1].rstrip(" ,.;:") + " …"
         blocks.append(("meaning", (f_m, mlines)))
     blocks.append(("ref", c["ref"]))
     hgt = pad
@@ -267,7 +275,7 @@ def overlay(scene, lang, story, path):
         if "ayah" in c:
             data = ayah_card(c["ayah"], lang, c.get("part"))
         elif "hadith" in c:
-            data = hadith_card(c["hadith"], lang, verify=False)
+            data = hadith_card(c["hadith"], lang, verify=False, quote_from=c.get("quote_from"))
         else:
             data = {"fact": c["fact"], "fact_label": c["fact_label"], "ref": c["ref"].upper()}
         card(img, data, lang, max(y + 60, 700), bottom=CAP_TOP - 40)
@@ -348,10 +356,23 @@ def caption(sentence, lit):
 
 
 # ---- narration ----
-def speak(text, out, lang):
+WORDS_PER_SEC = {"en": 2.43, "hi": 1.94}          # measured on the Yunus story (with pauses)
+LIMIT = 170
+
+
+def rate_for(scenes, lang):
+    """The voice rate for a part: normal, or a little faster when the part would run past ~2:50."""
+    base = int(VOICES[lang][1].rstrip("%"))
+    words = sum(len(sc["say"][lang].split()) for sc in scenes)
+    est = words / WORDS_PER_SEC[lang] + 0.9 * len(scenes)
+    extra = max(0, round((est / LIMIT - 1) * 100) + 2) if est > LIMIT else 0
+    return f"{base + extra:+d}%"
+
+
+def speak(text, out, lang, rate=None):
     """Narrate into `out`; returns (seconds, [(start, duration, word)]) with the voice's own word timings."""
     import edge_tts
-    voice, rate = VOICES[lang]
+    voice, rate = VOICES[lang][0], rate or VOICES[lang][1]
 
     async def run():
         c = edge_tts.Communicate(text, voice, rate=rate, boundary="WordBoundary")
@@ -397,6 +418,9 @@ def make(story_id, lang, out_dir, log=print, part=None, use_footage=True):
     work = out_dir / f"work_{story_id}_{k}_{lang}"
     shutil.rmtree(work, ignore_errors=True)
     work.mkdir(parents=True)
+    rate = rate_for(scenes, lang)
+    if rate != VOICES[lang][1]:
+        log(f"Voice rate {rate} to stay under 3 minutes")
     grain = work / "grain.png"
     _grain_png(grain)
     segs, credits, total = [], [], 0.0
@@ -407,7 +431,7 @@ def make(story_id, lang, out_dir, log=print, part=None, use_footage=True):
             sc["label"] = {lang: f"PART {k}/{len(plist)}" + (f" · {first}" if first else "")}
         log(f"Scene {i + 1}/{len(scenes)}: {sc['art']}")
         voice = work / f"v{i}.mp3"
-        said, bounds = speak(sc["say"][lang], voice, lang)
+        said, bounds = speak(sc["say"][lang], voice, lang, rate)
         secs = said + 0.9
         lead = 0.35
         base = work / f"ov{i}.png"

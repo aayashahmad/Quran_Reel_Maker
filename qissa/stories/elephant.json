@@ -1,0 +1,210 @@
+{
+ "id": "elephant",
+ "number": 8,
+ "title": {
+  "en": "The People of the Elephant",
+  "hi": "Haathi Waale"
+ },
+ "status": "draft: to be checked by a scholar before public release",
+ "sources": [
+  "Quran 105:1-5",
+  "Quran 106:1-4",
+  "Sahih Muslim 3306 (sunnah.com: Muslim 1355)",
+  "Sahih al-Bukhari 2731"
+ ],
+ "scenes": [
+  {
+   "art": "town-dusk",
+   "footage": "elephant walking",
+   "heading": {
+    "en": "AN ARMY OF ELEPHANTS. | *STOPPED BY BIRDS.*",
+    "hi": "HAATHIYON KA LASHKAR. | *PARINDON NE ROKA.*"
+   },
+   "say": {
+    "en": "An army came with an elephant, sure of its strength. And Allah answered it with small birds. The Quran gave this story a whole surah.",
+    "hi": "Ek lashkar haathi ke saath aaya, apni taaqat par yaqeen kiye hue. Aur Allah ne chhote parindon se jawab diya. Quran ne is waqiye ko poori ek surah di."
+   }
+  },
+  {
+   "art": "paper",
+   "label": {
+    "en": "THE QUESTION",
+    "hi": "SAWAL"
+   },
+   "heading": {
+    "en": "HAVE YOU NOT | *CONSIDERED?*",
+    "hi": "KYA AAPNE | *NAHI DEKHA?*"
+   },
+   "card": {
+    "ayah": "105:1"
+   },
+   "say": {
+    "en": "Surah Al-Fil begins with a question: Have you not considered how your Lord dealt with the companions of the elephant?",
+    "hi": "Surah Al-Fil ek sawal se shuru hoti hai: kya aapne nahi dekha ke aapke Rab ne haathi waalon ke saath kya kiya?"
+   }
+  },
+  {
+   "art": "town-dusk",
+   "footage": "desert sand dunes wind",
+   "label": {
+    "en": "THE PLAN",
+    "hi": "SAAZISH"
+   },
+   "heading": {
+    "en": "THEIR PLAN | *CAME TO NOTHING*",
+    "hi": "UNKI CHAAL | *NAAKAAM HO GAYI*"
+   },
+   "card": {
+    "ayah": "105:2"
+   },
+   "say": {
+    "en": "They came with a plan. And Allah made their plan go astray.",
+    "hi": "Woh ek chaal le kar aaye the. Aur Allah ne unki chaal ko bekaar kar diya."
+   }
+  },
+  {
+   "art": "dawn",
+   "footage": "birds flying flock sky",
+   "label": {
+    "en": "THE BIRDS",
+    "hi": "PARINDE"
+   },
+   "heading": {
+    "en": "BIRDS | *IN FLOCKS*",
+    "hi": "PARINDON KE | *JHUND*"
+   },
+   "card": {
+    "ayah": "105:3"
+   },
+   "say": {
+    "en": "And He sent against them birds, in flocks.",
+    "hi": "Aur Usne unpar parindon ke jhund ke jhund bheje."
+   }
+  },
+  {
+   "art": "darkness",
+   "footage": "desert sand storm",
+   "label": {
+    "en": "THE STONES",
+    "hi": "PATTHAR"
+   },
+   "heading": {
+    "en": "STONES | *OF HARD CLAY*",
+    "hi": "PAKKI MITTI KE | *PATTHAR*"
+   },
+   "card": {
+    "ayah": "105:4"
+   },
+   "say": {
+    "en": "Striking them with stones of hard, baked clay.",
+    "hi": "Jo unpar pakki hui mitti ke patthar maar rahe the."
+   }
+  },
+  {
+   "art": "shore",
+   "footage": "dry straw field wind",
+   "label": {
+    "en": "THE END",
+    "hi": "ANJAAM"
+   },
+   "heading": {
+    "en": "LIKE STRAW | *THAT WAS EATEN*",
+    "hi": "KHAAYE HUE | *BHOOSE KI TARAH*"
+   },
+   "card": {
+    "ayah": "105:5"
+   },
+   "say": {
+    "en": "And He made them like straw that has been eaten. The mighty army, with its elephant, was gone.",
+    "hi": "Aur Usne unhein khaaye hue bhoose ki tarah kar diya. Woh taaqatwar lashkar, apne haathi ke saath, khatam ho gaya."
+   }
+  },
+  {
+   "art": "paper",
+   "label": {
+    "en": "MAKKAH",
+    "hi": "MAKKAH"
+   },
+   "heading": {
+    "en": "THE PROPHET ﷺ SAID",
+    "hi": "NABI ﷺ NE FARMAYA"
+   },
+   "card": {
+    "hadith": "muslim:3306",
+    "quote_from": "Verily Allah, the Exalted and Majestic, held back the Ele- phants from Mecca, and gave its domination to His Messenger and believers."
+   },
+   "say": {
+    "en": "In the year Makkah was conquered, the Prophet, peace be upon him, said: Allah held back the elephants from Makkah.",
+    "hi": "Fatah Makkah ke saal Nabi sallallahu alaihi wasallam ne farmaya: Allah ne haathiyon ko Makkah se rok diya."
+   }
+  },
+  {
+   "art": "town-dawn",
+   "footage": "camel resting desert",
+   "label": {
+    "en": "HUDAIBIYA",
+    "hi": "HUDAIBIYA"
+   },
+   "heading": {
+    "en": "STOPPED BY HIM | *WHO STOPPED THE ELEPHANT*",
+    "hi": "USNE ROKA | *JISNE HAATHI KO ROKA*"
+   },
+   "say": {
+    "en": "At Hudaibiya, the Prophet's camel sat down and would not rise. People said she had become stubborn. He said: She was stopped by Him who stopped the elephant.",
+    "hi": "Hudaibiya mein Nabi ki oontni baith gayi aur na uthi. Logon ne kaha woh ziddi ho gayi. Aap ne farmaya: use usi ne roka hai jisne haathi ko roka tha."
+   }
+  },
+  {
+   "art": "town-dawn",
+   "label": {
+    "en": "THIS HOUSE",
+    "hi": "YEH GHAR"
+   },
+   "heading": {
+    "en": "THE LORD | *OF THIS HOUSE*",
+    "hi": "IS GHAR KA | *RAB*"
+   },
+   "card": {
+    "ayah": "106:3-4"
+   },
+   "say": {
+    "en": "The very next surah tells Quraysh: Worship the Lord of this House, who fed them against hunger and made them safe from fear.",
+    "hi": "Agli hi surah Quraish se kehti hai: is Ghar ke Rab ki ibadat karo, jisne unhein bhook mein khilaya aur khauf se aman diya."
+   }
+  },
+  {
+   "art": "dawn",
+   "footage": "birds flying flock sky",
+   "label": {
+    "en": "FOR YOU",
+    "hi": "AAPKE LIYE"
+   },
+   "heading": {
+    "en": "NO ARMY IS TOO BIG | *FOR ALLAH*",
+    "hi": "ALLAH KE AAGE | *KOI LASHKAR BADA NAHI*"
+   },
+   "card": {
+    "ayah": "105:3"
+   },
+   "say": {
+    "en": "Whatever stands against you today, however big it looks, Allah can stop it with the smallest of His creation. Trust Him, and worship Him.",
+    "hi": "Aaj aapke saamne jo bhi khada hai, kitna bhi bada lage, Allah use apni sabse chhoti makhlooq se rok sakta hai. Usi par bharosa rakho, usi ki ibadat karo."
+   }
+  },
+  {
+   "art": "dawn",
+   "label": {
+    "en": "SHARE",
+    "hi": "SHARE"
+   },
+   "heading": {
+    "en": "SEND THIS TO SOMEONE | *WHO FEELS SMALL*",
+    "hi": "YEH USAY BHEJEIN | *JO KHUD KO KAMZOR SAMJHE*"
+   },
+   "say": {
+    "en": "Send this to someone who feels small against a big problem today.",
+    "hi": "Yeh video usay bhejein jo aaj kisi badi mushkil ke saamne khud ko kamzor samajh raha hai."
+   }
+  }
+ ]
+}

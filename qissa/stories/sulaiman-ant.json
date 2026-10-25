@@ -1,0 +1,461 @@
+{
+ "id": "sulaiman-ant",
+ "number": 7,
+ "title": {
+  "en": "Sulaiman (AS): The Ant, the Hoopoe and the Queen",
+  "hi": "Sulaiman (AS): Chiyunti, Hud-hud aur Malika"
+ },
+ "status": "draft: to be checked by a scholar before public release",
+ "sources": [
+  "Quran 27:15-44",
+  "Sahih al-Bukhari 3423"
+ ],
+ "parts": [
+  [
+   1,
+   11
+  ],
+  [
+   12,
+   24
+  ]
+ ],
+ "scenes": [
+  {
+   "art": "town-dawn",
+   "footage": "ants walking",
+   "heading": {
+    "en": "AN ANT, A BIRD | *AND A QUEEN*",
+    "hi": "EK CHIYUNTI, EK PARINDA | *AUR EK MALIKA*"
+   },
+   "say": {
+    "en": "A king who was also a prophet. A tiny ant that spoke. A bird that brought news. And a queen who changed her heart. All of it, from the Quran.",
+    "hi": "Ek badshah jo paighambar bhi the. Ek chhoti si chiyunti jo boli. Ek parinda jo khabar laaya. Aur ek malika jiska dil badal gaya. Sab kuch Quran se."
+   }
+  },
+  {
+   "art": "paper",
+   "label": {
+    "en": "THE MAN",
+    "hi": "WOH SHAKHS"
+   },
+   "heading": {
+    "en": "DAWUD AND SULAIMAN | *GIVEN KNOWLEDGE*",
+    "hi": "DAWUD AUR SULAIMAN | *ILM DIYA GAYA*"
+   },
+   "card": {
+    "ayah": "27:15"
+   },
+   "say": {
+    "en": "Allah gave Dawud and his son Sulaiman, peace be upon them, knowledge. And they said: Praise be to Allah, who has favoured us over many of His believing servants.",
+    "hi": "Allah ne Dawud aur Sulaiman alaihis salam ko ilm diya. Aur unhone kaha: saari tareef Allah ke liye hai, jisne humein apne bahut se momin bandon par fazilat di."
+   }
+  },
+  {
+   "art": "dawn",
+   "footage": "birds flying flock sky",
+   "label": {
+    "en": "THE GIFT",
+    "hi": "NEMAT"
+   },
+   "heading": {
+    "en": "THE LANGUAGE | *OF THE BIRDS*",
+    "hi": "PARINDON KI | *BOLI*"
+   },
+   "card": {
+    "ayah": "27:16"
+   },
+   "say": {
+    "en": "Sulaiman inherited from Dawud. He said: O people, we have been taught the language of the birds, and given from all things. This is a clear bounty.",
+    "hi": "Sulaiman, Dawud ke waaris bane. Unhone kaha: logon, humein parindon ki boli sikhayi gayi hai, aur har cheez mein se diya gaya hai. Yeh khula hua fazl hai."
+   }
+  },
+  {
+   "art": "town-dusk",
+   "footage": "desert sand dunes wind",
+   "label": {
+    "en": "THE ARMY",
+    "hi": "LASHKAR"
+   },
+   "heading": {
+    "en": "JINN, MEN | *AND BIRDS*",
+    "hi": "JINN, INSAAN | *AUR PARINDE*"
+   },
+   "card": {
+    "ayah": "27:17"
+   },
+   "say": {
+    "en": "His army was gathered for him: jinn, men and birds, marching in ordered rows.",
+    "hi": "Unke liye unka lashkar jama kiya gaya: jinn, insaan aur parinde, sab qatar mein chalte hue."
+   }
+  },
+  {
+   "art": "shore",
+   "footage": "ants walking",
+   "label": {
+    "en": "THE VALLEY",
+    "hi": "WAADI"
+   },
+   "heading": {
+    "en": "THE VALLEY | *OF THE ANTS*",
+    "hi": "CHIYUNTIYON KI | *WAADI*"
+   },
+   "card": {
+    "ayah": "27:18"
+   },
+   "say": {
+    "en": "They came to the valley of the ants. And one ant said: O ants, go into your homes, so Sulaiman and his army do not crush you without knowing.",
+    "hi": "Woh chiyuntiyon ki waadi tak pahunche. Ek chiyunti ne kaha: aye chiyuntiyon, apne gharon mein chali jao, kahin Sulaiman aur unka lashkar anjaane mein tumhein kuchal na de."
+   }
+  },
+  {
+   "art": "paper",
+   "label": {
+    "en": "THE SMILE",
+    "hi": "MUSKURAHAT"
+   },
+   "heading": {
+    "en": "HE SMILED, | *THEN HE MADE DUA*",
+    "hi": "WOH MUSKURAYE, | *PHIR DUA KI*"
+   },
+   "card": {
+    "ayah": "27:19"
+   },
+   "say": {
+    "en": "Sulaiman smiled at her words. Then he said: My Lord, help me to be grateful for Your favour on me and on my parents, and to do good that pleases You.",
+    "hi": "Sulaiman uski baat par muskuraye. Phir kaha: aye mere Rab, mujhe taufeeq de ke main Teri nemat ka shukr karoon, jo Tune mujh par aur mere waalidain par ki, aur aise nek kaam karoon jo Tujhe pasand hon."
+   }
+  },
+  {
+   "art": "town-dawn",
+   "footage": "hoopoe bird",
+   "label": {
+    "en": "THE HOOPOE",
+    "hi": "HUD-HUD"
+   },
+   "heading": {
+    "en": "WHERE IS | *THE HOOPOE?*",
+    "hi": "HUD-HUD | *KAHAN HAI?*"
+   },
+   "card": {
+    "ayah": "27:20-21"
+   },
+   "say": {
+    "en": "He checked the birds and said: Why do I not see the hoopoe? Is he absent? Unless he brings a clear reason, he will be punished.",
+    "hi": "Unhone parindon ka jaiza liya aur kaha: mujhe hud-hud nazar kyun nahi aata? Kya woh ghaib hai? Agar woh koi saaf wajah na laaya, to use saza milegi."
+   }
+  },
+  {
+   "art": "dawn",
+   "footage": "hoopoe bird",
+   "label": {
+    "en": "THE NEWS",
+    "hi": "KHABAR"
+   },
+   "heading": {
+    "en": "SURE NEWS | *FROM SABA*",
+    "hi": "SABA SE | *PAKKI KHABAR*"
+   },
+   "card": {
+    "ayah": "27:22-23"
+   },
+   "say": {
+    "en": "The hoopoe did not stay away long. He said: I have come from Saba with sure news. I found a woman ruling them, given of all things, with a great throne.",
+    "hi": "Hud-hud zyada der door na raha. Usne kaha: main Saba se pakki khabar laaya hoon. Maine ek aurat ko unpar hukumat karte paaya, use har cheez di gayi hai, aur uska ek bada takht hai."
+   }
+  },
+  {
+   "art": "town-dusk",
+   "footage": "sun rising desert",
+   "label": {
+    "en": "THE SUN",
+    "hi": "SURAJ"
+   },
+   "heading": {
+    "en": "THEY BOWED | *TO THE SUN*",
+    "hi": "WOH SURAJ KO | *SAJDA KARTE THE*"
+   },
+   "card": {
+    "ayah": "27:24"
+   },
+   "say": {
+    "en": "I found her and her people bowing down to the sun instead of Allah. Shaitan made their deeds look good to them, and turned them from the way.",
+    "hi": "Maine use aur uski qaum ko Allah ko chhod kar suraj ko sajda karte paaya. Shaitan ne unke aamaal unhein achhe dikha diye, aur unhein raaste se rok diya."
+   }
+  },
+  {
+   "art": "paper",
+   "label": {
+    "en": "THE LETTER",
+    "hi": "KHAT"
+   },
+   "heading": {
+    "en": "TAKE THIS | *LETTER OF MINE*",
+    "hi": "MERA YEH | *KHAT LE JAO*"
+   },
+   "card": {
+    "ayah": "27:27-28"
+   },
+   "say": {
+    "en": "Sulaiman said: We will see if you told the truth or lied. Take this letter of mine to them, then step back and see what they answer.",
+    "hi": "Sulaiman ne kaha: hum dekhenge ke tumne sach kaha ya jhooth. Mera yeh khat unke paas le jao, phir hat kar dekho woh kya jawab dete hain."
+   }
+  },
+  {
+   "art": "town-dusk",
+   "footage": "old palace courtyard night",
+   "label": {
+    "en": "PART 2 NEXT",
+    "hi": "AGLA HISSA"
+   },
+   "heading": {
+    "en": "A LETTER ARRIVES. | *WHAT WILL SHE DO?*",
+    "hi": "KHAT PAHUNCH GAYA. | *AB WOH KYA KAREGI?*"
+   },
+   "say": {
+    "en": "The letter is on its way to the queen of Saba. What did it say, and what did she do? Watch part two.",
+    "hi": "Khat Saba ki malika ki taraf ja raha hai. Usmein kya likha tha, aur usne kya kiya? Doosra hissa dekhiye."
+   }
+  },
+  {
+   "art": "town-dawn",
+   "footage": "hoopoe bird",
+   "label": {
+    "en": "PART 2",
+    "hi": "HISSA 2"
+   },
+   "heading": {
+    "en": "THE HOOPOE | *AND THE LETTER*",
+    "hi": "HUD-HUD | *AUR KHAT*"
+   },
+   "say": {
+    "en": "Sulaiman, peace be upon him, sent a letter with the hoopoe to a queen whose people bowed to the sun.",
+    "hi": "Sulaiman alaihis salam ne hud-hud ke haath khat bheja, us malika ko jiski qaum suraj ko sajda karti thi."
+   }
+  },
+  {
+   "art": "paper",
+   "label": {
+    "en": "THE LETTER",
+    "hi": "KHAT"
+   },
+   "heading": {
+    "en": "IN THE NAME | *OF ALLAH*",
+    "hi": "ALLAH KE | *NAAM SE*"
+   },
+   "card": {
+    "ayah": "27:29-31"
+   },
+   "say": {
+    "en": "She said: A noble letter has come to me, from Sulaiman. In the name of Allah, the Most Merciful. Do not be proud against me, come to me in submission.",
+    "hi": "Usne kaha: mere paas Sulaiman ka ek izzat wala khat aaya hai. Allah ke naam se jo bada meherbaan, nihayat reham wala hai. Mujhse sarkashi na karo, farmabardar ban kar aa jao."
+   }
+  },
+  {
+   "art": "town-dusk",
+   "footage": "old palace hall empty",
+   "label": {
+    "en": "THE COUNCIL",
+    "hi": "MASHWARA"
+   },
+   "heading": {
+    "en": "ADVISE ME | *IN MY AFFAIR*",
+    "hi": "IS MAAMLE MEIN | *MUJHE MASHWARA DO*"
+   },
+   "card": {
+    "ayah": "27:32-33"
+   },
+   "say": {
+    "en": "She asked her chiefs for advice. They said: We are strong in war, but the command is yours.",
+    "hi": "Usne apne sardaron se mashwara maanga. Unhone kaha: hum jung mein taaqatwar hain, lekin hukm aapka hai."
+   }
+  },
+  {
+   "art": "paper",
+   "footage": "gold coins treasure",
+   "label": {
+    "en": "THE GIFT",
+    "hi": "TOHFA"
+   },
+   "heading": {
+    "en": "I WILL SEND | *A GIFT*",
+    "hi": "MAIN EK TOHFA | *BHEJUNGI*"
+   },
+   "card": {
+    "ayah": "27:34-35"
+   },
+   "say": {
+    "en": "She said: When kings enter a town, they ruin it. So I will send them a gift, and see what the messengers bring back.",
+    "hi": "Usne kaha: badshah jab kisi basti mein aate hain to use barbaad kar dete hain. Main unhein tohfa bhejti hoon, dekhti hoon qaasid kya jawab laate hain."
+   }
+  },
+  {
+   "art": "town-dawn",
+   "footage": "gold coins treasure",
+   "label": {
+    "en": "THE ANSWER",
+    "hi": "JAWAB"
+   },
+   "heading": {
+    "en": "WHAT ALLAH GAVE ME | *IS BETTER*",
+    "hi": "JO ALLAH NE MUJHE DIYA | *WOH BEHTAR HAI*"
+   },
+   "card": {
+    "ayah": "27:36"
+   },
+   "say": {
+    "en": "Sulaiman said: Do you offer me wealth? What Allah has given me is better than what He has given you.",
+    "hi": "Sulaiman ne kaha: kya tum mujhe maal dete ho? Jo Allah ne mujhe diya hai, woh usse behtar hai jo tumhein diya."
+   }
+  },
+  {
+   "art": "darkness",
+   "footage": "royal throne room empty",
+   "label": {
+    "en": "THE THRONE",
+    "hi": "TAKHT"
+   },
+   "heading": {
+    "en": "WHO WILL BRING | *HER THRONE?*",
+    "hi": "USKA TAKHT | *KAUN LAAYEGA?*"
+   },
+   "card": {
+    "ayah": "27:38-39"
+   },
+   "say": {
+    "en": "Sulaiman asked: Which of you will bring me her throne? A powerful one of the jinn said: Before you rise from your place.",
+    "hi": "Sulaiman ne poocha: tum mein se kaun uska takht laayega? Ek taaqatwar jinn ne kaha: aapke apni jagah se uthne se pehle."
+   }
+  },
+  {
+   "art": "dawn",
+   "label": {
+    "en": "THE TEST",
+    "hi": "IMTIHAAN"
+   },
+   "heading": {
+    "en": "BEFORE A BLINK. | *THEN: GRATEFUL?*",
+    "hi": "PALAK JHAPAKNE SE PEHLE. | *PHIR: SHUKR?*"
+   },
+   "card": {
+    "ayah": "27:40"
+   },
+   "say": {
+    "en": "One who had knowledge of the Scripture brought it before a blink of the eye. Sulaiman saw it before him and said: This is from the favour of my Lord, to test me, whether I will be grateful or ungrateful.",
+    "hi": "Jiske paas kitaab ka ilm tha, woh palak jhapakne se pehle use le aaya. Sulaiman ne use saamne dekha aur kaha: yeh mere Rab ka fazl hai, mujhe aazmane ke liye ke main shukr karta hoon ya nashukri."
+   },
+   "footage": "royal throne room empty"
+  },
+  {
+   "art": "darkness",
+   "footage": "royal throne room empty",
+   "label": {
+    "en": "THE THRONE",
+    "hi": "TAKHT"
+   },
+   "heading": {
+    "en": "IS YOUR THRONE | *LIKE THIS?*",
+    "hi": "KYA TUMHARA TAKHT | *AISA HI HAI?*"
+   },
+   "card": {
+    "ayah": "27:41-42",
+    "part": "start"
+   },
+   "say": {
+    "en": "Her throne was disguised. When she arrived, she was asked: Is your throne like this? She said: It is as though it were it.",
+    "hi": "Uska takht badal diya gaya. Jab woh aayi to poocha gaya: kya tumhara takht aisa hi hai? Usne kaha: yeh to goya wahi hai."
+   }
+  },
+  {
+   "art": "town-dawn",
+   "footage": "water reflection marble floor",
+   "label": {
+    "en": "THE PALACE",
+    "hi": "MAHAL"
+   },
+   "heading": {
+    "en": "A FLOOR | *OF SMOOTH GLASS*",
+    "hi": "SHEESHE KA | *CHIKNA FARSH*"
+   },
+   "card": {
+    "ayah": "27:44",
+    "part": "start"
+   },
+   "say": {
+    "en": "She was told: Enter the palace. She thought its floor was water. He said: It is made smooth with glass.",
+    "hi": "Usse kaha gaya: mahal mein aao. Usne farsh ko paani samjha. Unhone kaha: yeh sheeshe se chikna banaya gaya hai."
+   }
+  },
+  {
+   "art": "dawn",
+   "label": {
+    "en": "HER CHOICE",
+    "hi": "USKA FAISLA"
+   },
+   "heading": {
+    "en": "I SUBMIT | *WITH SULAIMAN*",
+    "hi": "MAIN SULAIMAN KE SAATH | *ISLAM LAATI HOON*"
+   },
+   "card": {
+    "ayah": "27:44"
+   },
+   "say": {
+    "en": "She said: My Lord, I have wronged myself, and I submit with Sulaiman to Allah, Lord of the worlds.",
+    "hi": "Usne kaha: aye mere Rab, maine apne upar zulm kiya, aur ab main Sulaiman ke saath Allah, saare jahanon ke Rab, ke aage jhukti hoon."
+   }
+  },
+  {
+   "art": "paper",
+   "label": {
+    "en": "HONOUR",
+    "hi": "IZZAT"
+   },
+   "heading": {
+    "en": "THE PROPHET ﷺ SAID | *MY BROTHER SULAIMAN*",
+    "hi": "NABI ﷺ NE KAHA | *MERE BHAI SULAIMAN*"
+   },
+   "card": {
+    "hadith": "bukhari:3423",
+    "quote_from": "I remembered the invocation of my brother Solomon: 'And grant me a kingdom such as shall not belong to any other after me.'"
+   },
+   "say": {
+    "en": "The Prophet, peace be upon him, remembered the dua of Sulaiman, and called him: my brother Sulaiman.",
+    "hi": "Nabi sallallahu alaihi wasallam ne Sulaiman ki dua yaad ki, aur unhein kaha: mere bhai Sulaiman."
+   }
+  },
+  {
+   "art": "shore",
+   "footage": "ants walking",
+   "label": {
+    "en": "FOR YOU",
+    "hi": "AAPKE LIYE"
+   },
+   "heading": {
+    "en": "WHEN ALLAH GIVES YOU MORE, | *SAY THANK YOU*",
+    "hi": "JAB ALLAH ZYADA DE, | *SHUKR KARO*"
+   },
+   "card": {
+    "ayah": "27:19"
+   },
+   "say": {
+    "en": "A kingdom, an army, the birds. And still he heard a small ant, and made a dua to be grateful. Whatever Allah gives you is a test. Be grateful.",
+    "hi": "Badshahat, lashkar, parinde, sab kuch tha. Phir bhi unhone ek chhoti chiyunti ki suni, aur shukr ki dua ki. Allah jo de, woh imtihaan hai. Shukr guzaar bano."
+   }
+  },
+  {
+   "art": "dawn",
+   "label": {
+    "en": "SHARE",
+    "hi": "SHARE"
+   },
+   "heading": {
+    "en": "SEND THIS TO SOMEONE | *WHO HAS BEEN BLESSED*",
+    "hi": "YEH USAY BHEJEIN | *JISE ALLAH NE NAWAZA HAI*"
+   },
+   "say": {
+    "en": "Send this to someone Allah has blessed, as a reminder to stay grateful.",
+    "hi": "Yeh video usay bhejein jise Allah ne nawaza hai, taake woh shukr guzaar rahe."
+   }
+  }
+ ]
+}
