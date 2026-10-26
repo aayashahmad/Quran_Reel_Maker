@@ -83,6 +83,8 @@ def slot_key(date, slot):
 
 def daily(db):
     """Make (and upload) the next of today's VIDEOS_PER_DAY videos; run it once per slot (e.g. 12:00 and 20:00)."""
+    import os
+    from hadith_shorts.due import due_slot
     date = today()
     for slot in range(1, settings.VIDEOS_PER_DAY + 1):
         day = slot_key(date, slot)
@@ -90,6 +92,9 @@ def daily(db):
             break
     else:
         print(f"{date}: all {settings.VIDEOS_PER_DAY} videos are uploaded, nothing to do.")
+        return 0
+    if os.getenv("FORCE") != "1" and due_slot(db_path=settings.DB_PATH) is None:
+        print(f"{date}: the next video (slot {slot}) is not due yet.")
         return 0
     return daily_slot(db, day, settings.SLOT_LANGS[(slot - 1) % len(settings.SLOT_LANGS)])
 

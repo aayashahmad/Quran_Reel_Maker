@@ -60,6 +60,10 @@ def run(out_dir, log=print):
     if sum(1 for e in state if e["day"] == today and e["status"] == "uploaded") >= PER_DAY:
         log(f"{today}: {PER_DAY} Qissa videos already uploaded.")
         return 0
+    from qissa.due import is_due
+    if os.getenv("FORCE") != "1" and not is_due():
+        log("No Qissa video is due yet.")
+        return 0
     done = {(e["story"], e["part"], e["lang"]) for e in state if e["status"] == "uploaded"}
     item = next(((s, k, lang) for s, k, lang in queue() if (s["id"], k, lang) not in done), None)
     if not item:

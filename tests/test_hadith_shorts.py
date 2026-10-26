@@ -122,6 +122,8 @@ def test_sunnah_verification():
 
 def test_two_videos_a_day(tmp_path, monkeypatch):
     from hadith_shorts import __main__ as job
+    import os
+    monkeypatch.setattr(os, "environ", {**os.environ, "FORCE": "1"})
     monkeypatch.setattr(settings, "DB_PATH", tmp_path / "h.sqlite")
     monkeypatch.setattr(settings, "VIDEOS_PER_DAY", 2)
     db = store.connect()
@@ -144,3 +146,20 @@ def test_urdu_text_and_metadata():
     title, desc, tags = publish.metadata(h, "نیت", "ur")
     assert "صحیح بخاری 1" in title and h.url in desc and "حدیث" in tags
     assert source.eligible(source.get("bukhari:6415"), "ur") in (True, False)
+
+
+def test_due_slots_follow_the_clock(tmp_path):
+    from datetime import datetime
+    from zoneinfo import ZoneInfo
+    from hadith_shorts import due
+    db = store.connect(tmp_path / "h.sqlite")
+    tz = ZoneInfo("Asia/Kolkata")
+    at = lambda h, m: datetime(2026, 10, 26, h, m, tzinfo=tz)
+    p = tmp_path / "h.sqlite"
+    assert due.due_slot(at(11, 0), p) is None                 # before 12:00 nothing is due
+    assert due.due_slot(at(14, 30), p) == 1                   # 12:00 was missed: catch up
+    store.add_video(db, "2026-10-26", "bukhari:1", "t", "p", "uploaded")
+    assert due.due_slot(at(14, 30), p) is None                # done, and 20:00 not yet
+    assert due.due_slot(at(20, 30), p) == 2
+    store.add_video(db, "2026-10-26#2", "bukhari:2", "t", "p", "uploaded")
+    assert due.due_slot(at(23, 30), p) is None
