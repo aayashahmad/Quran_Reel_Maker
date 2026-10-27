@@ -65,6 +65,12 @@ def clip(query, seed=0):
         data.raise_for_status()
         tmp = out.with_suffix(".part")
         tmp.write_bytes(data.content)
+        import subprocess
+        ok = subprocess.run(["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries", "stream=codec_name",
+                             "-of", "csv=p=0", str(tmp)], capture_output=True, text=True).stdout.strip()
+        if not ok:                                       # not a playable video: don't keep it
+            tmp.unlink(missing_ok=True)
+            return None, None
         tmp.replace(out)
         credit = {"by": v.get("user", {}).get("name", ""), "url": v.get("url", ""), "source": "Pexels"}
         meta.write_text(json.dumps(credit))

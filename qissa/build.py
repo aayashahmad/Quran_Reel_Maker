@@ -470,11 +470,23 @@ def make(story_id, lang, out_dir, log=print, part=None, use_footage=True):
                  f"[bg][ov]overlay=0:0:eof_action=repeat,fade=t=in:st=0:d=0.25,format=yuv420p[v];"
                  f"[2:a]adelay={int(lead * 1000)}|{int(lead * 1000)},apad,atrim=0:{secs:.3f}[a]")
         seg = work / f"s{i}.mp4"
-        r = subprocess.run(["ffmpeg", "-y", "-loglevel", "error", *bg_in, "-f", "concat", "-safe", "0", "-i", str(lst),
-                            "-i", str(voice), "-loop", "1", "-i", str(grain), "-filter_complex", graph,
-                            "-map", "[v]", "-map", "[a]", "-t", f"{secs:.3f}", "-r", "30", "-c:v", "libx264",
-                            "-preset", "medium", "-crf", "20", "-c:a", "aac", "-b:a", "160k", "-ar", "44100", str(seg)],
-                           capture_output=True, text=True)
+
+        def render_scene(bg_in, graph):
+            return subprocess.run(["ffmpeg", "-y", "-loglevel", "error", *bg_in, "-f", "concat", "-safe", "0", "-i",
+                                   str(lst), "-i", str(voice), "-loop", "1", "-i", str(grain), "-filter_complex", graph,
+                                   "-map", "[v]", "-map", "[a]", "-t", f"{secs:.3f}", "-r", "30", "-c:v", "libx264",
+                                   "-preset", "medium", "-crf", "20", "-c:a", "aac", "-b:a", "160k", "-ar", "44100",
+                                   str(seg)], capture_output=True, text=True)
+        r = render_scene(bg_in, graph)
+        if r.returncode and clip:                         # a clip ffmpeg can't use: fall back to the drawn art
+            log(f"  footage {clip.name} failed ({r.stderr.strip()[-200:]}); using drawn art for scene {i + 1}")
+            credits = [c for c in credits if c is not credit]
+            png_bg = work / f"bg{i}.png"
+            art.draw(sc["art"], seed=i).save(png_bg)
+            move = ["(iw-%d)*t/%f" % (W, secs), "(ih-%d)/2" % H] if i % 2 else ["(iw-%d)/2" % W, "(ih-%d)*(1-t/%f)" % (H, secs)]
+            bg = f"[0:v]crop={W}:{H}:x='{move[0]}':y='{move[1]}',setsar=1,fps=30[bg0];[bg0][3:v]overlay=0:0[bg]"
+            graph = bg + graph[graph.index(";[1:v]"):]
+            r = render_scene(["-loop", "1", "-i", str(png_bg)], graph)
         if r.returncode:
             raise StoryError(f"scene {i + 1}: ffmpeg failed: {r.stderr[-600:]}")
         segs.append(seg)
