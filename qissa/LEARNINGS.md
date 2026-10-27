@@ -15,3 +15,5 @@ every later story follows it. Keep each line short and dated.
   default for its art is not right.
 - 2026-10-25: Two Qissa videos a day, part by part (long stories split with "parts" into videos under 3 minutes),
   English then Hinglish; each uploaded private and published 5 hours later so the owner can review it.
+- 2026-10-27: The day's two Qissa videos must be different stories: English and Hinglish run as separate series
+  (Hinglish starts from the middle of the list); a long story continues part by part on the following days.

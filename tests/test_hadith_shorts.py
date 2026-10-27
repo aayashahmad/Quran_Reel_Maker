@@ -77,6 +77,8 @@ def test_duplicate_prevention(tmp_path):
 
 def test_crash_during_upload_blocks_reupload(tmp_path, monkeypatch):
     from hadith_shorts import __main__ as job
+    import os
+    monkeypatch.setattr(os, "environ", {**os.environ, "FORCE": "1"})     # whatever the time of day
     monkeypatch.setattr(settings, "DB_PATH", tmp_path / "h.sqlite")
     db = store.connect()
     store.add_video(db, job.today(), "bukhari:1", "t", "p.mp4", "uploading")     # crashed mid-upload

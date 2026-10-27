@@ -26,13 +26,22 @@ def save_state(state):
     STATE.write_text(json.dumps(state, ensure_ascii=False, indent=1))
 
 
-def queue():
-    """Every (story, part, lang) in publishing order."""
-    stories = sorted((build.load(f.stem) for f in build.STORIES.glob("*.json")), key=lambda s: s.get("number", 999))
-    for s in stories:
-        for k, _ in build.parts_of(s):
-            for lang in ("en", "hi"):
-                yield s, k, lang
+LANG_OF_SLOT = [x.strip() for x in os.getenv("QISSA_LANGS", "en,hi").split(",") if x.strip()]
+
+
+def stories():
+    return sorted((build.load(f.stem) for f in build.STORIES.glob("*.json")), key=lambda s: s.get("number", 999))
+
+
+def queue(lang="en"):
+    """Every (story, part, lang) of one language in publishing order: stories in order, each part by part.
+    Each language starts at a different story (Hinglish from the middle), so the day's two videos differ."""
+    ss = stories()
+    k = LANG_OF_SLOT.index(lang) if lang in LANG_OF_SLOT else 0
+    shift = (len(ss) * k) // max(1, len(LANG_OF_SLOT))
+    for s in ss[shift:] + ss[:shift]:
+        for part, _ in build.parts_of(s):
+            yield s, part, lang
 
 
 def metadata(story, part, parts, lang, credits):
@@ -65,9 +74,16 @@ def run(out_dir, log=print):
         log("No Qissa video is due yet.")
         return 0
     done = {(e["story"], e["part"], e["lang"]) for e in state if e["status"] == "uploaded"}
-    item = next(((s, k, lang) for s, k, lang in queue() if (s["id"], k, lang) not in done), None)
+    todays = [e for e in state if e["day"] == today and e["status"] == "uploaded"]
+    lang = LANG_OF_SLOT[len(todays) % len(LANG_OF_SLOT)]
+    busy = {e["story"] for e in todays}                  # never the same story twice in one day
+    started = {e["story"] for e in state if e["status"] == "uploaded" and e["lang"] == lang}
+    items = [(s, k, l) for s, k, l in queue(lang) if (s["id"], k, l) not in done]
+    # finish a story that is half told (part by part) before starting a new one
+    item = next((it for it in items if it[0]["id"] in started and it[0]["id"] not in busy), None) \
+        or next((it for it in items if it[0]["id"] not in busy), None)
     if not item:
-        log("The Qissa queue is empty: write new stories (qissa-writer agent).")
+        log(f"The Qissa queue ({lang}) is empty: write new stories (qissa-writer agent).")
         return 0
     story, part, lang = item
     log(f"Making {story['id']} part {part} ({lang})")
