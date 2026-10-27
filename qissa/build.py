@@ -384,7 +384,17 @@ def speak(text, out, lang, rate=None):
                 elif ch["type"] == "WordBoundary":
                     words.append((ch["offset"] / 1e7, ch["duration"] / 1e7, ch["text"]))
         return words
-    words = asyncio.run(run())
+    import time
+    for attempt in range(6):                            # the free voice service sometimes returns no audio:
+        try:                                            # wait and try again (2, 4, 8, 16, 32 s)
+            words = asyncio.run(run())
+            if Path(out).exists() and Path(out).stat().st_size > 1000:
+                break
+            raise RuntimeError("empty audio")
+        except Exception as e:
+            if attempt == 5:
+                raise StoryError(f"the voice service failed 6 times: {e.__class__.__name__}: {e}")
+            time.sleep(2 ** (attempt + 1))
     r = subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", str(out)],
                        capture_output=True, text=True)
     return float(r.stdout.strip()), words

@@ -63,10 +63,17 @@ def _edge(text, out, lang="en"):
     async def run():
         voice, rate = (settings.URDU_VOICE, settings.URDU_RATE) if lang == "ur" else (settings.ENGLISH_VOICE, settings.ENGLISH_RATE)
         await edge_tts.Communicate(spoken(text, lang), voice, rate=rate).save(str(out))
-    try:
-        asyncio.run(run())
-    except Exception as e:                       # network or service errors
-        raise TTSError(f"edge-tts failed: {e.__class__.__name__}: {e}")
+    import time
+    for attempt in range(6):                     # the free service sometimes returns no audio: retry with waits
+        try:
+            asyncio.run(run())
+            if Path(out).exists() and Path(out).stat().st_size > 1000:
+                return
+            raise RuntimeError("empty audio")
+        except Exception as e:                   # network or service errors
+            if attempt == 5:
+                raise TTSError(f"edge-tts failed 6 times: {e.__class__.__name__}: {e}")
+            time.sleep(2 ** (attempt + 1))
 
 
 def _say(text, out, lang="en"):
