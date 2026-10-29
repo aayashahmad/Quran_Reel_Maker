@@ -165,3 +165,13 @@ def test_due_slots_follow_the_clock(tmp_path):
     assert due.due_slot(at(20, 30), p) == 2
     store.add_video(db, "2026-10-26#2", "bukhari:2", "t", "p", "uploaded")
     assert due.due_slot(at(23, 30), p) is None
+
+
+def test_voice_says_salawat_after_every_mention_of_the_prophet():
+    from hadith_shorts.tts import spoken
+    assert spoken("The Prophet said: x") == "The Prophet (peace be upon him) said: x"
+    assert spoken("Allah's Messenger (ﷺ) said") == "Allah's Messenger (peace be upon him) said"
+    assert spoken("the Prophet (peace be upon him) said") == "the Prophet (peace be upon him) said"
+    for other in ("the Prophets came", "the Prophet Musa said", "Narrated Muhammad bin Sirin"):
+        assert spoken(other) == other
+    assert spoken("نبیؐ اور ابوہریرہؓ", "ur") == "نبی صلی اللہ علیہ وسلم اور ابوہریرہ رضی اللہ عنہ"

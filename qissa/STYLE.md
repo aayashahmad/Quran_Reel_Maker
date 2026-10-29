@@ -45,7 +45,8 @@ animals the story mentions). `"art": "paper"` scenes stay plain paper (cards, du
 - Narration: 1–3 short sentences per scene, spoken calmly; English plain and warm; **Hinglish** = everyday
   Roman Hindi/Urdu as people text it ("Unhone apni qaum ko Allah ki taraf bulaya"), Islamic words in their usual
   spelling (Allah, Quran, dua, imaan, sabr, qayamat, rasool, sallallahu alaihi wasallam).
-- Say "peace be upon him" / "sallallahu alaihi wasallam" after the Prophet ﷺ, "alaihis salam" (AS) for prophets.
+- Say "peace be upon him" / "sallallahu alaihi wasallam" after **every** mention of the Prophet ﷺ in narration
+  (also "Muhammad", "the Prophet's ..."; `check` flags a missing one), "alaihis salam" (AS) for prophets.
 - Vary `art` from scene to scene; dark arts for trials, dawn / town-dawn for relief.
 
 ## Checks before handing over

@@ -116,6 +116,13 @@ def hadith_card(ref, lang, verify=True, quote_from=None):
     return {"arabic": h.arabic, "meaning": meaning, "ref": h.citation.upper(), "url": h.url}
 
 
+# a mention of our Prophet in the narration that the voice must follow with the salawat (STYLE.md)
+NO_SALAWAT = {"en": re.compile(r"\b(?:[Tt]he Prophet|Allah's Messenger|[Tt]he Messenger of Allah|Muhammad)(?:'s)?"
+                               r"(?![a-zA-Z]| [A-Z][a-z]|,? \(?peace be upon him)"),
+              "hi": re.compile(r"\b(?:Nabi|Rasool(?:ullah)?|Muhammad)\b(?! (?:Ibrahim|Musa|Nuh|Yunus|Yusuf|Sulaiman|Isa))"
+                               r"(?!,? sallallahu alaihi wasallam)")}
+
+
 def check(story, verify=True):
     """Problems with a story script (empty = ready): languages, art, references, and that every source exists."""
     problems = []
@@ -126,6 +133,8 @@ def check(story, verify=True):
         for lang in ("en", "hi"):
             if not sc.get("say", {}).get(lang):
                 problems.append(f"scene {i}: no {lang} narration")
+            for m in NO_SALAWAT[lang].finditer(sc.get("say", {}).get(lang, "")):
+                problems.append(f"scene {i} ({lang}): say the salawat after {m.group(0)!r}")
             if not sc.get("heading", {}).get(lang):
                 problems.append(f"scene {i}: no {lang} heading")
         if sc.get("art") not in art.ARTS:

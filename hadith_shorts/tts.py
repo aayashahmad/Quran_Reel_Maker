@@ -47,11 +47,21 @@ def duration(path):
         raise TTSError(f"could not read the length of {path}")
 
 
+PBUH = "(peace be upon him)"
+# a mention of the Prophet: "the Prophet", "Allah's Messenger/Apostle", "the Messenger of Allah", with "Muhammad"
+# after it, and a possessive 's; not "the Prophets" nor "the Prophet Musa" (another prophet)
+_PROPHET = re.compile(r"\b(?:[Tt]he Prophet|Allah's (?:Messenger|Apostle)|(?:[Tt]he )?Messenger of Allah)(?: Muhammad)?(?:'s)?"
+                      r"(?![a-zA-Z]| [A-Z][a-z]| ?\(?(?:ﷺ|peace be upon him|p\.?b\.?u\.?h|may Allah))")
+
+
 def spoken(text, lang="en"):
-    """What the voice says: the text, with the ﷺ sign spoken out (and the brackets of explanations dropped)."""
+    """What the voice says: the text, with the ﷺ sign spoken out and said after every mention of the Prophet that
+    lacks it (some translations leave it out), ؐ and ؓ spoken in full (and in Urdu the brackets dropped)."""
     if lang == "ur":
-        return re.sub(r"[()]", " ", text.replace("ﷺ", "صلی اللہ علیہ وسلم"))
-    return text.replace("(ﷺ)", "(peace be upon him)").replace("ﷺ", "peace be upon him").replace("`", "'")
+        text = text.replace("ﷺ", " صلی اللہ علیہ وسلم ").replace("ؐ", " صلی اللہ علیہ وسلم ").replace("ؓ", " رضی اللہ عنہ ")
+        return re.sub(r"\s+", " ", re.sub(r"[()]", " ", text)).strip()
+    text = text.replace("(ﷺ)", PBUH).replace("ﷺ", PBUH).replace("ؐ", PBUH).replace("ؓ", "(may Allah be pleased with him)")
+    return _PROPHET.sub(lambda m: f"{m.group(0)} {PBUH}", text).replace("`", "'")
 
 
 def _edge(text, out, lang="en"):

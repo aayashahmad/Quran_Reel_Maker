@@ -17,3 +17,5 @@ every later story follows it. Keep each line short and dated.
   English then Hinglish; each uploaded private and published 5 hours later so the owner can review it.
 - 2026-10-27: The day's two Qissa videos must be different stories: English and Hinglish run as separate series
   (Hinglish starts from the middle of the list); a long story continues part by part on the following days.
+- 2026-10-29: The voice must say the salawat after every mention of our Prophet: "peace be upon him" (en),
+  "sallallahu alaihi wasallam" (hi), also after "Muhammad" and "the Prophet's". `check` now flags any mention without it.
