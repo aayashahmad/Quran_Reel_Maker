@@ -39,6 +39,14 @@ THEMES = {
               ["rosette", "rays"], "dawn", "zoom-in", "Make the Quran part of every day."),
 }
 DEFAULT = ("Daily Hadith", "", ["particles", "stars"], "dawn", "zoom-in", "Learn it, live it, and share it.")
+FOOTAGE = {   # theme -> real footage for when the hadith's own words name nothing to show (people-free)
+    "intention": "candle light dark", "patience": "ocean waves at night", "charity": "coins on table",
+    "knowledge": "old books library", "mercy": "rain drops leaves", "prayer": "mosque architecture",
+    "honesty": "calm lake reflection", "gratitude": "sunrise over hills", "character": "old town street houses",
+    "parents": "warm sunset field", "dua": "night sky timelapse", "repentance": "rain on window night",
+    "hereafter": "clouds moving sky timelapse", "faith": "starry night sky timelapse", "fasting": "crescent moon night",
+    "quran": "open book pages light", "default": "clouds moving sky timelapse",
+}
 GRADES = {   # ffmpeg colour grade per mood (no flashing, gentle contrast)
     "dawn": "colorbalance=rs=.06:gs=.02:bs=-.05:rm=.05:bm=-.03,eq=saturation=1.05",
     "warm": "colorbalance=rs=.08:gs=.03:bs=-.07,eq=saturation=1.08",

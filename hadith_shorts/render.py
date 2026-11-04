@@ -182,9 +182,72 @@ def outro_layer(h, reflection, path, lang="en"):
     _finish(img, path)
 
 
-def thumbnail(h, title, style, path, lang="en"):
+def footage_track(h, tid, parts, layers, work, lang, log=print):
+    """A background of real moving footage (Pexels) that follows what the hadith talks about: each caption part
+    shows a clip for the things its own words name (Urdu: the things the English translation names, in order),
+    with a slow camera move and crossfades. None without PEXELS_API_KEY or when no clip can be had (the
+    procedural loop is used then). Returns (path, credits)."""
+    import os
+    from qissa import footage
+    if not os.getenv("PEXELS_API_KEY"):
+        return None, []
+    whole = footage.queries_for(h.english) + [themes.FOOTAGE.get(tid, themes.FOOTAGE["default"])]
+    wanted = [whole[0]]                                              # the opening
+    for i, p in enumerate(parts):
+        own = footage.queries_for(p) if lang == "en" else []
+        wanted.append(own[0] if own else whole[min(i, len(whole) - 1)] if lang == "ur" else wanted[-1])
+    wanted.append(whole[-1])                                         # the closing: the theme's calm picture
+    X = 0.6                                                           # crossfade
+    pieces, credits, seeds = [], [], {}
+    try:
+        for k, (q, (_, sec)) in enumerate(zip(wanted, layers)):
+            if k and q == wanted[k - 1] and pieces:                  # the same subject goes on: longer piece
+                pieces[-1][1] += sec
+                continue
+            seeds[q] = seeds.get(q, -1) + 1
+            clip, credit = footage.clip(q, seeds[q] % 3)
+            if not clip:
+                clip, credit = footage.clip(whole[-1], 0)
+            if not clip:
+                return None, []
+            if credit and credit not in credits:
+                credits.append(credit)
+            pieces.append([clip, sec])
+        files = []
+        for k, (clip, sec) in enumerate(pieces):
+            length = sec + (X if k < len(pieces) - 1 else 0)
+            z = "1.10-0.08*t/%f" % length if k % 2 else "1.02+0.08*t/%f" % length
+            out = work / f"bg{k}.mp4"
+            subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-stream_loop", "-1", "-i", str(clip), "-t", f"{length:.3f}",
+                            "-vf", f"scale={W}:{H}:force_original_aspect_ratio=increase,crop={W}:{H},fps=30,"
+                                   f"scale=w='ceil({W}*({z})/2)*2':h='ceil({H}*({z})/2)*2':eval=frame,crop={W}:{H},"
+                                   f"eq=saturation=0.85:contrast=1.03,gblur=sigma=2.5,"   # soft and veiled: the text stays easy to read
+                                   f"drawbox=x=0:y=0:w=iw:h=ih:color=black@0.4:t=fill,setsar=1",
+                            "-an", "-c:v", "libx264", "-preset", "veryfast", "-crf", "19", str(out)], check=True,
+                           capture_output=True)
+            files.append(out)
+        track = work / "bg.mp4"
+        if len(files) == 1:
+            return files[0], credits
+        args, chain, prev, t = [], [], "0:v", 0.0
+        for f in files:
+            args += ["-i", str(f)]
+        for k in range(1, len(files)):
+            t += pieces[k - 1][1]
+            chain.append(f"[{prev}][{k}:v]xfade=transition=fade:duration={X}:offset={t:.3f}[x{k}]")
+            prev = f"x{k}"
+        subprocess.run(["ffmpeg", "-y", "-loglevel", "error", *args, "-filter_complex", ";".join(chain), "-map", f"[{prev}]",
+                        "-c:v", "libx264", "-preset", "veryfast", "-crf", "19", str(track)], check=True, capture_output=True)
+        log(f"Footage: {', '.join(dict.fromkeys(wanted))}")
+        return track, credits
+    except subprocess.CalledProcessError as e:
+        log(f"footage failed ({(e.stderr or b'').decode()[-200:]}); using the animated background")
+        return None, []
+
+
+def thumbnail(h, title, style, path, lang="en", bg=None):
     frame = Path(path).with_suffix(".bg.png")
-    subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-ss", "3", "-i", str(backgrounds.loop(style)), "-frames:v", "1",
+    subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-ss", "3", "-i", str(bg or backgrounds.loop(style)), "-frames:v", "1",
                     "-vf", "scale=1280:-2,crop=1280:720", str(frame)], check=True)
     img = Image.open(frame).convert("RGBA")
     frame.unlink()
@@ -245,6 +308,8 @@ def build(h, out_dir, log=print, lang="en"):
     if total > settings.VIDEO_MAX_SECONDS:
         raise ValueError(f"the video would be {total:.0f}s, more than {settings.VIDEO_MAX_SECONDS:.0f}s")
 
+    track, credits = footage_track(h, tid, parts, layers, work, lang, log)
+
     lst = work / "layers.txt"
     lst.write_text("".join(f"file '{p.name}'\nduration {sec:.3f}\n" for p, sec in layers) + f"file '{layers[-1][0].name}'\n")
 
@@ -264,6 +329,8 @@ def build(h, out_dir, log=print, lang="en"):
     bgf = (f"[0:v]scale={W}:{H},fps=30,scale=w='ceil({W}*({zoom})/2)*2':h='ceil({H}*({zoom})/2)*2':eval=frame,"
            f"crop={W}:{H}:x='(iw-{W})/2':y='{'(ih-%d)*(1-t/%f)' % (H, total) if plan['camera'] == 'pan-up' else '(ih-%d)/2' % H}',"
            f"{plan['grade']},vignette=PI/5,setsar=1[bg]")
+    if track:                                   # real footage already moves and crossfades: grade it only
+        bgf = f"[0:v]scale={W}:{H},fps=30,{plan['grade']},vignette=PI/5,setsar=1[bg]"
     graph = ";".join([bgf, "[1:v]format=rgba[ov]",
                       f"[bg][ov]overlay=0:0:format=auto:eof_action=repeat,fade=t=in:st=0:d={FADE},"
                       f"fade=t=out:st={total - FADE:.3f}:d={FADE},format=yuv420p[v]"] + chains +
@@ -271,7 +338,7 @@ def build(h, out_dir, log=print, lang="en"):
                       f"afade=t=out:st={total - FADE:.3f}:d={FADE}[a]"])
     mp4 = out_dir / f"{h.collection}_{h.number}{'_ur' if lang == 'ur' else ''}.mp4"
     log("Rendering the video")
-    cmd = ["ffmpeg", "-y", "-loglevel", "error", "-stream_loop", "-1", "-i", str(backgrounds.loop(style)),
+    cmd = ["ffmpeg", "-y", "-loglevel", "error", "-stream_loop", "-1", "-i", str(track or backgrounds.loop(style)),
            "-f", "concat", "-safe", "0", "-i", str(lst), *inputs, "-filter_complex", graph, "-map", "[v]", "-map", "[a]",
            "-t", f"{total:.3f}", "-r", "30", "-c:v", "libx264", "-preset", "medium", "-crf", "20",
            "-c:a", "aac", "-b:a", "160k", "-ar", "44100", "-movflags", "+faststart", str(mp4)]
@@ -279,11 +346,12 @@ def build(h, out_dir, log=print, lang="en"):
     if r.returncode:
         raise RuntimeError(f"ffmpeg failed: {r.stderr[-800:]}")
     thumb = mp4.with_name(mp4.stem + "_thumbnail.jpg")
-    thumbnail(h, title, style, thumb, lang)
+    thumbnail(h, title, style, thumb, lang, track)
     plan["captions"] = []
     t = layers[0][1]
     for s in segs:
         plan["captions"].append({"start": round(t, 3), "end": round(t + s["seconds"] - settings.PAUSE_SECONDS, 3), "text": s["text"]})
         t += s["seconds"]
     shutil.rmtree(work, ignore_errors=True)
-    return {"video": mp4, "thumbnail": thumb, "seconds": total, "plan": plan, "theme": tid, "title": title}
+    return {"video": mp4, "thumbnail": thumb, "seconds": total, "plan": plan, "theme": tid, "title": title,
+            "credits": credits}

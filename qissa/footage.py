@@ -33,6 +33,39 @@ QUERIES = {   # art name -> what to search for (people-free subjects)
     "night": "starry night sky timelapse",
 }
 
+# words in a text -> footage that shows them (people-free); the first matches in the text pick the clips, so every
+# video gets pictures of what its own words are about
+WORDS = [
+    (r"\b(sea|ocean|waves?)\b", "ocean waves"), (r"\b(rain|rains|raining)\b", "rain drops leaves"),
+    (r"\bwater|\b(a|the) well\b|\briver|\bspring\b|thirst", "clear water flowing stream"), (r"\bfire\b|flames?\b|\bhell\b", "fire flames dark"),
+    (r"paradise|jannah|garden|gardens", "lush green garden waterfall"), (r"\bdates?\b|palm", "date palm trees"),
+    (r"\bcamels?\b", "camels desert"), (r"desert|\bsand\b", "desert sand dunes wind"), (r"\bsheep\b|goats?\b|flock", "sheep grazing field"),
+    (r"\bbirds?\b", "birds flying sky"), (r"\bants?\b", "ants macro"), (r"\bfish\b|whale", "whale underwater ocean"),
+    (r"\bships?\b|\bboats?\b|\bark\b", "old wooden sailing boat at sea"), (r"mountains?|\bhills?\b", "mountains fog"),
+    (r"\bcave\b", "dark cave entrance light"), (r"\bmoon\b", "full moon night clouds"), (r"\bsun\b|sunrise|dawn|fajr", "sunrise over hills"),
+    (r"\bstars?\b", "starry night sky timelapse"), (r"\bnight\b|tahajjud", "night sky timelapse"), (r"\bsky\b|heavens?\b", "clouds moving sky timelapse"),
+    (r"\btrees?\b|\bplants?\b|\bseeds?\b|harvest|crops?", "green field wind"), (r"\bfruits?\b", "fresh fruit tree branch"),
+    (r"mosque|masjid|prayer|pray\b|prostrat|ablution|wudu", "mosque architecture"), (r"qur'?an|recit", "open book pages light"),
+    (r"knowledge|learn|teach|scholar", "old books library"), (r"\bfood\b|\bfeed|hungry|\bbread\b|meal", "bread on wooden table"),
+    (r"\bneighbou?rs?\b|\bhouses?\b|\bhomes?\b", "old town street houses"), (r"guests?\b|hospitality", "tea pouring cup"),
+    (r"charity|sadaqa|\bspend|\bpoor\b|needy|\bgold\b|silver|wealth|money", "coins on table"),
+    (r"\bgraves?\b|\bdeath\b|\bdie\b|\bdied\b", "autumn leaves falling"), (r"\bmarket|\btrade|\bbuy\b|\bsell\b", "old market spices"),
+    (r"\bjourney|travel|\broad\b|\bpath\b", "empty road landscape"), (r"\bheart|intention|sincer", "candle light dark"),
+    (r"\blight\b|\blamps?\b", "lantern light night"), (r"\bwind\b", "wind grass field"), (r"\btongue|\bspeak|\bspeech|\bwords?\b", "calm lake reflection"),
+    (r"\bmilk\b", "milk pouring glass"), (r"\bhoney\b", "honey dripping"), (r"\bmothers?\b|\bfathers?\b|parents", "warm sunset field"),
+]
+
+
+def queries_for(text):
+    """The footage queries for the things this text talks about, in the order it first mentions them."""
+    low = (text or "").lower()
+    hits = sorted((m.start(), q) for rx, q in WORDS for m in [re.search(rx, low)] if m)
+    out = []
+    for _, q in hits:
+        if q not in out:
+            out.append(q)
+    return out
+
 
 def _slug(q):
     return re.sub(r"[^a-z0-9]+", "-", q.lower()).strip("-")
@@ -80,7 +113,11 @@ def clip(query, seed=0):
 
 
 def for_scene(scene, index):
-    query = scene.get("footage") or QUERIES.get(scene.get("art"))
-    if not query or scene.get("art") == "paper":
+    """The scene's own "footage" query, else what its narration talks about, else the default for its art."""
+    if scene.get("art") == "paper":
+        return None, None
+    words = queries_for(scene.get("say", {}).get("en", ""))
+    query = scene.get("footage") or (words[0] if words else None) or QUERIES.get(scene.get("art"))
+    if not query:
         return None, None
     return clip(query, index % 3)

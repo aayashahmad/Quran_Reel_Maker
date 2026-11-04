@@ -175,3 +175,12 @@ def test_voice_says_salawat_after_every_mention_of_the_prophet():
     for other in ("the Prophets came", "the Prophet Musa said", "Narrated Muhammad bin Sirin"):
         assert spoken(other) == other
     assert spoken("نبیؐ اور ابوہریرہؓ", "ur") == "نبی صلی اللہ علیہ وسلم اور ابوہریرہ رضی اللہ عنہ"
+
+
+def test_footage_follows_the_words_of_each_video():
+    from qissa.footage import queries_for
+    assert queries_for("should not harm his neighbour, and should honour his guest") == \
+        ["old town street houses", "tea pouring cup"]
+    assert queries_for("He built the ark; the water rose to the mountains")[0] == "old wooden sailing boat at sea"
+    assert queries_for("Actions are judged by intentions")[0] == "candle light dark"
+    assert queries_for("") == []

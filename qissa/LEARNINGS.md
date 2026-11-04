@@ -19,3 +19,5 @@ every later story follows it. Keep each line short and dated.
   (Hinglish starts from the middle of the list); a long story continues part by part on the following days.
 - 2026-10-29: The voice must say the salawat after every mention of our Prophet: "peace be upon him" (en),
   "sallallahu alaihi wasallam" (hi), also after "Muhammad" and "the Prophet's". `check` now flags any mention without it.
+- 2026-11-04: Every video's pictures follow its own words: footage is picked from what each scene's narration names
+  (fire, ship, ants, rain...; qissa/footage.py WORDS), else the scene's "footage", else its art default.
