@@ -127,7 +127,7 @@ def home_ld():
 
 
 def sitemap_urls(topics, lastmod):
-    urls = [("/", "1.0"), ("/surah", "0.8"), ("/ask", "0.8")]
+    urls = [("/", "1.0"), ("/surah", "0.8"), ("/ask", "0.8"), ("/quran-prophecies", "0.8")]
     urls += [(surah_path(s["number"]), "0.7") for s in SURAHS]
     urls += [(topic_path(t["id"]), "0.7") for t in topics if t["id"] not in PRIVATE_TOPICS]
     urls += [("/privacy", "0.2"), ("/terms", "0.2")]
@@ -141,12 +141,14 @@ def llms_txt(topics):
              "WhatsApp status) with Mishary Rashid Alafasy's recitation, word-by-word highlighting of the Arabic, and "
              "translations in 46+ languages including Urdu, English, Roman Urdu, Hindi and Kashmiri. Also: read and "
              "listen to any surah, and Ask the Quran (related ayat and sahih hadith from Sahih al-Bukhari and Sahih "
-             "Muslim, every reference verified; guidance, not fatwa). No sign-up, no ads. Developed by Aayash Ahmad "
+             "Muslim, every reference verified; guidance, not fatwa), and Quran prophecies (fulfilled and still to come). No sign-up, no ads. Developed by Aayash Ahmad "
              "Bhat (aayash.bhat.dev@gmail.com).", "",
              "## Main", f"- [Make a Quran reel]({SITE}/): the app",
              f"- [All 114 surahs]({SITE}/surah): Arabic text with Urdu (Fateh Muhammad Jalandhry) and English "
              "(Saheeh International) translation",
-             f"- [What the Quran says about life's problems]({SITE}/ask): topics with verified ayat and sahih hadith", "",
+             f"- [What the Quran says about life's problems]({SITE}/ask): topics with verified ayat and sahih hadith",
+             f"- [Quran prophecies]({SITE}/quran-prophecies): what the Quran foretold that came true (the Romans' "
+             "victory, Badr, the conquest of Makkah...) and the signs of the Hour still to come, each with its ayat", "",
              "## Popular surahs"]
     lines += [f"- [Surah {surah_names(n)}]({SITE}{surah_path(n)})" for n in POPULAR]
     lines += ["", "## Ask the Quran topics"]

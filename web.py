@@ -27,6 +27,7 @@ import seo
 import stats
 import donation
 import live
+import prophecies
 import protect
 import site_settings
 from translations import LANGS, NO_SPACES, texts
@@ -502,6 +503,42 @@ def topic_index():
                 "What the Quran and authentic hadith say about anxiety, anger, grief, marriage, money, exams, guilt, "
                 "hope and more, with every reference checked. In English and Urdu.", "/ask",
                 [seo.breadcrumbs(("Home", "/"), ("Ask the Quran", "/ask"))], topics=topics)
+
+
+PROPHECY_PATH = "/quran-prophecies"
+
+
+@app.get(PROPHECY_PATH)
+def prophecy_page():
+    """What the Quran foretold: fulfilled (past) and still to come (future), every ayah from the verified text."""
+    en, ur = english(), texts("ur", QURAN, log=lambda m: None)
+    items = []
+    for p in prophecies.PROPHECIES:
+        refs = []
+        for sn, a, b in p["ayat"]:
+            s0 = RANGES[sn][0]
+            refs.append({"surah": sn, "from": a, "to": b, "surah_en": QURAN[s0]["surah_en"], "surah_path": seo.surah_path(sn),
+                         "verses": [{"n": n, "ar": QURAN[s0 + n - 1]["ar"], "ur": ur[s0 + n - 1], "en": en[s0 + n - 1]}
+                                    for n in range(a, b + 1)]})
+        items.append(dict(p, refs=refs, cat_en=prophecies.CATS[p["cat"]][0], cat_ur=prophecies.CATS[p["cat"]][1]))
+    ref = lambda i: " ".join(f"(Quran {r['surah']}:{r['from']}" + (f"-{r['to']}" if r["to"] != r["from"] else "") + ")"
+                             for r in i["refs"])
+    answer = lambda cat: "; ".join(f"{i['en']} {ref(i)}" + (f". {i['note']}" if i.get("note") else "")
+                                   for i in items if i["cat"] == cat)
+    faq = {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
+        {"@type": "Question", "name": "What prophecies in the Quran have already come true?",
+         "acceptedAnswer": {"@type": "Answer", "text": answer("past")}},
+        {"@type": "Question", "name": "What does the Quran say will happen in the future?",
+         "acceptedAnswer": {"@type": "Answer", "text": answer("future")}}]}
+    lst = {"@context": "https://schema.org", "@type": "ItemList", "name": "Prophecies in the Quran",
+           "itemListElement": [{"@type": "ListItem", "position": k, "name": f"{i['en']} {ref(i)}",
+                                "url": f"{seo.SITE}{PROPHECY_PATH}#{i['id']}"} for k, i in enumerate(items, 1)]}
+    counts = {c: sum(1 for i in items if i["cat"] == c) for c in prophecies.CATS}
+    return page("prophecies.html", "Quran Prophecies: Fulfilled & Still to Come",
+                "Prophecies in the Quran: what it foretold that came true, like the Romans' victory and the conquest "
+                "of Makkah, and the signs still to come, with the Arabic, Urdu and English of every ayah.", PROPHECY_PATH,
+                [faq, lst, seo.breadcrumbs(("Home", "/"), ("Quran prophecies", PROPHECY_PATH))],
+                og_type="article", items=items, counts=counts)
 
 
 @app.get("/ask/<tid>")

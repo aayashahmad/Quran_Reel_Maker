@@ -367,6 +367,17 @@
   .about summary { cursor: pointer; color: var(--text); font-weight: 600; }
   .about details p { color: var(--muted); margin: 8px 0 0; }
   .about .links { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; }
+  .prophecy-card { display: flex; align-items: center; gap: 14px; margin: 22px 0 4px; padding: 16px 18px; border-radius: 16px;
+                   text-decoration: none; color: inherit; border: 1px solid var(--gold); background:
+                   radial-gradient(120% 140% at 0% 0%, rgba(240,213,147,.16), transparent 60%), rgba(0,0,0,.18); transition: transform .15s; }
+  .prophecy-card:hover { transform: translateY(-2px); }
+  .prophecy-card .pc-icon { font-size: 34px; }
+  .prophecy-card .pc-body { display: flex; flex-direction: column; gap: 3px; flex: 1; min-width: 0; }
+  .prophecy-card b { color: var(--gold2); font-size: 18px; }
+  .prophecy-card .pc-body > span { font-size: 14px; opacity: .85; }
+  .prophecy-card .pc-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+  .prophecy-card .pc-tags i { font: normal 12px system-ui, sans-serif; padding: 2px 9px; border-radius: 999px; border: 1px solid var(--line); }
+  .prophecy-card .pc-go { font-size: 22px; color: var(--gold2); }
   .about .links a { padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px; color: var(--gold2); text-decoration: none; font-size: 14px; }
   footer { text-align: center; padding: 10px 16px 44px; color: var(--muted); }
   footer .ayah { font-family: "Amiri Quran", Amiri, serif; color: var(--gold2); font-size: 28px; line-height: 2; margin: 0; }
@@ -563,6 +574,12 @@
   <p class="links">{% for p in popular %}<a href="{{ p.path }}">Surah {{ p.name }}</a>{% endfor %}<a href="/surah">All 114 surahs →</a></p>
   <h2>What does the Quran say about…</h2>
   <p class="links">{% for t in topic_links %}<a href="{{ t.path }}">{{ t.title }}</a>{% endfor %}<a href="/ask">All topics →</a></p>
+  <a class="prophecy-card" href="/quran-prophecies">
+    <span class="pc-icon" aria-hidden="true">🔭</span>
+    <span class="pc-body"><b>Prophecies in the Quran</b>
+      <span>What it foretold that came true, and the signs still to come, with the ayat.</span>
+      <span class="pc-tags"><i>✓ Past · fulfilled</i><i>⏳ Future · to come</i></span></span>
+    <span class="pc-go" aria-hidden="true">→</span></a>
 </section>
 {% if donation and (donation.title or donation.has_qr or donation.account or donation.upi) %}
 <button type="button" class="support-fab" id="support_open" aria-haspopup="dialog" aria-controls="supportmodal">
