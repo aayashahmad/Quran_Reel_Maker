@@ -8,7 +8,7 @@ PROPHECIES = [
     # past: foretold, then it happened
     {"id": "romans", "cat": "past", "ayat": [(30, 2, 4)],
      "en": "The defeated Romans will win within a few years", "ur": "مغلوب رومی چند سال میں غالب آئیں گے",
-     "note": "Fulfilled: within a few years of these ayat the Romans (Byzantines) defeated the Persians, around 624–627 CE."},
+     "note": "Within a few years of these ayat the Romans (Byzantines) defeated the Persians, around 624–627 CE."},
     {"id": "badr", "cat": "past", "ayat": [(54, 45, 45)],
      "en": "Their assembly will be defeated and turn their backs", "ur": "یہ جماعت شکست کھائے گی اور پیٹھ پھیر کر بھاگے گی",
      "note": "Revealed in Makkah, fulfilled at the battle of Badr (2 AH)."},

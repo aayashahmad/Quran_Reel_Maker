@@ -508,9 +508,8 @@ def topic_index():
 PROPHECY_PATH = "/quran-prophecies"
 
 
-@app.get(PROPHECY_PATH)
-def prophecy_page():
-    """What the Quran foretold: fulfilled (past) and still to come (future), every ayah from the verified text."""
+def prophecy_items():
+    """Every prophecy with its ayat (Arabic, Urdu, English) from the verified text."""
     en, ur = english(), texts("ur", QURAN, log=lambda m: None)
     items = []
     for p in prophecies.PROPHECIES:
@@ -521,6 +520,25 @@ def prophecy_page():
                          "verses": [{"n": n, "ar": QURAN[s0 + n - 1]["ar"], "ur": ur[s0 + n - 1], "en": en[s0 + n - 1]}
                                     for n in range(a, b + 1)]})
         items.append(dict(p, refs=refs, cat_en=prophecies.CATS[p["cat"]][0], cat_ur=prophecies.CATS[p["cat"]][1]))
+    return items
+
+
+@app.get(PROPHECY_PATH + "/<pid>.png")
+def prophecy_snapshot(pid):
+    """A shareable picture of one prophecy with the site's name (?download=1: saved as a file)."""
+    import snapshot
+    item = next((i for i in prophecy_items() if i["id"] == pid), None)
+    if not item:
+        abort(404)
+    resp = send_file(io.BytesIO(snapshot.prophecy_png(item)), mimetype="image/png", max_age=86400,
+                     as_attachment=bool(request.args.get("download")), download_name=f"quran-prophecy-{pid}.png")
+    return resp
+
+
+@app.get(PROPHECY_PATH)
+def prophecy_page():
+    """What the Quran foretold: fulfilled (past) and still to come (future), every ayah from the verified text."""
+    items = prophecy_items()
     ref = lambda i: " ".join(f"(Quran {r['surah']}:{r['from']}" + (f"-{r['to']}" if r["to"] != r["from"] else "") + ")"
                              for r in i["refs"])
     answer = lambda cat: "; ".join(f"{i['en']} {ref(i)}" + (f". {i['note']}" if i.get("note") else "")
