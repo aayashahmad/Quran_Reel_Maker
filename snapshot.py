@@ -59,7 +59,7 @@ def _plan(item, scale):
 def _png(key, item_json):
     import json
     item = json.loads(item_json)
-    footer = 150
+    footer = 190
     for scale in (1, .92, .85, .78, .72, .66, .6):          # the largest text that fits in MAX_H
         blocks = _plan(item, scale)
         body = sum(h + gap for (h, _), gap in blocks)
@@ -79,13 +79,13 @@ def _png(key, item_json):
         draw(d, y)
         y += bh + gap
     # the site's name at the bottom
-    d.line([(W / 2 - 160, h - footer - 4), (W / 2 + 160, h - footer - 4)], fill=GOLD, width=2)
+    d.line([(W / 2 - 160, h - footer + 6), (W / 2 + 160, h - footer + 6)], fill=GOLD, width=2)
     f = font("Amiri-Regular.ttf", 46)
-    d.text(((W - text_w(f, SITE_LABEL, rtl=False)) / 2, h - footer + 18), SITE_LABEL, font=f, fill=GOLD2,
+    d.text(((W - text_w(f, SITE_LABEL, rtl=False)) / 2, h - footer + 24), SITE_LABEL, font=f, fill=GOLD2,
            stroke_width=1, stroke_fill=GOLD2)
     f = font("Amiri-Regular.ttf", 26)
     sub = "Read every prophecy and make free Quran reels"
-    d.text(((W - text_w(f, sub, rtl=False)) / 2, h - footer + 80), sub, font=f, fill=MUTED)
+    d.text(((W - text_w(f, sub, rtl=False)) / 2, h - footer + 84), sub, font=f, fill=MUTED)
     out = io.BytesIO()
     img.save(out, "PNG", optimize=True)
     return out.getvalue()
