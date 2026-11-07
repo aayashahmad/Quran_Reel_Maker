@@ -533,9 +533,10 @@ def seerah_view(c):
             v.update(kind="hadith", **{k2: h[k2].replace('""', '"') for k2 in ("en", "ur")},
                      ar=h["ar"], citation=h["citation"], url=h["url"], part=h["part"])
         for lang in ("en", "ur"):
-            text = seerah.spoken_text(b, lang, v[lang]).replace('""', '"')
+            text = seerah.spoken_text(b, lang, v[lang])
             v[f"say_{lang}"] = text
-            v[f"audio_{lang}"] = f"/seerah/audio/{c['n']}/{lang}/{k}-{hashlib.md5(text.encode()).hexdigest()[:10]}.mp3"
+            tag = hashlib.md5((seerah.VOICE_TAG[lang] + text).encode()).hexdigest()[:10]
+            v[f"audio_{lang}"] = f"/seerah/audio/{c['n']}/{lang}/{k}-{tag}.mp3"
         out.append(v)
     return out
 

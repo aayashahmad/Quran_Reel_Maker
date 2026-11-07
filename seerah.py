@@ -13,7 +13,10 @@ import re
 from hadith_shorts import source
 
 STATUS = "draft: to be checked by a scholar"
-VOICES = {"en": ("en-US-AndrewMultilingualNeural", "-8%"), "ur": ("ur-PK-AsadNeural", "-8%")}
+VOICES = {"en": ("en-US-AndrewMultilingualNeural", "-8%"), "ur": ("ur-PK-AsadNeural", "-8%")}   # fallback voices
+# who reads each language: Urdu is the Hayatus Sahaba narrator (OmniVoice, made on the Mac with seerah_voice.py,
+# every sentence checked with Whisper); a new tag gives every narration a new address (old ones stay cached)
+VOICE_TAG = {"en": "", "ur": "omni-hayatus-1"}
 
 CHAPTERS = [
     {"n": 1, "id": "birth-and-early-life", "period": "Makkah", "when": "c. 570 CE",
@@ -178,4 +181,6 @@ def spoken_text(block, lang, ayah_text=None):
     else:
         text = hadith_block(block)[lang]
     text = re.sub(r"\s*\(\d+\.\d+(?:, \d+\.\d+)*\)", "", text)          # "(96.1, 96.2)" verse numbers in translations
-    return spoken(text, lang)
+    if lang == "ur":
+        text = re.sub(r"(?<=\S) ے(?=[\s،۔]|$)", "ے", text)            # "بار ے" (a stray space in the data) -> "بارے"
+    return spoken(text, lang).replace('""', '"')
