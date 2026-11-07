@@ -127,7 +127,9 @@ def home_ld():
 
 
 def sitemap_urls(topics, lastmod):
-    urls = [("/", "1.0"), ("/surah", "0.8"), ("/ask", "0.8"), ("/quran-prophecies", "0.8")]
+    urls = [("/", "1.0"), ("/surah", "0.8"), ("/ask", "0.8"), ("/quran-prophecies", "0.8"), ("/seerah", "0.8")]
+    import seerah
+    urls += [(f"/seerah/{c['n']}-{c['id']}", "0.7") for c in seerah.CHAPTERS]
     urls += [(surah_path(s["number"]), "0.7") for s in SURAHS]
     urls += [(topic_path(t["id"]), "0.7") for t in topics if t["id"] not in PRIVATE_TOPICS]
     urls += [("/privacy", "0.2"), ("/terms", "0.2")]
@@ -148,7 +150,9 @@ def llms_txt(topics):
              "(Saheeh International) translation",
              f"- [What the Quran says about life's problems]({SITE}/ask): topics with verified ayat and sahih hadith",
              f"- [Quran prophecies]({SITE}/quran-prophecies): what the Quran foretold that came true (the Romans' "
-             "victory, Badr, the conquest of Makkah...) and the signs of the Hour still to come, each with its ayat", "",
+             "victory, Badr, the conquest of Makkah...) and the signs of the Hour still to come, each with its ayat",
+             f"- [Life of the Prophet Muhammad ﷺ (Seerah)]({SITE}/seerah): his life chapter by chapter, from the Quran and "
+             "sahih hadith, to read and listen to in English and Urdu", "",
              "## Popular surahs"]
     lines += [f"- [Surah {surah_names(n)}]({SITE}{surah_path(n)})" for n in POPULAR]
     lines += ["", "## Ask the Quran topics"]

@@ -1,0 +1,110 @@
+{% extends "_page.html" %}
+{% block body %}
+<style>
+  .sr[data-lang="en"] .ur-only, .sr[data-lang="ur"] .en-only { display: none; }
+  .bar { position: sticky; top: 0; z-index: 3; background: var(--bg); padding: 10px 0; display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
+         border-bottom: 1px solid var(--line); margin: 14px 0 6px; }
+  .bar button { font: 600 15px system-ui, sans-serif; padding: 9px 16px; border-radius: 999px; cursor: pointer; border: 1px solid var(--line);
+                background: transparent; color: var(--gold); }
+  .bar button[aria-pressed="true"] { background: var(--card); color: var(--gold2); border-color: var(--gold); }
+  .bar .play { background: linear-gradient(180deg, var(--gold2), var(--gold)); color: #1b1405; border-color: var(--gold); margin-left: auto; min-width: 128px; }
+  .bar .st { width: 100%; font: 13px system-ui, sans-serif; color: var(--muted); min-height: 1em; }
+  .blk { scroll-margin-top: 120px; border-radius: 14px; transition: background .3s, box-shadow .3s; padding: 2px 10px; margin: 10px -10px; }
+  .blk.now { background: rgba(240, 213, 147, .07); box-shadow: inset 3px 0 0 var(--gold2); }
+  .say p { font-size: 18px; margin: 10px 0; }
+  .say .ur { font-size: 21px; color: var(--text); text-align: right; }
+  .blk.card { padding: 16px 18px; margin: 14px 0; }
+  .blk.card.now { box-shadow: 0 0 0 2px var(--gold2); }
+  .kind { font: 600 12px system-ui, sans-serif; color: var(--gold); letter-spacing: .4px; text-transform: uppercase; margin: 0 0 8px; }
+  details.arh summary { cursor: pointer; font: 13px system-ui, sans-serif; color: var(--muted); margin-top: 8px; }
+  details.arh .ar { font: 22px/2 Amiri, serif; }
+  .meta { font: 13px system-ui, sans-serif; color: var(--muted); }
+  .pn { display: flex; justify-content: space-between; gap: 10px; margin: 26px 0 10px; flex-wrap: wrap; }
+</style>
+<p class="crumbs"><a href="/">Home</a> › <a href="/seerah">Seerah</a> › {{ c.en }}</p>
+<p class="meta">Chapter {{ c.n }} of {{ total }} · {{ c.period }} · {{ c.when }}</p>
+<h1>{{ c.en }}</h1>
+<p class="ur" lang="ur" style="text-align:left;font-size:24px;color:var(--gold2)">{{ c.ur }}</p>
+
+<div class="sr" id="sr" data-lang="en" data-n="{{ c.n }}">
+<div class="bar" role="toolbar" aria-label="Language and listening">
+  <button type="button" data-lang="en" aria-pressed="true">English</button>
+  <button type="button" data-lang="ur" aria-pressed="false" lang="ur">اردو</button>
+  <button type="button" class="play" id="play">▶ Listen</button>
+  <span class="st" id="st" aria-live="polite"></span>
+</div>
+
+{% for b in blocks %}
+{% if b.kind == "say" %}
+<div class="blk say" data-k="{{ b.k }}" data-en="{{ b.audio_en }}" data-ur="{{ b.audio_ur }}">
+  <p class="en en-only">{{ b.en }}</p>
+  <p class="ur ur-only" lang="ur">{{ b.ur }}</p>
+</div>
+{% elif b.kind == "ayah" %}
+<section class="blk card" data-k="{{ b.k }}" data-en="{{ b.audio_en }}" data-ur="{{ b.audio_ur }}">
+  <p class="ref"><span>Quran · Surah {{ b.surah_en }} {{ b.surah }}:{{ b.start }}{% if b.end != b.start %}–{{ b.end }}{% endif %}</span>
+    <a href="{{ b.surah_path }}#ayah-{{ b.start }}">Read in context</a></p>
+  {% for v in b.verses %}
+  <p class="ar" lang="ar">{{ v.ar }} ﴿{{ v.n }}﴾</p>
+  <p class="ur ur-only" lang="ur">{{ v.ur }}</p>
+  <p class="en en-only">{{ v.en }}</p>
+  {% endfor %}
+  <p style="margin:10px 0 0"><a class="btn ghost" href="/?surah={{ b.surah }}&amp;from={{ b.start }}&amp;to={{ b.end }}#go">🎬 Make a reel of this</a></p>
+</section>
+{% else %}
+<section class="blk card" data-k="{{ b.k }}" data-en="{{ b.audio_en }}" data-ur="{{ b.audio_ur }}">
+  <p class="kind">Sahih hadith{% if b.part %} · part of the narration{% endif %}</p>
+  <p class="en en-only">{{ b.en }}</p>
+  <p class="ur ur-only" lang="ur">{{ b.ur }}</p>
+  <details class="arh"><summary>Arabic text</summary><p class="ar" lang="ar">{{ b.ar }}</p></details>
+  <p class="ref" style="margin-top:8px"><a href="{{ b.url }}" rel="noopener">{{ b.citation }} · check on sunnah.com ↗</a></p>
+</section>
+{% endif %}
+{% endfor %}
+</div>
+
+<nav class="pn" aria-label="Chapters">
+  {% if nav.prev %}<a class="btn ghost" href="{{ nav.prev.path }}">← {{ nav.prev.en }}</a>{% else %}<span></span>{% endif %}
+  {% if nav.next %}<a class="btn" href="{{ nav.next.path }}">{{ nav.next.en }} →</a>{% else %}<a class="btn ghost" href="/seerah">All chapters</a>{% endif %}
+</nav>
+<p class="note">Everything the Prophet ﷺ said or did on this page is quoted word for word from the Quran or from Sahih
+  al-Bukhari / Sahih Muslim (each checked on sunnah.com). The short linking passages are ours and are being checked
+  by a scholar. Narration: AI voice (Microsoft neural text-to-speech); it may mispronounce some names.</p>
+
+<script>
+(function () {
+  var sr = document.getElementById("sr"), play = document.getElementById("play"), st = document.getElementById("st");
+  var blocks = Array.prototype.slice.call(sr.querySelectorAll(".blk")), audio = new Audio(), next = new Audio();
+  var i = -1, on = false, lang = "en";
+  try { lang = new URLSearchParams(location.search).get("lang") || localStorage.getItem("seerah_lang") || "en"; } catch (e) {}
+  if (lang !== "ur") lang = "en";
+  function setLang(l) {
+    stop(); lang = l; sr.dataset.lang = l;
+    sr.querySelectorAll(".bar [data-lang]").forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.lang === l); });
+    try { localStorage.setItem("seerah_lang", l); } catch (e) {}
+  }
+  function mark(k) { blocks.forEach(function (b, j) { b.classList.toggle("now", j === k); }); }
+  function go(k) {
+    if (k >= blocks.length) { stop(); st.textContent = lang === "ur" ? "باب مکمل ہوا" : "Chapter finished"; return; }
+    i = k; mark(k);
+    blocks[k].scrollIntoView({ behavior: "smooth", block: "center" });
+    audio.src = blocks[k].dataset[lang];
+    st.textContent = (lang === "ur" ? "حصہ " : "Part ") + (k + 1) + " / " + blocks.length + " · " + (lang === "ur" ? "تیار ہو رہا ہے…" : "loading…");
+    audio.play().catch(function () {});
+    if (blocks[k + 1]) { next.src = blocks[k + 1].dataset[lang]; next.preload = "auto"; next.load(); }
+  }
+  function stop() { on = false; audio.pause(); play.textContent = "▶ Listen"; mark(-1); i = -1; st.textContent = ""; }
+  audio.addEventListener("playing", function () { st.textContent = (lang === "ur" ? "حصہ " : "Part ") + (i + 1) + " / " + blocks.length; });
+  audio.addEventListener("ended", function () { if (on) go(i + 1); });
+  audio.addEventListener("error", function () { if (on) { st.textContent = "Could not load the narration, trying the next part…"; setTimeout(function () { go(i + 1); }, 1500); } });
+  play.addEventListener("click", function () {
+    if (!on && i < 0) { on = true; play.textContent = "❚❚ Pause"; go(0); }
+    else if (on) { on = false; audio.pause(); play.textContent = "▶ Resume"; }
+    else { on = true; play.textContent = "❚❚ Pause"; audio.play(); }
+  });
+  blocks.forEach(function (b, j) { b.addEventListener("dblclick", function () { on = true; play.textContent = "❚❚ Pause"; go(j); }); });
+  sr.querySelectorAll(".bar [data-lang]").forEach(function (b) { b.addEventListener("click", function () { setLang(b.dataset.lang); }); });
+  setLang(lang);
+})();
+</script>
+{% endblock %}

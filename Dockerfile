@@ -18,7 +18,7 @@ COPY --chown=user . .
 # translation, the moving backgrounds (deploy/bg), Sahih al-Bukhari / Muslim (fawazahmed0/hadith-api, public
 # domain) and the Ask the Quran search index.
 RUN mkdir -p data/bg data/hadith && cp deploy/bg/*.mp4 data/bg/ \
-    && for f in eng-bukhari urd-bukhari eng-muslim urd-muslim; do \
+    && for f in eng-bukhari urd-bukhari ara-bukhari eng-muslim urd-muslim ara-muslim; do \
          curl -sfL --retry 3 -o data/hadith/$f.json "https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions/$f.json"; \
        done \
     && python -c "from quran_data import load_quran; q = load_quran(); import video; video.ensure_fonts(); \

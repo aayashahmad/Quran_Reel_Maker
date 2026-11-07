@@ -184,3 +184,10 @@ def test_footage_follows_the_words_of_each_video():
     assert queries_for("He built the ark; the water rose to the mountains")[0] == "old wooden sailing boat at sea"
     assert queries_for("Actions are judged by intentions")[0] == "candle light dark"
     assert queries_for("") == []
+
+
+def test_seerah_chapters_are_complete_and_quote_word_for_word():
+    import seerah
+    assert seerah.check(verify=False) == []
+    badr = seerah.hadith_block(seerah.BY_ID["the-battle-of-badr"]["blocks"][1])
+    assert badr["part"] and badr["en"].endswith("So Allah helped him with angels.")
