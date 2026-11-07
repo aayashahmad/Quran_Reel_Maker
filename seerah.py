@@ -23,7 +23,7 @@ CHAPTERS = [
          {"say": {"en": "Muhammad ﷺ was born in Makkah, in the tribe of Quraysh. Historians date his birth to around 570 CE. "
                         "His father Abdullah died before he was born, and his mother Aminah died when he was a small child. "
                         "He grew up an orphan, cared for by his grandfather Abdul Muttalib and then by his uncle Abu Talib.",
-                  "ur": "محمد ﷺ مکہ میں قبیلہ قریش میں پیدا ہوئے۔ مورخین آپ کی ولادت تقریباً 570 عیسوی میں بتاتے ہیں۔ "
+                  "ur": "محمد ﷺ مکہ میں قبیلہ قریش میں پیدا ہوئے۔ مورخین آپ کی ولادت تقریباً پانچ سو ستر عیسوی میں بتاتے ہیں۔ "
                         "آپ کے والد عبداللہ آپ کی ولادت سے پہلے وفات پا گئے، اور والدہ آمنہ آپ کے بچپن ہی میں وفات پا گئیں۔ "
                         "آپ یتیم پلے بڑھے؛ پہلے دادا عبدالمطلب نے اور پھر چچا ابو طالب نے آپ کی پرورش کی۔"}},
          {"say": {"en": "He himself told us the day of the week on which he was born.",
