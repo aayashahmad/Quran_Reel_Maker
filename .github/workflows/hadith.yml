@@ -2,8 +2,10 @@ name: Daily Sahih Hadith Short
 
 on:
   schedule:
-    - cron: "30 6-18/2 * * *"   # every 2 h from 12:00 to 00:00 IST: posts whichever of the
-                                 # 12:00 / 20:00 videos is due and missing (GitHub may delay or skip runs)
+    - cron: "30 3-17/2 * * *"   # every 2 h from 09:00 to 23:00 IST: posts whichever of the 09:00 (en),
+                                 # 15:00 (ur) and 21:00 (en) videos is due and missing (GitHub may delay or skip runs).
+                                 # The owner's Mac makes them on time (hadith_shorts/laptop.sh; Urdu in the Hayatus
+                                 # narrator's voice); this job makes a video only when the Mac has not, 90 min late.
   workflow_dispatch:
 
 permissions:
@@ -25,6 +27,9 @@ jobs:
         run: python hadith_shorts/due.py
         env:
           FORCE: ${{ github.event_name == 'workflow_dispatch' && '1' || '0' }}
+          RUNNER: github
+          SLOT_TIMES: ${{ vars.HADITH_TIMES || '09:00,15:00,21:00' }}
+          LAPTOP_SLOTS: ${{ vars.HADITH_LAPTOP_SLOTS || '1,2,3' }}
       - run: sudo apt-get update && sudo apt-get install -y ffmpeg libraqm0 libfribidi0
         if: steps.due.outputs.due == 'true'
       - run: pip install -r requirements.txt -r hadith_shorts/requirements.txt
@@ -50,10 +55,13 @@ jobs:
           ENABLE_PUBLICATION: ${{ vars.HADITH_PUBLISH || 'false' }}
           YOUTUBE_PRIVACY_STATUS: ${{ vars.HADITH_PRIVACY || 'private' }}
           PUBLISH_TIME: ${{ vars.HADITH_PUBLISH_TIME || '' }}
-          VIDEOS_PER_DAY: ${{ vars.HADITH_PER_DAY || '2' }}
-          ENGLISH_VOICE: ${{ vars.HADITH_VOICE || 'en-US-AndrewMultilingualNeural' }}
+          VIDEOS_PER_DAY: ${{ vars.HADITH_PER_DAY || '3' }}
+          RUNNER: github
+          SLOT_TIMES: ${{ vars.HADITH_TIMES || '09:00,15:00,21:00' }}
+          LAPTOP_SLOTS: ${{ vars.HADITH_LAPTOP_SLOTS || '1,2,3' }}
+          ENGLISH_VOICE: ${{ vars.HADITH_VOICE || 'en-GB-RyanNeural' }}
           ENGLISH_RATE: ${{ vars.HADITH_VOICE_RATE || '-8%' }}
-          SLOT_LANGS: ${{ vars.HADITH_LANGS || 'en,ur' }}
+          SLOT_LANGS: ${{ vars.HADITH_LANGS || 'en,ur,en' }}
       - name: Keep the video for review
         if: always()
         uses: actions/upload-artifact@v4

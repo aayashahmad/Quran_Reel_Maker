@@ -61,6 +61,7 @@ def spoken(text, lang="en"):
         text = text.replace("ﷺ", " صلی اللہ علیہ وسلم ").replace("ؐ", " صلی اللہ علیہ وسلم ").replace("ؓ", " رضی اللہ عنہ ")
         return re.sub(r"\s+", " ", re.sub(r"[()]", " ", text)).strip()
     text = text.replace("(ﷺ)", PBUH).replace("ﷺ", PBUH).replace("ؐ", PBUH).replace("ؓ", "(may Allah be pleased with him)")
+    text = re.sub(r"\(?\bi\.\s?e\.,?\s*", "that is, ", text)          # "(i.e. abstain...)" read as words
     return _PROPHET.sub(lambda m: f"{m.group(0)} {PBUH}", text).replace("`", "'")
 
 
@@ -93,6 +94,24 @@ def _say(text, out, lang="en"):
         if r.returncode:
             raise TTSError(f"say failed: {r.stderr.decode()[:200]}")
         subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(aiff), str(out)], check=True)
+
+
+def speak_omni(texts, outs, log=print):
+    """Urdu in the Hayatus Sahaba narrator's voice (OmniVoice on the Mac): all parts in one run (the model loads
+    once), every sentence checked with Whisper and remade when words are missing (seerah_voice.py)."""
+    import json
+    out_dir = Path(outs[0]).parent
+    jobs = out_dir / "omni_jobs.json"
+    jobs.write_text(json.dumps([{"file": Path(o).name, "text": spoken(t, "ur")} for t, o in zip(texts, outs)],
+                               ensure_ascii=False), encoding="utf-8")
+    r = subprocess.run([settings.OMNI_PYTHON, str(settings.ROOT / "seerah_voice.py"), "make", str(jobs), str(out_dir)],
+                       capture_output=True, text=True, timeout=3600)
+    missing = [o for o in outs if not Path(o).exists()]
+    if r.returncode or missing:
+        raise TTSError(f"OmniVoice failed: {(r.stderr or r.stdout)[-300:]}")
+    for line in r.stdout.splitlines():
+        if line.startswith("["):
+            log("  " + line)
 
 
 def speak(text, out, lang="en"):

@@ -2,6 +2,7 @@
 
   python3 seerah_voice.py jobs > /tmp/jobs.json                       what is missing (site's Python)
   ~/.hayatus-voice/omni/bin/python seerah_voice.py make /tmp/jobs.json   make it (the Hayatus voice env)
+  ... seerah_voice.py make jobs.json <folder>                           into another folder (hadith Shorts use this)
 
 Each block is read sentence by sentence; Whisper listens to every take and a sentence is remade (up to TRIES) until
 at least ACCEPT of its words are heard. Sentences still below that are listed in seerah_audio/review.tsv for a person
@@ -53,7 +54,8 @@ def norm(s):
     return re.sub(r"\s+", " ", re.sub(r"[^؀-ۿ ]", " ", s)).split()
 
 
-def make(path):
+def make(path, out=OUT):
+    out = pathlib.Path(out)
     import difflib
     import subprocess
     import tempfile
@@ -83,7 +85,7 @@ def make(path):
         sm = difflib.SequenceMatcher(None, ref_w, hyp, autojunk=False)
         return sum(b.size for b in sm.get_matching_blocks()) / max(1, len(ref_w))
 
-    review = open(OUT / "review.tsv", "a", encoding="utf-8")
+    review = open(out / "review.tsv", "a", encoding="utf-8")
     for j, job in enumerate(todo, 1):
         t0, chunks, worst = time.time(), [], 1.0
         for s in sentences(job["text"]):
@@ -100,10 +102,10 @@ def make(path):
                 review.flush()
             worst = min(worst, best_c)
             chunks += [best, np.zeros(int(SR * GAP), dtype=np.float32)]
-        wav = OUT / (job["file"] + ".wav")
+        wav = out / (job["file"] + ".wav")
         sf.write(wav, np.concatenate(chunks), SR)
         subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(wav), "-af", "loudnorm=I=-16:TP=-1.5",
-                        "-ac", "1", "-b:a", "80k", str(OUT / job["file"])], check=True)
+                        "-ac", "1", "-b:a", "80k", str(out / job["file"])], check=True)
         wav.unlink()
         print(f"[{j}/{len(todo)}] {job['file']}  lowest sentence {worst:.0%}  {time.time() - t0:.0f}s", flush=True)
 
@@ -112,6 +114,6 @@ if __name__ == "__main__":
     if sys.argv[1:2] == ["jobs"]:
         print(json.dumps(jobs(), ensure_ascii=False))
     elif sys.argv[1:2] == ["make"]:
-        make(sys.argv[2])
+        make(sys.argv[2], *sys.argv[3:4])
     else:
         print(__doc__)

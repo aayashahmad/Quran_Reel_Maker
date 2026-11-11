@@ -86,17 +86,18 @@ def daily(db):
     import os
     from hadith_shorts.due import due_slot
     date = today()
-    for slot in range(1, settings.VIDEOS_PER_DAY + 1):
-        day = slot_key(date, slot)
-        if not any(r["status"] == "uploaded" for r in store.for_day(db, day)):
-            break
-    else:
+    left = [n for n in range(1, settings.VIDEOS_PER_DAY + 1)
+            if not any(r["status"] == "uploaded" for r in store.for_day(db, slot_key(date, n)))]
+    if not left:
         print(f"{date}: all {settings.VIDEOS_PER_DAY} videos are uploaded, nothing to do.")
         return 0
-    if os.getenv("FORCE") != "1" and due_slot(db_path=settings.DB_PATH) is None:
-        print(f"{date}: the next video (slot {slot}) is not due yet.")
+    slot = due_slot(db_path=settings.DB_PATH)
+    if slot is None and os.getenv("FORCE") == "1":
+        slot = left[0]
+    if slot is None or slot > settings.VIDEOS_PER_DAY:
+        print(f"{date}: no video is due now (left today: slots {left}).")
         return 0
-    return daily_slot(db, day, settings.SLOT_LANGS[(slot - 1) % len(settings.SLOT_LANGS)])
+    return daily_slot(db, slot_key(date, slot), settings.SLOT_LANGS[(slot - 1) % len(settings.SLOT_LANGS)])
 
 
 def daily_slot(db, day, lang="en"):

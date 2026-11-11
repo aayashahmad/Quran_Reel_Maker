@@ -286,9 +286,18 @@ def build(h, out_dir, log=print, lang="en"):
     arabic = tts.arabic_recording(h) if settings.NARRATION_MODE == "ar_en" else None
     if settings.NARRATION_MODE == "ar_en" and not arabic:
         log("No approved Arabic recording for this hadith: English narration only")
-    for i, p in enumerate(parts):
-        f = work / f"en{i}.mp3"
-        segs.append({"text": p, "seconds": tts.speak(p, f, lang) + settings.PAUSE_SECONDS, "file": f})
+    files = [work / f"en{i}.mp3" for i in range(len(parts))]
+    if lang == "ur" and settings.URDU_ENGINE == "omni":
+        try:
+            log("Urdu voice: the Hayatus Sahaba narrator (OmniVoice)")
+            tts.speak_omni(parts, files, log)
+        except (tts.TTSError, OSError, subprocess.TimeoutExpired) as e:
+            log(f"{e}; using the Asad voice instead")
+            for f in files:
+                f.unlink(missing_ok=True)
+    for p, f in zip(parts, files):
+        secs = tts.duration(f) if f.exists() else tts.speak(p, f, lang)
+        segs.append({"text": p, "seconds": secs + settings.PAUSE_SECONDS, "file": f})
 
     plan = themes.scene_plan(h, tid, segs, INTRO, OUTRO)
     style = plan["style"]

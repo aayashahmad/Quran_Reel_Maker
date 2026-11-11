@@ -150,7 +150,9 @@ def test_urdu_text_and_metadata():
     assert source.eligible(source.get("bukhari:6415"), "ur") in (True, False)
 
 
-def test_due_slots_follow_the_clock(tmp_path):
+def test_due_slots_follow_the_clock(tmp_path, monkeypatch):
+    monkeypatch.setenv("SLOT_TIMES", "12:00,20:00")
+    monkeypatch.delenv("RUNNER", raising=False)
     from datetime import datetime
     from zoneinfo import ZoneInfo
     from hadith_shorts import due
@@ -191,3 +193,29 @@ def test_seerah_chapters_are_complete_and_quote_word_for_word():
     assert seerah.check(verify=False) == []
     badr = seerah.hadith_block(seerah.BY_ID["the-battle-of-badr"]["blocks"][1])
     assert badr["part"] and badr["en"].endswith("So Allah helped him with angels.")
+
+
+def test_three_slots_and_the_urdu_slot_belongs_to_the_mac(tmp_path, monkeypatch):
+    from datetime import datetime
+    from zoneinfo import ZoneInfo
+    from hadith_shorts.due import due_slot
+    tz = ZoneInfo("Asia/Kolkata")
+    at = lambda h, m=0: datetime(2026, 11, 11, h, m, tzinfo=tz)
+    db = str(tmp_path / "h.sqlite")
+    monkeypatch.setenv("SLOT_TIMES", "09:00,15:00,21:00")
+    monkeypatch.setenv("LAPTOP_SLOTS", "2")
+    monkeypatch.setenv("LAPTOP_GRACE_MIN", "90")
+    monkeypatch.setenv("RUNNER", "github")
+    assert due_slot(at(8), db) is None
+    assert due_slot(at(9, 5), db) == 1
+    assert due_slot(at(15, 30), db) == 1            # slot 1 still missing: catch up first
+    import sqlite3
+    c = sqlite3.connect(db)
+    c.execute("CREATE TABLE videos (day TEXT, status TEXT)")
+    c.execute("INSERT INTO videos VALUES ('2026-11-11', 'uploaded')")
+    c.commit()
+    assert due_slot(at(15, 30), db) is None          # the Mac's turn (90 min grace)
+    assert due_slot(at(16, 35), db) == 2             # the Mac did not make it: GitHub does
+    monkeypatch.setenv("RUNNER", "laptop")
+    assert due_slot(at(15, 5), db) == 2
+    assert due_slot(at(21, 5), db) == 2              # the Mac only ever makes its own slot
