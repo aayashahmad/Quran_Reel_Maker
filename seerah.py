@@ -13,10 +13,10 @@ import re
 from hadith_shorts import source
 
 STATUS = "draft: to be checked by a scholar"
-VOICES = {"en": ("en-US-AndrewMultilingualNeural", "-8%"), "ur": ("ur-PK-AsadNeural", "-8%")}   # fallback voices
+VOICES = {"en": ("en-GB-RyanNeural", "-8%"), "ur": ("ur-PK-AsadNeural", "-8%")}   # en: Ryan (UK); ur: fallback
 # who reads each language: Urdu is the Hayatus Sahaba narrator (OmniVoice, made on the Mac with seerah_voice.py,
 # every sentence checked with Whisper); a new tag gives every narration a new address (old ones stay cached)
-VOICE_TAG = {"en": "", "ur": "omni-hayatus-2"}   # 2: the name and salawat in Arabic
+VOICE_TAG = {"en": "ryan-1", "ur": "omni-hayatus-2"}   # 2: the name and salawat in Arabic
 
 CHAPTERS = [
     {"n": 1, "id": "birth-and-early-life", "period": "Makkah", "when": "c. 570 CE",
