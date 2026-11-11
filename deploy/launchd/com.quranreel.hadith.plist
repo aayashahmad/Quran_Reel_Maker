@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- Daily hadith Shorts on the Mac: runs ~/hadith-bot/hadith_shorts/laptop.sh every 20 minutes (it posts only when a
+     video is due). Install: see hadith_shorts/README.md ("On the Mac"). -->
+<plist version="1.0"><dict>
+  <key>Label</key><string>com.quranreel.hadith</string>
+  <key>ProgramArguments</key><array><string>/bin/bash</string><string>-c</string>
+    <string>"$HOME/hadith-bot/hadith_shorts/laptop.sh" >> "$HOME/hadith-bot/output/laptop.log" 2>&amp;1</string></array>
+  <key>StartInterval</key><integer>1200</integer>
+  <key>RunAtLoad</key><true/>
+</dict></plist>

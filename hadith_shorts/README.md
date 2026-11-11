@@ -83,3 +83,16 @@ Sample record: `videos: day=2026-10-22 ref=bukhari:1 title="On Intentions | Sahi
 - *"source check FAILED"*: sunnah.com shows a different text or number for that reference; it is skipped for good.
 - *"invalid_grant"*: the YouTube login expired; run `./run.sh auth` and update the `YT_TOKEN_JSON` secret.
 - *"an earlier upload's result is unknown"*: see Safety and recovery.
+
+## On the Mac (posts on time; GitHub is the backup)
+Three a day: 09:00 English (UK voice, Ryan), 15:00 Urdu (Hayatus Sahaba narrator, OmniVoice), 21:00 English (IST).
+The Mac makes them from its own clone, `~/hadith-bot` (with `.venv`, `data/hadith`, `data/bg`, `fonts` and `token.json`
+copied in); GitHub makes any video the Mac has not posted 90 minutes after its time.
+
+Install the 20-minute timer once (Terminal):
+
+    mkdir -p ~/hadith-bot/output && cp ~/hadith-bot/deploy/launchd/com.quranreel.hadith.plist ~/Library/LaunchAgents/ \
+      && launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.quranreel.hadith.plist
+
+Log: `~/hadith-bot/output/laptop.log`. Stop: `launchctl bootout gui/$(id -u)/com.quranreel.hadith`.
+Real footage needs the Pexels key in `~/.quranreel-pexels` (one line, typed by the owner; never in git).
