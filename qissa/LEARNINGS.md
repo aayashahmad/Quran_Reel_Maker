@@ -21,3 +21,6 @@ every later story follows it. Keep each line short and dated.
   "sallallahu alaihi wasallam" (hi), also after "Muhammad" and "the Prophet's". `check` now flags any mention without it.
 - 2026-11-04: Every video's pictures follow its own words: footage is picked from what each scene's narration names
   (fire, ship, ants, rain...; qissa/footage.py WORDS), else the scene's "footage", else its art default.
+- 2026-11-11: Paper Atlas look (owner's reference kit): torn parchment caption strips with the spoken word in
+  crimson, paper edges on every cut-out, a map scene for journeys (no place names unless the source names them), a
+  wax seal on the closing scene, a soft paper rustle at each scene. Its cut-paper people are never used.

@@ -14,7 +14,7 @@
      "card": {"ayah": "37:139"},
      "say": {"en": "The Quran says: And indeed, Yunus was among the messengers.",
              "hi": "Quran kehta hai: aur yaqeenan Yunus bhi rasoolon mein se the."}},
-    {"art": "town-dusk", "label": {"en": "THE PEOPLE", "hi": "QAUM"},
+    {"art": "map", "label": {"en": "THE PEOPLE", "hi": "QAUM"},
      "heading": {"en": "HE LEFT | *IN ANGER*", "hi": "WOH CHALE GAYE | *NARAZGI MEIN*"},
      "card": {"ayah": "21:87", "part": "start"},
      "say": {"en": "He called his people to Allah. But he left them in anger, thinking that Allah would not hold him to account.",
@@ -73,7 +73,7 @@
      "card": {"ayah": "21:87", "part": "dua"},
      "say": {"en": "So when your life gets dark, call Him the way Yunus did. He heard Yunus from the belly of a fish. He hears you.",
              "hi": "To jab aapki zindagi mein andhera ho, Usay waise hi pukaarna jaise Yunus ne pukaara. Usne machli ke pet se Yunus ki suni. Woh aapki bhi sunta hai."}},
-    {"art": "dawn", "label": {"en": "SHARE", "hi": "SHARE"},
+    {"art": "seal", "label": {"en": "SHARE", "hi": "SHARE"},
      "heading": {"en": "SEND THIS TO SOMEONE | *IN THE DARK TODAY*", "hi": "YEH USAY BHEJEIN | *JO AAJ ANDHERE MEIN HAI*"},
      "say": {"en": "Send this to someone who is going through darkness today.",
              "hi": "Yeh video usay bhejein, jo aaj kisi andhere se guzar raha hai."}}

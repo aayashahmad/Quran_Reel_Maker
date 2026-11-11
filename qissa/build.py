@@ -297,6 +297,7 @@ def overlay(scene, lang, story, path):
 
 # ---- captions: the sentence being spoken, each word lit as it is said ----
 CAP_TOP, CAP_BOTTOM = H - 470, H - 150
+CAP_FONT = SERIF                              # captions: serif on torn parchment (Paper Atlas)
 
 
 def _norm(t):
@@ -323,42 +324,48 @@ def word_times(text, bounds):
 
 
 def caption(sentence, lit):
-    """The caption band: spoken words white, the current one on gold, the rest dimmed."""
+    """The caption: the sentence on a torn parchment strip (Paper Atlas style), the words already spoken in ink, the
+    word being spoken in crimson, the rest faded."""
+    import random
     img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     d = ImageDraw.Draw(img)
     words = sentence.split()
-    size = 60
+    size = 64
     while True:
-        f = font(HEAD, size)
+        f = font(CAP_FONT, size)
         space = text_w(f, " ", False)
         lines, cur, cw = [], [], 0
         for i, w in enumerate(words):
-            ww = text_w(f, w.upper(), False)
-            if cur and cw + space + ww > W - 140:
+            ww = text_w(f, w, False)
+            if cur and cw + space + ww > W - 190:
                 lines.append((cur, cw))
                 cur, cw = [], 0
             cw += (space if cur else 0) + ww
-            cur.append((i, w.upper(), ww))
+            cur.append((i, w, ww))
         if cur:
             lines.append((cur, cw))
-        if len(lines) <= 3 or size <= 40:
+        if len(lines) <= 3 or size <= 42:
             break
         size -= 4
-    lh = int(size * 1.25)
-    top = CAP_BOTTOM - len(lines) * lh - 30
-    band = Image.new("RGBA", (W - 60, CAP_BOTTOM - top + 10), (8, 10, 12, 165))
-    m = Image.new("L", band.size, 0)
-    ImageDraw.Draw(m).rounded_rectangle([0, 0, band.width - 1, band.height - 1], radius=26, fill=255)
-    img.paste(band, (30, top - 10), m)
-    y = top + 8
+    lh = int(size * 1.32)
+    top = CAP_BOTTOM - len(lines) * lh - 34
+    rnd = random.Random(len(sentence))
+    x0, x1, y0, y1 = 44, W - 44, top - 14, CAP_BOTTOM + 6
+    edge = lambda a, b, y, jag: [(a + (b - a) * k / 30, y + rnd.uniform(-jag, jag)) for k in range(31)]
+    strip = edge(x0, x1, y0, 7) + [(x1 + rnd.uniform(-5, 5), (y0 + y1) / 2)] + edge(x1, x0, y1, 7) + \
+        [(x0 + rnd.uniform(-5, 5), (y0 + y1) / 2)]
+    sh = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    ImageDraw.Draw(sh).polygon([(x + 5, y + 10) for x, y in strip], fill=(0, 0, 0, 120))
+    img = Image.alpha_composite(img, sh.filter(ImageFilter.GaussianBlur(12)))
+    d = ImageDraw.Draw(img)
+    d.polygon(strip, fill=(233, 220, 188, 245))
+    d.line(strip + strip[:1], fill=(248, 240, 220, 255), width=3)
+    y = top + 4
     for line, lw in lines:
         x = (W - lw) / 2
         for i, w, ww in line:
-            if i == lit:
-                d.rounded_rectangle([x - 10, y - 4, x + ww + 10, y + size * 1.12], radius=10, fill=GOLD)
-                d.text((x, y), w, font=f, fill=(20, 16, 10))
-            else:
-                d.text((x, y), w, font=f, fill=WHITE if lit is not None and i < lit else (205, 205, 200))
+            ink = (168, 50, 45) if i == lit else (62, 44, 30) if lit is not None and i < lit else (140, 122, 100)
+            d.text((x, y), w, font=f, fill=ink, stroke_width=1 if i == lit else 0, stroke_fill=ink)
             x += ww + space
         y += lh
     return img
@@ -442,6 +449,10 @@ def make(story_id, lang, out_dir, log=print, part=None, use_footage=True):
         log(f"Voice rate {rate} to stay under 3 minutes")
     grain = work / "grain.png"
     _grain_png(grain)
+    rustle = work / "rustle.wav"                         # a soft paper rustle as each new scene is laid down
+    subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-f", "lavfi", "-i", "anoisesrc=d=0.5:c=pink:a=0.6:r=44100",
+                    "-af", "highpass=f=1800,lowpass=f=7000,tremolo=f=22:d=0.7,afade=t=in:d=0.04,afade=t=out:st=0.12:d=0.38,"
+                    "volume=0.22", str(rustle)], check=True)
     segs, credits, total = [], [], 0.0
     for i, sc in enumerate(scenes):
         sc = dict(sc)
@@ -487,12 +498,13 @@ def make(story_id, lang, out_dir, log=print, part=None, use_footage=True):
             bg = f"[0:v]crop={W}:{H}:x='{move[0]}':y='{move[1]}',setsar=1,fps=30[bg0];[bg0][3:v]overlay=0:0[bg]"
         graph = (f"{bg};[1:v]format=rgba,fade=t=in:st=0.1:d=0.4:alpha=1[ov];"
                  f"[bg][ov]overlay=0:0:eof_action=repeat,fade=t=in:st=0:d=0.25,format=yuv420p[v];"
-                 f"[2:a]adelay={int(lead * 1000)}|{int(lead * 1000)},apad,atrim=0:{secs:.3f}[a]")
+                 f"[2:a]adelay={int(lead * 1000)}|{int(lead * 1000)},apad[vo];[4:a]aresample=44100,apad[rs];"
+                 f"[vo][rs]amix=inputs=2:normalize=0:duration=first,atrim=0:{secs:.3f}[a]")
         seg = work / f"s{i}.mp4"
 
         def render_scene(bg_in, graph):
             return subprocess.run(["ffmpeg", "-y", "-loglevel", "error", *bg_in, "-f", "concat", "-safe", "0", "-i",
-                                   str(lst), "-i", str(voice), "-loop", "1", "-i", str(grain), "-filter_complex", graph,
+                                   str(lst), "-i", str(voice), "-loop", "1", "-i", str(grain), "-i", str(rustle), "-filter_complex", graph,
                                    "-map", "[v]", "-map", "[a]", "-t", f"{secs:.3f}", "-r", "30", "-c:v", "libx264",
                                    "-preset", "medium", "-crf", "20", "-c:a", "aac", "-b:a", "160k", "-ar", "44100",
                                    str(seg)], capture_output=True, text=True)
@@ -517,7 +529,8 @@ def make(story_id, lang, out_dir, log=print, part=None, use_footage=True):
     mp4 = out_dir / (f"{story_id}_p{k}_{lang}.mp4" if len(plist) > 1 else f"{story_id}_{lang}.mp4")
     log("Joining scenes")
     r = subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-f", "concat", "-safe", "0", "-i", str(lst),
-                        "-c:v", "copy", "-af", CLEAR, "-c:a", "aac", "-b:a", "160k", "-movflags", "+faststart", str(mp4)],
+                        "-c:v", "copy", "-af", CLEAR, "-c:a", "aac", "-b:a", "160k", "-ar", "44100",   # loudnorm resamples up
+                        "-movflags", "+faststart", str(mp4)],
                        capture_output=True, text=True)
     if r.returncode:
         raise StoryError(f"join failed: {r.stderr[-500:]}")

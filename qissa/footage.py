@@ -114,7 +114,7 @@ def clip(query, seed=0):
 
 def for_scene(scene, index):
     """The scene's own "footage" query, else what its narration talks about, else the default for its art."""
-    if scene.get("art") == "paper":
+    if scene.get("art") in ("paper", "map", "seal"):     # drawn on purpose: cards, the journey map, the closing seal
         return None, None
     words = queries_for(scene.get("say", {}).get("en", ""))
     query = scene.get("footage") or (words[0] if words else None) or QUERIES.get(scene.get("art"))

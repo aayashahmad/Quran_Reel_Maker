@@ -39,6 +39,15 @@ Scenes show real footage from Pexels for their `art` (see qissa/footage.py QUERI
 `"footage": "<search words>"`. Only people-free subjects (sea, sky, rain, desert, mountains, boats, old towns, plants,
 animals the story mentions). `"art": "paper"` scenes stay plain paper (cards, duas, hadith).
 
+## Paper Atlas look (from 2026-11-11)
+Cut paper on aged parchment: every shape has a light paper edge and a soft shadow; captions are serif words on a torn
+parchment strip, the word being spoken in **crimson**; a soft paper rustle as each scene is laid down.
+- `"art": "map"`: a journey on an aged paper map (sea, land, compass, dashed crimson route, small ship). **No place
+  names**, unless the Quran or the hadith names the place. Use it where the story travels (Musa, Yunus, the hoopoe).
+- `"art": "seal"`: the last scene ("Send this to someone"): a crimson wax seal with a gold star.
+- Crimson only for the route and the spoken word; gold only for the seal. No people, ever (the style sheet's figures
+  are not used).
+
 ## Writing
 - Headings: CAPITALS, 2–6 words per line, at most 2 lines split by `|`; the key phrase in `*stars*` (shown red).
 - Labels: 1–3 words, CAPITALS ("THE SHIP", "FOR YOU").

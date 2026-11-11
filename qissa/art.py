@@ -10,7 +10,10 @@ from PIL import Image, ImageDraw, ImageFilter
 W, H = 1080, 1920
 PAD = 1.12                                   # drawn larger than the frame, for the slow camera move
 BW, BH = int(W * PAD), int(H * PAD)
-ARTS = ("paper", "sea-night", "ship", "fish", "darkness", "dawn", "shore", "town-dusk", "town-dawn")
+ARTS = ("paper", "sea-night", "ship", "fish", "darkness", "dawn", "shore", "town-dusk", "town-dawn", "map", "seal")
+# Paper Atlas palette (cut paper on aged parchment): crimson only for routes and the key word, gold only for seals
+PARCHMENT, INK, CRIMSON, GOLD_PAPER = (233, 220, 188), (62, 44, 30), (168, 50, 45), (200, 149, 47)
+SEA, LAND = (157, 180, 176), (220, 201, 160)
 
 
 @lru_cache(maxsize=4)
@@ -54,6 +57,8 @@ def _layer(img, poly, color, shadow=18, rnd=None):
     mask = Image.new("L", img.size, 0)
     ImageDraw.Draw(mask).polygon(poly, fill=255)
     img.paste(paper, (0, 0), mask)
+    # the light edge of cut paper
+    ImageDraw.Draw(img).line(poly + poly[:1], fill=tuple(min(255, c + 38) for c in color), width=3)
 
 
 def _wave(y, amp, freq, phase, w=BW, h=BH):
@@ -101,11 +106,68 @@ def _town(img, base, color, lit, rnd):
         x += w + rnd.randint(-10, 20)
 
 
+def _blob(cx, cy, rx, ry, rnd, n=22):
+    """An invented coastline: a wobbly closed shape."""
+    k = [rnd.uniform(0.75, 1.15) for _ in range(5)]
+    return [(cx + rx * math.cos(a) * (k[i % 5] + 0.12 * math.sin(3 * a + k[0])),
+             cy + ry * math.sin(a) * (k[(i + 2) % 5] + 0.12 * math.cos(2 * a + k[1])))
+            for i, a in enumerate(i * 2 * math.pi / n for i in range(n))]
+
+
+def _compass(img, cx, cy, r):
+    d = ImageDraw.Draw(img)
+    d.ellipse([cx - r, cy - r, cx + r, cy + r], outline=INK, width=4)
+    d.ellipse([cx - r + 10, cy - r + 10, cx + r - 10, cy + r - 10], outline=INK, width=1)
+    for a, col, ln in ((-90, CRIMSON, 0.9), (90, INK, 0.9), (0, INK, 0.7), (180, INK, 0.7)):
+        t = math.radians(a)
+        tip = (cx + r * ln * math.cos(t), cy + r * ln * math.sin(t))
+        side = [(cx + 0.16 * r * math.cos(t + s), cy + 0.16 * r * math.sin(t + s)) for s in (math.pi / 2, -math.pi / 2)]
+        d.polygon([tip, side[0], (cx, cy), side[1]], fill=col)
+
+
+def _seal(img, cx, cy, r, rnd):
+    """A crimson wax seal with a gold eight-pointed star (no words, no images of living beings)."""
+    pts = [(cx + r * (1 + 0.07 * math.sin(9 * a + rnd.random())) * math.cos(a),
+            cy + r * (1 + 0.07 * math.sin(9 * a + rnd.random())) * math.sin(a)) for a in [i * math.pi / 30 for i in range(60)]]
+    _layer(img, pts, CRIMSON, 22, rnd)
+    d = ImageDraw.Draw(img)
+    d.ellipse([cx - r * 0.72, cy - r * 0.72, cx + r * 0.72, cy + r * 0.72], outline=(120, 30, 28), width=6)
+    star = []
+    for i in range(16):
+        a = i * math.pi / 8 - math.pi / 2
+        rr = r * (0.5 if i % 2 == 0 else 0.24)
+        star.append((cx + rr * math.cos(a), cy + rr * math.sin(a)))
+    d.polygon(star, fill=GOLD_PAPER)
+
+
 def draw(art, seed=0):
     """The background for one scene, BW x BH."""
     rnd = random.Random(hash(art) % 1000 + seed)
     if art == "paper":
         return _paper(BW, BH, (34, 33, 31), (20, 19, 18), 0.18)
+    if art == "map":                     # a journey across the sea on an aged paper map (no place names)
+        img = _paper(BW, BH, PARCHMENT, (214, 198, 160), 0.14)
+        _layer(img, [(70, 170), (BW - 70, 170), (BW - 70, BH - 330), (70, BH - 330)], SEA, 16, rnd)
+        a_ = _blob(BW * 0.30, BH * 0.30, 300, 330, rnd)
+        b_ = _blob(BW * 0.70, BH * 0.62, 320, 300, rnd)
+        _layer(img, a_, LAND, 18, rnd)
+        _layer(img, b_, LAND, 18, rnd)
+        _layer(img, _blob(BW * 0.82, BH * 0.22, 110, 90, rnd, 14), LAND, 12, rnd)
+        d = ImageDraw.Draw(img)
+        p0, p1 = (BW * 0.36, BH * 0.36), (BW * 0.64, BH * 0.56)
+        pts = [(p0[0] + (p1[0] - p0[0]) * t + 140 * math.sin(math.pi * t), p0[1] + (p1[1] - p0[1]) * t) for t in
+               [i / 40 for i in range(41)]]
+        for i in range(0, 40, 2):                                  # a dashed crimson route
+            d.line([pts[i], pts[i + 1]], fill=CRIMSON, width=9)
+        for q in (p0, p1):
+            d.ellipse([q[0] - 16, q[1] - 16, q[0] + 16, q[1] + 16], fill=CRIMSON)
+        _ship(img, pts[20][0] + 40, pts[20][1] - 10, 26, rnd)
+        _compass(img, BW - 240, 380, 105)
+        return img
+    if art == "seal":                    # the closing scene: a wax seal on dark paper
+        img = _paper(BW, BH, (34, 33, 31), (20, 19, 18), 0.18)
+        _seal(img, BW / 2, BH * 0.47, 200, rnd)
+        return img
     if art == "sea-night":
         img = _paper(BW, BH, (16, 34, 52), (6, 16, 28))
         for i, (y, col) in enumerate([(BH * 0.55, (22, 52, 78)), (BH * 0.68, (17, 42, 66)), (BH * 0.82, (12, 32, 52))]):

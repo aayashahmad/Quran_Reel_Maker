@@ -146,7 +146,7 @@
    }
   },
   {
-   "art": "dawn",
+   "art": "map",
    "footage": "hoopoe bird",
    "label": {
     "en": "THE NEWS",
@@ -218,7 +218,7 @@
    }
   },
   {
-   "art": "town-dawn",
+   "art": "map",
    "footage": "hoopoe bird",
    "label": {
     "en": "PART 2",
@@ -443,7 +443,7 @@
    }
   },
   {
-   "art": "dawn",
+   "art": "seal",
    "label": {
     "en": "SHARE",
     "hi": "SHARE"
