@@ -59,7 +59,7 @@ CHAPTERS = [
                   "ur": "حضرت خدیجہ رضی اللہ عنہا آپ پر ایمان لائیں اور سب سے پہلے اسلام قبول کرنے والی وہی تھیں۔ "
                         "پھر نبی ﷺ نے اپنے خاندان اور اپنی قوم کو ایک اللہ کی عبادت کی دعوت دینا شروع کی۔"}},
      ]},
-    {"n": 3, "id": "the-hijrah", "period": "Makkah to Madinah", "when": "622 CE",
+    {"n": 8, "id": "the-hijrah", "period": "Makkah to Madinah", "when": "622 CE",
      "en": "The Hijrah to Madinah", "ur": "ہجرتِ مدینہ",
      "q": "What was the Hijrah of the Prophet Muhammad ﷺ?",
      "blocks": [
@@ -79,7 +79,7 @@ CHAPTERS = [
                         "counts its years from it.",
                   "ur": "دونوں بحفاظت مدینہ پہنچ گئے۔ یہ سفر، ہجرت، اتنا اہم ہے کہ اسلامی کیلنڈر کے سال اسی سے شمار ہوتے ہیں۔"}},
      ]},
-    {"n": 4, "id": "the-battle-of-badr", "period": "Madinah", "when": "2 AH · 624 CE",
+    {"n": 11, "id": "the-battle-of-badr", "period": "Madinah", "when": "2 AH · 624 CE",
      "en": "The Battle of Badr", "ur": "غزوۂ بدر",
      "q": "What happened at the Battle of Badr?",
      "blocks": [
@@ -98,7 +98,7 @@ CHAPTERS = [
                   "ur": "اس دن اللہ نے مومنوں کو فتح دی، اور قرآن میں انہیں اس کی یاد دلائی:"}},
          {"ayah": (3, 123, 123)},
      ]},
-    {"n": 5, "id": "the-conquest-of-makkah", "period": "Madinah", "when": "8 AH · 630 CE",
+    {"n": 16, "id": "the-conquest-of-makkah", "period": "Madinah", "when": "8 AH · 630 CE",
      "en": "The Conquest of Makkah", "ur": "فتح مکہ",
      "q": "What happened at the conquest of Makkah?",
      "blocks": [
@@ -118,6 +118,14 @@ CHAPTERS = [
          {"ayah": (110, 1, 3)},
      ]},
 ]
+
+# the other chapters, one JSON file each (same shape; "ayah" as [surah, from, to], cuts as [first words, last words],
+# optional "keys": [words that alone point to it, words that do only in a question about the Prophet ﷺ])
+CHAPTER_DIR = __import__("pathlib").Path(__file__).parent / "seerah_chapters"
+for _f in sorted(CHAPTER_DIR.glob("*.json")):
+    CHAPTERS.append(__import__("json").loads(_f.read_text(encoding="utf-8")))
+CHAPTERS.sort(key=lambda c: c["n"])
+assert len({c["n"] for c in CHAPTERS}) == len(CHAPTERS), "two Seerah chapters share a number"
 BY_ID = {c["id"]: c for c in CHAPTERS}
 
 
@@ -212,7 +220,7 @@ def ask_match(q):
     about = bool(PROPHET.search(text))
     out = []
     for c in CHAPTERS:
-        strong, weak = KEYS[c["id"]]
+        strong, weak = KEYS.get(c["id"]) or c.get("keys") or ("$^", "$^")
         score = 3 * len(re.findall(strong, text, re.I)) + (len(re.findall(weak, text, re.I)) if about else 0)
         if score:
             out.append((score, c))

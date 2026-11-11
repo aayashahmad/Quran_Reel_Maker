@@ -537,21 +537,21 @@ def seerah_view(c):
             text = seerah.spoken_text(b, lang, v[lang])
             v[f"say_{lang}"] = text
             tag = hashlib.md5((seerah.VOICE_TAG[lang] + text).encode()).hexdigest()[:10]
-            v[f"audio_{lang}"] = f"/seerah/audio/{c['n']}/{lang}/{k}-{tag}.mp3"
+            v[f"audio_{lang}"] = f"/seerah/audio/{c['id']}/{lang}/{k}-{tag}.mp3"
         out.append(v)
     return out
 
 
-@app.get("/seerah/audio/<int:n>/<lang>/<int:k>-<h>.mp3")
-def seerah_audio(n, lang, k, h):
-    """One block of a chapter read aloud (made once with the free neural voice, then kept)."""
-    c = next((x for x in seerah.CHAPTERS if x["n"] == n), None)
+@app.get("/seerah/audio/<cid>/<lang>/<int:k>-<h>.mp3")
+def seerah_audio(cid, lang, k, h):
+    """One block of a chapter read aloud (made ahead of time; else once with the free neural voice, then kept)."""
+    c = seerah.BY_ID.get(cid)
     if not c or lang not in seerah.VOICES or not 0 <= k < len(c["blocks"]):
         abort(404)
     block = seerah_view(c)[k]
     if not block[f"audio_{lang}"].endswith(f"/{k}-{h}.mp3"):
         return redirect(block[f"audio_{lang}"], 302)               # the text changed: its new narration
-    out = SEERAH_AUDIO / f"{n}-{lang}-{k}-{h}.mp3"
+    out = SEERAH_AUDIO / f"{cid}-{lang}-{k}-{h}.mp3"
     with _seerah_locks.setdefault(out.name, threading.Lock()):
         if not out.exists():
             import asyncio
@@ -580,15 +580,16 @@ def seerah_index():
            "itemListElement": [{"@type": "ListItem", "position": c["n"], "name": c["en"], "url": seo.SITE + seerah_path(c)}
                                for c in seerah.CHAPTERS]}
     return page("seerah_index.html", "Life of Prophet Muhammad ﷺ (Seerah): Read & Listen",
-                "The life of the Prophet Muhammad ﷺ chapter by chapter, from his birth to the conquest of Makkah, with the "
-                "Quran and sahih hadith. Read and listen in English and Urdu.", "/seerah",
+                "The life of the Prophet Muhammad ﷺ chapter by chapter, from his birth to his passing, and his character, "
+                "with the Quran and sahih hadith. Read and listen in English and Urdu.", "/seerah",
                 [lst, seo.breadcrumbs(("Home", "/"), ("Seerah", "/seerah"))], items=items)
 
 
 @app.get("/seerah/<int:n>")
 @app.get("/seerah/<int:n>-<slug>")
 def seerah_chapter(n, slug=None):
-    c = next((x for x in seerah.CHAPTERS if x["n"] == n), None)
+    # by its name first: an old address keeps working when chapters are added in between
+    c = seerah.BY_ID.get(slug) or next((x for x in seerah.CHAPTERS if x["n"] == n), None)
     if not c:
         abort(404)
     path = seerah_path(c)
@@ -596,8 +597,8 @@ def seerah_chapter(n, slug=None):
         return redirect(path, 301)
     blocks = seerah_view(c)
     nav = {k: (dict(x, path=seerah_path(x)) if x else None) for k, x in
-           (("prev", next((x for x in seerah.CHAPTERS if x["n"] == n - 1), None)),
-            ("next", next((x for x in seerah.CHAPTERS if x["n"] == n + 1), None)))}
+           (("prev", next((x for x in reversed(seerah.CHAPTERS) if x["n"] < c["n"]), None)),
+            ("next", next((x for x in seerah.CHAPTERS if x["n"] > c["n"]), None)))}
     answer = " ".join(b["en"] for b in blocks if b["kind"] in ("say", "hadith"))[:1200]
     faq = {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
         {"@type": "Question", "name": c["q"], "acceptedAnswer": {"@type": "Answer", "text": answer}}]}
@@ -607,7 +608,8 @@ def seerah_chapter(n, slug=None):
            "position": c["n"], "audio": {"@type": "AudioObject", "contentUrl": seo.SITE + blocks[0]["audio_en"], "inLanguage": "en"}}
     return page("seerah_chapter.html", f"{c['en']} | Seerah of Prophet Muhammad ﷺ", blocks[0]["en"], path,
                 [faq, art, seo.breadcrumbs(("Home", "/"), ("Seerah", "/seerah"), (c["en"], path))],
-                og_type="article", c=c, blocks=blocks, nav=nav, total=len(seerah.CHAPTERS))
+                og_type="article", c=c, blocks=blocks, nav=nav, total=len(seerah.CHAPTERS),
+                pos=seerah.CHAPTERS.index(c) + 1)
 
 
 PROPHECY_PATH = "/quran-prophecies"
