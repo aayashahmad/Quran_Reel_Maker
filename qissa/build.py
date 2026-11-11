@@ -22,7 +22,7 @@ STORIES = Path(__file__).resolve().parent / "stories"
 W, H = art.W, art.H
 HEAD, MONO, AR, SERIF, UR = "Anton-Regular.ttf", "CourierPrime-Bold.ttf", "Amiri-Regular.ttf", "Amiri-Regular.ttf", "NotoNastaliqUrdu.ttf"
 CREAM, INK, RED, GOLD, WHITE = (236, 226, 204), (40, 34, 28), (186, 40, 36), (212, 175, 95), (246, 242, 232)
-VOICES = {"en": ("en-US-AndrewMultilingualNeural", "-6%"), "hi": ("hi-IN-MadhurNeural", "-4%")}
+VOICES = {"en": ("en-GB-RyanNeural", "-6%"), "hi": ("hi-IN-MadhurNeural", "-4%")}
 TR = {"en": "en", "hi": "ur-roman"}          # the translation shown on Hinglish cards: Roman Urdu
 CLEAR = ("highpass=f=70,lowpass=f=11000,equalizer=f=180:t=q:w=1:g=-2,equalizer=f=3200:t=q:w=1.2:g=3,"
          "acompressor=threshold=-20dB:ratio=2.5:attack=8:release=120:makeup=2,loudnorm=I=-14:TP=-1.5:LRA=9")

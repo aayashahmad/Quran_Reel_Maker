@@ -24,3 +24,4 @@ every later story follows it. Keep each line short and dated.
 - 2026-11-11: Paper Atlas look (owner's reference kit): torn parchment caption strips with the spoken word in
   crimson, paper edges on every cut-out, a map scene for journeys (no place names unless the source names them), a
   wax seal on the closing scene, a soft paper rustle at each scene. Its cut-paper people are never used.
+- 2026-11-11: English narration is now Ryan (UK, en-GB-RyanNeural), as for the hadith Shorts; Hinglish stays Madhur.
