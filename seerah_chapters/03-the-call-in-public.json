@@ -1,0 +1,67 @@
+{
+ "n": 3,
+ "id": "the-call-in-public",
+ "period": "Makkah",
+ "when": "Makkah",
+ "en": "Calling Openly from Safa",
+ "ur": "کوہِ صفا سے کھلی دعوت",
+ "q": "How did the Prophet Muhammad ﷺ begin calling people to Islam openly?",
+ "keys": [
+  "mount safa|\\bsafa (hill|mountain|pahar)|koh[ -]?e[ -]?safa|abu ?lahab|\\btabbat\\b|warn your (closest )?(tribe|kindred)|کوہِ? ?صفا|صفا پہاڑ|ابو ?لہب|تبت یدا",
+  "\\bsafa\\b|openly|in public|publicly|first public|preach|khuli dawat|khule? ?aam|e?'?l[aa]niy|ailaniy|tabli?gh|صفا|کھلی دعوت|علانیہ|تبلیغ"
+ ],
+ "blocks": [
+  {
+   "say": {
+    "en": "In the first years, the Prophet ﷺ called people to Islam quietly, speaking to those close to him. Then Allah commanded him to warn his own family and tribe:",
+    "ur": "شروع کے برسوں میں نبی ﷺ خاموشی سے، اپنے قریبی لوگوں کو اسلام کی دعوت دیتے رہے۔ پھر اللہ تعالیٰ نے آپ کو حکم دیا کہ اپنے خاندان اور قبیلے کو خبردار کریں:"
+   }
+  },
+  {
+   "ayah": [
+    26,
+    214,
+    214
+   ]
+  },
+  {
+   "say": {
+    "en": "Ibn Abbas, may Allah be pleased with him, tells us what the Prophet ﷺ did when this ayah was revealed.",
+    "ur": "حضرت ابن عباس رضی اللہ عنہما بتاتے ہیں کہ جب یہ آیت نازل ہوئی تو نبی ﷺ نے کیا کیا۔"
+   }
+  },
+  {
+   "hadith": "bukhari:4770",
+   "ur": [
+    "ابن عباس رضی اللہ عنہما نے بیان کیا کہ جب آیت",
+    null
+   ]
+  },
+  {
+   "say": {
+    "en": "Abu Lahab was one of the Prophet's ﷺ own uncles. Allah answered his words in a whole surah of the Quran:",
+    "ur": "ابولہب نبی ﷺ کا اپنا چچا تھا۔ اللہ تعالیٰ نے اس کی بات کا جواب قرآن کی ایک پوری سورت میں دیا:"
+   }
+  },
+  {
+   "ayah": [
+    111,
+    1,
+    5
+   ]
+  },
+  {
+   "say": {
+    "en": "Abu Hurairah, may Allah be pleased with him, narrates that the Prophet ﷺ also called out to his own relatives one by one, even to his daughter Fatimah, may Allah be pleased with her.",
+    "ur": "حضرت ابوہریرہ رضی اللہ عنہ بیان کرتے ہیں کہ نبی ﷺ نے اپنے رشتہ داروں کو بھی ایک ایک کر کے پکارا، یہاں تک کہ اپنی بیٹی حضرت فاطمہ رضی اللہ عنہا کو بھی۔"
+   }
+  },
+  {
+   "hadith": "bukhari:4771",
+   "ur": [
+    "ابوہریرہ رضی اللہ عنہ نے بیان کیا، جب",
+    "کوئی فائدہ نہ پہنچا سکوں گا۔"
+   ]
+  }
+ ]
+}

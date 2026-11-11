@@ -16,7 +16,7 @@ STATUS = "draft: to be checked by a scholar"
 VOICES = {"en": ("en-US-AndrewMultilingualNeural", "-8%"), "ur": ("ur-PK-AsadNeural", "-8%")}   # fallback voices
 # who reads each language: Urdu is the Hayatus Sahaba narrator (OmniVoice, made on the Mac with seerah_voice.py,
 # every sentence checked with Whisper); a new tag gives every narration a new address (old ones stay cached)
-VOICE_TAG = {"en": "", "ur": "omni-hayatus-1"}
+VOICE_TAG = {"en": "", "ur": "omni-hayatus-2"}   # 2: the name and salawat in Arabic
 
 CHAPTERS = [
     {"n": 1, "id": "birth-and-early-life", "period": "Makkah", "when": "c. 570 CE",
@@ -179,6 +179,9 @@ def check(verify=True):
     return problems
 
 
+SPLIT_WORDS = {"چا ہیے": "چاہیے", "جا نتا": "جانتا", "جا نتے": "جانتے"}
+
+
 def spoken_text(block, lang, ayah_text=None):
     """What the voice reads for a block (ﷺ and the salawat spoken out)."""
     from hadith_shorts.tts import spoken
@@ -191,6 +194,8 @@ def spoken_text(block, lang, ayah_text=None):
     text = re.sub(r"\s*\(\d+\.\d+(?:, \d+\.\d+)*\)", "", text)          # "(96.1, 96.2)" verse numbers in translations
     if lang == "ur":
         text = re.sub(r"(?<=\S) ے(?=[\s،۔]|$)", "ے", text)            # "بار ے" (a stray space in the data) -> "بارے"
+        for broken, word in SPLIT_WORDS.items():                         # words the data splits with a space
+            text = text.replace(broken, word)
     return spoken(text, lang).replace('""', '"')
 
 
@@ -201,14 +206,14 @@ PROPHET = re.compile(r"\b(prophet|muhammad|mohammad|mohammed|muhammed|nabi|rasoo
 KEYS = {
     "birth-and-early-life": (r"abdul ?muttalib|abu ?talib|\baminah?\b|\bamina\b|عبدالمطلب|ابو طالب|آمنہ",
                              r"\bborn\b|\bbirth|birthday|childhood|\borphan|\byoung\b|shepherd|paida|wiladat|viladat|"
-                             r"bachpan|yateem|yatim|bakriyan|پیدا|ولادت|بچپن|یتیم"),
+                             r"bachpan|yateem|yatim|bakriyan|\bmother|\bfather|walida|walid\b|ammi|پیدا|ولادت|بچپن|یتیم|والدہ|والد"),
     "the-first-revelation": (r"\bhira\b|first revelation|pehli wa?hi|waraqa|\biqra\b|حرا|پہلی وحی|ورقہ",
                              r"revelation|\bwa?hi\b|prophethood|nubuwwat|nabuwat|khadija|وحی|نبوت|خدیجہ"),
     "the-hijrah": (r"\bhij?ra[th]?\b|hijrat|\bthawr\b|\bsaur\b|ghar[ -]e[ -]saur|ہجرت|غار ثور",
                    r"migrat|emigrat|madinah?\b|medina|madina|\bcave\b|ghar\b|مدینہ|غار"),
     "the-battle-of-badr": (r"\bbadr\b|بدر", r"first battle|pehli jang|\bangels?\b|farishte|فرشت"),
     "the-conquest-of-makkah": (r"conquest of (makkah|mecca)|fat[-' ]?h[ -]?(e[ -])?makk?ah?|fath makka|hudaibiy|فتح مکہ|حدیبیہ",
-                               r"\bidols?\b|\bbut\b|ka'?bah?|kaaba|\bmakk?ah?\b|mecca|کعبہ|مکہ|بت"),
+                               r"\bidols?\b|\bbut\b|ka'?bah?|kaaba|\bmakk?ah?\b|mecca|کعبہ|مکہ|(?<![\w])بت(?![\w])"),
 }
 LIFE = re.compile(r"\blife\b|zindagi|seerah?|sirat|seerat|biography|history|story|qissa|waqiat|سیرت|زندگی|حالات", re.I)
 

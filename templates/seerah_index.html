@@ -12,6 +12,8 @@
   ol.tl .meta { font: 13px system-ui, sans-serif; color: var(--gold); }
   ol.tl .ur { margin: 0; text-align: left; color: var(--gold2); font-size: 18px; }
   ol.tl p.en { color: var(--muted); font-size: 15px; margin-top: 4px; }
+  ol.tl li.era { padding-left: 58px; margin: 26px 0 10px; }
+  ol.tl li.era h2 { margin: 0; font-size: 20px; color: var(--gold); }
 </style>
 <p class="crumbs"><a href="/">Home</a> › Seerah</p>
 <h1>The Life of the Prophet Muhammad ﷺ</h1>
@@ -20,7 +22,11 @@
   any chapter, in English or Urdu.</p>
 <ol class="tl">
   {% for c in items %}
-  <li><span class="num">{{ c.n }}</span>
+  {% set era = "His character" if c.period == "His character" else ("Madinah" if "Madinah" in c.period and c.period != "Makkah to Madinah" else "Makkah") %}
+  {% set prev = items[loop.index0 - 1] if not loop.first else None %}
+  {% set prev_era = None if not prev else ("His character" if prev.period == "His character" else ("Madinah" if "Madinah" in prev.period and prev.period != "Makkah to Madinah" else "Makkah")) %}
+  {% if era != prev_era %}<li class="era"><h2>{{ {"Makkah": "In Makkah · مکی دور", "Madinah": "In Madinah · مدنی دور", "His character": "His character · شمائل"}[era] }}</h2></li>{% endif %}
+  <li><span class="num">{{ loop.index }}</span>
     <a class="card" href="{{ c.path }}">
       <span class="meta">{{ c.period }} · {{ c.when }}</span>
       <h2>{{ c.en }}</h2>
@@ -29,6 +35,6 @@
     </a></li>
   {% endfor %}
 </ol>
-<p class="note">More chapters are coming, in sha Allah. Everything the Prophet ﷺ said or did is quoted from the Quran
+<p class="note"> Everything the Prophet ﷺ said or did is quoted from the Quran
   or Sahih al-Bukhari / Sahih Muslim; the short linking passages are being checked by a scholar.</p>
 {% endblock %}

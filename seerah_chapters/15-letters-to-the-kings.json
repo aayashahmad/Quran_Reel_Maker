@@ -1,0 +1,71 @@
+{
+ "n": 15,
+ "id": "letters-to-the-kings",
+ "period": "Madinah",
+ "when": "After Hudaibiya",
+ "en": "Letters to the Kings",
+ "ur": "بادشاہوں کے نام خطوط",
+ "q": "What did the Prophet Muhammad ﷺ write to the kings of his time?",
+ "keys": [
+  "heracl|hiraql|hirakl|harqal|ہرقل|\\bcaesar|qaisar|qaiser|قیصر|khusrau|khusro|chosroes|kisra|کسریٰ|کسری|lett?ers? to (the )?(kings|rulers|emperors?)|(kings|badshahon|badshaho|hukmaranon) ?(ko|ke naam|kay naam) (khat|khutoot)|بادشاہوں (کو|کے نام) خط|seal(ed)? ring|muhammad rasulullah ring",
+  "\\blett?ers?\\b|\\bkhat\\b|\\bkhatt\\b|khutoot|khutut|خط|خطوط|\\bkings?\\b|badshah|بادشاہ|emperor|\\bruler|\\bring\\b|angoo?thi|انگوٹھی|\\bseal\\b|\\bmohar\\b|\\bmuhr\\b|byzantin|\\broman\\b|\\brome\\b|\\brum\\b|persia|iran|روم|فارس|ایران"
+ ],
+ "blocks": [
+  {
+   "say": {
+    "en": "After the Treaty of Hudaibiya brought peace with Quraysh, the Prophet ﷺ wrote letters to the kings and rulers around Arabia, inviting them to Islam. Anas ibn Malik, may Allah be pleased with him, tells how the letters were sealed.",
+    "ur": "صلح حدیبیہ سے قریش کے ساتھ امن ہوا تو نبی ﷺ نے عرب کے آس پاس کے بادشاہوں اور حکمرانوں کو خطوط لکھے اور انہیں اسلام کی دعوت دی۔ حضرت انس بن مالک رضی اللہ عنہ بتاتے ہیں کہ ان خطوں پر مہر کیسے لگائی گئی۔"
+   }
+  },
+  {
+   "hadith": "bukhari:5875",
+   "ur": [
+    "انس بن مالک رضی اللہ عنہ نے بیان کیا کہ",
+    null
+   ]
+  },
+  {
+   "say": {
+    "en": "One letter went to Khusrau, the king of Persia. Abdullah ibn Abbas, may Allah be pleased with him, tells what he did with it.",
+    "ur": "ایک خط فارس کے بادشاہ کسریٰ کے نام گیا۔ حضرت عبداللہ بن عباس رضی اللہ عنہما بتاتے ہیں کہ اس نے اس خط کے ساتھ کیا کیا۔"
+   }
+  },
+  {
+   "hadith": "bukhari:2939",
+   "ur": [
+    "عبداللہ بن عباس رضی اللہ عنہما نے کہ",
+    null
+   ]
+  },
+  {
+   "say": {
+    "en": "Another letter went to Heraclius, the emperor of the Byzantines. When it was read in his court, Abu Sufyan, may Allah be pleased with him, was there; he had not yet accepted Islam, and he later told Ibn Abbas, may Allah be pleased with him, what happened. These were the words of the letter:",
+    "ur": "ایک اور خط روم کے بادشاہ ہرقل کے نام گیا۔ جب اس کے دربار میں یہ خط پڑھا گیا تو حضرت ابوسفیان رضی اللہ عنہ وہاں موجود تھے؛ وہ اس وقت تک مسلمان نہیں ہوئے تھے، اور بعد میں انہوں نے حضرت ابن عباس رضی اللہ عنہما کو یہ واقعہ سنایا۔ خط کے الفاظ یہ تھے:"
+   }
+  },
+  {
+   "hadith": "bukhari:7",
+   "en": [
+    "Heraclius then asked for the letter",
+    "(i.e. Allah guided me to it)."
+   ],
+   "ur": [
+    "ہرقل نے رسول اللہ صلی اللہ علیہ وسلم وہ خط منگایا",
+    "حتیٰ کہ اللہ نے مجھے مسلمان کر دیا۔"
+   ]
+  },
+  {
+   "say": {
+    "en": "The words at the end of the letter are a verse of the Quran:",
+    "ur": "خط کے آخر کے الفاظ قرآن کی ایک آیت ہیں:"
+   }
+  },
+  {
+   "ayah": [
+    3,
+    64,
+    64
+   ]
+  }
+ ]
+}

@@ -1,0 +1,60 @@
+{
+ "n": 10,
+ "id": "the-change-of-the-qiblah",
+ "period": "Madinah",
+ "when": "2 AH · 624 CE",
+ "en": "The Change of the Qiblah",
+ "ur": "تحویلِ قبلہ",
+ "q": "Why did the qiblah change from Jerusalem to the Ka'bah?",
+ "keys": [
+  "(change|chang\\w+|turn\\w*|shift\\w*) (of |in )?(the )?(qibl|kibl)|(qibl|kibl)\\w* (was |is )?(change|chang|turn|shift|badl|badal|tabdee?l)|tah?wee?l|first qibl|pehl[ae] qibl|qibla[ -]?e?[ -]?awwal|(prayed|pray|praying|face|facing) (towards? )?(jerusalem|bait ?ul ?maq|bayt al-?maq)|(qibl|kibl)\\w*\\s+(\\w+\\s+)?(badl|badal|tabdee?l|change|chang)|(bait ?ul ?maq\\w*|bayt al-?maq\\w*|jerusalem) (ki|kee) (taraf|tarf)|(pray\\w*|namaz|salah|fac\\w+)\\s+(\\w+\\s+)?(towards?|to) (jerusalem|bait ?ul ?maq|bayt al-?maq)|بیت المقدس کی طرف (منہ|رخ|نماز)|تحویل|قبلہ بدل|قبلہ کب بدل|قبلے کی تبدیلی|قبلہ کی تبدیلی|پہلا قبلہ|قبلہ اول|قبلۂ اول|قبلۂ اوّل",
+  "\\bqibl|\\bkibl|jerusalem|bait ?ul ?maqdis|bayt al-?maqdis|baitul ?muqaddas|\\baqsa\\b|قبلہ|قبلے|بیت المقدس|یروشلم"
+ ],
+ "blocks": [
+  {
+   "say": {
+    "en": "After the Hijrah, the Prophet ﷺ and the believers in Madinah prayed facing Bayt al-Maqdis in Jerusalem, but he longed to face the Ka'bah in Makkah. Al-Bara' ibn Azib, may Allah be pleased with him, tells us how the qiblah changed.",
+    "ur": "ہجرت کے بعد نبی ﷺ اور مدینہ کے مومن بیت المقدس کی طرف منہ کر کے نماز پڑھتے تھے، لیکن آپ ﷺ کی خواہش تھی کہ مکہ میں کعبہ کی طرف رخ کریں۔ حضرت براء بن عازب رضی اللہ عنہ بتاتے ہیں کہ قبلہ کیسے بدلا۔"
+   }
+  },
+  {
+   "hadith": "bukhari:4486",
+   "ur": [
+    "براء بن عازب رضی اللہ عنہ سے کہ",
+    null
+   ]
+  },
+  {
+   "say": {
+    "en": "This is the verse Allah revealed, turning the believers towards the Sacred Mosque in Makkah:",
+    "ur": "یہ وہ آیت ہے جو اللہ نے نازل فرمائی اور مومنوں کا رخ مکہ میں مسجد حرام کی طرف پھیر دیا:"
+   }
+  },
+  {
+   "ayah": [
+    2,
+    144,
+    144
+   ]
+  },
+  {
+   "say": {
+    "en": "Allah also told the believers that the change was a test of who would follow the Messenger ﷺ, and that the prayers they had offered before it were not lost:",
+    "ur": "اللہ نے مومنوں کو یہ بھی بتایا کہ یہ تبدیلی اس بات کی آزمائش تھی کہ کون رسول ﷺ کی پیروی کرتا ہے، اور اس سے پہلے پڑھی گئی ان کی نمازیں ضائع نہیں ہوئیں:"
+   }
+  },
+  {
+   "ayah": [
+    2,
+    143,
+    143
+   ]
+  },
+  {
+   "say": {
+    "en": "Since that day, Muslims all over the world face the Ka'bah in Makkah in every prayer.",
+    "ur": "اس دن سے دنیا بھر کے مسلمان ہر نماز میں مکہ میں کعبہ کی طرف رخ کرتے ہیں۔"
+   }
+  }
+ ]
+}

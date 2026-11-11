@@ -1,0 +1,71 @@
+{
+ "n": 13,
+ "id": "the-battle-of-the-trench",
+ "period": "Madinah",
+ "when": "5 AH · 627 CE",
+ "en": "The Battle of the Trench",
+ "ur": "غزوۂ خندق",
+ "q": "What happened at the Battle of the Trench?",
+ "keys": [
+  "\\bkhandaq\\b|\\bkhandak\\b|\\btrench\\b|\\bahzab\\b|confedera|خندق|احزاب",
+  "\\bdig|\\bdug\\b|digging|khod|کھود|stones? (tied|on (his|the) (belly|stomach))|\\bti(e|ed|es|ing) a stone|stones? to (his )?(belly|stomach)|pet (pe|par) patth?ar|پیٹ پر پتھر|patth?ar baa?ndh|\\bhunger|\\bhungry|bhook|بھوک|\\brock\\b|chatt?an|چٹان|\\bsiege\\b|muha?sar|محاصر|\\bsalman\\b|سلمان"
+ ],
+ "blocks": [
+  {
+   "say": {
+    "en": "In the fifth year after the Hijrah, Quraysh and the tribes allied with them gathered a great army against Madinah. The believers dug a trench to protect the city, and the Prophet ﷺ worked with them. Anas ibn Malik, may Allah be pleased with him, describes those days.",
+    "ur": "ہجرت کے پانچویں سال قریش اور ان کے حلیف قبیلوں نے مدینہ کے خلاف ایک بڑا لشکر جمع کیا۔ مومنوں نے شہر کی حفاظت کے لیے خندق کھودی، اور نبی ﷺ بھی ان کے ساتھ کام کرتے رہے۔ حضرت انس بن مالک رضی اللہ عنہ ان دنوں کا حال بتاتے ہیں۔"
+   }
+  },
+  {
+   "hadith": "bukhari:4100",
+   "ur": [
+    "انس رضی اللہ عنہ نے بیان کیا کہ مدینہ",
+    null
+   ]
+  },
+  {
+   "say": {
+    "en": "Al-Bara' ibn Azib, may Allah be pleased with him, saw the Prophet ﷺ carrying earth from the trench, and heard what he recited.",
+    "ur": "حضرت براء بن عازب رضی اللہ عنہ نے نبی ﷺ کو خندق کی مٹی اٹھاتے دیکھا، اور سنا کہ آپ ﷺ کیا پڑھ رہے تھے۔"
+   }
+  },
+  {
+   "hadith": "bukhari:2837",
+   "ur": [
+    "براء بن عازب رضی اللہ عنہ نے بیان کیا کہ میں نے",
+    null
+   ]
+  },
+  {
+   "say": {
+    "en": "Jabir ibn Abdullah, may Allah be pleased with him, tells what happened when a large rock appeared in the trench.",
+    "ur": "حضرت جابر بن عبداللہ رضی اللہ عنہما بتاتے ہیں کہ جب خندق میں ایک بڑی چٹان نکل آئی تو کیا ہوا۔"
+   }
+  },
+  {
+   "hadith": "bukhari:4101",
+   "en": [
+    null,
+    "it became like sand."
+   ],
+   "ur": [
+    "میں جابر رضی اللہ عنہ کی خدمت میں حاضر ہوا",
+    "بالو کے ڈھیر کی طرح بہہ گئی۔"
+   ]
+  },
+  {
+   "say": {
+    "en": "The armies surrounded Madinah for many days, but the trench held them back, and in the end they went away. Allah describes how the believers met that test, and how it ended:",
+    "ur": "لشکروں نے کئی دن تک مدینہ کو گھیرے رکھا، لیکن خندق نے انہیں روکے رکھا، اور آخرکار وہ لوٹ گئے۔ اللہ تعالیٰ بیان فرماتا ہے کہ مومنوں نے اس آزمائش کا سامنا کیسے کیا، اور اس کا انجام کیا ہوا:"
+   }
+  },
+  {
+   "ayah": [
+    33,
+    22,
+    25
+   ]
+  }
+ ]
+}

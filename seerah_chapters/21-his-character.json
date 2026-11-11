@@ -1,0 +1,71 @@
+{
+ "n": 21,
+ "id": "his-character",
+ "period": "His character",
+ "when": "",
+ "en": "His Character and Manners",
+ "ur": "آپ ﷺ کے اخلاق",
+ "q": "What was the character of the Prophet Muhammad ﷺ like?",
+ "keys": [
+  "shama'?il|شمائل|character was the qur'?an|akhlaq qur'?an|akhlaq[ -]e[ -]nab(a)?wi|اخلاق نبوی|never said (to me )?.?uff?\\b",
+  "\\bcharacter|\\bmanners?\\b|\\bmorals?\\b|akhl?aa?q|\\bkhulq|\\bhumble|humility|\\bbehaviou?r|\\btemper\\b|\\banger\\b|\\bangry\\b|g?h?ussa|\\bhabits?\\b|aadat|\\badat|mizaj|\\bbad language|\\bharsh|اخلاق|خلق|عادت|عادات|مزاج|غصہ|برتاؤ"
+ ],
+ "blocks": [
+  {
+   "say": {
+    "en": "Allah Himself praised the character of the Prophet ﷺ. He said to him in the Quran:",
+    "ur": "اللہ تعالیٰ نے خود نبی ﷺ کے اخلاق کی تعریف فرمائی۔ قرآن میں آپ ﷺ سے فرمایا:"
+   }
+  },
+  {
+   "ayah": [
+    68,
+    4,
+    4
+   ]
+  },
+  {
+   "say": {
+    "en": "Sa'd ibn Hisham once asked Aisha, the mother of the believers, may Allah be pleased with her, about the character of the Prophet ﷺ. Her answer was short.",
+    "ur": "سعد بن ہشام نے ایک بار ام المؤمنین حضرت عائشہ رضی اللہ عنہا سے نبی ﷺ کے اخلاق کے بارے میں پوچھا۔ ان کا جواب مختصر تھا۔"
+   }
+  },
+  {
+   "hadith": "muslim:1739",
+   "en": [
+    "I said: Mother of the Faithful, tell me about the character",
+    "was the Qur'an."
+   ],
+   "ur": [
+    "میں نے کہا : ام المومنین! مجھے رسول اللہ صلی اللہ علیہ وسلم کے خلق مبارک",
+    "اخلاق قرآن ہی تھا"
+   ]
+  },
+  {
+   "say": {
+    "en": "Those who lived closest to him saw the same. Anas ibn Malik, may Allah be pleased with him, served the Prophet ﷺ for ten years, and Abdullah ibn Amr, may Allah be pleased with him, tells us how he spoke and what he taught.",
+    "ur": "جو لوگ آپ ﷺ کے سب سے قریب رہے انہوں نے بھی یہی دیکھا۔ حضرت انس بن مالک رضی اللہ عنہ نے دس برس تک نبی ﷺ کی خدمت کی، اور حضرت عبداللہ بن عمرو رضی اللہ عنہما بتاتے ہیں کہ آپ ﷺ کیسے بات کرتے تھے اور کیا سکھاتے تھے۔"
+   }
+  },
+  {
+   "hadith": "bukhari:6038",
+   "ur": [
+    "انس رضی اللہ عنہ نے بیان کیا",
+    null
+   ]
+  },
+  {
+   "hadith": "bukhari:6035",
+   "ur": [
+    "مسروق نے بیان کیا کہ ہم",
+    null
+   ]
+  },
+  {
+   "say": {
+    "en": "Good character is not something far away. Whoever wants to follow the Prophet ﷺ can begin with what we have just heard: a gentle word, patience with those who serve us, and a tongue kept free of harsh speech.",
+    "ur": "اچھے اخلاق کوئی دور کی چیز نہیں۔ جو نبی ﷺ کی پیروی کرنا چاہے وہ انہی باتوں سے شروع کر سکتا ہے جو ہم نے ابھی سنیں: نرم بات، اپنی خدمت کرنے والوں کے ساتھ صبر، اور زبان کو سخت باتوں سے بچانا۔"
+   }
+  }
+ ]
+}

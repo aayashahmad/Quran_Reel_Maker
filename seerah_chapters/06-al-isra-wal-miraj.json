@@ -1,0 +1,71 @@
+{
+ "n": 6,
+ "id": "al-isra-wal-miraj",
+ "period": "Makkah",
+ "when": "Makkah",
+ "en": "Al-Isra and Al-Mi'raj",
+ "ur": "اسراء و معراج",
+ "q": "What happened on the night of Al-Isra and Al-Mi'raj?",
+ "keys": [
+  "\\bisra\\b|\\bisra'|mi'?raj|me'?raj|night journey|\\bburaq\\b|sidrat|lote tree|اسراء|معراج|براق|سدرۃ|سدرہ",
+  "jerusalem|\\baqsa\\b|bait ?ul ?maqdis|bayt ?al ?maqdis|heavens?\\b|aasman|asman|five (daily )?prayers|fifty prayers|50 prayers|pa[a]?nch (waqt )?nama[az]|بیت المقدس|اقصی|اقصیٰ|آسمان|پانچ نماز|پچاس نماز"
+ ],
+ "blocks": [
+  {
+   "say": {
+    "en": "While he was still in Makkah, Allah honoured the Prophet ﷺ with a miraculous journey in one night: from the Sacred Mosque in Makkah to Al-Aqsa Mosque in Jerusalem, and from there up through the heavens. Allah tells of it in the Quran:",
+    "ur": "جب آپ ﷺ ابھی مکہ ہی میں تھے، اللہ تعالیٰ نے آپ کو ایک ہی رات میں ایک معجزانہ سفر کا شرف بخشا: مکہ کی مسجد حرام سے بیت المقدس کی مسجد اقصیٰ تک، اور وہاں سے آسمانوں کی طرف۔ اللہ تعالیٰ قرآن میں اس کا ذکر فرماتا ہے:"
+   }
+  },
+  {
+   "ayah": [
+    17,
+    1,
+    1
+   ]
+  },
+  {
+   "say": {
+    "en": "In the heavens he met earlier prophets, among them Adam, Moses, Jesus and Abraham, peace be upon them. Abu Dharr, may Allah be pleased with him, narrates what the Prophet ﷺ said about the gift of prayer.",
+    "ur": "آسمانوں میں آپ ﷺ کی ملاقات پہلے انبیاء سے ہوئی، جن میں حضرت آدم، حضرت موسیٰ، حضرت عیسیٰ اور حضرت ابراہیم علیہم السلام بھی تھے۔ حضرت ابوذر رضی اللہ عنہ بیان کرتے ہیں کہ نبی ﷺ نے نماز کے تحفے کے بارے میں کیا فرمایا۔"
+   }
+  },
+  {
+   "hadith": "bukhari:349",
+   "en": [
+    "The Prophet (ﷺ) said, \"Then Allah enjoined",
+    "its earth was of musk"
+   ],
+   "ur": [
+    "نبی کریم صلی اللہ علیہ وسلم نے فرمایا۔ پس",
+    "اس کی مٹی مشک کی ہے۔"
+   ]
+  },
+  {
+   "say": {
+    "en": "Allah also tells in the Quran of what the Prophet ﷺ saw at the Lote Tree of the Utmost Boundary:",
+    "ur": "اللہ تعالیٰ نے قرآن میں یہ بھی بتایا ہے کہ نبی ﷺ نے سدرۃ المنتہیٰ کے پاس کیا دیکھا:"
+   }
+  },
+  {
+   "ayah": [
+    53,
+    13,
+    18
+   ]
+  },
+  {
+   "say": {
+    "en": "When he told the people of Quraysh about his journey, they did not believe him. Jabir ibn Abdullah, may Allah be pleased with him, heard the Prophet ﷺ describe what happened then.",
+    "ur": "جب آپ ﷺ نے قریش کو اس سفر کے بارے میں بتایا تو انہوں نے آپ کو جھٹلایا۔ حضرت جابر بن عبداللہ رضی اللہ عنہما نے نبی ﷺ سے سنا کہ پھر کیا ہوا۔"
+   }
+  },
+  {
+   "hadith": "bukhari:3886",
+   "ur": [
+    "انہوں نے رسول اللہ صلی اللہ علیہ وسلم سے سنا",
+    null
+   ]
+  }
+ ]
+}

@@ -1,0 +1,67 @@
+{
+ "n": 4,
+ "id": "persecution-in-makkah",
+ "period": "Makkah",
+ "when": "Makkah",
+ "en": "Patience under Persecution",
+ "ur": "مکہ میں ظلم اور صبر",
+ "q": "How did the Prophet Muhammad ﷺ and the early Muslims face persecution in Makkah?",
+ "keys": [
+  "khabbab|abi mu'?ai?t|\\babyssinia|\\bhabsh|خباب|معیط|حبشہ",
+  "persecut|tortur|\\bchok|strangl|throttl|sataya|satay|ستای|اذیت|گلا گھونٹ|(zulm|sitam|oppress|harm|hurt|takleef|takalif|ظلم|ستم|تکلیف).{0,40}(makk|mecca|quraish|quraysh|مکہ|قریش)|(makk|mecca|quraish|quraysh|مکہ|قریش).{0,40}(zulm|sitam|oppress|harm|hurt|takleef|takalif|ظلم|ستم|تکلیف)"
+ ],
+ "blocks": [
+  {
+   "say": {
+    "en": "As more people accepted Islam, the leaders of Quraysh turned against the believers. Many Muslims were mocked and beaten, and the Prophet ﷺ himself was harmed. Urwa ibn az-Zubair asked Abdullah ibn Amr, may Allah be pleased with him, about the worst thing they did to him.",
+    "ur": "جیسے جیسے لوگ اسلام قبول کرتے گئے، قریش کے سردار مومنوں کے دشمن ہوتے گئے۔ بہت سے مسلمانوں کا مذاق اڑایا گیا اور انہیں مارا پیٹا گیا، اور خود نبی ﷺ کو بھی تکلیفیں دی گئیں۔ عروہ بن زبیر نے حضرت عبداللہ بن عمرو رضی اللہ عنہما سے پوچھا کہ مشرکوں نے آپ ﷺ کے ساتھ سب سے سخت سلوک کیا کیا۔"
+   }
+  },
+  {
+   "hadith": "bukhari:3856",
+   "ur": [
+    "عروہ بن زبیر نے بیان کیا کہ میں نے",
+    "میرا رب اللہ ہے"
+   ]
+  },
+  {
+   "say": {
+    "en": "The words of Abu Bakr, may Allah be pleased with him, are those of a believer from the people of Pharaoh, which Allah tells us about in the Quran:",
+    "ur": "حضرت ابوبکر رضی اللہ عنہ کے یہ الفاظ فرعون کی قوم کے ایک مومن کے الفاظ ہیں، جن کا ذکر اللہ تعالیٰ نے قرآن میں فرمایا ہے:"
+   }
+  },
+  {
+   "ayah": [
+    40,
+    28,
+    28
+   ]
+  },
+  {
+   "say": {
+    "en": "Khabbab ibn al-Aratt, may Allah be pleased with him, was one of the believers who suffered greatly. He tells us what the Prophet ﷺ said when they asked him to pray for them.",
+    "ur": "حضرت خباب بن ارت رضی اللہ عنہ بھی ان مومنوں میں سے تھے جنہوں نے بہت تکلیفیں اٹھائیں۔ وہ بتاتے ہیں کہ جب انہوں نے نبی ﷺ سے دعا کی درخواست کی تو آپ نے کیا فرمایا۔"
+   }
+  },
+  {
+   "hadith": "bukhari:3612",
+   "ur": [
+    "خباب بن ارت رضی اللہ عنہ نے بیان کیا",
+    null
+   ]
+  },
+  {
+   "say": {
+    "en": "Some of the believers emigrated to Abyssinia, where they could worship Allah in peace. And Allah told His Messenger ﷺ to be patient:",
+    "ur": "کچھ مومن ہجرت کر کے حبشہ چلے گئے، جہاں وہ سکون سے اللہ کی عبادت کر سکتے تھے۔ اور اللہ تعالیٰ نے اپنے رسول ﷺ کو صبر کا حکم دیا:"
+   }
+  },
+  {
+   "ayah": [
+    73,
+    10,
+    10
+   ]
+  }
+ ]
+}

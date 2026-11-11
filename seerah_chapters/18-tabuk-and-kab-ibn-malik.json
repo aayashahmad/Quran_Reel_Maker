@@ -1,0 +1,75 @@
+{
+ "n": 18,
+ "id": "tabuk-and-kab-ibn-malik",
+ "period": "Madinah",
+ "when": "9 AH · 630 CE",
+ "en": "Tabuk and the Repentance of Ka'b ibn Malik",
+ "ur": "غزوۂ تبوک اور کعب بن مالک کی توبہ",
+ "q": "What happened at Tabuk, and how was Ka'b ibn Malik forgiven?",
+ "keys": [
+  "\\btabuk\\b|\\btabook\\b|تبوک|ka'?a?b (ibn|bin|bn) malik|کعب بن مالک|three (who (were )?)?(left|stayed) behind",
+  "stayed behind|left behind|peech?he reh|پیچھے رہ|\\bharun\\b|\\bharoon\\b|\\baaron\\b|ہارون|boycott|بائیکاٹ"
+ ],
+ "blocks": [
+  {
+   "say": {
+    "en": "In the ninth year after the Hijrah, the Prophet ﷺ set out with a large army on a long journey north to Tabuk, in the heat of summer. He left Ali ibn Abi Talib, may Allah be pleased with him, in charge in Madinah. Sa'd ibn Abi Waqqas, may Allah be pleased with him, narrates:",
+    "ur": "ہجرت کے نویں سال نبی ﷺ ایک بڑے لشکر کے ساتھ شمال میں تبوک کے لمبے سفر پر نکلے، اور یہ سخت گرمی کا زمانہ تھا۔ آپ نے حضرت علی بن ابی طالب رضی اللہ عنہ کو مدینہ میں اپنا نائب بنایا۔ حضرت سعد بن ابی وقاص رضی اللہ عنہ بیان کرتے ہیں:"
+   }
+  },
+  {
+   "hadith": "bukhari:4416",
+   "ur": [
+    "مصعب بن سعد نے اور ان سے ان کے والد نے",
+    "میرے بعد کوئی نبی نہیں ہو گا۔"
+   ]
+  },
+  {
+   "say": {
+    "en": "A few believers stayed behind without an excuse. One of them was Ka'b ibn Malik, may Allah be pleased with him. When the Prophet ﷺ returned to Madinah, many who had stayed behind came to him with excuses. Ka'b tells what happened when his turn came.",
+    "ur": "چند مومن بغیر کسی عذر کے پیچھے رہ گئے تھے، ان میں حضرت کعب بن مالک رضی اللہ عنہ بھی تھے۔ جب نبی ﷺ مدینہ واپس تشریف لائے تو پیچھے رہ جانے والے بہت سے لوگ آپ کے پاس عذر لے کر آئے۔ حضرت کعب بتاتے ہیں کہ جب ان کی باری آئی تو کیا ہوا۔"
+   }
+  },
+  {
+   "hadith": "bukhari:4418",
+   "en": [
+    "Then I came to him, and when I greeted him",
+    "So get up till Allah decides your case.'"
+   ],
+   "ur": [
+    "اس کے بعد میں حاضر ہوا۔",
+    "تمہارے بارے میں خود کوئی فیصلہ کر دے۔"
+   ]
+  },
+  {
+   "say": {
+    "en": "Ka'b and two other Companions who had also told the truth waited fifty nights for Allah's decision. Then the good news came.",
+    "ur": "حضرت کعب اور دو اور صحابہ، جنہوں نے بھی سچ بولا تھا، پچاس راتوں تک اللہ کے فیصلے کا انتظار کرتے رہے۔ پھر خوشخبری آ گئی۔"
+   }
+  },
+  {
+   "hadith": "bukhari:4418",
+   "en": [
+    "When I had offered the Fajr prayer on the 50th morning",
+    "He said, 'No, it is from Allah.'"
+   ],
+   "ur": [
+    "پچاسویں رات کی صبح کو",
+    "فرمایا نہیں، بلکہ اللہ کی طرف سے ہے۔"
+   ]
+  },
+  {
+   "say": {
+    "en": "These are the ayat Allah revealed about them:",
+    "ur": "اللہ تعالیٰ نے ان کے بارے میں یہ آیات نازل فرمائیں:"
+   }
+  },
+  {
+   "ayah": [
+    9,
+    117,
+    119
+   ]
+  }
+ ]
+}

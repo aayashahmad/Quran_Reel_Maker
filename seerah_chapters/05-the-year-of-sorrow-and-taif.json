@@ -1,0 +1,60 @@
+{
+ "n": 5,
+ "id": "the-year-of-sorrow-and-taif",
+ "period": "Makkah",
+ "when": "c. 619 CE",
+ "en": "The Year of Sorrow and Ta'if",
+ "ur": "عام الحزن اور طائف",
+ "q": "What happened in the Year of Sorrow and at Ta'if?",
+ "keys": [
+  "year of (sorrow|grief)|\\b(aa?m|am) ?[ua]l[ -]?huzn|\\bta'?[iy]f\\b|angel of (the )?mountains|abu ?talib(?=.{0,30}(death|died|dying|\\bdie|wafat|inteqal|maut))|(?<=talib).{0,30}?(death|died|dying|\\bdie|wafat|inteqal|maut)|(death|died|wafat|inteqal|maut)(?=.{0,30}abu ?talib)|(?<=of )abu ?talib|طائف|عام الحزن|پہاڑوں کا فرشتہ|ابو ?طالب(?= کی (وفات|موت))|(?<=طالب) کی (وفات|موت)",
+  "hardest day|harder than (the day of )?uhud|sakht din|uncle.{0,20}(death|died)|khadija.{0,30}(death|died|wafat)|(death|died|wafat).{0,30}khadija|سخت دن|خدیجہ.{0,20}وفات"
+ ],
+ "blocks": [
+  {
+   "say": {
+    "en": "For many years the Prophet's ﷺ uncle Abu Talib protected him from Quraysh, although he did not accept Islam himself. When Abu Talib was dying, the Prophet ﷺ went to him. Al-Musayyib, may Allah be pleased with him, tells us what happened.",
+    "ur": "برسوں تک نبی ﷺ کے چچا ابو طالب نے قریش کے مقابلے میں آپ کی حفاظت کی، اگرچہ وہ خود اسلام نہیں لائے۔ جب ابو طالب کی وفات کا وقت آیا تو نبی ﷺ ان کے پاس تشریف لے گئے۔ حضرت مسیب رضی اللہ عنہ بتاتے ہیں کہ کیا ہوا۔"
+   }
+  },
+  {
+   "hadith": "bukhari:3884",
+   "ur": [
+    "مسیب بن حزن صحابی رضی اللہ عنہ نے کہ",
+    null
+   ]
+  },
+  {
+   "say": {
+    "en": "Around the same time, Khadijah, may Allah be pleased with her, his wife and the first to believe in him, also passed away, and this time is remembered as the Year of Sorrow. Then the Prophet ﷺ went to the town of Ta'if to call its people to Islam, but its leaders rejected his call.",
+    "ur": "تقریباً اسی زمانے میں آپ ﷺ کی زوجہ حضرت خدیجہ رضی اللہ عنہا بھی وفات پا گئیں، جو سب سے پہلے آپ پر ایمان لائی تھیں، اسی لیے یہ زمانہ عام الحزن، یعنی غم کا سال، کہلاتا ہے۔ پھر نبی ﷺ طائف تشریف لے گئے تاکہ وہاں کے لوگوں کو اسلام کی دعوت دیں، مگر وہاں کے سرداروں نے آپ کی دعوت رد کر دی۔"
+   }
+  },
+  {
+   "say": {
+    "en": "Years later, Aisha, may Allah be pleased with her, asked the Prophet ﷺ whether he had ever faced a day harder than the day of Uhud. This was his answer.",
+    "ur": "برسوں بعد حضرت عائشہ رضی اللہ عنہا نے نبی ﷺ سے پوچھا کہ کیا آپ پر احد کے دن سے بھی زیادہ سخت کوئی دن گزرا ہے۔ آپ ﷺ نے یہ جواب دیا۔"
+   }
+  },
+  {
+   "hadith": "bukhari:3231",
+   "ur": [
+    "نبی کریم صلی اللہ علیہ وسلم کی زوجہ مطہرہ عائشہ رضی اللہ عنہا",
+    null
+   ]
+  },
+  {
+   "say": {
+    "en": "Even on that hard day, he chose mercy for his people. Allah says of His Messenger ﷺ:",
+    "ur": "اس سخت دن بھی آپ ﷺ نے اپنی قوم کے لیے رحمت ہی کو چنا۔ اللہ تعالیٰ اپنے رسول ﷺ کے بارے میں فرماتا ہے:"
+   }
+  },
+  {
+   "ayah": [
+    21,
+    107,
+    107
+   ]
+  }
+ ]
+}

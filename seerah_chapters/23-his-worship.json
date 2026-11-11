@@ -1,0 +1,67 @@
+{
+ "n": 23,
+ "id": "his-worship",
+ "period": "His character",
+ "when": "",
+ "en": "His Worship and Night Prayer",
+ "ur": "آپ ﷺ کی عبادت",
+ "q": "How did the Prophet Muhammad ﷺ worship and pray at night?",
+ "keys": [
+  "grateful (slave|servant)|thankful (slave|servant)|shukr ?guzaa?r band[ae]|شکر گزار بندہ|feet (swell|swoll|crack)|(paon|paaon|qadam).{0,15}(suj|phat)|قدم.{0,10}(پھٹ|سوج)|پاؤں.{0,10}سوج",
+  "worship|\\bi?baa?dat|\\bprays?\\b|\\bprayed|\\bpraying|\\bprayers?\\b|nama+z|\\bsalah?\\b|\\bsalat\\b|tahajjud|qiyam|\\bnight\\b|\\braat\\b|\\brak'?a+t|\\brak'?ah|\\bwitr\\b|istighfar|forgiveness|repent|tau?ba|tawba|\\bdhikr|\\bzikr|\\bdua\\b|supplicat|\\bfast(s|ed|ing)?\\b|\\broz[ae]|عبادت|نماز|تہجد|قیام|رات|رکعت|وتر|استغفار|توبہ|ذکر|دعا|روزہ|روزے"
+ ],
+ "blocks": [
+  {
+   "say": {
+    "en": "Prayer was at the heart of the life of the Prophet ﷺ. In the early days of his mission, Allah commanded him to stand in prayer at night:",
+    "ur": "نماز نبی ﷺ کی زندگی کا مرکز تھی۔ نبوت کے ابتدائی دنوں میں اللہ تعالیٰ نے آپ ﷺ کو رات میں نماز کے لیے کھڑے ہونے کا حکم دیا:"
+   }
+  },
+  {
+   "ayah": [
+    73,
+    1,
+    4
+   ]
+  },
+  {
+   "say": {
+    "en": "He kept to the night prayer all his life. Aisha, the mother of the believers, may Allah be pleased with her, tells us how long he stood, and how he prayed.",
+    "ur": "آپ ﷺ ساری زندگی رات کی نماز پڑھتے رہے۔ ام المؤمنین حضرت عائشہ رضی اللہ عنہا بتاتی ہیں کہ آپ ﷺ کتنی دیر کھڑے رہتے تھے، اور کیسے نماز پڑھتے تھے۔"
+   }
+  },
+  {
+   "hadith": "bukhari:4837",
+   "ur": [
+    "عائشہ رضی اللہ عنہا سے کہ نبی کریم",
+    null
+   ]
+  },
+  {
+   "hadith": "bukhari:1147",
+   "ur": [
+    "ابوسلمہ بن عبدالرحمٰن نے خبر دی کہ",
+    null
+   ]
+  },
+  {
+   "say": {
+    "en": "He also turned to Allah in repentance many times every day. Abu Hurairah, may Allah be pleased with him, heard the Prophet ﷺ say:",
+    "ur": "آپ ﷺ ہر روز بار بار اللہ سے توبہ اور استغفار بھی کرتے تھے۔ حضرت ابوہریرہ رضی اللہ عنہ نے نبی ﷺ کو یہ فرماتے سنا:"
+   }
+  },
+  {
+   "hadith": "bukhari:6307",
+   "ur": [
+    "ابوہریرہ رضی اللہ عنہ نے بیان کیا کہ",
+    null
+   ]
+  },
+  {
+   "say": {
+    "en": "Allah had forgiven the Prophet ﷺ, and still he stood at night out of gratitude. We may not pray as long as he did, but we can begin: a few rak'at at night, and asking Allah's forgiveness every day.",
+    "ur": "اللہ تعالیٰ نے نبی ﷺ کو معاف فرما دیا تھا، پھر بھی آپ ﷺ شکر کے طور پر راتوں کو کھڑے رہتے۔ ہم شاید آپ ﷺ جتنی لمبی نماز نہ پڑھ سکیں، مگر شروع کر سکتے ہیں: رات کو چند رکعتیں، اور ہر روز اللہ سے استغفار۔"
+   }
+  }
+ ]
+}

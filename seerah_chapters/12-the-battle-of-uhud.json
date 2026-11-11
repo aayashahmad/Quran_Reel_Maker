@@ -1,0 +1,67 @@
+{
+ "n": 12,
+ "id": "the-battle-of-uhud",
+ "period": "Madinah",
+ "when": "3 AH · 625 CE",
+ "en": "The Battle of Uhud",
+ "ur": "غزوۂ احد",
+ "q": "What happened at the Battle of Uhud?",
+ "keys": [
+  "\\buh[ou]d\\b|\\buhad\\b|\\boh[ou]d\\b|\\bohad\\b|اُحد|(غزو[ۂہ]|جنگ|کوہ|جبل|معرک[ہۂ])\\s*ِ?\\s*احد|احد\\s*(کی|کے|میں)\\s*(جنگ|لڑائی|غزو|دن|پہاڑ|میدان)",
+  "archers?|teer ?anda+z|تیر انداز|\\btooth\\b|\\bteeth\\b|\\bdaa?nt\\b|دانت|wounded|injured|zakh?mi|زخمی|jabal ?(e ?)?rumah|\\bhamz[ae]h?\\b|حمزہ"
+ ],
+ "blocks": [
+  {
+   "say": {
+    "en": "In the third year after the Hijrah, Quraysh marched on Madinah with a large army to avenge Badr, and the Prophet ﷺ led the believers out to meet them at the mountain of Uhud. Al-Bara' ibn Azib, may Allah be pleased with him, tells us what happened.",
+    "ur": "ہجرت کے تیسرے سال قریش بدر کا بدلہ لینے کے لیے ایک بڑا لشکر لے کر مدینہ کی طرف بڑھے، اور نبی ﷺ مومنوں کو لے کر احد پہاڑ کے پاس ان کے مقابلے کے لیے نکلے۔ حضرت براء بن عازب رضی اللہ عنہ بتاتے ہیں کہ کیا ہوا۔"
+   }
+  },
+  {
+   "hadith": "bukhari:4043",
+   "en": [
+    null,
+    "Say: Allah is our Helper and you have no helper.\""
+   ],
+   "ur": [
+    "براء بن عازب رضی اللہ عنہ نے بیان کیا",
+    "اللہ ہمارا حامی اور مددگار ہے اور تمہارا کوئی حامی نہیں۔"
+   ]
+  },
+  {
+   "say": {
+    "en": "The Prophet ﷺ himself was wounded that day. Anas ibn Malik, may Allah be pleased with him, tells us what he said, and the verse Allah revealed then.",
+    "ur": "اس دن نبی ﷺ خود بھی زخمی ہوئے۔ حضرت انس بن مالک رضی اللہ عنہ بتاتے ہیں کہ آپ ﷺ نے کیا فرمایا، اور اس وقت اللہ نے کون سی آیت نازل فرمائی۔"
+   }
+  },
+  {
+   "hadith": "muslim:4645"
+  },
+  {
+   "say": {
+    "en": "Abdullah ibn Mas'ud, may Allah be pleased with him, remembered the Prophet ﷺ telling the story of one of the earlier prophets, who was hurt by his own people and prayed for them.",
+    "ur": "حضرت عبداللہ بن مسعود رضی اللہ عنہ کو یاد تھا کہ نبی ﷺ پہلے انبیاء میں سے ایک نبی کا واقعہ بیان فرما رہے تھے، جنہیں ان کی اپنی قوم نے تکلیف دی اور انہوں نے اپنی قوم کے لیے دعا کی۔"
+   }
+  },
+  {
+   "hadith": "bukhari:3477",
+   "ur": [
+    "عبداللہ بن مسعود رضی اللہ عنہ نے کہا",
+    null
+   ]
+  },
+  {
+   "say": {
+    "en": "At Uhud the believers learned how much depends on obeying the Messenger ﷺ. Afterwards Allah comforted them and told them not to lose heart:",
+    "ur": "احد کے دن مومنوں نے سیکھا کہ رسول ﷺ کی اطاعت پر کتنا کچھ منحصر ہے۔ اس کے بعد اللہ تعالیٰ نے انہیں تسلی دی اور فرمایا کہ ہمت نہ ہارو:"
+   }
+  },
+  {
+   "ayah": [
+    3,
+    139,
+    139
+   ]
+  }
+ ]
+}

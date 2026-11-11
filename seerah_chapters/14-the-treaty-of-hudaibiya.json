@@ -1,0 +1,71 @@
+{
+ "n": 14,
+ "id": "the-treaty-of-hudaibiya",
+ "period": "Madinah",
+ "when": "6 AH · 628 CE",
+ "en": "The Treaty of Hudaibiya",
+ "ur": "صلح حدیبیہ",
+ "q": "What was the Treaty of Hudaibiya?",
+ "keys": [
+  "hud[ae]ibiy|hudaybiy|hudaibi|حدیبیہ|حدیبیے|bay'?a?t[ -]?(e[ -]|al-?|ar-?)?ri[dz]wan|bai'?a?t[ -]?(e[ -]|al-?|ar-?)?ri[dz]wan|bay'?ah? (al-?|ar-?)?ri[dz]wan|pledge of (ar-?|al-?)?ri[dz]wan|pledge under the tree|بیعت رضوان|بیعتِ رضوان|suhail (bin|ibn) a?mr|سہیل بن عمرو",
+  "\\btreaty|peace (deal|agreement|treaty)|\\bsulh\\b|\\bsuleh\\b|صلح|معاہد|\\bpledge|\\bbay'?ah\\b|bai'?at|بیعت|under (a|the) tree|darakht ke neeche|درخت کے نیچے|clear victory|fath[ -]?(e[ -])?mubee?n|فتح مبین"
+ ],
+ "blocks": [
+  {
+   "say": {
+    "en": "In the sixth year after the Hijrah, the Prophet ﷺ set out with his companions to perform Umrah at the Ka'bah. Quraysh would not let them enter Makkah, and the believers stopped at Hudaibiya, close to the city. There they pledged allegiance to the Prophet ﷺ under a tree, and Allah was pleased with them:",
+    "ur": "ہجرت کے چھٹے سال نبی ﷺ اپنے صحابہ کے ساتھ عمرہ ادا کرنے کے لیے نکلے۔ قریش نے انہیں مکہ میں داخل نہ ہونے دیا، اور مومن مکہ کے قریب حدیبیہ کے مقام پر ٹھہر گئے۔ وہاں انہوں نے ایک درخت کے نیچے نبی ﷺ سے بیعت کی، اور اللہ ان سے راضی ہو گیا:"
+   }
+  },
+  {
+   "ayah": [
+    48,
+    18,
+    18
+   ]
+  },
+  {
+   "say": {
+    "en": "Then Suhail ibn Amr came from Quraysh to make peace. Al-Miswar ibn Makhramah, may Allah be pleased with him, and Marwan narrate how the treaty was written.",
+    "ur": "پھر قریش کی طرف سے سہیل بن عمرو صلح کرنے آئے۔ حضرت مسور بن مخرمہ رضی اللہ عنہ اور مروان بیان کرتے ہیں کہ صلح نامہ کیسے لکھا گیا۔"
+   }
+  },
+  {
+   "hadith": "bukhari:2731",
+   "en": [
+    "When Suhail bin `Amr came, the Prophet (ﷺ) said, \"Now the matter has become easy.\"",
+    "after he has become a Muslim?"
+   ],
+   "ur": [
+    "جب سہیل بن عمرو آیا تو نبی کریم صلی اللہ علیہ وسلم نے",
+    "جو مسلمان ہو کر آیا ہو۔"
+   ]
+  },
+  {
+   "say": {
+    "en": "Many of the believers found these terms hard to accept. Yet Allah called the treaty a clear victory. The surah revealed about it begins:",
+    "ur": "بہت سے مومنوں کو یہ شرطیں بہت بھاری لگیں۔ لیکن اللہ نے اس صلح کو کھلی فتح قرار دیا۔ اس کے بارے میں نازل ہونے والی سورت یوں شروع ہوتی ہے:"
+   }
+  },
+  {
+   "ayah": [
+    48,
+    1,
+    1
+   ]
+  },
+  {
+   "say": {
+    "en": "Al-Bara' ibn Azib, may Allah be pleased with him, who was there, tells us what the believers counted as the real victory, and of a blessing at the well of Hudaibiya.",
+    "ur": "حضرت براء بن عازب رضی اللہ عنہ، جو وہاں موجود تھے، بتاتے ہیں کہ صحابہ اصل فتح کسے سمجھتے تھے، اور حدیبیہ کے کنویں کی ایک برکت کا واقعہ سناتے ہیں۔"
+   }
+  },
+  {
+   "hadith": "bukhari:4150",
+   "ur": [
+    "براء بن عازب رضی اللہ عنہ نے کہا",
+    null
+   ]
+  }
+ ]
+}

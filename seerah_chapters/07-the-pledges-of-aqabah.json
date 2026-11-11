@@ -1,0 +1,66 @@
+{
+ "n": 7,
+ "id": "the-pledges-of-aqabah",
+ "period": "Makkah",
+ "when": "621–622 CE",
+ "en": "The Pledges of Aqabah",
+ "ur": "بیعتِ عقبہ",
+ "q": "What were the pledges of Aqabah?",
+ "keys": [
+  "\\baqab?ah?\\b|\\baqaba|bai'?at[ -]?(e[ -]?)?aqab|بیعت\\s*ِ?\\s*عقبہ|لیلۃ ?العقبہ|عقبہ کی (رات|بیعت)",
+  "pledge|allegiance|\\bbai'?a[th]?\\b|\\bansar\\b|yathrib|khazraj|\\baws\\b|بیعت|انصار|یثرب|خزرج"
+ ],
+ "blocks": [
+  {
+   "say": {
+    "en": "Each year, when the Arab tribes came to Makkah for the pilgrimage, the Prophet ﷺ presented Islam to them. Some people from Yathrib, the town later called Madinah, believed in him, and they met him at Al-Aqabah, near Mina, to give him their pledge.",
+    "ur": "ہر سال جب عرب کے قبیلے حج کے لیے مکہ آتے تو نبی ﷺ ان کے سامنے اسلام پیش کرتے۔ یثرب سے، جس کا نام بعد میں مدینہ ہوا، آئے ہوئے کچھ لوگ آپ پر ایمان لے آئے، اور انہوں نے منیٰ کے قریب عقبہ کے مقام پر آپ سے مل کر بیعت کی۔"
+   }
+  },
+  {
+   "say": {
+    "en": "Ubadah ibn as-Samit, may Allah be pleased with him, was with the Prophet ﷺ on the night of Al-Aqabah. He narrates the pledge the Prophet ﷺ asked his companions to give.",
+    "ur": "حضرت عبادہ بن صامت رضی اللہ عنہ عقبہ کی رات نبی ﷺ کے ساتھ تھے۔ وہ بیان کرتے ہیں کہ نبی ﷺ نے اپنے صحابہ سے کس بات کی بیعت لی۔"
+   }
+  },
+  {
+   "hadith": "bukhari:3892",
+   "ur": [
+    "عبادہ بن صامت رضی اللہ عنہ ان صحابہ",
+    null
+   ]
+  },
+  {
+   "say": {
+    "en": "The next year a larger group came from Yathrib, and they too gave him their pledge at Al-Aqabah, promising to protect him if he came to them. Ka'b ibn Malik, may Allah be pleased with him, was one of them.",
+    "ur": "اگلے سال یثرب سے ایک بڑی جماعت آئی، اور انہوں نے بھی عقبہ کے مقام پر آپ ﷺ سے بیعت کی اور وعدہ کیا کہ اگر آپ ان کے پاس تشریف لائیں تو وہ آپ کی حفاظت کریں گے۔ حضرت کعب بن مالک رضی اللہ عنہ بھی انہی میں سے تھے۔"
+   }
+  },
+  {
+   "hadith": "bukhari:3889",
+   "ur": [
+    "کعب نے کہا کہ میں نبی کریم",
+    null
+   ]
+  },
+  {
+   "say": {
+    "en": "Abu Hurairah, may Allah be pleased with him, narrates what the Prophet ﷺ said about the town Allah commanded him to emigrate to.",
+    "ur": "حضرت ابوہریرہ رضی اللہ عنہ بیان کرتے ہیں کہ نبی ﷺ نے اس شہر کے بارے میں کیا فرمایا جس کی طرف آپ کو ہجرت کا حکم ہوا۔"
+   }
+  },
+  {
+   "hadith": "bukhari:1871",
+   "ur": [
+    "نبی کریم صلی اللہ علیہ وسلم نے فرمایا کہ مجھے",
+    null
+   ]
+  },
+  {
+   "say": {
+    "en": "Then the believers of Makkah began to leave for Madinah, and in time the Prophet ﷺ followed them.",
+    "ur": "پھر مکہ کے مومن مدینہ کی طرف روانہ ہونے لگے، اور کچھ عرصے بعد نبی ﷺ نے بھی ہجرت فرمائی۔"
+   }
+  }
+ ]
+}

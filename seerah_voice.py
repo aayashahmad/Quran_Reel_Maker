@@ -6,7 +6,12 @@
 
 Each block is read sentence by sentence; Whisper listens to every take and a sentence is remade (up to TRIES) until
 at least ACCEPT of its words are heard. Sentences still below that are listed in seerah_audio/review.tsv for a person
-to listen to. The narrator (narrator.wav/.txt) is the one Hayatus Sahaba uses, so both sites share one voice."""
+to listen to. The narrator (narrator.wav/.txt) is the one Hayatus Sahaba uses, so both sites share one voice.
+
+The Prophet's ﷺ name and the salawat are said in proper Arabic: where Whisper hears "(محمد) صلی اللہ علیہ وسلم" in a
+take, that stretch is replaced by the same narrator saying it in Arabic (voice/muhammad-salawat-ar.wav,
+voice/salawat-ar.wav: OmniVoice's Arabic mode, chosen because Whisper heard them 100% right). If Whisper cannot place
+it, the Urdu take is kept as it is."""
 import json
 import pathlib
 import re
@@ -54,6 +59,51 @@ def norm(s):
     return re.sub(r"\s+", " ", re.sub(r"[^؀-ۿ ]", " ", s)).split()
 
 
+SALAWAT = ["صلی", "اللہ", "علیہ", "وسلم"]
+
+
+def _w(word):
+    """A heard word, plain: no vowel marks or punctuation, Arabic letters as Urdu."""
+    word = re.sub(r"[ً-ٰٟ؀-؟،۔.,!?:\"']", "", word)
+    for a, b in (("ى", "ی"), ("ي", "ی"), ("ه", "ہ"), ("ك", "ک"), ("ة", "ہ"), ("أ", "ا"), ("إ", "ا")):
+        word = word.replace(a, b)
+    return word.strip()
+
+
+def arabic_salawat(audio, words, clips, sr=SR):
+    """Replace each spoken "(محمد) صلی اللہ علیہ وسلم" in a take with the Arabic recording. words: Whisper's
+    [(word, start, end)]. Returns (audio, how many were replaced)."""
+    import numpy as np
+    plain = [_w(w) for w, _, _ in words]
+    spans, i = [], 0
+    while i < len(plain):
+        if plain[i] in ("صلی", "صل") and [p for p in plain[i:i + 4]][1:] == SALAWAT[1:]:
+            a = i - 1 if i and plain[i - 1] == "محمد" else i
+            spans.append((words[a][1], words[i + 3][2], "muhammad" if a < i else "salawat"))
+            i += 4
+        else:
+            i += 1
+    if not spans:
+        return audio, 0
+    out, pos, fade = [], 0, int(0.03 * sr)
+    for start, end, kind in spans:
+        a, b = int(max(0, start - 0.04) * sr), int(min(len(audio) / sr, end + 0.06) * sr)
+        if a <= pos or b <= a:
+            continue
+        head = audio[pos:a].copy()
+        head[-fade:] *= np.linspace(1, 0, min(fade, len(head)))[-len(head[-fade:]):]
+        clip = clips[kind].copy()
+        clip[:fade] *= np.linspace(0, 1, fade)
+        clip[-fade:] *= np.linspace(1, 0, fade)
+        out += [head, np.zeros(int(0.05 * sr), dtype=np.float32), clip, np.zeros(int(0.05 * sr), dtype=np.float32)]
+        pos = b
+    tail = audio[pos:].copy()
+    if len(tail) > fade:
+        tail[:fade] *= np.linspace(0, 1, fade)
+    out.append(tail)
+    return np.concatenate(out).astype(np.float32), len(spans)
+
+
 def make(path, out=OUT):
     out = pathlib.Path(out)
     import difflib
@@ -74,6 +124,15 @@ def make(path, out=OUT):
     ref, sr = sf.read(NARRATOR / "narrator.wav", dtype="float32")
     prompt = model.create_voice_clone_prompt(ref_audio=(torch.from_numpy(ref).unsqueeze(0), sr),
                                              ref_text=(NARRATOR / "narrator.txt").read_text(encoding="utf-8"))
+
+    clips = {k: sf.read(HERE / "voice" / f"{f}-ar.wav", dtype="float32")[0]
+             for k, f in (("salawat", "salawat"), ("muhammad", "muhammad-salawat"))}
+
+    def timed(audio):
+        with tempfile.NamedTemporaryFile(suffix=".wav") as f:
+            sf.write(f.name, audio, SR)
+            r = mlx_whisper.transcribe(f.name, path_or_hf_repo=ASR, language="ur", word_timestamps=True)
+        return [(w["word"], w["start"], w["end"]) for seg in r["segments"] for w in seg.get("words", [])]
 
     def heard(audio):
         with tempfile.NamedTemporaryFile(suffix=".wav") as f:
@@ -101,6 +160,12 @@ def make(path, out=OUT):
                 review.write(f"{job['file']}\t{best_c:.2f}\t{s}\n")
                 review.flush()
             worst = min(worst, best_c)
+            want = s.count("صلی اللہ علیہ وسلم")
+            if want:                                     # the name and salawat in proper Arabic
+                best, done = arabic_salawat(best, timed(best), clips)
+                if done < want:
+                    review.write(f"{job['file']}\tsalawat {done}/{want} in Arabic\t{s}\n")
+                    review.flush()
             chunks += [best, np.zeros(int(SR * GAP), dtype=np.float32)]
         wav = out / (job["file"] + ".wav")
         sf.write(wav, np.concatenate(chunks), SR)

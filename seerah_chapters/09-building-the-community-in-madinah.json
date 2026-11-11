@@ -1,0 +1,68 @@
+{
+ "n": 9,
+ "id": "building-the-community-in-madinah",
+ "period": "Madinah",
+ "when": "1 AH · 622 CE",
+ "en": "The Mosque and the Brotherhood in Madinah",
+ "ur": "مسجد نبوی اور مواخات",
+ "q": "What did the Prophet Muhammad ﷺ do when he arrived in Madinah?",
+ "keys": [
+  "masjid[ -]?(e[ -]|an[ -]?|al[ -]?)?nabaw[iy]|prophet'?s mosque|mosque of the prophet|mu?'?a+khat|mawa+khat|mowakhat|brotherhood between (the )?(ansar|emigrants|muhajir)|banu ?(an-?)?najjar|bani ?(an-?)?najjar|sa'?a?d (bin|ibn) (ar-? ?)?rabi|buil[dt]\\w* (the |his |a |that |first )*(mosque|masjid)|(mosque|masjid) (was )?buil[dt]|masjid (kaise |kab |ki )?(banai|banayi|bani|banwai|tameer|tamir)|مسجد نبوی|مسجدِ نبوی|مواخات|بنو ?نجار|سعد بن ربیع|مسجد (کی تعمیر|بنائی|بنوائی)",
+  "\\bmosques?\\b|\\bmasjid\\b|brotherhood|brothers?\\b|bhai ?chara|bhaichara|bhai bana|\\bansar|muhajir|emigrants|helpers|abdur? ?rahman (bin|ibn) a?[uw]f|arriv\\w* (in|at) (madinah?|medina)|madinah? (pahunch|aa)|مسجد|بھائی چارہ|بھائی|انصار|مہاجر|عبدالرحمٰن بن عوف|عبدالرحمن بن عوف"
+ ],
+ "blocks": [
+  {
+   "say": {
+    "en": "When the Prophet ﷺ arrived in Madinah, he first stayed for some days with the tribe of Banu Amr ibn Awf in Quba. Then he came into the town, and one of the first things he did was to build a mosque. Anas ibn Malik, may Allah be pleased with him, tells us how it was built.",
+    "ur": "جب نبی ﷺ مدینہ پہنچے تو پہلے کچھ دن قبا میں بنو عمرو بن عوف کے ہاں ٹھہرے۔ پھر آپ شہر میں تشریف لائے، اور آپ نے جو پہلے کام کیے ان میں سے ایک مسجد کی تعمیر تھی۔ حضرت انس بن مالک رضی اللہ عنہ بتاتے ہیں کہ یہ مسجد کیسے بنی۔"
+   }
+  },
+  {
+   "hadith": "bukhari:428",
+   "en": [
+    "Then he sent for Bani An-Najjar",
+    null
+   ],
+   "ur": [
+    "پھر آپ صلی اللہ علیہ وسلم نے بنونجار کو بلا بھیجا",
+    null
+   ]
+  },
+  {
+   "say": {
+    "en": "The Prophet ﷺ also made the emigrants from Makkah and the Ansar, the believers of Madinah, brothers to one another. Abdur Rahman ibn Awf, may Allah be pleased with him, was one of the emigrants. He tells us what his new brother offered him.",
+    "ur": "نبی ﷺ نے مکہ سے آنے والے مہاجرین اور مدینہ کے مومنوں، یعنی انصار، کو ایک دوسرے کا بھائی بھی بنا دیا۔ حضرت عبدالرحمٰن بن عوف رضی اللہ عنہ بھی مہاجرین میں سے تھے۔ وہ بتاتے ہیں کہ ان کے نئے بھائی نے انہیں کیا پیشکش کی۔"
+   }
+  },
+  {
+   "hadith": "bukhari:2048",
+   "en": [
+    "`Abdur Rahman bin `Auf said",
+    "and then he continued going there regularly."
+   ],
+   "ur": [
+    "عبدالرحمٰن بن عوف رضی اللہ عنہ نے کہا کہ جب ہم مدینہ آئے",
+    "پھر وہ تجارت کے لیے بازار آنے جانے لگے۔"
+   ]
+  },
+  {
+   "say": {
+    "en": "Allah praised the Ansar in the Quran for their love for the emigrants, and for putting them before themselves:",
+    "ur": "اللہ تعالیٰ نے قرآن میں انصار کی تعریف فرمائی کہ وہ مہاجرین سے محبت کرتے اور انہیں اپنے آپ پر ترجیح دیتے تھے:"
+   }
+  },
+  {
+   "ayah": [
+    59,
+    9,
+    9
+   ]
+  },
+  {
+   "say": {
+    "en": "The mosque the Prophet ﷺ built, the Masjid an-Nabawi, became the heart of the new community in Madinah. There the believers prayed together, learned their religion and met one another.",
+    "ur": "نبی ﷺ کی بنائی ہوئی یہ مسجد، مسجد نبوی، مدینہ کی نئی امت کا مرکز بن گئی۔ یہاں مومن مل کر نماز پڑھتے، اپنا دین سیکھتے اور ایک دوسرے سے ملتے تھے۔"
+   }
+  }
+ ]
+}

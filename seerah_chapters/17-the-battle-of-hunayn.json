@@ -1,0 +1,58 @@
+{
+ "n": 17,
+ "id": "the-battle-of-hunayn",
+ "period": "Madinah",
+ "when": "8 AH · 630 CE",
+ "en": "The Day of Hunayn",
+ "ur": "غزوۂ حنین",
+ "q": "What happened at the Battle of Hunayn?",
+ "keys": [
+  "\\bhunain\\b|\\bhunayn\\b|\\bhawazin\\b|ghazwa[- ]?e?[- ]?hunain|حنین|ہوازن",
+  "\\bmule\\b|khach+ar|خچر|no lie|\\bla kadhib\\b|jhoot nahi|jhoot nahin|stood firm|sabit qadam|ثابت قدم"
+ ],
+ "blocks": [
+  {
+   "say": {
+    "en": "In the same year as the conquest of Makkah, the tribes of Hawazin gathered an army against the believers, and the Prophet ﷺ went out to meet them in the valley of Hunayn. The believers went out in great numbers. Allah describes that day in the Quran:",
+    "ur": "فتح مکہ ہی کے سال قبیلہ ہوازن نے مومنوں کے خلاف لشکر جمع کیا، اور نبی ﷺ ان کے مقابلے کے لیے وادیِ حنین کی طرف نکلے۔ مومن بڑی تعداد میں نکلے تھے۔ اللہ تعالیٰ قرآن میں اس دن کا حال بیان فرماتا ہے:"
+   }
+  },
+  {
+   "ayah": [
+    9,
+    25,
+    26
+   ]
+  },
+  {
+   "say": {
+    "en": "Al-Bara ibn Azib, may Allah be pleased with him, was asked whether they had fled that day. He describes how the Prophet ﷺ stood firm.",
+    "ur": "حضرت براء بن عازب رضی اللہ عنہ سے پوچھا گیا کہ کیا اس دن لوگ بھاگ گئے تھے۔ وہ بتاتے ہیں کہ نبی ﷺ کس طرح ثابت قدم رہے۔"
+   }
+  },
+  {
+   "hadith": "bukhari:2930",
+   "ur": [
+    "ابواسحاق نے بیان کیا، کہا کہ میں نے براء",
+    null
+   ]
+  },
+  {
+   "say": {
+    "en": "Anas ibn Malik, may Allah be pleased with him, tells how the Prophet ﷺ called the Ansar, and what he said to them after the battle.",
+    "ur": "حضرت انس بن مالک رضی اللہ عنہ بتاتے ہیں کہ نبی ﷺ نے انصار کو کیسے پکارا، اور جنگ کے بعد ان سے کیا فرمایا۔"
+   }
+  },
+  {
+   "hadith": "bukhari:4337",
+   "en": [
+    null,
+    "I would take the Ansar's mountain pass."
+   ],
+   "ur": [
+    "انس بن مالک رضی اللہ عنہ نے بیان کیا کہ جب حنین",
+    "انصار ہی کی گھاٹی میں چلنا پسند کروں گا۔"
+   ]
+  }
+ ]
+}

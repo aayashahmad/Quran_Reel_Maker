@@ -1,0 +1,67 @@
+{
+ "n": 24,
+ "id": "his-mercy",
+ "period": "His character",
+ "when": "",
+ "en": "His Mercy to Children, People and Animals",
+ "ur": "آپ ﷺ کی رحمت",
+ "q": "How did the Prophet Muhammad ﷺ show mercy to children, people and animals?",
+ "keys": [
+  "mercy (to|for) (all )?the worlds|rah?matu?l?[ -]?l?il[ -]?a+lam[ei]+n|رحمۃ للعالمین|رحمت للعالمین|kissed (al-?)?hasan|thirsty dog|py?aa?s[ae] kutt[ae]|پیاسے کتے",
+  "merc(y|iful)|compassion|\\bkind(ness|ly)?\\b|\\bgentle|\\bsoft\\b|children|\\bchild\\b|\\bkids?\\b|\\bbab(y|ies)\\b|\\bbach(o|e|ay|on|ay?n|chon|che|cho)\\b|\\bbachon|\\bbachchon|grand(son|child)|nawas[ae]|\\bhasan\\b|husain|husayn|animals?|ja+nwar|\\bdogs?\\b|\\bcats?\\b|kutt[ae]|billi|\\brah?m\\b|reh?m\\b|rah?mat|reh?mat|shafqat|pya+r|piyar|\\bnaram|narmi|رحم|رحمت|شفقت|بچوں|بچے|بچہ|نواس|حسین|جانور|کتے|بلی|نرمی|پیار"
+ ],
+ "blocks": [
+  {
+   "say": {
+    "en": "Allah describes the Prophet ﷺ as a mercy, sent not to one people only but to all the worlds:",
+    "ur": "اللہ تعالیٰ نے نبی ﷺ کو رحمت قرار دیا، جو صرف ایک قوم کے لیے نہیں بلکہ تمام جہانوں کے لیے بھیجے گئے:"
+   }
+  },
+  {
+   "ayah": [
+    21,
+    107,
+    107
+   ]
+  },
+  {
+   "say": {
+    "en": "His mercy reached even the children. Abu Hurairah, may Allah be pleased with him, saw the Prophet ﷺ with his grandson al-Hasan, and Abu Qatadah, may Allah be pleased with him, heard what he said about a crying child during prayer.",
+    "ur": "آپ ﷺ کی رحمت بچوں تک بھی پہنچی۔ حضرت ابوہریرہ رضی اللہ عنہ نے نبی ﷺ کو اپنے نواسے حضرت حسن رضی اللہ عنہ کے ساتھ دیکھا، اور حضرت ابو قتادہ رضی اللہ عنہ نے سنا کہ آپ ﷺ نے نماز کے دوران روتے بچے کے بارے میں کیا فرمایا۔"
+   }
+  },
+  {
+   "hadith": "bukhari:5997",
+   "ur": [
+    "ابوہریرہ رضی اللہ عنہ نے بیان کیا کہ",
+    null
+   ]
+  },
+  {
+   "hadith": "bukhari:868",
+   "ur": [
+    "ابوقتادہ انصاری رضی اللہ عنہ نے بیان کیا",
+    null
+   ]
+  },
+  {
+   "say": {
+    "en": "He taught that mercy reaches animals too. Abu Hurairah, may Allah be pleased with him, heard the Prophet ﷺ tell of a man and a thirsty dog.",
+    "ur": "آپ ﷺ نے سکھایا کہ رحمت جانوروں تک بھی پہنچتی ہے۔ حضرت ابوہریرہ رضی اللہ عنہ نے نبی ﷺ کو ایک آدمی اور ایک پیاسے کتے کا واقعہ بیان کرتے سنا۔"
+   }
+  },
+  {
+   "hadith": "bukhari:6009",
+   "ur": [
+    "ابوہریرہ رضی اللہ عنہ نے کہ",
+    null
+   ]
+  },
+  {
+   "say": {
+    "en": "Mercy to a child, to a tired mother, even to a thirsty animal: none of it is small with Allah. Let us be merciful to everyone around us, as the Prophet ﷺ was.",
+    "ur": "بچے پر، تھکی ہوئی ماں پر، یہاں تک کہ پیاسے جانور پر رحم: اللہ کے ہاں ان میں سے کوئی بات چھوٹی نہیں۔ آئیے ہم بھی اپنے آس پاس سب پر رحم کریں، جیسے نبی ﷺ کرتے تھے۔"
+   }
+  }
+ ]
+}

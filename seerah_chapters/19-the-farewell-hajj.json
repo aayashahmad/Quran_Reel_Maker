@@ -1,0 +1,56 @@
+{
+ "n": 19,
+ "id": "the-farewell-hajj",
+ "period": "Madinah",
+ "when": "10 AH · 632 CE",
+ "en": "The Farewell Hajj",
+ "ur": "حجۃ الوداع",
+ "q": "What did the Prophet Muhammad ﷺ say in the Farewell Hajj?",
+ "keys": [
+  "farewell (hajj|haj|sermon|pilgrimage|khutba)|hajj?at[ -]?ul[ -]?wid?a|hajj?atul ?wid?a|khutba[ -]?(e|tul)?[ -]?wid?a|last sermon|aakhri khutba|akhri khutba|perfected (for )?you(r)? religion|حجۃ الوداع|حجة الوداع|آخری خطبہ",
+  "\\bhajj?\\b|\\barafa[ht]?\\b|\\barafat\\b|\\bmina\\b|sermon|khutba|deen mukammal|خطبہ|حج|عرفہ|عرفات|منیٰ|دین مکمل"
+ ],
+ "blocks": [
+  {
+   "say": {
+    "en": "In the tenth year after the Hijrah, the Prophet ﷺ went to Makkah for Hajj, and a very large number of believers came with him. It was the only Hajj he performed after the Hijrah, and it is known as the Farewell Hajj. On the day of Arafah, Allah revealed an ayah that Umar ibn al-Khattab, may Allah be pleased with him, later spoke about.",
+    "ur": "ہجرت کے دسویں سال نبی ﷺ حج کے لیے مکہ تشریف لے گئے، اور مومنوں کی بہت بڑی تعداد آپ کے ساتھ تھی۔ ہجرت کے بعد یہ آپ کا واحد حج تھا، اور اسے حجۃ الوداع کہا جاتا ہے۔ عرفہ کے دن اللہ نے ایک آیت نازل فرمائی، جس کا ذکر بعد میں حضرت عمر بن خطاب رضی اللہ عنہ نے کیا۔"
+   }
+  },
+  {
+   "hadith": "bukhari:45",
+   "ur": [
+    "عمر بن خطاب رضی اللہ عنہ سے روایت کرتے ہیں",
+    null
+   ]
+  },
+  {
+   "say": {
+    "en": "On the day of sacrifice, at Mina, the Prophet ﷺ addressed the people. Abdullah ibn Abbas, may Allah be pleased with him, narrates:",
+    "ur": "قربانی کے دن منیٰ میں نبی ﷺ نے لوگوں سے خطاب فرمایا۔ حضرت عبداللہ بن عباس رضی اللہ عنہما بیان کرتے ہیں:"
+   }
+  },
+  {
+   "hadith": "bukhari:1739",
+   "ur": [
+    "عبداللہ بن عباس رضی اللہ عنہما نے کہ",
+    null
+   ]
+  },
+  {
+   "say": {
+    "en": "Jabir ibn Abdullah, may Allah be pleased with him, saw him on the same day.",
+    "ur": "حضرت جابر بن عبداللہ رضی اللہ عنہ نے اسی دن آپ ﷺ کو دیکھا۔"
+   }
+  },
+  {
+   "hadith": "muslim:3137"
+  },
+  {
+   "say": {
+    "en": "This was the last Hajj of the Prophet ﷺ. He returned to Madinah, and a few months later he fell ill.",
+    "ur": "یہ نبی ﷺ کا آخری حج تھا۔ آپ مدینہ واپس تشریف لے گئے، اور چند مہینوں بعد آپ بیمار ہو گئے۔"
+   }
+  }
+ ]
+}

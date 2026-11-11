@@ -1,0 +1,67 @@
+{
+ "n": 20,
+ "id": "his-illness-and-passing",
+ "period": "Madinah",
+ "when": "11 AH · 632 CE",
+ "en": "His Illness and Passing",
+ "ur": "مرضِ وفات اور وصال",
+ "q": "How did the Prophet Muhammad ﷺ pass away?",
+ "keys": [
+  "highest companion|rafiq[ -]?(e[ -]|ul[ -])?a'?la|ar-?rafiq|marz[ -]?(e[ -]|ul[ -])?(wafat|maut)|wafat[ -]?(e|un)?[ -]?nabi|وصال|رفیق اعلی|رفیق اعلیٰ|مرض الموت|مرضِ وفات|مرض وفات",
+  "^(?!.*(\\b(mother|father|parents?|sons?|uncle|grand ?father|wife|wives|khadijah?|aminah?|abu ?talib|ibrahim|walida|walid|ammi|abba|beta|chacha|dada|biwi)\\b|والدہ|والد|بیٹے|چچا|دادا|بیوی|خدیجہ|آمنہ|ابو طالب|ابراہیم)).*?(\\bdie[ds]?\\b|\\bdeath\\b|\\bdying\\b|passed away|passing|pass away|last (words|days|moments|illness)|(his|last|final|fatal) (illness|sickness)|\\bfell ill\\b|(nabi|huzoo?r|aap|rasoo?l|rasulullah)( ?ﷺ)? ki b[ie]e?mari|\\bburi(ed|al)\\b|wafat|inteqal|intiqal|wisal|visal|\\bmaut\\b|aakhri (alfaz|din|lamhe)|(نبی|حضور|آپ)[^،۔?]{0,25}کی بیماری|وفات|انتقال|موت|آخری الفاظ)"
+ ],
+ "blocks": [
+  {
+   "say": {
+    "en": "In the eleventh year after the Hijrah, a few months after the Farewell Hajj, the Prophet ﷺ fell ill in Madinah. During his illness he stayed in the house of Aisha, may Allah be pleased with her, and Abu Bakr, may Allah be pleased with him, led the people in prayer. Anas ibn Malik, may Allah be pleased with him, describes the morning of his last day.",
+    "ur": "ہجرت کے گیارہویں سال، حجۃ الوداع کے چند مہینوں بعد، نبی ﷺ مدینہ میں بیمار ہو گئے۔ بیماری کے دنوں میں آپ حضرت عائشہ رضی اللہ عنہا کے گھر میں رہے، اور حضرت ابوبکر رضی اللہ عنہ لوگوں کو نماز پڑھاتے رہے۔ حضرت انس بن مالک رضی اللہ عنہ آپ کے آخری دن کی صبح کا حال بیان کرتے ہیں۔"
+   }
+  },
+  {
+   "hadith": "bukhari:680",
+   "ur": [
+    "انس بن مالک انصاری رضی اللہ عنہ نے خبر دی",
+    "کی وفات اسی دن ہو گئی۔"
+   ]
+  },
+  {
+   "say": {
+    "en": "Aisha, may Allah be pleased with her, tells us his last words.",
+    "ur": "حضرت عائشہ رضی اللہ عنہا ہمیں آپ ﷺ کے آخری الفاظ بتاتی ہیں۔"
+   }
+  },
+  {
+   "hadith": "bukhari:4463",
+   "ur": [
+    "عائشہ رضی اللہ عنہا نے بیان کیا کہ نبی کریم",
+    null
+   ]
+  },
+  {
+   "say": {
+    "en": "Anas, may Allah be pleased with him, tells what his daughter Fatimah, may Allah be pleased with her, said.",
+    "ur": "حضرت انس رضی اللہ عنہ بتاتے ہیں کہ آپ ﷺ کی صاحبزادی حضرت فاطمہ رضی اللہ عنہا نے کیا کہا۔"
+   }
+  },
+  {
+   "hadith": "bukhari:4462",
+   "ur": [
+    "انس بن مالک رضی اللہ عنہ نے کہ",
+    null
+   ]
+  },
+  {
+   "say": {
+    "en": "The Prophet ﷺ was sixty-three years old. The believers were overwhelmed with grief, and Abu Bakr, may Allah be pleased with him, reminded them that whoever worshipped Muhammad ﷺ should know that he had died, and whoever worshipped Allah should know that Allah is Ever-Living and never dies. Then he recited this ayah:",
+    "ur": "اس وقت نبی ﷺ کی عمر مبارک تریسٹھ برس تھی۔ مومن غم سے نڈھال تھے، اور حضرت ابوبکر رضی اللہ عنہ نے انہیں یاد دلایا کہ جو محمد ﷺ کی عبادت کرتا تھا وہ جان لے کہ آپ کی وفات ہو گئی ہے، اور جو اللہ کی عبادت کرتا تھا وہ جان لے کہ اللہ ہمیشہ زندہ ہے اور اسے کبھی موت نہیں آئے گی۔ پھر انہوں نے یہ آیت پڑھی:"
+   }
+  },
+  {
+   "ayah": [
+    3,
+    144,
+    144
+   ]
+  }
+ ]
+}

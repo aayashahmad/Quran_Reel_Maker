@@ -1,0 +1,67 @@
+{
+ "n": 22,
+ "id": "his-simple-life",
+ "period": "His character",
+ "when": "",
+ "en": "His Simple Life",
+ "ur": "آپ ﷺ کی سادہ زندگی",
+ "q": "How simply did the Prophet Muhammad ﷺ live?",
+ "keys": [
+  "simple life|sa+da zindagi|saadgi|sadgi|سادہ زندگی|سادگی|two black things|armou?r.{0,40}(jew|pledg|mortgag|barley)|zirah?.{0,20}(girvi|rehn)|زرہ.{0,30}(گروی|رہن)",
+  "\\bsimpl[ey]|\\bpoor\\b|poverty|\\bhunger|\\bhungry|\\bfood\\b|\\beat\\b|\\bate\\b|\\bmeals?\\b|\\bbed\\b|\\bhouse(hold)?\\b|\\bhome\\b|\\bwealth|\\bmoney|\\brich\\b|\\barmou?r|housework|chores|\\bsada\\b|ghareeb|gar[ie]+b\\b|gh?urbat|\\bfaqr|faqeer|bh[ou]+k|\\bkhana\\b|khate|khaate|\\bghar\\b|\\bdunya|سادہ|غریب|غربت|فقر|فاقہ|بھوک|کھانا|کھاتے|گھر|دولت|مال|زرہ"
+ ],
+ "blocks": [
+  {
+   "say": {
+    "en": "In Madinah the Prophet ﷺ led the believers, and yet he lived very simply. Aisha, the mother of the believers, may Allah be pleased with her, tells her nephew Urwa what there was to eat in his home.",
+    "ur": "مدینہ میں نبی ﷺ مومنوں کے رہنما تھے، پھر بھی آپ ﷺ نے بہت سادہ زندگی گزاری۔ ام المؤمنین حضرت عائشہ رضی اللہ عنہا اپنے بھانجے عروہ کو بتاتی ہیں کہ آپ ﷺ کے گھر میں کھانے کو کیا ہوتا تھا۔"
+   }
+  },
+  {
+   "hadith": "bukhari:6459",
+   "ur": [
+    "ام المؤمنین عائشہ رضی اللہ عنہا نے بیان کیا",
+    null
+   ]
+  },
+  {
+   "say": {
+    "en": "Al-Aswad once asked Aisha, may Allah be pleased with her, what the Prophet ﷺ used to do at home.",
+    "ur": "اسود بن یزید نے ایک بار حضرت عائشہ رضی اللہ عنہا سے پوچھا کہ نبی ﷺ گھر میں کیا کیا کرتے تھے۔"
+   }
+  },
+  {
+   "hadith": "bukhari:676",
+   "ur": [
+    "میں نے عائشہ رضی اللہ عنہا سے پوچھا",
+    null
+   ]
+  },
+  {
+   "say": {
+    "en": "He asked Allah to give his family only what they needed. Abu Hurairah, may Allah be pleased with him, heard him pray, and Anas ibn Malik, may Allah be pleased with him, tells us how little there was in his household.",
+    "ur": "آپ ﷺ نے اللہ سے اپنے گھر والوں کے لیے بس ضرورت بھر رزق مانگا۔ حضرت ابوہریرہ رضی اللہ عنہ نے آپ ﷺ کو یہ دعا کرتے سنا، اور حضرت انس بن مالک رضی اللہ عنہ بتاتے ہیں کہ آپ ﷺ کے گھر میں کتنا کم ہوتا تھا۔"
+   }
+  },
+  {
+   "hadith": "muslim:7440",
+   "ur": [
+    "حضرت ابو ہریرہ رضی اللہ تعالیٰ عنہ سے روایت کی",
+    null
+   ]
+  },
+  {
+   "hadith": "bukhari:2508",
+   "ur": [
+    "انس بن مالک رضی اللہ عنہ نے کہ",
+    null
+   ]
+  },
+  {
+   "say": {
+    "en": "The home of the Prophet ﷺ teaches us that honour is not in what we own. Being content with what Allah gives, helping at home, and giving thanks for a little are all part of following him.",
+    "ur": "نبی ﷺ کا گھر ہمیں سکھاتا ہے کہ عزت اس میں نہیں جو ہمارے پاس ہے۔ اللہ کے دیے پر راضی رہنا، گھر کے کاموں میں ہاتھ بٹانا، اور تھوڑے پر بھی شکر کرنا، یہ سب آپ ﷺ کی پیروی کا حصہ ہیں۔"
+   }
+  }
+ ]
+}
