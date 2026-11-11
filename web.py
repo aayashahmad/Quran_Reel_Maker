@@ -29,6 +29,7 @@ import donation
 import live
 import prophecies
 import seerah
+import ask_rules
 import protect
 import site_settings
 from translations import LANGS, NO_SPACES, texts
@@ -709,6 +710,13 @@ def guide():
     q, topic = (request.args.get("q") or "")[:500], request.args.get("topic")
     tr = texts(lang, QURAN, log=lambda m: None)
     data = None
+    ruling = ask_rules.NOTE if ask_rules.is_ruling(q) else None   # asked for a fatwa: say so first
+    life = seerah.ask_match(q) if topic not in guidance.BY_ID else []
+    if any(c["n"] for c in life):                  # about an event of the Prophet's ﷺ life: its Seerah chapter answers
+        return jsonify(found=True, seerah=life, ruling=ruling, ayat=[], hadith=[], related=[], spaced=True,
+                       title="From the Seerah", title_ur="سیرت النبی ﷺ سے",
+                       guide="This is told in the Seerah, the life of the Prophet ﷺ, with its ayat and sahih hadith. "
+                             "Read it, or press Listen, in English or Urdu.", guide_rtl=False, search=False)
     if topic not in guidance.BY_ID:
         ranked = guidance.match(q)
         best, topic = ranked[0] if ranked else (0, None)
@@ -719,7 +727,7 @@ def guide():
             related = [t for s, t in ranked[:2] if s >= 3 and t != "crisis"]
         if data is None:
             if best < 2:
-                return jsonify(found=False, topics=guidance.topic_list())
+                return jsonify(found=False, topics=guidance.topic_list(), seerah=life, ruling=ruling)
             related = [t for s, t in ranked[1:3] if s >= 2 and t != "crisis"]
     else:
         related = []
@@ -733,6 +741,7 @@ def guide():
                      tr_audio=audio_url(it, rec) if rec else None)
     data["related"] = [{"id": t, "title": guidance.BY_ID[t]["en"]} for t in related]
     data["spaced"] = lang not in NO_SPACES       # translation can be highlighted word by word
+    data["seerah"], data["ruling"] = life, ruling   # "his life" in general: a link to the Seerah
     return jsonify(found=True, **data)
 
 

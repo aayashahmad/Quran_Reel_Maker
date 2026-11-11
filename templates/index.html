@@ -367,6 +367,15 @@
   .about summary { cursor: pointer; color: var(--text); font-weight: 600; }
   .about details p { color: var(--muted); margin: 8px 0 0; }
   .about .links { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; }
+  .ruling-box { margin: 0 0 14px; padding: 12px 14px; border-radius: 12px; border: 1px solid rgba(240,213,147,.55);
+                background: rgba(240,213,147,.09); font-size: 15px; line-height: 1.6; }
+  .ruling-box .ur { margin: 6px 0 0; font: 17px/2 "Noto Nastaliq Urdu", serif; text-align: right; }
+  .seerah-box { margin: 0 0 16px; }
+  .seerah-link { display: flex; flex-direction: column; gap: 2px; padding: 12px 14px; margin: 8px 0; border-radius: 12px;
+                 border: 1px solid var(--gold); text-decoration: none; color: inherit; background: rgba(0,0,0,.18); }
+  .seerah-link b { color: var(--gold2); }
+  .seerah-link .ur { font: 16px/2.6 "Noto Nastaliq Urdu", serif; color: var(--muted); padding-bottom: 4px; }
+  .seerah-link small { color: var(--gold); font-size: 13px; }
   .prophecy-card { display: flex; align-items: center; gap: 14px; margin: 22px 0 4px; padding: 16px 18px; border-radius: 16px;
                    text-decoration: none; color: inherit; border: 1px solid var(--gold); background:
                    radial-gradient(120% 140% at 0% 0%, rgba(240,213,147,.16), transparent 60%), rgba(0,0,0,.18); transition: transform .15s; }
@@ -1214,6 +1223,7 @@ if ($("ask")) {
                  ", or tell someone you trust.");
       $("ask_crisis").append(box);
     }
+    askExtras(d);
     const title = $("ask_title"); title.replaceChildren(d.title, el("small", "", d.title_ur));
     $("ask_ayat").replaceChildren(...d.ayat.map(p => {
       const card = el("div", "passage");
@@ -1278,6 +1288,26 @@ if ($("ask")) {
     $("ask_result").style.display = "block";
     $("ask_result").scrollIntoView({ behavior: "smooth", block: "start" });
   }
+  function askExtras(d) {             // a ruling question: say first that we give no fatwa; a Seerah question: its chapter
+    const box = $("ask_crisis");
+    if (d.ruling) {
+      const n = el("div", "ruling-box");
+      n.append(el("b", "", "Not a fatwa. "), d.ruling.en, el("p", "ur", d.ruling.ur));
+      n.lastChild.lang = "ur"; n.lastChild.dir = "rtl";
+      box.append(n);
+    }
+    if (d.seerah && d.seerah.length) {
+      const sb = el("div", "seerah-box");
+      sb.append(el("p", "ask-h", "From the Seerah · سیرت النبی ﷺ"));
+      d.seerah.forEach(c => {
+        const a = Object.assign(el("a", "seerah-link"), { href: c.path });
+        a.append(el("b", "", c.en), el("span", "ur", c.ur), el("small", "", (c.when ? c.when + " · " : "") + "read & listen →"));
+        a.lastChild.previousSibling.lang = "ur";
+        sb.append(a);
+      });
+      box.append(sb);
+    }
+  }
   async function ask(params) {
     const st = $("ask_status"), go = $("ask_go"); act("ask");
     go.disabled = true; setStatus("Finding guidance…", false, st, true);
@@ -1286,6 +1316,13 @@ if ($("ask")) {
       const d = await api("/api/guide?" + qs);
       if (params.q) d.question = params.q;
       if (!d.found) {
+        $("ask_crisis").replaceChildren(); askExtras(d);
+        if (d.seerah && d.seerah.length) {          // nothing from the topics, but a Seerah chapter answers it
+          ["ask_ayat", "ask_hadith", "ask_related"].forEach(i => $(i).replaceChildren());
+          $("ask_title").replaceChildren(d.seerah[0].en); $("ask_guide").textContent = ""; $("ask_h_guide").textContent = "";
+          ["ask_h_ayat", "ask_h_hadith"].forEach(i => $(i).hidden = true);
+          $("ask_result").style.display = "block";
+        }
         setStatus("We couldn't find a close match. Please choose the topic nearest to what you feel:", false, st);
         $("ask_chips").replaceChildren(...d.topics.map(t => btn(t.title, true, () => ask({ topic: t.id }))));
       } else { setStatus("", false, st); showAnswer(d); }

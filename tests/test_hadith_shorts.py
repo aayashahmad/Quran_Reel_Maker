@@ -219,3 +219,16 @@ def test_three_slots_and_the_urdu_slot_belongs_to_the_mac(tmp_path, monkeypatch)
     monkeypatch.setenv("RUNNER", "laptop")
     assert due_slot(at(15, 5), db) == 2
     assert due_slot(at(21, 5), db) == 2              # the Mac only ever makes its own slot
+
+
+def test_ask_sends_seerah_questions_to_the_seerah_and_flags_rulings():
+    import ask_rules
+    import seerah
+    assert seerah.ask_match("nabi pe pehli wahi kaise aayi")[0]["id"] == "the-first-revelation"
+    assert seerah.ask_match("what happened at badr")[0]["id"] == "the-battle-of-badr"
+    assert seerah.ask_match("my child was born today") == []          # no Prophet in it: not a Seerah question
+    assert seerah.ask_match("I saw my baby being born") == []
+    for q in ("is music haram", "kya main roza tod sakta hoon", "can i marry my cousin", "کیا یہ جائز ہے"):
+        assert ask_rules.is_ruling(q), q
+    for q in ("mujhse gunah ho gaya", "i feel anxious", "kya main maaf ho sakta hoon"):
+        assert not ask_rules.is_ruling(q), q

@@ -184,3 +184,42 @@ def spoken_text(block, lang, ayah_text=None):
     if lang == "ur":
         text = re.sub(r"(?<=\S) ے(?=[\s،۔]|$)", "ے", text)            # "بار ے" (a stray space in the data) -> "بارے"
     return spoken(text, lang).replace('""', '"')
+
+
+# ---- Ask the Quran: questions about the Prophet's ﷺ life lead to the chapter that answers them ----
+PROPHET = re.compile(r"\b(prophet|muhammad|mohammad|mohammed|muhammed|nabi|rasool|rasul|rasulullah|huzoor|huzur|"
+                     r"pbuh|sallallahu)\b|\(s\.?a\.?w\.?s?\)|\bs\.a\.w\b|ﷺ|نبی|رسول|محمد|حضور", re.I)   # not a bare "saw" (I saw)
+# chapter id -> (words that alone point to it, words that do only in a question about the Prophet ﷺ)
+KEYS = {
+    "birth-and-early-life": (r"abdul ?muttalib|abu ?talib|\baminah?\b|\bamina\b|عبدالمطلب|ابو طالب|آمنہ",
+                             r"\bborn\b|\bbirth|birthday|childhood|\borphan|\byoung\b|shepherd|paida|wiladat|viladat|"
+                             r"bachpan|yateem|yatim|bakriyan|پیدا|ولادت|بچپن|یتیم"),
+    "the-first-revelation": (r"\bhira\b|first revelation|pehli wa?hi|waraqa|\biqra\b|حرا|پہلی وحی|ورقہ",
+                             r"revelation|\bwa?hi\b|prophethood|nubuwwat|nabuwat|khadija|وحی|نبوت|خدیجہ"),
+    "the-hijrah": (r"\bhij?ra[th]?\b|hijrat|\bthawr\b|\bsaur\b|ghar[ -]e[ -]saur|ہجرت|غار ثور",
+                   r"migrat|emigrat|madinah?\b|medina|madina|\bcave\b|ghar\b|مدینہ|غار"),
+    "the-battle-of-badr": (r"\bbadr\b|بدر", r"first battle|pehli jang|\bangels?\b|farishte|فرشت"),
+    "the-conquest-of-makkah": (r"conquest of (makkah|mecca)|fat[-' ]?h[ -]?(e[ -])?makk?ah?|fath makka|hudaibiy|فتح مکہ|حدیبیہ",
+                               r"\bidols?\b|\bbut\b|ka'?bah?|kaaba|\bmakk?ah?\b|mecca|کعبہ|مکہ|بت"),
+}
+LIFE = re.compile(r"\blife\b|zindagi|seerah?|sirat|seerat|biography|history|story|qissa|waqiat|سیرت|زندگی|حالات", re.I)
+
+
+def ask_match(q):
+    """The Seerah chapters a question is about, best first: [{"n", "id", "en", "ur", "path"}] (empty when none),
+    plus the whole Seerah when the question asks about his life in general."""
+    text = q or ""
+    about = bool(PROPHET.search(text))
+    out = []
+    for c in CHAPTERS:
+        strong, weak = KEYS[c["id"]]
+        score = 3 * len(re.findall(strong, text, re.I)) + (len(re.findall(weak, text, re.I)) if about else 0)
+        if score:
+            out.append((score, c))
+    out.sort(key=lambda x: -x[0])
+    items = [{"n": c["n"], "id": c["id"], "en": c["en"], "ur": c["ur"], "when": c["when"],
+              "path": f"/seerah/{c['n']}-{c['id']}"} for _, c in out[:2]]
+    if about and (LIFE.search(text) or items):
+        items.append({"n": 0, "id": "all", "en": "The life of the Prophet ﷺ: all chapters", "ur": "سیرت النبی ﷺ: تمام ابواب",
+                      "when": "", "path": "/seerah"})
+    return items
