@@ -121,9 +121,12 @@ def daily_slot(db, day, lang="en"):
     if done and not settings.ENABLE_PUBLICATION:
         print(f"{day}: already made ({done['ref']}); publication is off.")
         return 0
+    posted = [source.get(r["ref"]) for r in db.execute("SELECT ref FROM videos WHERE status IN ('uploading', 'uploaded')")]
     for ref in source.candidates(settings.HADITH_COLLECTIONS, lang=lang):
         if store.used(db, ref):
             continue
+        if any(source.same_saying(source.get(ref), p) for p in posted):
+            continue                                   # the same words by another chain: viewers see a repeat
         row = store.checked(db, ref)
         if row and not row["verified"]:
             continue                                   # failed before: recorded, never used

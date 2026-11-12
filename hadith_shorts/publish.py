@@ -16,21 +16,38 @@ HASHTAGS_UR = "#حدیث #SahihHadith #DailyHadith #UrduHadith #IslamicShorts #I
 def metadata(h, title, lang="en"):
     if lang == "ur":
         return metadata_ur(h, title)
-    yt_title = f"{title} | {h.citation} | Daily Sahih Hadith #Shorts"
+    yt_title = hook_title(source.key_words(h), f" | {h.citation}") \
+        or f"{title} | {h.citation} | Daily Sahih Hadith #Shorts"
     if len(yt_title) > 100:
         yt_title = f"{title} | {h.citation} #Shorts"[:100]
-    lines = [f"{title}: an authentic hadith from {source.NAMES[h.collection]}.", "",
+    lines = [f"The Prophet ﷺ said: \"{source.key_words(h, max_words=40)}\"" if source.key_words(h) else
+             f"{title}: an authentic hadith from {source.NAMES[h.collection]}.", "",
              h.english, "", h.arabic + (" (the Prophet's ﷺ words, from the full narration)" if h.arabic_is_excerpt else ""), "",
              f"Reference: {h.citation}" + (f", {h.book}" if h.book else ""),
              f"Source: {h.url}",
              f"English translation: {h.translator}. Arabic and English text: {source.DATASET}.",
              "Narration: AI voice (Microsoft Edge neural text-to-speech)." if settings.TTS_ENGINE == "edge" else "",
-             "", "Learn it, live it, share it. This is the hadith as narrated, not a fatwa: for rulings ask a qualified scholar.",
+             "", "Follow for one sahih hadith every day. Share it with someone who needs it.", "",
+             "This is the hadith as narrated, not a fatwa: for rulings ask a qualified scholar.",
              "", "Make your own Quran reels, free: https://quranreelmaker.xyz", "", HASHTAGS]
     desc = "\n".join(l for l in lines if l is not None)[:4900]
     tags = ["Sahih Hadith", "Daily Hadith", "Hadith", source.NAMES[h.collection], title.replace("On ", ""),
             "Hadith in English", "Islamic Shorts", "Sunnah", "Prophet Muhammad", "Islam"]
     return yt_title, desc, tags
+
+
+def hook_title(words, tail):
+    """The Prophet's ﷺ words first (what makes someone stop), then the reference: shortened at a word, with …"""
+    if not words:
+        return None
+    room = 100 - len(tail) - 2
+    cut = words.endswith("…")
+    words = words.replace(" …", "")
+    if len(words) > room:
+        words, cut = words[:room - 2].rsplit(" ", 1)[0].rstrip(",;:"), True
+    if cut:
+        words += " …"
+    return f"“{words}”{tail}"
 
 
 def publish_at(day):
@@ -72,15 +89,18 @@ def upload(path, title, desc, tags, thumbnail=None, when=None):
 
 
 def metadata_ur(h, title):
-    yt_title = f"{title} | {UR_NAMES[h.collection]} {h.display_number} | روزانہ حدیث #Shorts"[:100]
-    lines = [f"{title}: {UR_NAMES[h.collection]} سے ایک صحیح حدیث۔", "",
+    yt_title = hook_title(source.key_words(h, "ur"), f" | {UR_NAMES[h.collection]} {h.display_number}") \
+        or f"{title} | {UR_NAMES[h.collection]} {h.display_number} | روزانہ حدیث #Shorts"[:100]
+    lines = [f"رسول اللہ ﷺ نے فرمایا: {source.key_words(h, 'ur', 40)}" if source.key_words(h, "ur") else
+             f"{title}: {UR_NAMES[h.collection]} سے ایک صحیح حدیث۔", "",
              h.urdu + (" (رسول اللہ ﷺ کے الفاظ، مکمل روایت میں سے)" if h.urdu != h.urdu_full else ""), "",
              h.arabic, "",
              f"حوالہ: {h.citation}" + (f", {h.book}" if h.book else ""),
              f"Source: {h.url}",
              f"Urdu translation: {source.URDU_SOURCE}. Arabic: {source.DATASET}.",
              "Narration: AI voice (Microsoft Edge neural text-to-speech)." if settings.TTS_ENGINE == "edge" else "",
-             "", "یہ حدیث جیسی روایت ہوئی ویسی پیش کی گئی ہے، فتویٰ نہیں۔ شرعی مسئلے کے لیے مستند عالم سے پوچھیں۔",
+             "", "روزانہ ایک صحیح حدیث کے لیے فالو کریں، اور کسی کو بھیجیں جسے اس کی ضرورت ہو۔", "",
+             "یہ حدیث جیسی روایت ہوئی ویسی پیش کی گئی ہے، فتویٰ نہیں۔ شرعی مسئلے کے لیے مستند عالم سے پوچھیں۔",
              "", "اپنی قرآن ریل مفت بنائیں: https://quranreelmaker.xyz", "", HASHTAGS_UR]
     tags = ["حدیث", "صحیح حدیث", "Urdu Hadith", "Hadith in Urdu", "Sahih Hadith", "Daily Hadith", source.NAMES[h.collection],
             UR_NAMES[h.collection], "Islamic Shorts", "Islam"]

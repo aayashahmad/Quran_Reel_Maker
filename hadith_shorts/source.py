@@ -180,7 +180,47 @@ def candidates(collections, seed=1446, lang="en"):
             except SourceError:
                 continue
     random.Random(seed).shuffle(refs)
-    return refs
+    # what reaches people on Shorts: one short, direct saying of the Prophet ﷺ; long stories come last
+    return sorted(refs, key=lambda r: reach_rank(get(r)))      # (stable: the shuffle stays within each rank)
+
+
+# "...Allah's Messenger (ﷺ) said:" / "...the Prophet (ﷺ) as saying:" - where his own words begin
+_SAID = re.compile(r"\(ﷺ\)\s*(?:as\s+(?:having\s+)?|having\s+|that\s+he\s+)?(?:said|saying|says)\b\s*[,:]?\s*[\"']?\s*"
+                   r"(?:Verily[.,!]?\s*)?", re.I)
+_UR_END = re.compile(r"[۔؟!]")
+
+
+def key_words(h, lang="en", max_words=18):
+    """The opening of the Prophet's ﷺ own words, as they are in the translation (cut at the first sentence or
+    max_words, marked with …) - for the first second of the video and the title. None if they can't be found."""
+    if lang == "ur":
+        text = (h.urdu or "").strip()
+        first = _UR_END.split(text)[0].strip() if text else ""
+    else:
+        m = _SAID.search(h.english)
+        if not m or len(h.english[:m.start()].split()) > 20:
+            return None
+        text = h.english[m.end():].strip()
+        first = re.split(r"(?<=[.?!])\s|\"", text)[0].strip()
+    words = first.split()
+    if len(words) < 4:
+        return None
+    cut = len(words) > max_words or bool(text[len(first):].strip(" ۔.!?\"'"))
+    out = " ".join(words[:max_words]).rstrip(",;:.")
+    return out + (" …" if cut else "")
+
+
+def reach_rank(h):
+    """0: a short, direct saying (best on Shorts), 1: a direct saying, 2: anything else (a story, a question)."""
+    if not key_words(h):
+        return 2
+    return 0 if len(h.english.split()) <= 50 else 1
+
+
+def same_saying(a, b):
+    """True when two narrations carry the same words of the Prophet ﷺ (the same hadith by another chain)."""
+    wa, wb = (set(re.findall(r"[a-z']+", (key_words(x, max_words=40) or x.english).lower())) for x in (a, b))
+    return len(wa & wb) / max(1, min(len(wa), len(wb))) >= 0.7
 
 
 def verify(h, session=None):

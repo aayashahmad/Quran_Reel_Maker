@@ -232,3 +232,13 @@ def test_ask_sends_seerah_questions_to_the_seerah_and_flags_rulings():
         assert ask_rules.is_ruling(q), q
     for q in ("mujhse gunah ho gaya", "i feel anxious", "kya main maaf ho sakta hoon"):
         assert not ask_rules.is_ruling(q), q
+
+
+def test_hook_is_the_prophets_own_words_and_repeats_are_skipped():
+    h = source.get("bukhari:6486")
+    assert source.key_words(h) == "If you knew that which I know, you would laugh little and weep much"
+    assert source.key_words(source.get("bukhari:6397")) is None        # a Companion speaking, not the Prophet ﷺ
+    title, desc, _ = publish.metadata(h, "On the Hereafter")
+    assert title.startswith("“If you knew") and title.endswith("Sahih al-Bukhari 6486") and len(title) <= 100
+    assert source.same_saying(source.get("muslim:6828"), source.get("muslim:6820"))      # one hadith, two chains
+    assert not source.same_saying(source.get("muslim:6828"), source.get("bukhari:108"))

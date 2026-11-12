@@ -11,15 +11,15 @@ from PIL import Image, ImageDraw
 import backgrounds
 import video
 from video import font, shape, text_w, wrap, GOLD, GOLD2, WHITE, MUTED
-from hadith_shorts import settings, themes, tts
+from hadith_shorts import settings, source, themes, tts
 
 W, H = settings.VIDEO_WIDTH, settings.VIDEO_HEIGHT
 AR_FONT, EN_FONT, UR_FONT = "Amiri-Regular.ttf", "Amiri-Regular.ttf", "NotoNastaliqUrdu.ttf"
 TEXT = {"en": {"head": "DAILY SAHIH HADITH", "excerpt": "(the Prophet's ﷺ words, from the full narration)",
-               "share": "Learn it · Live it · Share it"},
+               "share": "Follow for a sahih hadith every day", "said": "The Prophet ﷺ said"},
         "ur": {"head": "روزانہ صحیح حدیث", "excerpt": "(رسول اللہ ﷺ کے الفاظ، مکمل روایت میں سے)",
-               "share": "سیکھیں · عمل کریں · آگے پہنچائیں"}}
-INTRO, OUTRO = 3.0, 4.0
+               "share": "روزانہ ایک صحیح حدیث کے لیے فالو کریں", "said": "رسول اللہ ﷺ نے فرمایا"}}
+INTRO, OUTRO = 2.0, 3.5      # the first second decides if a Short is watched: the Prophet's ﷺ words at once
 DIMMED = (165, 185, 175)
 FADE = 0.6
 # voice polish: remove rumble and hiss, a little less boom, a little more presence (clear words), gentle
@@ -134,13 +134,29 @@ def _citation(h, lang):
 
 
 def intro_layer(h, title, path, lang="en"):
+    """The hook: the Prophet's ﷺ own words, big, in the viewer's language (the theme title if they can't be found)."""
     img, d = _layer()
-    _say(d, TEXT[lang]["head"], 40, 400 if lang == "ur" else 420, GOLD, lang)
-    d.line([(W / 2 - 160, 490), (W / 2 + 160, 490)], fill=GOLD, width=2)
-    hook = h.arabic.split("،")[0] if len(h.arabic.split("،")[0].split()) <= 8 else " ".join(h.arabic.split()[:6]) + " …"
-    _arabic(d, hook, 600, 420, 84, 56, GOLD2)
-    _say(d, title, 72 if lang == "en" else 64, 1110 if lang == "ur" else 1130, WHITE, lang)
-    _say(d, _citation(h, lang), 44 if lang == "en" else 40, 1250, MUTED, lang)
+    words = source.key_words(h, lang)
+    if not words:
+        _say(d, TEXT[lang]["head"], 40, 400 if lang == "ur" else 420, GOLD, lang)
+        d.line([(W / 2 - 160, 490), (W / 2 + 160, 490)], fill=GOLD, width=2)
+        hook = h.arabic.split("،")[0] if len(h.arabic.split("،")[0].split()) <= 8 else " ".join(h.arabic.split()[:6]) + " …"
+        _arabic(d, hook, 600, 420, 84, 56, GOLD2)
+        _say(d, title, 72 if lang == "en" else 64, 1110 if lang == "ur" else 1130, WHITE, lang)
+        _say(d, _citation(h, lang), 44 if lang == "en" else 40, 1250, MUTED, lang)
+        _finish(img, path)
+        return
+    _say(d, TEXT[lang]["said"], 50 if lang == "en" else 46, 470, GOLD, lang)
+    d.line([(W / 2 - 160, 560 if lang == "en" else 580), (W / 2 + 160, 560 if lang == "en" else 580)], fill=GOLD, width=2)
+    quoted = f"“{words}”" if lang == "en" else words
+    fname, rtl = (UR_FONT, True) if lang == "ur" else (EN_FONT, False)
+    f, size, lines = _fit(quoted, fname, W - 150, 640, 84 if lang == "en" else 66, 52 if lang == "en" else 44,
+                          1.35 if lang == "en" else 1.9, rtl)
+    y = 640
+    for ln in lines:
+        _center(d, ln, fname, size, y, WHITE, rtl=rtl, lang="ur")
+        y += int(size * (1.35 if lang == "en" else 1.9))
+    _say(d, _citation(h, lang), 42 if lang == "en" else 40, max(y + 40, 1240), GOLD2, lang)
     _finish(img, path)
 
 
@@ -341,7 +357,7 @@ def build(h, out_dir, log=print, lang="en"):
     if track:                                   # real footage already moves and crossfades: grade it only
         bgf = f"[0:v]scale={W}:{H},fps=30,{plan['grade']},vignette=PI/5,setsar=1[bg]"
     graph = ";".join([bgf, "[1:v]format=rgba[ov]",
-                      f"[bg][ov]overlay=0:0:format=auto:eof_action=repeat,fade=t=in:st=0:d={FADE},"
+                      f"[bg][ov]overlay=0:0:format=auto:eof_action=repeat,fade=t=in:st=0:d=0.15,"
                       f"fade=t=out:st={total - FADE:.3f}:d={FADE},format=yuv420p[v]"] + chains +
                      [f"{mix}amix=inputs={len(chains)}:normalize=0,{CLEAR_VOICE},apad,atrim=0:{total:.3f},"
                       f"afade=t=out:st={total - FADE:.3f}:d={FADE}[a]"])
