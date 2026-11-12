@@ -60,6 +60,14 @@ def metadata(story, part, parts, lang, credits):
     return yt_title, "\n".join(lines)[:4900], tags
 
 
+def next_item(state, done, lang, busy):
+    """The next (story, part, lang) to post in one language, finishing a half-told story before a new one."""
+    started = {e["story"] for e in state if e["status"] == "uploaded" and e["lang"] == lang}
+    items = [(s, k, l) for s, k, l in queue(lang) if (s["id"], k, l) not in done]
+    return next((it for it in items if it[0]["id"] in started and it[0]["id"] not in busy), None) \
+        or next((it for it in items if it[0]["id"] not in busy), None)
+
+
 def run(out_dir, log=print):
     state = load_state()
     today = datetime.now(TZ).date().isoformat()
@@ -75,15 +83,16 @@ def run(out_dir, log=print):
         return 0
     done = {(e["story"], e["part"], e["lang"]) for e in state if e["status"] == "uploaded"}
     todays = [e for e in state if e["day"] == today and e["status"] == "uploaded"]
-    lang = LANG_OF_SLOT[len(todays) % len(LANG_OF_SLOT)]
     busy = {e["story"] for e in todays}                  # never the same story twice in one day
-    started = {e["story"] for e in state if e["status"] == "uploaded" and e["lang"] == lang}
-    items = [(s, k, l) for s, k, l in queue(lang) if (s["id"], k, l) not in done]
-    # finish a story that is half told (part by part) before starting a new one
-    item = next((it for it in items if it[0]["id"] in started and it[0]["id"] not in busy), None) \
-        or next((it for it in items if it[0]["id"] not in busy), None)
+    first = len(todays) % len(LANG_OF_SLOT)
+    item = None
+    # this slot's language first; if its queue is used up, the other language's next video instead
+    for lang in LANG_OF_SLOT[first:] + LANG_OF_SLOT[:first]:
+        item = next_item(state, done, lang, busy)
+        if item:
+            break
+        log(f"::warning::The Qissa queue ({lang}) is empty: write new stories (qissa-writer agent).")
     if not item:
-        log(f"The Qissa queue ({lang}) is empty: write new stories (qissa-writer agent).")
         return 0
     story, part, lang = item
     log(f"Making {story['id']} part {part} ({lang})")
