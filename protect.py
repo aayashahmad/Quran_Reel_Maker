@@ -37,6 +37,7 @@ CSP = "; ".join([
     "img-src 'self' data: blob:",
     "media-src 'self' blob: https://verses.quran.com https://cdn.islamic.network",
     "connect-src 'self' https://verses.quran.com https://cdn.islamic.network",
+    "frame-src https://www.youtube-nocookie.com",     # the Seerah documentary episodes
     "frame-ancestors 'none'",
     "form-action 'self'",
     "base-uri 'self'",

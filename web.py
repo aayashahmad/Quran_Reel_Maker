@@ -2,6 +2,7 @@
 Run with:  ./run.sh web   then open http://localhost:5050"""
 import hashlib
 import io
+import json
 import os
 import pathlib
 import re
@@ -609,7 +610,68 @@ def seerah_chapter(n, slug=None):
     return page("seerah_chapter.html", f"{c['en']} | Seerah of Prophet Muhammad ﷺ", blocks[0]["en"], path,
                 [faq, art, seo.breadcrumbs(("Home", "/"), ("Seerah", "/seerah"), (c["en"], path))],
                 og_type="article", c=c, blocks=blocks, nav=nav, total=len(seerah.CHAPTERS),
-                pos=seerah.CHAPTERS.index(c) + 1)
+                pos=seerah.CHAPTERS.index(c) + 1, map=seerah_map(c))
+
+
+SEERAH_MAPS = pathlib.Path(__file__).parent / "output" / "seerah_maps"          # drawn once, then kept
+
+
+def seerah_map(c):
+    """The chapter's map of real places (from the documentary), or None for chapters with no journey or place."""
+    from documentary import build as doc
+    if c["id"] not in doc.MAPS:
+        return None
+    places, route = doc.MAPS[c["id"]]
+    names = [doc.PLACES[p][2] for p in (route or places)]
+    alt = ("Map: " + " to ".join(names)) if route else ("Map: " + ", ".join(names))
+    note = doc.NOTE.get(c["id"], ("", ""))
+    return {"en": f"/seerah/map/{c['id']}-en.jpg", "ur": f"/seerah/map/{c['id']}-ur.jpg", "alt": alt,
+            "note_en": note[0], "note_ur": note[1]}
+
+
+@app.get("/seerah/map/<cid>-<lang>.jpg")
+def seerah_map_png(cid, lang):
+    from documentary import build as doc
+    if cid not in doc.MAPS or lang not in ("en", "ur"):
+        abort(404)
+    out = SEERAH_MAPS / f"{cid}-{lang}.jpg"
+    with _seerah_locks.setdefault(out.name, threading.Lock()):
+        if not out.exists():
+            SEERAH_MAPS.mkdir(parents=True, exist_ok=True)
+            img = doc.map_image(cid, lang).convert("RGB")
+            img = img.crop((60, 50, int(doc.BW * 0.52) - 20, doc.BH - 50))      # the map, without the title side
+            img.thumbnail((900, 900))
+            img.save(out, "JPEG", quality=82, optimize=True, progressive=True)
+    return send_file(out, mimetype="image/jpeg", max_age=31536000)
+
+
+DOC_PUBLISHED = pathlib.Path(__file__).parent / "documentary" / "published.json"
+
+
+@app.get("/seerah/documentary")
+def seerah_documentary():
+    """The documentary episodes: each one's video (once it is on YouTube) and its chapters to read and listen to."""
+    from documentary import build as doc
+    published = json.loads(DOC_PUBLISHED.read_text()) if DOC_PUBLISHED.exists() else {}
+    by_n = {c["n"]: c for c in seerah.CHAPTERS}
+    episodes = []
+    for eid, e in doc.EPISODES.items():
+        first = by_n[e["chapters"][0]]
+        episodes.append({"id": eid, "en": e["en"], "ur": e["ur"], "videos": published.get(eid, {}),
+                         "poster": seerah_map(first),
+                         "chapters": [dict(by_n[n], path=seerah_path(by_n[n])) for n in e["chapters"]]})
+    vids = [{"@type": "VideoObject", "name": f"{e['en']} | Seerah documentary", "description": f"{e['en']}: from the Quran and sahih hadith.",
+             "embedUrl": f"https://www.youtube-nocookie.com/embed/{yid}", "thumbnailUrl": f"https://i.ytimg.com/vi/{yid}/hqdefault.jpg",
+             "uploadDate": published.get("_dates", {}).get(yid, "2026-11-13"), "inLanguage": lang}
+            for e in episodes for lang, yid in e["videos"].items()]
+    ld = [seo.breadcrumbs(("Home", "/"), ("Seerah", "/seerah"), ("Documentary", "/seerah/documentary"))]
+    if vids:
+        ld.append({"@context": "https://schema.org", "@type": "ItemList",
+                   "itemListElement": [dict(v, position=i + 1) for i, v in enumerate(vids)]})
+    return page("seerah_documentary.html", "Seerah Documentary: the Life of Prophet Muhammad ﷺ (English & Urdu)",
+                "The life of the Prophet ﷺ as a documentary series in English and Urdu, from the Quran and sahih hadith: "
+                "maps of the real places, every ayah and hadith on screen with its reference.", "/seerah/documentary",
+                ld, episodes=episodes)
 
 
 PROPHECY_PATH = "/quran-prophecies"

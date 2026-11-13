@@ -19,6 +19,11 @@
   details.arh summary { cursor: pointer; font: 13px system-ui, sans-serif; color: var(--muted); margin-top: 8px; }
   details.arh .ar { font: 22px/2 Amiri, serif; }
   .meta { font: 13px system-ui, sans-serif; color: var(--muted); }
+  figure.map { margin: 14px 0 6px; }
+  figure.map img { width: 100%; max-width: 560px; height: auto; display: block; margin: 0 auto; border-radius: 12px;
+                   border: 1px solid var(--line); }
+  figure.map figcaption { text-align: center; font: 13px system-ui, sans-serif; color: var(--muted); margin-top: 6px; }
+  .doc-link { font: 14px system-ui, sans-serif; }
   .pn { display: flex; justify-content: space-between; gap: 10px; margin: 26px 0 10px; flex-wrap: wrap; }
 </style>
 <p class="crumbs"><a href="/">Home</a> › <a href="/seerah">Seerah</a> › {{ c.en }}</p>
@@ -27,6 +32,14 @@
 <p class="ur" lang="ur" style="text-align:left;font-size:24px;color:var(--gold2)">{{ c.ur }}</p>
 
 <div class="sr" id="sr" data-lang="en" data-n="{{ c.n }}">
+{% if map %}
+<figure class="map">
+  <img class="en-only" src="{{ map.en }}" alt="{{ map.alt }}" width="900" height="900" loading="lazy">
+  <img class="ur-only" src="{{ map.ur }}" alt="{{ map.alt }}" width="900" height="900" loading="lazy">
+  <figcaption><span class="en-only">{{ map.alt }}{% if map.note_en %} · {{ map.note_en }}{% endif %}</span>
+    <span class="ur-only" lang="ur">{{ map.note_ur }}</span></figcaption>
+</figure>
+{% endif %}
 <div class="bar" role="toolbar" aria-label="Language and listening">
   <button type="button" data-lang="en" aria-pressed="true">English</button>
   <button type="button" data-lang="ur" aria-pressed="false" lang="ur">اردو</button>
@@ -63,6 +76,7 @@
 {% endfor %}
 </div>
 
+<p class="doc-link"><a href="/seerah/documentary">🎬 Watch the Seerah as a documentary (English &amp; Urdu)</a></p>
 <nav class="pn" aria-label="Chapters">
   {% if nav.prev %}<a class="btn ghost" href="{{ nav.prev.path }}">← {{ nav.prev.en }}</a>{% else %}<span></span>{% endif %}
   {% if nav.next %}<a class="btn" href="{{ nav.next.path }}">{{ nav.next.en }} →</a>{% else %}<a class="btn ghost" href="/seerah">All chapters</a>{% endif %}

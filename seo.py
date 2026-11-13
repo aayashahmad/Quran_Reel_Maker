@@ -127,7 +127,7 @@ def home_ld():
 
 
 def sitemap_urls(topics, lastmod):
-    urls = [("/", "1.0"), ("/surah", "0.8"), ("/ask", "0.8"), ("/quran-prophecies", "0.8"), ("/seerah", "0.8")]
+    urls = [("/", "1.0"), ("/surah", "0.8"), ("/ask", "0.8"), ("/quran-prophecies", "0.8"), ("/seerah", "0.8"), ("/seerah/documentary", "0.7")]
     import seerah
     urls += [(f"/seerah/{c['n']}-{c['id']}", "0.7") for c in seerah.CHAPTERS]
     urls += [(surah_path(s["number"]), "0.7") for s in SURAHS]

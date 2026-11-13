@@ -1,0 +1,62 @@
+{% extends "_page.html" %}
+{% block body %}
+<style>
+  .ep { margin: 22px 0; }
+  .ep h2 { margin: 0 0 2px; }
+  .ep .ur { margin: 0 0 12px; text-align: left; color: var(--gold2); font-size: 20px; }
+  .ep .player { position: relative; aspect-ratio: 16 / 9; border-radius: 12px; overflow: hidden; background: #000; margin: 10px 0; }
+  .ep .player iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .ep .poster { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; margin: 10px 0; }
+  .ep .poster img { width: 180px; height: auto; border-radius: 10px; border: 1px solid var(--line); }
+  .ep .soon { font: 14px system-ui, sans-serif; color: var(--muted); flex: 1; min-width: 200px; }
+  .tabs { display: flex; gap: 8px; margin: 6px 0; }
+  .tabs button { font: 600 14px system-ui, sans-serif; padding: 7px 14px; border-radius: 999px; cursor: pointer;
+                 border: 1px solid var(--line); background: transparent; color: var(--gold); }
+  .tabs button[aria-pressed="true"] { background: var(--card); color: var(--gold2); border-color: var(--gold); }
+  ol.ch { margin: 8px 0 0; padding-left: 22px; }
+  ol.ch li { margin: 4px 0; }
+  ol.ch .meta { font: 13px system-ui, sans-serif; color: var(--muted); }
+</style>
+<p class="crumbs"><a href="/">Home</a> › <a href="/seerah">Seerah</a> › Documentary</p>
+<h1>The Seerah: a documentary</h1>
+<p class="ur" lang="ur" style="text-align:left;color:var(--gold2)">سیرت النبی ﷺ: دستاویزی سلسلہ</p>
+<p class="lead">The life of the Prophet ﷺ in {{ episodes|length }} episodes, in English and Urdu: maps of the real places, and
+  every ayah and sahih hadith on screen with its reference while it is read. Watch an episode, or read and listen to its
+  chapters below.</p>
+{% for e in episodes %}
+<section class="card ep" id="{{ e.id }}">
+  <p class="meta" style="font:13px system-ui,sans-serif;color:var(--gold)">Episode {{ loop.index }}</p>
+  <h2>{{ e.en }}</h2>
+  <p class="ur" lang="ur">{{ e.ur }}</p>
+  {% if e.videos %}
+  {% if e.videos|length > 1 %}<div class="tabs" role="group" aria-label="Language">
+    {% for lang, yid in e.videos.items() %}<button type="button" data-yid="{{ yid }}" aria-pressed="{{ 'true' if loop.first else 'false' }}">{{ {"en": "English", "ur": "اردو"}[lang] }}</button>{% endfor %}
+  </div>{% endif %}
+  {% set first = e.videos.values()|list|first %}
+  <div class="player"><iframe src="https://www.youtube-nocookie.com/embed/{{ first }}" title="{{ e.en }}" loading="lazy"
+    allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+  {% else %}
+  <div class="poster">
+    {% if e.poster %}<img src="{{ e.poster.en }}" alt="{{ e.poster.alt }}" width="900" height="900" loading="lazy">{% endif %}
+    <p class="soon">The video of this episode is coming soon. Its chapters are ready now: read them, or press ▶ Listen on
+      any chapter, in English or Urdu.</p>
+  </div>
+  {% endif %}
+  <ol class="ch">
+    {% for c in e.chapters %}<li><a href="{{ c.path }}">{{ c.en }}</a> <span class="meta">· {{ c.when or c.period }}</span></li>{% endfor %}
+  </ol>
+</section>
+{% endfor %}
+<p class="note">Everything the Prophet ﷺ said or did is quoted word for word from the Quran or Sahih al-Bukhari / Sahih
+  Muslim (checked on sunnah.com). No prophet, Companion or angel is drawn: only the places, the land and the text.
+  The short linking passages are ours and are being checked by a scholar.</p>
+<script>
+document.querySelectorAll(".ep .tabs").forEach(function (t) {
+  t.addEventListener("click", function (ev) {
+    var b = ev.target.closest("button"); if (!b) return;
+    t.querySelectorAll("button").forEach(function (x) { x.setAttribute("aria-pressed", x === b); });
+    t.parentNode.querySelector("iframe").src = "https://www.youtube-nocookie.com/embed/" + b.dataset.yid;
+  });
+});
+</script>
+{% endblock %}
