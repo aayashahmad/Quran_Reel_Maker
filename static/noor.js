@@ -1,11 +1,12 @@
-/* Noor: soft drops of gold light falling slowly behind the page, each one gently twinkling.
-   One fixed canvas behind all content (pointer-events off), about 30 frames a second, paused when the tab is hidden;
+/* Noor: soft drops of gold light falling slowly over the page, each one gently twinkling.
+   One fixed canvas over all content (pointer-events off), about 30 frames a second, paused when the tab is hidden;
    with "reduce motion" the light is drawn once and stays still. */
 (function () {
   var c = document.createElement("canvas");
   c.setAttribute("aria-hidden", "true");
-  c.style.cssText = "position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none";
-  document.body.insertBefore(c, document.body.firstChild);
+  // over the whole page, cards and sections too (clicks and text selection pass straight through it)
+  c.style.cssText = "position:fixed;inset:0;width:100%;height:100%;z-index:2147483000;pointer-events:none";
+  document.body.appendChild(c);
   var ctx = c.getContext("2d");
   if (!ctx) return;
   var still = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
