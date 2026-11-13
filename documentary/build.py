@@ -29,7 +29,7 @@ W, H = 1920, 1080
 PAD = 1.10                                     # backgrounds drawn larger, for a slow pan
 BW, BH = int(W * PAD), int(H * PAD)
 GAP = 0.6                                      # silence after each narrated block
-CARD_SECONDS, TITLE_SECONDS, END_SECONDS = 5.0, 6.0, 14.0     # the end screen needs 5-20 s for YouTube's end elements
+CARD_SECONDS, TITLE_SECONDS, END_SECONDS = 7.0, 7.0, 14.0     # the end screen needs 5-20 s for YouTube's end elements
 SERIF, AR, UR = "Amiri-Regular.ttf", "AmiriQuran-Regular.ttf", "NotoNastaliqUrdu.ttf"
 INK, CRIMSON, PARCH = art.INK, art.CRIMSON, art.PARCHMENT
 SITE = "quranreelmaker.xyz"
@@ -350,7 +350,8 @@ def plan(eid, lang):
     ep = EPISODES[eid]
     T = TEXT[lang]
     by_n = {c["n"]: c for c in seerah.CHAPTERS}
-    units, chapters, sources, t = [], [], [], 0.0
+    units, chapters, sources, groups, t = [], [], [], [], 0.0
+    used_photos = {}
 
     def add(bg, ov, secs, audio=None, cut=None):
         nonlocal t
@@ -392,24 +393,136 @@ def plan(eid, lang):
                 pages = _pages(text, 34 if lang == "en" else 30)
                 bodies = None
             words = [max(1, len(p.split())) for p in pages]
+            if len(pages) > 1:                     # the real page turns are set below, from the narration itself
+                groups.append({"units": list(range(len(units), len(units) + len(pages))), "audio": audio,
+                               "pages": pages, "secs": secs, "words": words})
             for i, p in enumerate(pages):
                 share = secs * words[i] / sum(words)
                 if bodies:
                     bg, ov = ("paper", n * 10 + v["k"]), ("card", bodies[i], tag)
                 else:
-                    bg, ov = (scene_for(text, v["k"] + n), n * 10 + v["k"]), ("say", p, tag)
+                    ph = photo_for(p, lang, used_photos)
+                    bg = ("photo", ph) if ph else (scene_for(text, v["k"] + n), n * 10 + v["k"])
+                    ov = ("say", p, tag, ph)
                 add(bg, ov, share, audio if i == 0 else None, secs if i == 0 else None)
     add(("seal", 0), ("title", [(T["end1"], 46, (240, 226, 196)), (f"{SITE}/seerah", 64, (250, 240, 214)),
                                 (T["sub"], 48, art.GOLD_PAPER), (T["sources"], 30, (210, 196, 170))]), END_SECONDS)
+    page_turns(groups, units, lang)
+    for key, idxs in used_photos.items():
+        for i in sorted(set(idxs)):
+            ph = PHOTOS[key]["photos"][i]
+            sources.append(f"Photo: {ph['by']}, {ph['license']} - {ph['page']}")
+    if any(u["bg"][0] == "map" for u in units):
+        sources.append("Satellite image: NASA Blue Marble (public domain)")
     return units, chapters, sources
+
+
+PHOTOS = json.loads((Path(__file__).with_name("photos.json")).read_text())
+PHOTO_DIR = ROOT / "data" / "places"
+
+
+def photo_for(text, lang, used):
+    """A real photo of the place the narration names (each place's photos in turn), or None."""
+    for key, ph in PHOTOS.items():
+        if re.search(ph["match"], text, re.I):
+            i = len(used.setdefault(key, [])) % len(ph["photos"])
+            used[key].append(i)
+            return (key, i)
+    return None
+
+
+def photo_image(key, i):
+    import hashlib
+    import urllib.request
+    ph = PHOTOS[key]["photos"][i]
+    f = PHOTO_DIR / (hashlib.md5(ph["url"].encode()).hexdigest()[:12] + ".jpg")
+    if not f.exists():
+        PHOTO_DIR.mkdir(parents=True, exist_ok=True)
+        req = urllib.request.Request(ph["url"], headers={"User-Agent": "QuranReelMaker/1.0 (https://quranreelmaker.xyz)"})
+        f.write_bytes(urllib.request.urlopen(req, timeout=60).read())
+    img = Image.open(f).convert("RGB")
+    s = max(BW / img.width, BH / img.height)                    # cover the frame
+    img = img.resize((int(img.width * s) + 1, int(img.height * s) + 1), Image.Resampling.LANCZOS)
+    x, y = (img.width - BW) // 2, (img.height - BH) // 2
+    img = img.crop((x, y, x + BW, y + BH))
+    return Image.blend(img, Image.new("RGB", img.size, (12, 10, 8)), 0.12)
+
+
+def photo_caption(img, key, i, lang):
+    ph, place = PHOTOS[key]["photos"][i], PHOTOS[key]
+    d = ImageDraw.Draw(img)
+    f = font(UR if lang == "ur" else SERIF, 30 if lang == "ur" else 32)
+    text = place["ur" if lang == "ur" else "en"]
+    s = shape(text) if lang == "ur" else text
+    kw = dict(direction="rtl", language="ur") if lang == "ur" and video.RAQM else {}
+    tw = text_w(f, s, lang == "ur", "ur" if lang == "ur" else None)
+    cf = font(SERIF, 22)
+    credit = f"Photo: {ph['by']} ({ph['license']}), Wikimedia Commons"
+    cw = text_w(cf, credit, False, None)
+    d.rounded_rectangle([W - max(tw, cw) - 84, 30, W - 40, 30 + f.size * (2.0 if lang == "ur" else 1.5) + 34], 10,
+                        fill=(14, 10, 8, 170))
+    d.text((W - tw - 62, 36 if lang == "en" else 26), s, font=f, fill=(250, 240, 214), **kw)
+    d.text((W - cw - 62, 36 + f.size * (2.0 if lang == "ur" else 1.5) - (10 if lang == "ur" else 4)), credit, font=cf,
+           fill=(220, 210, 190))
+
+
+PAGE_TIMES = Path(__file__).resolve().parent / "page_times.json"     # kept in git: Whisper runs once per block
+OMNI_PYTHON = Path.home() / ".hayatus-voice" / "omni" / "bin" / "python"
+
+
+def _key(g):
+    import hashlib
+    return f"{Path(g['audio']).name}|" + hashlib.md5("\n".join(g["pages"]).encode()).hexdigest()[:10]
+
+
+def page_turns(groups, units, lang, log=print):
+    """Each page of a long ayah/hadith/passage is shown from the moment its first words are spoken (Whisper),
+    not by its share of the words: the voice says more than the screen shows (the salawat) and keeps its own pace.
+    The block's total time does not change, so the episode's chapter times stay the same."""
+    cache = json.loads(PAGE_TIMES.read_text()) if PAGE_TIMES.exists() else {}
+    todo = [g for g in groups if _key(g) not in cache]
+    if todo and OMNI_PYTHON.exists():
+        import tempfile
+        with tempfile.TemporaryDirectory() as tmp:
+            jobs = Path(tmp) / "jobs.json"
+            jobs.write_text(json.dumps([{"key": _key(g), "audio": str(g["audio"]), "lang": lang, "pages": g["pages"]}
+                                        for g in todo], ensure_ascii=False))
+            log(f"Timing {len(todo)} page turns from the narration (Whisper)")
+            subprocess.run([str(OMNI_PYTHON), str(Path(__file__).with_name("align.py")), str(jobs), str(Path(tmp) / "out.json")],
+                           check=True)
+            cache.update(json.loads((Path(tmp) / "out.json").read_text()))
+        PAGE_TIMES.write_text(json.dumps(cache, ensure_ascii=False, indent=1, sort_keys=True) + "\n")
+    elif todo:
+        log(f"{len(todo)} blocks have no measured page turns (no Whisper here): their pages are timed by word count")
+    for g in groups:
+        heard = cache.get(_key(g))
+        if not heard:
+            continue
+        n, secs, words = len(g["pages"]), g["secs"], g["words"]
+        guess = [secs * sum(words[:i]) / sum(words) for i in range(n)]
+        cuts = [0.0] + [h if h is not None else guess[i + 1] for i, h in enumerate(heard)] + [secs]
+        if any(b - a < 1.0 for a, b in zip(cuts, cuts[1:])):          # a mismatch: keep the word-count timing
+            continue
+        for i, u in enumerate(g["units"]):
+            units[u]["seconds"] = cuts[i + 1] - cuts[i]
 
 
 def render_unit(u, i, work, lang):
     kind, seed = u["bg"]
+    if kind == "map" and u["ov"][0] == "title":                 # the moving satellite map with the title
+        from documentary import sat
+        places, route = MAPS.get(seed, ([], None))
+        nm = lambda k: PLACES[k][3 if lang == "ur" else 2]
+        marks = [(PLACES[k][0], PLACES[k][1], nm(k), k in places) for k in PLACES]
+        return sat.segment(work / f"seg-{i:04d}.mp4", u["seconds"], marks,
+                           [PLACES[k][:2] for k in route] if route else None, u["ov"][1], lang, places)
     key = f"{kind}-{seed}"
     bg = work / f"bg-{key}.png"
     if not bg.exists():
-        img = map_image(seed, lang) if kind == "map" else background(kind, seed)
+        if kind == "photo":
+            img = photo_image(*seed)
+        else:
+            img = map_image(seed, lang) if kind == "map" else background(kind, seed)
         img.convert("RGB").save(bg)
     ov = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     o = u["ov"]
@@ -426,6 +539,8 @@ def render_unit(u, i, work, lang):
     else:
         strip(ov, o[1], lang)
         label(ov, o[2], lang)
+        if len(o) > 3 and o[3]:
+            photo_caption(ov, *o[3], lang)
     ovp = work / f"ov-{i:04d}.png"
     ov.save(ovp)
     d = u["seconds"]
@@ -492,7 +607,7 @@ def metadata(eid, lang, chapters, sources):
     lines = [head, "", "0:00 " + ep[lang]] + [f"{stamp(s)} {n}" for s, n in chapters] + [
         "", "Sources:"] + [f"• {s}" for s in dict.fromkeys(sources)] + [
         "", "The short linking passages are ours; everything the Prophet ﷺ said or did is quoted from the sources above.",
-        "Narration: AI voices (English: Microsoft neural voice; Urdu: OmniVoice).",
+        "Narration: AI voices (English: Microsoft neural voice; Urdu: OmniVoice). Photos of the places as they are today.",
         f"Read and listen to the whole Seerah: https://{SITE}/seerah", "",
         "#Seerah #ProphetMuhammad #IslamicHistory #Documentary #Islam"]
     return json.dumps({"title": title[:100], "description": "\n".join(lines)[:4900]}, ensure_ascii=False, indent=1)

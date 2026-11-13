@@ -1,0 +1,121 @@
+{
+ "uhud": {
+  "match": "\\buhud\\b|احد|اُحد",
+  "en": "Mount Uhud, north of Madinah, today",
+  "ur": "جبلِ احد، مدینہ کے شمال میں، آج",
+  "photos": [
+   {
+    "title": "File:Mount Uhud.JPG",
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/74/Mount_Uhud.JPG/1920px-Mount_Uhud.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "by": "Adiput (talk)",
+    "license": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Mount_Uhud.JPG"
+   },
+   {
+    "title": "File:Ravine of Mount Uhud .JPG",
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f3/Ravine_of_Mount_Uhud_.JPG/1920px-Ravine_of_Mount_Uhud_.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "by": "Md iet (talk)",
+    "license": "CC BY-SA 3.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Ravine_of_Mount_Uhud_.JPG"
+   },
+   {
+    "title": "File:Mount uhud.jpg",
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/39/Mount_uhud.jpg/1920px-Mount_uhud.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "by": "Adilakv",
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Mount_uhud.jpg"
+   }
+  ]
+ },
+ "badr": {
+  "match": "\\bbadr\\b|بدر",
+  "en": "The plain of Badr and its burial ground, today",
+  "ur": "میدانِ بدر اور اس کا قبرستان، آج",
+  "photos": [
+   {
+    "title": "File:General view of the battlefield and burial ground of Badr, Saudi Arabia, site of the historic battle between the Prophet Muhammad and the Quraysh in 624 (1).jpg",
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a3/General_view_of_the_battlefield_and_burial_ground_of_Badr%2C_Saudi_Arabia%2C_site_of_the_historic_battle_between_the_Prophet_Muhammad_and_the_Quraysh_in_624_%281%29.jpg/1920px-General_view_of_the_battlefield_and_burial_ground_of_Badr%2C_Saudi_Arabia%2C_site_of_the_historic_battle_between_the_Prophet_Muhammad_and_the_Quraysh_in_624_%281%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "by": "Richard Mortel",
+    "license": "CC BY 2.0",
+    "page": "https://commons.wikimedia.org/wiki/File:General_view_of_the_battlefield_and_burial_ground_of_Badr,_Saudi_Arabia,_site_of_the_historic_battle_between_the_Prophet_Muhammad_and_the_Quraysh_in_624_(1).jpg"
+   },
+   {
+    "title": "File:General view of the battlefield and burial ground of Badr, Saudi Arabia, site of the historic battle between the Prophet Muhammad and the Quraysh in 624 (4).jpg",
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/78/General_view_of_the_battlefield_and_burial_ground_of_Badr%2C_Saudi_Arabia%2C_site_of_the_historic_battle_between_the_Prophet_Muhammad_and_the_Quraysh_in_624_%284%29.jpg/1920px-General_view_of_the_battlefield_and_burial_ground_of_Badr%2C_Saudi_Arabia%2C_site_of_the_historic_battle_between_the_Prophet_Muhammad_and_the_Quraysh_in_624_%284%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "by": "Richard Mortel",
+    "license": "CC BY 2.0",
+    "page": "https://commons.wikimedia.org/wiki/File:General_view_of_the_battlefield_and_burial_ground_of_Badr,_Saudi_Arabia,_site_of_the_historic_battle_between_the_Prophet_Muhammad_and_the_Quraysh_in_624_(4).jpg"
+   },
+   {
+    "title": "File:General view of the battlefield and burial ground of Badr, Saudi Arabia, site of the historic battle between the Prophet Muhammad and the Quraysh in 624 (6).jpg",
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c0/General_view_of_the_battlefield_and_burial_ground_of_Badr%2C_Saudi_Arabia%2C_site_of_the_historic_battle_between_the_Prophet_Muhammad_and_the_Quraysh_in_624_%286%29.jpg/1920px-General_view_of_the_battlefield_and_burial_ground_of_Badr%2C_Saudi_Arabia%2C_site_of_the_historic_battle_between_the_Prophet_Muhammad_and_the_Quraysh_in_624_%286%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "by": "Richard Mortel",
+    "license": "CC BY 2.0",
+    "page": "https://commons.wikimedia.org/wiki/File:General_view_of_the_battlefield_and_burial_ground_of_Badr,_Saudi_Arabia,_site_of_the_historic_battle_between_the_Prophet_Muhammad_and_the_Quraysh_in_624_(6).jpg"
+   },
+   {
+    "title": "File:General view of the battlefield and burial ground of Badr, Saudi Arabia, site of the historic battle between the Prophet Muhammad and the Quraysh in 624 (2).jpg",
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/97/General_view_of_the_battlefield_and_burial_ground_of_Badr%2C_Saudi_Arabia%2C_site_of_the_historic_battle_between_the_Prophet_Muhammad_and_the_Quraysh_in_624_%282%29.jpg/1920px-General_view_of_the_battlefield_and_burial_ground_of_Badr%2C_Saudi_Arabia%2C_site_of_the_historic_battle_between_the_Prophet_Muhammad_and_the_Quraysh_in_624_%282%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "by": "Richard Mortel",
+    "license": "CC BY 2.0",
+    "page": "https://commons.wikimedia.org/wiki/File:General_view_of_the_battlefield_and_burial_ground_of_Badr,_Saudi_Arabia,_site_of_the_historic_battle_between_the_Prophet_Muhammad_and_the_Quraysh_in_624_(2).jpg"
+   },
+   {
+    "title": "File:Badr Saudi Arabia - panoramio (5).jpg",
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1f/Badr_Saudi_Arabia_-_panoramio_%285%29.jpg/1920px-Badr_Saudi_Arabia_-_panoramio_%285%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "by": "Devu Anchal",
+    "license": "CC BY 3.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Badr_Saudi_Arabia_-_panoramio_(5).jpg"
+   }
+  ]
+ },
+ "trench": {
+  "match": "\\btrench\\b|خندق|salman|سلمان",
+  "en": "The site of the Trench in Madinah (the Seven Mosques), today",
+  "ur": "مدینہ میں خندق کی جگہ (سات مساجد)، آج",
+  "photos": [
+   {
+    "title": "File:Mosque of Salman al-Farisi at the Seven Mosques, Madinah, Saudi Arabia (2).jpg",
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6d/Mosque_of_Salman_al-Farisi_at_the_Seven_Mosques%2C_Madinah%2C_Saudi_Arabia_%282%29.jpg/1920px-Mosque_of_Salman_al-Farisi_at_the_Seven_Mosques%2C_Madinah%2C_Saudi_Arabia_%282%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "by": "Richard Mortel",
+    "license": "CC BY 2.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Mosque_of_Salman_al-Farisi_at_the_Seven_Mosques,_Madinah,_Saudi_Arabia_(2).jpg"
+   },
+   {
+    "title": "File:Sab'u Masajid.jpg",
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ec/Sab%27u_Masajid.jpg/1920px-Sab%27u_Masajid.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "by": "Imam Khairul Annas",
+    "license": "CC BY-SA 3.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Sab%27u_Masajid.jpg"
+   },
+   {
+    "title": "File:Mosque of Salman al-Farisi at the Seven Mosques, Madinah, Saudi Arabia (1).jpg",
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/43/Mosque_of_Salman_al-Farisi_at_the_Seven_Mosques%2C_Madinah%2C_Saudi_Arabia_%281%29.jpg/1920px-Mosque_of_Salman_al-Farisi_at_the_Seven_Mosques%2C_Madinah%2C_Saudi_Arabia_%281%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "by": "Richard Mortel",
+    "license": "CC BY 2.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Mosque_of_Salman_al-Farisi_at_the_Seven_Mosques,_Madinah,_Saudi_Arabia_(1).jpg"
+   }
+  ]
+ },
+ "madinah": {
+  "match": "\\bmadinah\\b|\\bmedina\\b|مدینہ",
+  "en": "Madinah and the Prophet's Mosque ﷺ, today",
+  "ur": "مدینہ اور مسجدِ نبوی ﷺ، آج",
+  "photos": [
+   {
+    "title": "File:Al-Masjid An-Nabawi (Bird's Eye View).jpg",
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0e/Al-Masjid_An-Nabawi_%28Bird%27s_Eye_View%29.jpg/1920px-Al-Masjid_An-Nabawi_%28Bird%27s_Eye_View%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "by": "Konevi",
+    "license": "CC0",
+    "page": "https://commons.wikimedia.org/wiki/File:Al-Masjid_An-Nabawi_(Bird%27s_Eye_View).jpg"
+   },
+   {
+    "title": "File:Al Masjid an Nabawi 3.jpg",
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a0/Al_Masjid_an_Nabawi_3.jpg/1920px-Al_Masjid_an_Nabawi_3.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "by": "Aymanzaid2",
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Al_Masjid_an_Nabawi_3.jpg"
+   }
+  ]
+ }
+}
