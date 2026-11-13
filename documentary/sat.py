@@ -2,6 +2,7 @@
 down from the whole region to the chapter's places while the route draws itself, and the chapter title fades in.
 Every place is drawn at its real latitude and longitude."""
 import math
+import re
 import subprocess
 import urllib.request
 from pathlib import Path
@@ -94,12 +95,12 @@ def title_layer(lines, lang):
     d = ImageDraw.Draw(img)
     blocks = []
     for text, size, color in lines:
-        lg = "ur" if lang == "ur" and not text.isascii() else "en"
+        lg = "ur" if lang == "ur" and re.search("[\u0600-\u06FF]", text) else "en"
         f = font(UR if lg == "ur" else SERIF, size)
         ls = wrap(text, f, W - 300, lg == "ur", "ur" if lg == "ur" else None)
         blocks.append((f, ls, color, lg))
-    lh = lambda lg: 1.85 if lg == "ur" else 1.25
-    total = sum(len(ls) * f.size * lh(lg) for f, ls, _, lg in blocks)
+    lh = lambda lg: 2.05 if lg == "ur" else 1.25
+    total = sum(len(ls) * f.size * lh(lg) + f.size * 0.25 for f, ls, _, lg in blocks)
     y = H - 70 - total
     for f, ls, color, lg in blocks:
         for ln in ls:
@@ -109,6 +110,7 @@ def title_layer(lines, lang):
             d.text(((W - w) / 2 + 2, y + 2), s, font=f, fill=(0, 0, 0, 220), **kw)
             d.text(((W - w) / 2, y), s, font=f, fill=color, **kw)
             y += f.size * lh(lg)
+        y += f.size * 0.25
     cf = font(SERIF, 22)
     d.text((W - text_w(cf, CREDIT, False, None) - 30, 24), CREDIT, font=cf, fill=(255, 255, 255, 170))
     return img

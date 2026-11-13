@@ -307,7 +307,7 @@ def title_overlay(lines, lang, dark=True, x0=0, width=W):
     d = ImageDraw.Draw(img)
     blocks = []
     for text, size, color in lines:
-        lg = "ur" if lang == "ur" and not text.isascii() else "en"
+        lg = "ur" if lang == "ur" and re.search("[\u0600-\u06FF]", text) else "en"
         lh = 1.9 if lg == "ur" else 1.3
         f, wl = _fit(text, UR if lg == "ur" else SERIF, width - 120, size * lh * 2.2, size, 26, lh, lg)
         blocks.append((f, wl, color, lg, lh))

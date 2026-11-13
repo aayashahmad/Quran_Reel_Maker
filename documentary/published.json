@@ -1,10 +1,16 @@
 {
  "battles": {
-  "en": "8pruiAEsYaw",
-  "ur": "YekKOR7fv6w"
+  "en": "7Fg0_N4mYF8",
+  "ur": "_UODEYffftk"
  },
  "_dates": {
   "8pruiAEsYaw": "2026-11-13",
-  "YekKOR7fv6w": "2026-11-13"
+  "YekKOR7fv6w": "2026-11-13",
+  "7Fg0_N4mYF8": "2026-11-13",
+  "_UODEYffftk": "2026-11-13"
+ },
+ "_replaced": {
+  "8pruiAEsYaw": "7Fg0_N4mYF8",
+  "YekKOR7fv6w": "_UODEYffftk"
  }
 }
