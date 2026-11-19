@@ -1,4 +1,214 @@
 {
+ "hira": {
+  "match": "\\bhira\\b|حرا",
+  "en": "Jabal al-Nour, the mountain of the cave of Hira, Makkah, today",
+  "ur": "جبل النور، جس میں غارِ حرا ہے، مکہ، آج",
+  "photos": [
+   {
+    "title": "File:Jabal al-Nur, Mecca, Saudi Arabia (2).jpg",
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e0/Jabal_al-Nur%2C_Mecca%2C_Saudi_Arabia_%282%29.jpg/1920px-Jabal_al-Nur%2C_Mecca%2C_Saudi_Arabia_%282%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "by": "Richard Mortel",
+    "license": "CC BY 2.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Jabal_al-Nur,_Mecca,_Saudi_Arabia_(2).jpg"
+   },
+   {
+    "title": "File:Jabbal An-Nour - Makkah (2241558560).jpg",
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/42/Jabbal_An-Nour_-_Makkah_%282241558560%29.jpg/1920px-Jabbal_An-Nour_-_Makkah_%282241558560%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "by": "Wal N.",
+    "license": "CC BY 2.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Jabbal_An-Nour_-_Makkah_(2241558560).jpg"
+   },
+   {
+    "title": "File:Jabbal An-Nour (2024).jpg",
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/57/Jabbal_An-Nour_%282024%29.jpg/1920px-Jabbal_An-Nour_%282024%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "by": "Kaliper1",
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Jabbal_An-Nour_(2024).jpg"
+   },
+   {
+    "title": "File:Jabal Nur.JPG",
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/95/Jabal_Nur.JPG/1920px-Jabal_Nur.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "by": "Adiput (talk)",
+    "license": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Jabal_Nur.JPG"
+   }
+  ]
+ },
+ "thawr": {
+  "match": "\\bthawr\\b|ثور",
+  "en": "Jabal Thawr, south of Makkah, today",
+  "ur": "جبلِ ثور، مکہ کے جنوب میں، آج",
+  "photos": [
+   {
+    "title": "File:Jabele thor - panoramio.jpg",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/1/1a/Jabele_thor_-_panoramio.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+    "by": "Abdul Razzaq Phulpot…",
+    "license": "CC BY-SA 3.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Jabele_thor_-_panoramio.jpg"
+   }
+  ]
+ },
+ "jerusalem": {
+  "match": "jerusalem|\\baqsa\\b|بیت المقدس|اقصیٰ|اقصی",
+  "en": "Al-Masjid al-Aqsa and the Dome of the Rock, Jerusalem, today",
+  "ur": "مسجدِ اقصیٰ اور قبۃ الصخرہ، بیت المقدس، آج",
+  "photos": [
+   {
+    "title": "File:Jerusalem-2013-Temple Mount-Al-Aqsa Mosque (NE exposure).jpg",
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/87/Jerusalem-2013-Temple_Mount-Al-Aqsa_Mosque_%28NE_exposure%29.jpg/1920px-Jerusalem-2013-Temple_Mount-Al-Aqsa_Mosque_%28NE_exposure%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "by": "Godot13",
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Jerusalem-2013-Temple_Mount-Al-Aqsa_Mosque_(NE_exposure).jpg"
+   },
+   {
+    "title": "File:Dome of the Al-Aqsa Mosque (20160).jpg",
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5a/Dome_of_the_Al-Aqsa_Mosque_%2820160%29.jpg/1920px-Dome_of_the_Al-Aqsa_Mosque_%2820160%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "by": "Rhododendrites",
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Dome_of_the_Al-Aqsa_Mosque_(20160).jpg"
+   },
+   {
+    "title": "File:Jerusalem-2013(2)-Temple Mount-Dome of the Rock (SE exposure).jpg",
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8b/Jerusalem-2013%282%29-Temple_Mount-Dome_of_the_Rock_%28SE_exposure%29.jpg/1920px-Jerusalem-2013%282%29-Temple_Mount-Dome_of_the_Rock_%28SE_exposure%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "by": "Godot13",
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Jerusalem-2013(2)-Temple_Mount-Dome_of_the_Rock_(SE_exposure).jpg"
+   }
+  ]
+ },
+ "taif": {
+  "match": "ta'?if\\b|طائف",
+  "en": "The mountains of Ta'if, today",
+  "ur": "طائف کے پہاڑ، آج",
+  "photos": [
+   {
+    "title": "File:Taif Mountains (8355942584).jpg",
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a2/Taif_Mountains_%288355942584%29.jpg/1920px-Taif_Mountains_%288355942584%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "by": "Nick Shields",
+    "license": "CC BY 2.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Taif_Mountains_(8355942584).jpg"
+   },
+   {
+    "title": "File:Taif Mountains 3.jpg",
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2d/Taif_Mountains_3.jpg/1920px-Taif_Mountains_3.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "by": "Nick Shields",
+    "license": "CC BY 2.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Taif_Mountains_3.jpg"
+   },
+   {
+    "title": "File:Al-Hada mountain road, al-Taif region, Saudi Arabia (4).jpg",
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0b/Al-Hada_mountain_road%2C_al-Taif_region%2C_Saudi_Arabia_%284%29.jpg/1920px-Al-Hada_mountain_road%2C_al-Taif_region%2C_Saudi_Arabia_%284%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "by": "Richard Mortel",
+    "license": "CC BY 2.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Al-Hada_mountain_road,_al-Taif_region,_Saudi_Arabia_(4).jpg"
+   },
+   {
+    "title": "File:Al-Hada mountain road, al-Taif, Saudi Arabia (1).jpg",
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/34/Al-Hada_mountain_road%2C_al-Taif%2C_Saudi_Arabia_%281%29.jpg/1920px-Al-Hada_mountain_road%2C_al-Taif%2C_Saudi_Arabia_%281%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "by": "Richard Mortel",
+    "license": "CC BY 2.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Al-Hada_mountain_road,_al-Taif,_Saudi_Arabia_(1).jpg"
+   }
+  ]
+ },
+ "quba": {
+  "match": "\\bquba\\b|قبا",
+  "en": "Masjid Quba, Madinah, today",
+  "ur": "مسجدِ قبا، مدینہ، آج",
+  "photos": [
+   {
+    "title": "File:Quba Mosque Full Picture (2024).jpg",
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/98/Quba_Mosque_Full_Picture_%282024%29.jpg/1920px-Quba_Mosque_Full_Picture_%282024%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "by": "Kaliper1",
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Quba_Mosque_Full_Picture_(2024).jpg"
+   }
+  ]
+ },
+ "qiblah": {
+  "match": "\\bqiblah?\\b|قبلہ",
+  "en": "Masjid al-Qiblatayn (the mosque of the two qiblahs), Madinah, today",
+  "ur": "مسجدِ قبلتین، مدینہ، آج",
+  "photos": [
+   {
+    "title": "File:Masjid Qiblatain.jpg",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/5/57/Masjid_Qiblatain.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+    "by": "Muhammad Mahdi Karim at English Wikipedia",
+    "license": "CC BY-SA 2.5",
+    "page": "https://commons.wikimedia.org/wiki/File:Masjid_Qiblatain.jpg"
+   },
+   {
+    "title": "File:Masjid al-Qiblatain.jpg",
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bc/Masjid_al-Qiblatain.jpg/1920px-Masjid_al-Qiblatain.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "by": "Aiman titi",
+    "license": "CC BY-SA 3.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Masjid_al-Qiblatain.jpg"
+   }
+  ]
+ },
+ "hudaibiya": {
+  "match": "hudaib|hudayb|حدیبیہ",
+  "en": "Old stone ruins at al-Hudaibiya (al-Shumaisi), west of Makkah, today",
+  "ur": "حدیبیہ (الشمیسی) کے پرانے کھنڈر، مکہ کے مغرب میں، آج",
+  "photos": [
+   {
+    "title": "File:Udaobiyah Old 2 (4254883403).jpg",
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/53/Udaobiyah_Old_2_%284254883403%29.jpg/1920px-Udaobiyah_Old_2_%284254883403%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "by": "KELANTAN JOTTINGS",
+    "license": "CC BY 2.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Udaobiyah_Old_2_(4254883403).jpg"
+   },
+   {
+    "title": "File:Udaibiyah Old (4254883405).jpg",
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/de/Udaibiyah_Old_%284254883405%29.jpg/1920px-Udaibiyah_Old_%284254883405%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "by": "KELANTAN JOTTINGS",
+    "license": "CC BY 2.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Udaibiyah_Old_(4254883405).jpg"
+   }
+  ]
+ },
+ "tabuk": {
+  "match": "\\btabuk\\b|تبوک",
+  "en": "Tabuk and its old fort (built centuries later), today",
+  "ur": "تبوک اور اس کا پرانا قلعہ (صدیوں بعد بنا)، آج",
+  "photos": [
+   {
+    "title": "File:Tabuk Fortress 2022.jpg",
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/66/Tabuk_Fortress_2022.jpg/1920px-Tabuk_Fortress_2022.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "by": "amanderson2",
+    "license": "CC BY 2.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Tabuk_Fortress_2022.jpg"
+   },
+   {
+    "title": "File:قلعة تبوك.jpg",
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d5/%D9%82%D9%84%D8%B9%D8%A9_%D8%AA%D8%A8%D9%88%D9%83.jpg/1920px-%D9%82%D9%84%D8%B9%D8%A9_%D8%AA%D8%A8%D9%88%D9%83.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "by": "Heritage Commission",
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:%D9%82%D9%84%D8%B9%D8%A9_%D8%AA%D8%A8%D9%88%D9%83.jpg"
+   }
+  ]
+ },
+ "baqi": {
+  "match": "\\bbaqi|بقیع",
+  "en": "Al-Baqi, the burial ground of Madinah, today",
+  "ur": "جنت البقیع، مدینہ، آج",
+  "photos": [
+   {
+    "title": "File:Al-Baqi Cemetery 2021.jpg",
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/eb/Al-Baqi_Cemetery_2021.jpg/1920px-Al-Baqi_Cemetery_2021.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "by": "Saleh Al Hussain",
+    "license": "CC BY 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Al-Baqi_Cemetery_2021.jpg"
+   },
+   {
+    "title": "File:Al-Baqi'1.jpg",
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/ff/Al-Baqi%271.jpg/1920px-Al-Baqi%271.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "by": "Yasser.Bakhsh",
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Al-Baqi%271.jpg"
+   }
+  ]
+ },
  "uhud": {
   "match": "\\buhud\\b|احد|اُحد",
   "en": "Mount Uhud, north of Madinah, today",
@@ -94,6 +304,34 @@
     "by": "Richard Mortel",
     "license": "CC BY 2.0",
     "page": "https://commons.wikimedia.org/wiki/File:Mosque_of_Salman_al-Farisi_at_the_Seven_Mosques,_Madinah,_Saudi_Arabia_(1).jpg"
+   }
+  ]
+ },
+ "makkah": {
+  "match": "\\bmakkah\\b|\\bmecca\\b|ka'?bah\\b|مکہ|کعبہ",
+  "en": "Makkah and al-Masjid al-Haram, today",
+  "ur": "مکہ اور مسجدِ حرام، آج",
+  "photos": [
+   {
+    "title": "File:Mecca from Jabal Nur.JPG",
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5c/Mecca_from_Jabal_Nur.JPG/1920px-Mecca_from_Jabal_Nur.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "by": "Adiput (talk)",
+    "license": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Mecca_from_Jabal_Nur.JPG"
+   },
+   {
+    "title": "File:Masjidul-HaramAerialView (cropped).jpg",
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cb/Masjidul-HaramAerialView_%28cropped%29.jpg/1920px-Masjidul-HaramAerialView_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "by": "Wurzelgnohm",
+    "license": "CC0",
+    "page": "https://commons.wikimedia.org/wiki/File:Masjidul-HaramAerialView_(cropped).jpg"
+   },
+   {
+    "title": "File:Mecca at night.jpg",
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/93/Mecca_at_night.jpg/1920px-Mecca_at_night.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "by": "عباد ديرانية",
+    "license": "CC BY-SA 3.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Mecca_at_night.jpg"
    }
   ]
  },
