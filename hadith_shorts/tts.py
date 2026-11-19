@@ -35,7 +35,7 @@ def segments(english, max_words=16, lang="en"):
             cur.append(part)
         if cur:
             out.append(" ".join(cur))
-    return [s for s in out if s.strip()]
+    return [s for s in out if re.search(r"\w", s)]          # no part that is only a stray "۔" (nothing to say)
 
 
 def duration(path):

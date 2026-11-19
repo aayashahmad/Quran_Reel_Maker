@@ -1,6 +1,6 @@
 {
  "hira": {
-  "match": "\\bhira\\b|حرا",
+  "match": "\\bhira\\b|\\bحرا\\b",
   "en": "Jabal al-Nour, the mountain of the cave of Hira, Makkah, today",
   "ur": "جبل النور، جس میں غارِ حرا ہے، مکہ، آج",
   "photos": [
@@ -35,7 +35,7 @@
   ]
  },
  "thawr": {
-  "match": "\\bthawr\\b|ثور",
+  "match": "\\bthawr\\b|\\bثور\\b",
   "en": "Jabal Thawr, south of Makkah, today",
   "ur": "جبلِ ثور، مکہ کے جنوب میں، آج",
   "photos": [
@@ -49,7 +49,7 @@
   ]
  },
  "jerusalem": {
-  "match": "jerusalem|\\baqsa\\b|بیت المقدس|اقصیٰ|اقصی",
+  "match": "jerusalem|\\baqsa\\b|\\bبیت المقدس\\b|\\bاقصیٰ\\b|\\bاقصی\\b",
   "en": "Al-Masjid al-Aqsa and the Dome of the Rock, Jerusalem, today",
   "ur": "مسجدِ اقصیٰ اور قبۃ الصخرہ، بیت المقدس، آج",
   "photos": [
@@ -77,7 +77,7 @@
   ]
  },
  "taif": {
-  "match": "ta'?if\\b|طائف",
+  "match": "ta'?if\\b|\\bطائف\\b",
   "en": "The mountains of Ta'if, today",
   "ur": "طائف کے پہاڑ، آج",
   "photos": [
@@ -112,7 +112,7 @@
   ]
  },
  "quba": {
-  "match": "\\bquba\\b|قبا",
+  "match": "\\bquba\\b|\\bقبا\\b",
   "en": "Masjid Quba, Madinah, today",
   "ur": "مسجدِ قبا، مدینہ، آج",
   "photos": [
@@ -126,7 +126,7 @@
   ]
  },
  "qiblah": {
-  "match": "\\bqiblah?\\b|قبلہ",
+  "match": "\\bqiblah?\\b|\\bقبلہ\\b",
   "en": "Masjid al-Qiblatayn (the mosque of the two qiblahs), Madinah, today",
   "ur": "مسجدِ قبلتین، مدینہ، آج",
   "photos": [
@@ -147,7 +147,7 @@
   ]
  },
  "hudaibiya": {
-  "match": "hudaib|hudayb|حدیبیہ",
+  "match": "hudaib|hudayb|\\bحدیبیہ\\b",
   "en": "Old stone ruins at al-Hudaibiya (al-Shumaisi), west of Makkah, today",
   "ur": "حدیبیہ (الشمیسی) کے پرانے کھنڈر، مکہ کے مغرب میں، آج",
   "photos": [
@@ -168,7 +168,7 @@
   ]
  },
  "tabuk": {
-  "match": "\\btabuk\\b|تبوک",
+  "match": "\\btabuk\\b|\\bتبوک\\b",
   "en": "Tabuk and its old fort (built centuries later), today",
   "ur": "تبوک اور اس کا پرانا قلعہ (صدیوں بعد بنا)، آج",
   "photos": [
@@ -189,7 +189,7 @@
   ]
  },
  "baqi": {
-  "match": "\\bbaqi|بقیع",
+  "match": "\\bbaqi|\\bبقیع\\b",
   "en": "Al-Baqi, the burial ground of Madinah, today",
   "ur": "جنت البقیع، مدینہ، آج",
   "photos": [
@@ -210,7 +210,7 @@
   ]
  },
  "uhud": {
-  "match": "\\buhud\\b|احد|اُحد",
+  "match": "\\buhud\\b|\\bاحد\\b|\\bاُحد\\b",
   "en": "Mount Uhud, north of Madinah, today",
   "ur": "جبلِ احد، مدینہ کے شمال میں، آج",
   "photos": [
@@ -238,7 +238,7 @@
   ]
  },
  "badr": {
-  "match": "\\bbadr\\b|بدر",
+  "match": "\\bbadr\\b|\\bبدر\\b",
   "en": "The plain of Badr and its burial ground, today",
   "ur": "میدانِ بدر اور اس کا قبرستان، آج",
   "photos": [
@@ -280,7 +280,7 @@
   ]
  },
  "trench": {
-  "match": "\\btrench\\b|خندق|salman|سلمان",
+  "match": "\\btrench\\b|\\bخندق\\b|salman|\\bسلمان\\b",
   "en": "The site of the Trench in Madinah (the Seven Mosques), today",
   "ur": "مدینہ میں خندق کی جگہ (سات مساجد)، آج",
   "photos": [
@@ -308,7 +308,7 @@
   ]
  },
  "makkah": {
-  "match": "\\bmakkah\\b|\\bmecca\\b|ka'?bah\\b|مکہ|کعبہ",
+  "match": "\\bmakkah\\b|\\bmecca\\b|ka'?bah\\b|\\bمکہ\\b|\\bکعبہ\\b",
   "en": "Makkah and al-Masjid al-Haram, today",
   "ur": "مکہ اور مسجدِ حرام، آج",
   "photos": [
@@ -336,7 +336,7 @@
   ]
  },
  "madinah": {
-  "match": "\\bmadinah\\b|\\bmedina\\b|مدینہ",
+  "match": "\\bmadinah\\b|\\bmedina\\b|\\bمدینہ\\b",
   "en": "Madinah and the Prophet's Mosque ﷺ, today",
   "ur": "مدینہ اور مسجدِ نبوی ﷺ، آج",
   "photos": [

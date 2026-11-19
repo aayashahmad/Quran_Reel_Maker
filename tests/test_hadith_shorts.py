@@ -54,6 +54,12 @@ def test_caption_segments_cover_text():
     assert all(len(p.split()) <= 24 for p in parts)    # whole sentences without commas may run a little over 16
 
 
+def test_stray_full_stop_is_not_a_part():
+    # Muslim 2735 in Urdu has "۔ ۔": a part with nothing to say made both voices fail
+    parts = tts.segments("میں نے دعا کی ، لیکن میرے حق میں قبول نہیں ہوتی ۔ ۔ یا نہیں ہوئی ۔", 18, "ur")
+    assert parts == ["میں نے دعا کی ، لیکن میرے حق میں قبول نہیں ہوتی ۔", "یا نہیں ہوئی ۔"]
+
+
 def test_tts_failure_is_reported(monkeypatch, tmp_path):
     monkeypatch.setattr(settings, "TTS_ENGINE", "edge")
     monkeypatch.setattr(tts, "_edge", lambda text, out, lang="en": (_ for _ in ()).throw(tts.TTSError("service down")))
